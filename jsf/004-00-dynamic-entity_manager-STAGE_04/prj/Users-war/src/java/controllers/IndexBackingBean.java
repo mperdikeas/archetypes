@@ -23,19 +23,30 @@ public class IndexBackingBean implements Serializable {
     private static final String CLASS_NAME = IndexBackingBean.class.getName();
 
     // @EJB(beanName="userFacade") // EJB3 injection refid:234lkdjs0923kljhdfsf082
+    @EJB(mappedName = "java:global/Users-ejb/userFacade!facades.IUserFacadeRemote")
     private IUserFacadeRemote userFacade;
 
+    static int _i = 0;
     private IUserFacadeRemote getUserFacade() {
-        if (userFacade == null) {
-            String jndiName = "java:global/Users-ejb/userFacade!facades.IUserFacadeRemote";
-            try {
-                this.userFacade = (IUserFacadeRemote) new InitialContext().lookup(jndiName); 
-            } catch (Exception e) {
-                throw new ExceptionAdapter(e);
-            }
+        if ((_i++ % 2)==0) {
+            l.info("getting facade via JNDI lookup");
+            return getUserFacade_via_JNDI();
+        } else {
+            l.info("gettting facade via injection");
+            return getUserFacade_viaInjection();
         }
-        return userFacade;
     }
+
+    private IUserFacadeRemote getUserFacade_via_JNDI() {
+        String jndiName = "java:global/Users-ejb/userFacade!facades.IUserFacadeRemote";
+        try {
+            return (IUserFacadeRemote) new InitialContext().lookup(jndiName);  // don't save it so we can try both ways
+        } catch (Exception e) {
+            throw new ExceptionAdapter(e);
+        }
+    }
+
+    private IUserFacadeRemote getUserFacade_viaInjection() {return userFacade;}
 
     private String name;
     public String getName() {
