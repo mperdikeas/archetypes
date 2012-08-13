@@ -84,12 +84,14 @@
       description="Prepare for clean build">
       <delete dir="${webinf.dir}/classes"/>
       <delete dir="${build.dir}"/>
+      <delete file="${webinf.dir}/lib/${client-lib.jar}"/>
     </target>
 
     <target name="rewar" depends="clean,war"/>
 
     <!-- Create binary distribution -->
     <target name="war" depends="compile">
+      <copy file="${client-lib.dir}/${client-lib.jar}" todir="${webinf.dir}/lib"/>
       <mkdir dir="${build.dir}"/>
       <war
         needxmlfile="false"
