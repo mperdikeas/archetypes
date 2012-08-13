@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+        <p:dialog header="header" resizable="true" widgetVar="customerNameDlg" closable="true" dynamic="true"
+                  showEffect="clip" hideEffect="clip" appendToBody="true" modal="true">
+            <h:form>
+            
+                <h:inputText value="${CustomerNameDlgBackingBean.name}"/>
+                    <p:commandButton value      = "ok"
+                                     oncomplete = "CustomerNameDlg.hide()"
+                                     action     = "#{CustomerNameDlgBackingBean.done}"
+                                     update     = ":parentForm:customerName">
+                        <f:param name="skipValidation" value="1"></f:param>
+                    </p:commandButton>
+            </h:form>
+        </p:dialog>
+
+</ui:composition>

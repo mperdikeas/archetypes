@@ -1,0 +1,58 @@
+<project name="Users" basedir="." default="publish">
+
+    <!-- Project settings -->
+    <property name="project.distname" value="${ant.project.name}"/>
+    <property name="project.ejb-jar.artefact" value="${project.distname}-ejb.jar"/>
+    <property name="project.war.artefact" value="${project.distname}-war.war"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="ear-lib.src.dir"       value="lib"/>
+    <property name="ear-lib.dest.preffix"  value="lib"/>
+
+
+    <!-- Local system paths -->
+    <property file="build.properties"/>
+    <property name="ejb-project.name" value="${project.distname}-ejb"/>
+    <property name="war-project.name" value="${project.distname}-war"/>
+    <property name="ejb-project.dir" value="./${ejb-project.name}"/>
+    <property name="war-project.dir" value="./${war-project.name}"/>
+
+    <property name="project.ejb-jar.artefact.path" value="./${ejb-project.dir}/dist/${project.ejb-jar.artefact}"/>
+    <property name="project.war.artefact.path"     value="./${war-project.dir}/build/${project.war.artefact}"/>
+
+     
+
+
+    <target name="clean"
+      description="Prepare for clean build">
+      <delete dir="${dist.dir}"/>
+      <ant antfile = "${ejb-project.dir}/build.xml" target="clean" inheritAll="false"/>
+      <ant antfile = "${war-project.dir}/build.xml" target="clean" inheritAll="false"/>
+    </target>
+
+    <target name="build-ejb">
+      <ant antfile = "${ejb-project.dir}/build.xml" target="jar" inheritAll="false"/>
+    </target>
+
+    <target name="build-war">
+      <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false"/>
+    </target>
+
+
+    <target name="publish" depends="build-ejb, build-war" description="publish ejb.jar and .war to local configured web server">
+      <echo message="copying ${project.ejb-jar.artefact.path} to ${publish.dir}"/>
+      <copy file="${project.ejb-jar.artefact.path}"       todir="${publish.dir}"/>
+      <echo message="copying ${project.war.artefact.path}     to ${publish.dir}"/>
+      <copy file="${project.war.artefact.path}"           todir="${publish.dir}"/>
+    </target>
+
+    <target name="republish" depends="clean, publish"/>
+
+    <target name="unpublish">
+        <delete quiet="true" verbose="true">
+            <fileset dir="${publish.dir}" includes="${project.ejb-jar.artefact}"/>
+            <fileset dir="${publish.dir}" includes="${project.war.artefact}"/>
+        </delete>
+    </target>
+    
+
+</project>

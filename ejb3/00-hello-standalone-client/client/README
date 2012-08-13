@@ -1,0 +1,31 @@
+You should make sure that the IP address configured in 
+file "jboss-ejb-client.properties" is the same as the
+one that JBoss AS 7.1 binds to.
+
+This is configured in file: <jboss-root>/standalone/configuration/standalone.xml.
+
+E.g. a typical section might read as follows:
+
+    <interfaces>
+        <interface name="management">
+            <inet-address value="${jboss.bind.address.management:127.0.0.1}"/>
+        </interface>
+        <interface name="public">
+            <inet-address value="${jboss.bind.address:127.0.0.1}"/>
+        </interface>
+        (...)
+    <interfaces>
+
+The meaning of the above is that JBoss AS 7.1.1 will bind to 127.0.0.1
+unless the jboss.bind.address environment property is defined, in which
+case it will bind to the value of that.
+So if JBoss is started with the "standalone.sh" script without defining this
+property, it will bind to 127.0.0.1. If on the other hand it is started
+like this:
+
+./standalone.sh -Djboss.bind.address=172.31.129.29 -bmanagement=127.0.0.1
+
+It will bind to 172.31.129.29. Then, the value of the property
+"remote.connection.default.host" defined in the "jboss-ejb-client.properties"
+file will have to change accordingly.
+(this wasted 8 hours of my time on 9.VIII.2012).

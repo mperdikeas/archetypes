@@ -1,0 +1,3 @@
+In this STAGE (03) we are able to bind to the EJB3 bean using
+all possible JNDI names PLUS the JBoss-specific "ejb:" namespace.
+Open issue is how to differentiate between different beans.

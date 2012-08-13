@@ -1,0 +1,3 @@
+In this STAGE we are able to bind to the EJB3 bean using
+JNDI lookup instead of injection.
+Open issue is how to differentiate between different beans.

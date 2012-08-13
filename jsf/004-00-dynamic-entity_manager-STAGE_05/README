@@ -1,0 +1,4 @@
+In this STAGE (04) we are able to bind to the EJB3 bean using
+all possible JNDI names PLUS the JBoss-specific "ejb:" namespace
+IN A CONFIGURATION of separate deployment (not a single EAR but
+rather a separate EJB-jar and a war).

@@ -1,0 +1,7 @@
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <path id ="run.classpath" path="${compile.classpath}"/>

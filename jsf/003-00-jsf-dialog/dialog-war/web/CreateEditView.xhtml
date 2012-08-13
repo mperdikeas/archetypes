@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+<f:metadata>
+    <f:viewParam name="cust-id" value="#{customerBackingBean.id}" 
+        required="false" requiredMessage="cust-id f:viewParam not present"
+    />
+</f:metadata>
+
+
+<h:head></h:head> <!-- we need an empty head for composition purposes -->
+<!--h:head>                                                                                                                                                  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />                                                                                 
+    <title>a title ...</title>                                                                                      
+    <ui:remove><h:outputStylesheet name="css/jsfcrud.css"/>
+    <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/mperd.css" />                                                       
+    </ui:remove
+</h:head-->
+
+<h:body>
+
+   <h:panelGrid columns="1" cellpadding="5">           
+       <h:outputText value="customer id   is: #{customerBackingBean.id}"/>
+       <h:outputText value="customer name is: #{customerBackingBean.name}"/>
+       
+    
+       <h:form id="parentForm">
+           <h:panelGrid columns="2" cellpadding="10">    
+                <h:outputText id="tentative-customer-name" value="new name to be entered: ${customerNameDlgBackingBean.name}"/>
+                <p:commandButton onclick="customerNameDlg.show(); return false" value="enter name"
+                                 type="button" styleClass="ui-icon ui-icon-search"/>
+            </h:panelGrid>
+        </h:form>
+    </h:panelGrid>
+
+
+    <p:dialog header="header" resizable="true" widgetVar="customerNameDlg" closable="true" dynamic="true" rendered="true" visible="false"
+              showEffect="clip" hideEffect="clip" >
+        <h:form>
+            <h:inputText  value="${customerNameDlgBackingBean.name}"
+                         valueChangeListener="#{customerNameDlgBackingBean.nameChange}"/>
+            <p:commandButton value      = "ok"
+                             update     = ":parentForm:tentative-customer-name"
+                             oncomplete = "customerNameDlg.hide()"/>
+                 
+<ui:remove>
+            <p:commandButton value      = "ok"
+                             oncomplete = "customerNameDlg.hide()"
+                             action     = "#{customerNameDlgBackingBean.done}"
+                             update     = ":parentForm:tentative-customer-name"/>
+</ui:remove>
+        </h:form>
+    </p:dialog>
+
+
+    <ui:remove>
+        <ui:include src="MunicipalityLOV.xhtml"/>
+    </ui:remove>
+
+</h:body>
+</f:view>
+</html>

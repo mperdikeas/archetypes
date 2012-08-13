@@ -1,0 +1,7 @@
+    <target name="run" depends="jar">
+       <property name="classpath.msg" refid="run.classpath"/>
+       <echo message="classpath = ${classpath.msg}"/>
+        <java classname ="archetypeEjb3Client.HelloClient">
+            <classpath refid="run.classpath"/>
+        </java>
+    </target>

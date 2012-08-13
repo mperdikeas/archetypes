@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> <!-- we need an empty head for composition purposes -->
+<!--h:head>                                                                                                                                                  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />                                                                                 
+    <title>a title ...</title>                                                                                      
+    <ui:remove>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/mperd.css" />
+    </ui:remove>
+</h:head-->
+
+<h:body>
+   <h:panelGrid columns="1" cellpadding="5">
+
+       <h:outputText id="user-name"       value="user name is: #{indexBackingBean.name}"/>
+       <h:outputText id="user-jdbcCoords" value="user jdbc is: #{indexBackingBean.jdbcUrl}"/>
+
+       
+       <h:form id="userEntryForm">
+           Welcome to the application!
+            <h:panelGrid columns="3" cellpadding="10">    
+                <h:inputText id="user-name-input" value="#{indexBackingBean.name}" required="true"/>
+            </h:panelGrid>
+            <ui:remove>
+                <p:commandButton action="null" update=":user-name, :user-jdbcCoords"
+                                 actionListener="#{indexBackingBean.retrieveJdbcUrl}">
+                </p:commandButton>
+            </ui:remove>
+            <p:commandButton action="#{indexBackingBean.retrieveJdbcUrl}" update=":user-name, :user-jdbcCoords">
+                <ui:remove>
+                    <f:param name="user-id" value="#{user.name}" />
+                </ui:remove>
+            </p:commandButton>
+       </h:form>
+    </h:panelGrid>
+</h:body>
+</html>

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ $# -eq 3 ]
+then 
+    echo $0 expects range-start range-end
+    exit
+fi
+
+psql -U postgres postgres -c "CREATE ROLE allusers WITH CREATEDB LOGIN PASSWORD 'allusers';"
+psql -U postgres postgres -c "CREATE DATABASE allusersdb WITH OWNER allusers;"
+psql -U allusers allusersdb -f common-database-ddl.sql
+
+./create-users-meta.py    $1 $2 > create-users-ddl.sql
+psql -U postgres postgres -f      create-users-ddl.sql
+rm                              ./create-users-ddl.sql
+
+./create-database-meta.py $1 $2 > create-database-ddl.sql
+psql -U postgres postgres -f      create-database-ddl.sql
+rm                              ./create-database-ddl.sql
+
+./create-database-ddl-meta.py $1 $2 > create-database-schema-ddl.sh
+chmod ugo+x                         ./create-database-schema-ddl.sh
+                                    ./create-database-schema-ddl.sh
+rm                                  ./create-database-schema-ddl.sh
+
+./drop-database-ddl-meta.py $1 $2 >  drop-users-and-databases-ddl.sql
+echo "psql -U postgres postgres -f ./drop-users-and-databases-ddl.sql" > drop-users-and-databases
+echo "psql -U postgres postgres -c \"DROP DATABASE allusersdb;\""     >> drop-users-and-databases
+echo "psql -U postgres postgres -c \"DROP ROLE allusers;\""           >> drop-users-and-databases
+chmod ugo+x ./drop-users-and-databases
