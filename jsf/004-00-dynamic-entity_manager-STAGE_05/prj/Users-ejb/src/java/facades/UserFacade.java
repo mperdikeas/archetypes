@@ -40,5 +40,7 @@ public class UserFacade extends AbstractFacade<User> implements IUserFacadeLocal
         super(User.class);
     }
 
-    
+    public String boo(String name) {
+        return name+" BOO BOO BOO ! "+name;
+    }
 }

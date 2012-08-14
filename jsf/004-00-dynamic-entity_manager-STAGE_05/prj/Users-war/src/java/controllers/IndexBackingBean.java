@@ -69,6 +69,7 @@ public class IndexBackingBean implements Serializable {
     public String retrieveJdbcUrl() {
         l.info("inside "+CLASS_NAME+"#retrieveJdbcUrl(): name="+name);
         IUserFacadeRemote userFacade = getUserFacade();
+        l.info("boo msg is: "+userFacade.boo("Guy Fawkes"));
         l.info("userFacade is: "+userFacade);
         User user = userFacade.find(name);
         if (user==null) {
