@@ -1,10 +1,13 @@
-<project name="Users-ejb" basedir="." default="rejar">
+<project name="Users-ejb" basedir="." default="reear">
 
-    <!-- Project settings -->
+
     <property name="project.distname" value="${ant.project.name}"/>
-
-    <!-- Local system paths -->
+    <property name="project.jar.artefact.name" value="${project.distname}.jar"/>
+    <property name="project.ear.artefact.name" value="${project.distname}.ear"/>
+    <property name="ear-lib.src.dir"       value="lib"/>
+    <property name="ear-lib.dest.preffix"  value="lib"/>
     <property file="build.properties"/>
+    <property name="bin.dir" value="bin"/>
     <property name="build.dir" value="build"/>
     <property name="jarlib.dir" value="${build.dir}/lib"/>
     <property name="dist.dir" value="dist"/>
@@ -40,9 +43,9 @@
     <!-- Normal build of application -->
     <target name="compile" depends="prepare, jar-client"
             description="Compile java sources">
-        <mkdir  dir="${build.dir}"/>
+        <mkdir  dir="${bin.dir}"/>
         <javac srcdir="${javasource.dir}" 
-               destdir="${build.dir}"
+               destdir="${bin.dir}"
                source="1.7"
                target="1.7"
                debug="true"
@@ -50,53 +53,48 @@
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
         </javac>
-        <copy file="${conf.dir}/persistence.xml" todir="${build.dir}/META-INF"/>
-        <copy file="${conf.dir}/postgres-ds.xml" todir="${build.dir}/META-INF"/>
+        <copy file="${conf.dir}/persistence.xml" todir="${bin.dir}/META-INF"/>
+        <copy file="${conf.dir}/postgres-ds.xml" todir="${bin.dir}/META-INF"/>
     </target>
 
     <target name="jar" depends="compile"
             description="jar class files">
-      <mkdir  dir="${dist.dir}"/>
-      <copy file="${client-lib.dir}/${client-lib.jar}" todir="${jarlib.dir}"/>
+      <mkdir  dir="${build.dir}"/>
 
-      <!-- create a property containing all .jar files, prefix lib/, and seperated with a space -->
-      <pathconvert property="libs.project" pathsep=" ">
-        <mapper>
-          <chainedmapper>
-     
-            <!-- remove absolute path -->
-            <flattenmapper />
-     
-            <!-- add lib/ prefix -->
-            <globmapper from="*" to="lib/*" />
-          </chainedmapper>
-        </mapper>
-     
-        <path>
-     
-          <!-- lib.home contains all jar files, in several subdirectories -->
-          <fileset dir="${jarlib.dir}">
-            <include name="**/*.jar" />
-          </fileset>
-        </path>
-      </pathconvert>
-
-      <jar destfile="${dist.dir}/${project.distname}.jar"
-           basedir="${build.dir}">
-        <manifest>
-          <attribute name="Class-Path" value="${libs.project}" />
-        </manifest>
+      <jar destfile="${build.dir}/${project.jar.artefact.name}"
+           basedir="${bin.dir}">
       </jar>
+    </target>
+
+
+    <target name="ear" description="Building the ear file containing the ejb.jar and dependent libs" 
+                       depends="jar"> 
+      <mkdir dir="${dist.dir}"/>
+      <ear destfile="${dist.dir}/${project.ear.artefact.name}" appxml="conf/application.xml">
+        <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
+              <include name="commons-lang3-3.1.jar"/>
+              <include name="mutil.jar"/>
+              <include name="joda-time-2.1.jar"/>
+        </zipfileset>
+        <zipfileset dir="${client-lib.dir}" prefix="${ear-lib.dest.preffix}">
+            <include name ="${client-lib.jar}"/>
+        </zipfileset>
+        <fileset dir="${build.dir}" includes="${project.jar.artefact.name}"/>
+
+        <!--include name ="${basedir}/${build.dir}/${project.jar.artefact.name}"/-->
+
+      </ear>
     </target>
 
 
     <target name="clean"
             description="Prepare for clean build">
-      <delete dir="${build.dir}"/>
-      <delete dir="${dist.dir}"/>
+      <delete dir="${basedir}/${bin.dir}"/>
+      <delete dir="${basedir}/${build.dir}"/>
+      <delete dir="${basedir}/${dist.dir}"/>
     </target>
 
     <!-- Rebuild project -->
-    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+    <target name="reear" depends="clean,ear" description="clean and ear anew"/>
 
 </project>

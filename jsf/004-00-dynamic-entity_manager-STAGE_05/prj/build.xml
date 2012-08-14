@@ -1,8 +1,8 @@
-<project name="Users" basedir="." default="publish">
+<project name="Users" basedir="." default="republish">
 
     <!-- Project settings -->
     <property name="project.distname"            value="${ant.project.name}"/>
-    <property name="project.ejb-jar.artefact"    value="${project.distname}-ejb.jar"/>
+    <property name="project.ejb-ear.artefact"    value="${project.distname}-ejb.ear"/>
     <property name="project.war.artefact"        value="${project.distname}-war.war"/>
     <property name="dist.dir" value="dist"/>
     <property name="ear-lib.src.dir"       value="lib"/>
@@ -18,7 +18,7 @@
     <property name="ejb-project.dir"     value="./${ejb-project.name}"/>
     <property name="war-project.dir"     value="./${war-project.name}"/>
 
-    <property name="project.ejb-jar.artefact.path" value="./${ejb-project.dir}/dist/${project.ejb-jar.artefact}"/>
+    <property name="project.ejb-ear.artefact.path" value="./${ejb-project.dir}/dist/${project.ejb-ear.artefact}"/>
     <property name="project.war.artefact.path"     value="./${war-project.dir}/build/${project.war.artefact}"/>
 
      
@@ -33,7 +33,7 @@
     </target>
 
     <target name="build-ejb">
-      <ant antfile = "${ejb-project.dir}/build.xml" target="jar" inheritAll="false"/>
+      <ant antfile = "${ejb-project.dir}/build.xml" target="ear" inheritAll="false"/>
     </target>
 
     <target name="build-war">
@@ -42,8 +42,8 @@
 
 
     <target name="publish" depends="build-ejb, build-war" description="publish ejb.jar and .war to local configured web server">
-      <echo message="copying ${project.ejb-jar.artefact.path} to ${publish.dir}"/>
-      <copy file="${project.ejb-jar.artefact.path}"       todir="${publish.dir}"/>
+      <echo message="copying ${project.ejb-ear.artefact.path} to ${publish.dir}"/>
+      <copy file="${project.ejb-ear.artefact.path}"       todir="${publish.dir}"/>
       <echo message="copying ${project.war.artefact.path}     to ${publish.dir}"/>
       <copy file="${project.war.artefact.path}"           todir="${publish.dir}"/>
     </target>
@@ -52,7 +52,7 @@
 
     <target name="unpublish">
         <delete quiet="true" verbose="true">
-            <fileset dir="${publish.dir}" includes="${project.ejb-jar.artefact}"/>
+            <fileset dir="${publish.dir}" includes="${project.ejb-ear.artefact}"/>
             <fileset dir="${publish.dir}" includes="${project.war.artefact}"/>
         </delete>
     </target>

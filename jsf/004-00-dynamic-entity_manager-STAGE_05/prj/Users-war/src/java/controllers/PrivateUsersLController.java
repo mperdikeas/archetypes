@@ -58,10 +58,6 @@ public class PrivateUsersLController implements Serializable {
         return aList==null?"list is null":aList.size()+" elements";
     }
 
-    // @EJB // injection-case ref-id: 2l3kj4lsd092
-    // private PrivateUserDataFacade privateUserDataFacade; // we don't store it so we retrieve it every time
-                                                            // using a different JNDI name and so we can test
-                                                            // different names. refid:234sdf089u23kljhdfskjh
 
     public List<PrivateUserData> getItems() {
         if (items == null) {
@@ -75,17 +71,17 @@ public class PrivateUsersLController implements Serializable {
     private static int _i = 0 ;
 
     private String ejbName() {
-            final String appName         = "";
-            final String moduleName      = "Users-ejb";
-            final String distinctName    = "";
-            final String beanName        = "PrivateUserDataFacade"; // The EJB name which by default is the simple
+        final String appName         = "Users-ejb"; // the ear package
+        final String moduleName      = "Users-ejb"; // the jar package
+        final String distinctName    = "";
+        final String beanName        = "PrivateUserDataFacade"; // The EJB name which by default is the simple
                                                                     // class name of the bean implementation class
-            final String viewClassName = IPrivateUserDataFacade.class.getName();  // the remote view fully qualified class name
-            final boolean stateful=false;
+        final String viewClassName = IPrivateUserDataFacade.class.getName();  // the remote view fully qualified class name
+        final boolean stateful=false;
             
-            String ejbName = "ejb:" + appName + "/"  + moduleName + "/" + distinctName + "/" 
-                + beanName + "!" + viewClassName    + (stateful?"?stateful":"");
-            return ejbName;
+        String ejbName = "ejb:" + appName + "/"  + moduleName + "/" + distinctName + "/" 
+               + beanName + "!" + viewClassName    + (stateful?"?stateful":"");
+        return ejbName;
     }
 
     private IPrivateUserDataFacade getFacade() {
@@ -95,24 +91,25 @@ public class PrivateUsersLController implements Serializable {
 
         /* The JBoss AS reports the following names: 
 
-           java:global/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade
+           java:global/Users-ejb/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade
            java:app/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade
            java:module/PrivateUserDataFacade!facades.IPrivateUserDataFacade
-           java:jboss/exported/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade
-           java:global/Users-ejb/PrivateUserDataFacade
+           java:jboss/exported/Users-ejb/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade
+           java:global/Users-ejb/Users-ejb/PrivateUserDataFacade
            java:app/Users-ejb/PrivateUserDataFacade
            java:module/PrivateUserDataFacade
+
            --
            I suppose I can use any of these provided they reside in the java:app and java:global
            namespaces (I've tried the java:module namespace and it's not working)
         */
         String ejbName = ejbName();
         String jndiNames[] = {
-            "java:global/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
+            "java:global/Users-ejb/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
             "java:app/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
             "java:module/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
-            "java:jboss/exported/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
-            "java:global/Users-ejb/PrivateUserDataFacade",
+            "java:jboss/exported/Users-ejb/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
+            "java:global/Users-ejb/Users-ejb/PrivateUserDataFacade",
             "java:app/Users-ejb/PrivateUserDataFacade",
             "java:module/PrivateUserDataFacade",
              ejbName};
