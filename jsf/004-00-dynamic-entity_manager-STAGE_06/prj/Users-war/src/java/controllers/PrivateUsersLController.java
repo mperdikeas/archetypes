@@ -1,4 +1,4 @@
-package gr.neuropublic.neurojsfpilot.customerservice.backingBeans;
+package controllers;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -40,6 +41,13 @@ import facades.*;
 public class PrivateUsersLController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
 
+    @ManagedProperty(value="#{indexBackingBean}")
+    private IndexBackingBean indexBackingBean;
+
+    public void setIndexBackingBean(IndexBackingBean indexBackingBean) {
+        this.indexBackingBean = indexBackingBean;
+    }
+
     private PrivateUserData current;
     private List<PrivateUserData> items;
     public PrivateUserData getCurrent() {return current;}
@@ -71,7 +79,7 @@ public class PrivateUsersLController implements Serializable {
     private static int _i = 0 ;
 
     private String ejbName() {
-        final String appName         = "Users-ejb"; // the ear package
+        final String appName         = indexBackingBean.getJdbcUrl(); // "Users-ejb"; // the ear package
         final String moduleName      = "Users-ejb"; // the jar package
         final String distinctName    = "";
         final String beanName        = "PrivateUserDataFacade"; // The EJB name which by default is the simple
@@ -100,16 +108,16 @@ public class PrivateUsersLController implements Serializable {
            java:module/PrivateUserDataFacade
 
            --
-           I suppose I can use any of these provided they reside in the java:app and java:global
-           namespaces (I've tried the java:module namespace and it's not working)
+           I suppose I can use only those in the java:global namespace since the war
+           is deployed separately from the ear
         */
         String ejbName = ejbName();
         String jndiNames[] = {
-            "java:global/Users-ejb/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
+            "java:global/"+indexBackingBean.getJdbcUrl()+"/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
             "java:app/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
             "java:module/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
-            "java:jboss/exported/Users-ejb/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
-            "java:global/Users-ejb/Users-ejb/PrivateUserDataFacade",
+            "java:jboss/exported/"+indexBackingBean.getJdbcUrl()+"/Users-ejb/PrivateUserDataFacade!facades.IPrivateUserDataFacade",
+            "java:global/"+indexBackingBean.getJdbcUrl()+"/Users-ejb/PrivateUserDataFacade",
             "java:app/Users-ejb/PrivateUserDataFacade",
             "java:module/PrivateUserDataFacade",
              ejbName};

@@ -1,9 +1,8 @@
 <project name="Users-ejb" basedir="." default="reear">
 
-
     <property name="project.distname" value="${ant.project.name}"/>
     <property name="project.jar.artefact.name" value="${project.distname}.jar"/>
-    <property name="project.ear.artefact.name" value="${project.distname}.ear"/>
+    <property name="project.ear.artefact.name" value="Users-01-ejb.ear"/>
     <property name="ear-lib.src.dir"       value="lib"/>
     <property name="ear-lib.dest.preffix"  value="lib"/>
     <property file="build.properties"/>

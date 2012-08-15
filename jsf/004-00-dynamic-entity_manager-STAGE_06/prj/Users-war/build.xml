@@ -8,8 +8,6 @@
     <property name="src.dir" value="${basedir}/src"/>
     <property name="javasource.dir" value="${src.dir}/java"/>
     <property name="compilelibs.dir" value="${basedir}/lib"/>
-    <property name="name.of.ejb.submodule" value="Users-ejb"/>
-    <property name="path.to.orders-ejb" value="../${name.of.ejb.submodule}"/>
     <property name="client-project.name" value="Users-client"/>
     <property name="client-project.dir"  value="${basedir}/../${client-project.name}"/>
     <property name="client-lib.dir" value="${basedir}/../Users-client/dist"/>
@@ -35,8 +33,6 @@
 
     <path id = "compile.classpath">
         <path refid = "compile.classpath.without-ejb"/>
-        <!-- now we are not using the ejb.jar - we'll have to change that to use the interfaces jar instead -->
-        <!-- pathelement location="${path.to.orders-ejb}/dist/${name.of.ejb.submodule}.jar"/ -->
     </path>
 
 
@@ -56,9 +52,6 @@
     <!-- Normal build of application -->
     <target name="compile" depends="prepare, resources, jar-client">
         <echo message="compile classpath is: ${toString:compile.classpath}"/>
-        <echo message="invoking ${name-of-ejb-submodule} build.xml Ant file"/>
-        <ant antfile = "${path.to.orders-ejb}/build.xml" target="jar" inheritAll="false"/>
-        <echo message="done invoking ${name-of-ejb-submodule} build.xml Ant file"/>
         <mkdir  dir="${webinf.dir}/classes"/>
         <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
                source="1.6"
