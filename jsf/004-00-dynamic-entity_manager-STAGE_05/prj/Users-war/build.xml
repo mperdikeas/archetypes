@@ -1,10 +1,6 @@
 <project name="Users-war" basedir="." default="war">
 
-    <!-- Project settings -->
     <property name="project.distname" value="${ant.project.name}"/>
-
-
-    <!-- Local system paths -->
     <property file="build.properties"/>
     <property name="webroot.dir" value="${basedir}/web"/>
     <property name="webinf.dir" value="${webroot.dir}/WEB-INF"/>
@@ -19,8 +15,6 @@
     <property name="client-lib.dir" value="${basedir}/../Users-client/dist"/>
     <property name="client-lib.jar" value="Users-client.jar"/>
 
-
-
     <!-- Check timestamp on files -->
     <target name="prepare">
         <tstamp/>
@@ -29,8 +23,6 @@
     <target name="jar-client">
       <ant antfile = "${client-project.dir}/build.xml" target="jar" inheritAll="false"/>
     </target>
-
-
 
     <path id = "compile.classpath.without-ejb">
       <fileset dir="${compilelibs.dir}">
@@ -46,7 +38,6 @@
         <!-- now we are not using the ejb.jar - we'll have to change that to use the interfaces jar instead -->
         <!-- pathelement location="${path.to.orders-ejb}/dist/${name.of.ejb.submodule}.jar"/ -->
     </path>
-
 
 
     <!-- Copy any resource or configuration files -->
@@ -99,6 +90,7 @@
         warfile="${build.dir}/${project.distname}.war">
         <exclude name="WEB-INF/src/**"/>
        </war>
+      <delete file="${webinf.dir}/lib/${client-lib.jar}" quiet="false" failonerror="true"/>
     </target>
 
 </project>
