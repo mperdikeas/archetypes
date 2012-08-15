@@ -8,7 +8,6 @@
     <property name="build.dir" value="build"/>
     <property name="dist.dir" value="dist"/>
     <property name="src.dir" value="${basedir}/src"/>
-    <property name="conf.dir" value="${basedir}/conf"/>
     <property name="javasource.dir" value="${src.dir}/java"/>
     <property name="compilelibs.dir" value="${basedir}/lib"/>
 
@@ -42,7 +41,6 @@
     <target name="jar" depends="compile"
             description="jar class files">
       <mkdir dir="${build.dir}/META-INF"/>
-      <copy file="${conf.dir}/persistence.xml" todir="${build.dir}/META-INF"/>
       <mkdir  dir="${dist.dir}"/>
       <jar destfile="${dist.dir}/${project.distname}.jar"
            basedir="${build.dir}"
