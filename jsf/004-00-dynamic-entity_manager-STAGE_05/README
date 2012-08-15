@@ -1,4 +1,11 @@
-In this STAGE (04) we are able to bind to the EJB3 bean using
-all possible JNDI names PLUS the JBoss-specific "ejb:" namespace
-IN A CONFIGURATION of separate deployment (not a single EAR but
-rather a separate EJB-jar and a war).
+In this STAGE (05) we are able to bind to the EJB3 bean
+using a deployment structured in three parts:
+
+[1] Users-client.jar
+[2] Users-ejb.ear (contains only only module: Users-ejb.jar and the Users-client.jar as a library)
+[3] Users-war.war (contains Users-client.jar as a library)
+
+Where the Users-client.jar is not deployed independently
+and where there exists only one persistence.xml file
+declared in the Users-ejb.jar that's contained inside 
+Users-ejb.ear.
