@@ -1,1 +1,16 @@
-In this STAGE (06) we ...
+In this STAGE (06) we are for the first time able to 
+showcase the use of dynamically accessed EJB3 beans
+with different persistent contexts.
+NB: in the following database table 
+
+            Table "public.users"
+   Column   |       Type        | Modifiers
+------------+-------------------+-----------
+ user_name  | character varying | not null
+ jdbccoodrs | character varying | not null
+
+
+The column "jdbccoords" is not actually storing the JDBC URL of the database
+but rather the application (ear) name of the EJB3 application which embeds the
+corresponding persistence context. I should have changed the name of the column
+to disambiguate that but I am short on time.
