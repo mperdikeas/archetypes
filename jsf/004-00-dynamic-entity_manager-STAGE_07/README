@@ -1,2 +1,6 @@
-In this STAGE (07) we will try to also modify
-the entity beans from different databases.
+In this STAGE (07) we managed to also modify (edit) AND
+remove the entity beans from different databases.
+A problem I seem to be having (but unrelated to the main point of 
+this exercise which was to handled different databases) is that
+both "edit" and "remove" functionality on the second form don't
+seem to be working on the 1st try.
