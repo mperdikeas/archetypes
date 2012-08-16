@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+    <datasource jta="true" jndi-name="java:/allusersdb" pool-name="allusersPU" enabled="true" use-ccm="false">
+      <connection-url>jdbc:postgresql://127.0.0.1:5432/allusersdb</connection-url>
+      <driver-class>org.postgresql.Driver</driver-class>
+      <driver>postgresql9.1</driver>
+      <security>
+        <user-name>hr</user-name>
+        <password>hr</password>
+        </security>
+        <validation>
+        <validate-on-match>false</validate-on-match>
+        <background-validation>false</background-validation>
+        </validation>
+        <statement>
+        <share-prepared-statements>false</share-prepared-statements>
+        </statement>
+    </datasource>
+</datasources> 
