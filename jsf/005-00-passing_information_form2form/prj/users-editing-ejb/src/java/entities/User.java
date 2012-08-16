@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "public.user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT x FROM User x"),
+    @NamedQuery(name = "User.findAll"        , query = "SELECT x FROM User x"),
     @NamedQuery(name = "User.findByUser_Name", query = "SELECT x FROM User x WHERE x.id = :id")
 }) 
 public class User implements Serializable {

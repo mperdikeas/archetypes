@@ -37,15 +37,10 @@ import facades.*;
 
 @ManagedBean
 @RequestScoped
-public class UserLController implements Serializable {
+public class UserEController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
-    private static final String CLASSNAME=UserLController.class.getName();
+    private static final String CLASSNAME=UserEController.class.getName();
 
-    @ManagedProperty(value="#{userEController}")    
-    private UserEController userEController;
-    public void setUserEController(UserEController userEController) {
-        this.userEController = userEController;
-    }
 
     @EJB
     private UserFacade userFacade;
@@ -53,41 +48,22 @@ public class UserLController implements Serializable {
         return userFacade;
     }
 
-    private User current;
-    private List<User> items;
-    public User getCurrent() {return current;}
-    public void setCurrent(User current) {
-        this.current = current;
+    private User theEdited;
+    public User getTheEdited() {return theEdited;}
+    public void setTheEdited(User theEdited) {
+        this.theEdited = theEdited;
     }
 
-    public UserLController() {
+    public UserEController() {
     }
 
-    public List<User> getItems() {
-        if (items == null) {
-            l.info("inside "+CLASSNAME+"#getItems()");            
-            items = getFacade().findAll();
-            l.info("************ "+items.size()+" items returned");
-        }
-        return items;
-    }
-
-    public String edit() {
+    public String save() {
+        /*
         Integer id = current.getId();
         User user = getFacade().find(id);
         l.info("found user: "+user);
-        userEController.setTheEdited(user);
-        return "userEdit";
-    }
-
-    public String remove() {
-        Integer id = current.getId();
-        User user = getFacade().find(id);
-        l.info("found user: "+user);
-        getFacade().remove(user);
+        getFacade().remove(user); */
         return "null";
     }
-
-
 
 }

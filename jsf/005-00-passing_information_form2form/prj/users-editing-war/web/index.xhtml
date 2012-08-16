@@ -32,10 +32,19 @@
                     <p:column headerText="Age" sortBy="#{item.age}" filterBy="#{item.age}" id="age">  
                         #{item.age}
                     </p:column>  
+                    <p:column headerText="&nbsp;">
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton ajax="false" action="#{privateUsersLController.edit}" value="edit">
+                            <f:setPropertyActionListener value="#{item}" target="#{userLController.current}" />
+                        </p:commandButton>
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton update=":userList" ajax="false" action="#{userLController.remove}" value="remove">
+                            <f:setPropertyActionListener value="#{item}" target="#{userLController.current}" />
+                         </p:commandButton>
+                    </p:column>
                 </p:dataTable>  
              </p:outputPanel>
          </h:form>
-         <h:link value="start page" outcome="index"/>
      </p:layoutUnit>
     </h:panelGrid>
 </h:body>
