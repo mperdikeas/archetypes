@@ -1,0 +1,3 @@
+psql -U postgres postgres -f ./drop-users-and-databases-ddl.sql
+psql -U postgres postgres -c "DROP DATABASE allusersdb;"
+psql -U postgres postgres -c "DROP ROLE allusers;"

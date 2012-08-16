@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> <!-- we need an empty head for composition purposes -->
+<!--h:head>                                                                                                                                                  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />                                                                                 
+    <title>a title ...</title>                                                                                      
+    <ui:remove>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/mperd.css" />
+    </ui:remove>
+</h:head-->
+
+<h:body>
+   <h:panelGrid columns="1" cellpadding="50">
+     <p:layoutUnit position="center">
+         <h:form id="privateUsersForm" styleClass="jsfcrud_list_form">
+             <p:outputPanel id="custDataTable">            
+                <p:dataTable var="item" value="#{privateUsersLController.items}" rowKey="#{item.employee}"
+                                        paginator="true" rows="10"
+                                selection="#{privateUsersLController.current}" selectionMode="single"
+                                           id="privateUsersTable"
+                                style="width: 98%;margin-left: 1%;margin-right: 1%;"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                                   {PageLinks} {NextPageLink}  {LastPageLink} {RowsPerPageDropdown}">
+                    <p:column headerText="Employee" sortBy="#{item.employee}" filterBy="#{item.employee}" id="employee">  
+                        #{item.employee}
+                    </p:column>  
+                    <p:column headerText="Employee Personal" sortBy="#{item.employee}"
+                              filterBy="#{item.employee}" id="employee_personal">  
+                        #{item.employeePersonal}
+                    </p:column>
+
+
+                    <p:column headerText="&nbsp;">
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton ajax="false" action="#{privateUsersLController.prepareEdit}" value="edit">
+                            <f:setPropertyActionListener value="#{item}" target="#{privateUsersLController.current}" />
+                        </p:commandButton>
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton update=":privateUsersForm" ajax="false" action="#{privateUsersLController.destroy}" value="remove">
+                            <f:setPropertyActionListener value="#{item}" target="#{privateUsersLController.current}" />                                
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>  
+             </p:outputPanel>
+         </h:form>
+         <h:link value="start page" outcome="index"/>
+     </p:layoutUnit>
+    </h:panelGrid>
+</h:body>
+</html>
