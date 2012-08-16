@@ -67,6 +67,9 @@ public class PrivateUsersLController implements Serializable {
     }
 
     public String prepareEdit() {
+        String name = current.getEmployee();
+        PrivateUserData privateUserData = getFacade().find(name);
+        l.info("found privateUserData: "+privateUserData);
         return null;
         /*
         Map<String, Object> criteria = new HashMap<String, Object>();

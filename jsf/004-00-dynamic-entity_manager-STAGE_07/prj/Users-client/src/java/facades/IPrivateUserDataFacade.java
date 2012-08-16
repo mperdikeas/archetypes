@@ -6,4 +6,5 @@ import entities.PrivateUserData;
 public interface IPrivateUserDataFacade {
 
     List<PrivateUserData> findAll();
+    public PrivateUserData find(Object id);
 }
