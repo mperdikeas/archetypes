@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -36,7 +37,7 @@ import facades.*;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UserEController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=UserEController.class.getName();
