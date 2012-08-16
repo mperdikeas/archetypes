@@ -7,4 +7,5 @@ public interface IPrivateUserDataFacade {
 
     List<PrivateUserData> findAll();
     public PrivateUserData find(Object id);
+    public void edit(PrivateUserData object);
 }
