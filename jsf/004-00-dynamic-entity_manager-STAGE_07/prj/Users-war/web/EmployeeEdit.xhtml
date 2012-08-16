@@ -13,10 +13,10 @@
        <h:outputText id="employee-personal" value="employee personal is: #{employeeEController.theEditedEmployee.employeePersonal}"/>
        
        <h:form id="employeeDetails">
-            <h:inputText value="#{employeeEController.theEditedEmployee.employee}"         required="true"/>
             <h:inputText value="#{employeeEController.theEditedEmployee.employeePersonal}" required="true"/>
             <p:commandButton action="#{employeeEController.save}" update=":employee, :employee-personal" value="save"/>
        </h:form>
+       <h:link value="results page" outcome="PrivateUserData"/>
    </h:panelGrid>
 </h:body>
 </html>
