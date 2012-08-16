@@ -35,6 +35,18 @@
                               filterBy="#{item.employee}" id="employee_personal">  
                         #{item.employeePersonal}
                     </p:column>
+
+
+                    <p:column headerText="&nbsp;">
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton ajax="false" action="#{privateUsersLController.prepareEdit}" value="edit">
+                            <f:setPropertyActionListener value="#{item}" target="#{privateUsersLController.current}" />
+                        </p:commandButton>
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton update=":privateUsersForm" ajax="false" action="#{privateUsersLController.destroy}" value="remove">
+                            <f:setPropertyActionListener value="#{item}" target="#{privateUsersLController.current}" />                                
+                        </p:commandButton>
+                    </p:column>
                 </p:dataTable>  
              </p:outputPanel>
          </h:form>

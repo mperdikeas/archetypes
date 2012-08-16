@@ -66,6 +66,41 @@ public class PrivateUsersLController implements Serializable {
         return aList==null?"list is null":aList.size()+" elements";
     }
 
+    public String prepareEdit() {
+        return null;
+        /*
+        Map<String, Object> criteria = new HashMap<String, Object>();
+        criteria.put(CustomerServiceUtils.SEARCH_CUSTOMERS_BY_ID, current.getId());
+        ArrayList<Customer> customersById = (ArrayList<Customer>) customerService.getCustomers(criteria, true);
+        
+        System.out.println("Size = "+customersById.size());
+        
+        if (customersById.get(0) != null)
+        {
+            getCustomerCEVController().initCustomerCreateEditViewControllerForEdit(this,customersById.get(0));
+            return "goToCreateEditView";
+        }
+        else
+        {
+            //stay on the current page if the customer was not found
+            return null;
+            }*/
+    }
+
+    public String destroy() {
+        /*
+        l.info(this.getClass().getName()+"::destroy current is: "+safeCustomerToString(current));
+        try {
+            // getFacade().remove(current); // the JPE em.remove type of removal doesn't seem to work
+            getFacade().jpqlRemove(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomerDeleted"));
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+        }
+        createModel(); */
+        return "null";
+    }
+
 
     public List<PrivateUserData> getItems() {
         if (items == null) {
