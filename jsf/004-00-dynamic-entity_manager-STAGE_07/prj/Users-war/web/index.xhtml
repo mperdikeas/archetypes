@@ -33,11 +33,7 @@
                                  actionListener="#{indexBackingBean.retrieveJdbcUrl}">
                 </p:commandButton>
             </ui:remove>
-            <p:commandButton action="#{indexBackingBean.retrieveJdbcUrl}" update=":user-name, :user-jdbcCoords">
-                <ui:remove>
-                    <f:param name="user-id" value="#{user.name}" />
-                </ui:remove>
-            </p:commandButton>
+            <p:commandButton action="#{indexBackingBean.retrieveJdbcUrl}" update=":user-name, :user-jdbcCoords" value="go to this user's database"/>
        </h:form>
     </h:panelGrid>
 </h:body>

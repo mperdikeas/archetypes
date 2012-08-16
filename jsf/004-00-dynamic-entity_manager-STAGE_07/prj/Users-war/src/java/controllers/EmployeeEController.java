@@ -67,4 +67,8 @@ public class EmployeeEController implements Serializable {
         l.info("inside EmployeeEController, saving employee="+theEditedEmployee);
         UsersFacadeUtil.getFacade(indexBackingBean.getJdbcUrl()).edit(theEditedEmployee);
     }
+    
+    public void remove() {
+        UsersFacadeUtil.getFacade(indexBackingBean.getJdbcUrl()).remove(theEditedEmployee);
+    }
 }

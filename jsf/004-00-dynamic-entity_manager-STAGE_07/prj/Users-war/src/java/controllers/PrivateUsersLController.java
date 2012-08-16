@@ -57,6 +57,7 @@ public class PrivateUsersLController implements Serializable {
     private List<PrivateUserData> items;
     public PrivateUserData getCurrent() {return current;}
     public void setCurrent(PrivateUserData current) {
+        l.info("setting current to the value of: "+current);
         this.current = current;
     }
 
@@ -77,36 +78,13 @@ public class PrivateUsersLController implements Serializable {
         l.info("found privateUserData: "+privateUserData);
         employeeEController.setTheEditedEmployee(privateUserData);
         return "EmployeeEdit";
-        /*
-        Map<String, Object> criteria = new HashMap<String, Object>();
-        criteria.put(CustomerServiceUtils.SEARCH_CUSTOMERS_BY_ID, current.getId());
-        ArrayList<Customer> customersById = (ArrayList<Customer>) customerService.getCustomers(criteria, true);
-        
-        System.out.println("Size = "+customersById.size());
-        
-        if (customersById.get(0) != null)
-        {
-            getCustomerCEVController().initCustomerCreateEditViewControllerForEdit(this,customersById.get(0));
-            return "goToCreateEditView";
-        }
-        else
-        {
-            //stay on the current page if the customer was not found
-            return null;
-            }*/
     }
 
     public String destroy() {
-        /*
-        l.info(this.getClass().getName()+"::destroy current is: "+safeCustomerToString(current));
-        try {
-            // getFacade().remove(current); // the JPE em.remove type of removal doesn't seem to work
-            getFacade().jpqlRemove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomerDeleted"));
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-        createModel(); */
+        String name = current.getEmployee();
+        PrivateUserData privateUserData = UsersFacadeUtil.getFacade(indexBackingBean.getJdbcUrl()).find(name);
+        l.info("found privateUserData: "+privateUserData);
+        UsersFacadeUtil.getFacade(indexBackingBean.getJdbcUrl()).remove(privateUserData);
         return "null";
     }
 
