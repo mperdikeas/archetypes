@@ -37,10 +37,9 @@
         <param-name>javax.faces.CONFIG_FILES</param-name> 
         <param-value>/WEB-INF/faces-config.xml, /WEB-INF/common-beans.xml</param-value> 
     </context-param> 
-    <!--
+    <!-- see http://tinyurl.com/bln5vzs for the following context parameter-->
     <context-param>
         <param-name>com.sun.faces.writeStateAtFormEnd</param-name>
         <param-value>false</param-value>
     </context-param>
-    -->
 </web-app>
