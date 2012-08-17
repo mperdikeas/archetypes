@@ -69,11 +69,11 @@ public class UserEController implements Serializable {
     }
 
     public String save() {
-        /*
-        Integer id = current.getId();
+        /*        Integer id = current.getId();
         User user = getFacade().find(id);
         l.info("found user: "+user);
         getFacade().remove(user); */
+        getFacade().edit(theEdited);
         return "null";
     }
 
