@@ -8,7 +8,7 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
     <lifecycle>
-        <!--phase-listener>mutil.jsf.LifeCycleListener</phase-listener-->
-        <phase-listener>mutil.jsf.PrintComponentTree</phase-listener>
+        <phase-listener>mutil.jsf.LifeCycleListener</phase-listener>
+        <!--phase-listener>mutil.jsf.PrintComponentTree</phase-listener-->
     </lifecycle>
 </faces-config>

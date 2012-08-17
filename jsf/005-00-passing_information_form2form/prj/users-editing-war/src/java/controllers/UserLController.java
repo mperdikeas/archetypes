@@ -30,6 +30,7 @@ import java.util.Date;
 import mutil.base.Pair;
 import mutil.base.Triad;
 import mutil.base.ExceptionAdapter;
+import mutil.base.BooleanToggler;
 
 import entities.*;
 import facades.*;
@@ -72,13 +73,19 @@ public class UserLController implements Serializable {
         return items;
     }
 
+    private static BooleanToggler booleanToggler = new BooleanToggler();
+
     public String edit() {
         Integer id = current.getId();
         User user = getFacade().find(id);
         l.info("found user: "+user);
         userEController.setTheEdited(user);
-        return "userEdit";
+        boolean redirect = booleanToggler.getValueAndToggle();
+        l.info("redirecting = "+redirect);
+        return "userEdit"+(redirect?"?faces-redirect=true":"");
     }
+
+
 
     public String remove() {
         Integer id = current.getId();

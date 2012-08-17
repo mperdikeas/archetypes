@@ -37,7 +37,7 @@ import facades.*;
 
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class UserEController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=UserEController.class.getName();
@@ -50,8 +50,12 @@ public class UserEController implements Serializable {
     }
 
     private User theEdited;
-    public User getTheEdited() {return theEdited;}
+    public User getTheEdited() {
+        l.info("getting the edited in UserEController instance: #"+this);        
+        return theEdited;
+    }
     public void setTheEdited(User theEdited) {
+        l.info("setting the edited in UserEController instance: #"+this);
         this.theEdited = theEdited;
     }
 
