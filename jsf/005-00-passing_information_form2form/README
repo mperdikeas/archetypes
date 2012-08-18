@@ -1,0 +1,19 @@
+In this stage we are showcasing the following:
+[1] a mechanism for passing information from bean to bean using
+    @ManagedProperty injection from the CustomerLController to the CustomerEController
+[2] use of the faces redirect option where it is shown that every second attempt
+    to open the 2nd page for viewing the user fails (as faces redirect destroys the 
+    request-scoped beans)
+[3] we are demonstrating that the ViewScope is NOT broader than the RequestScope as
+    if one tries to change the scope of the 2nd bean to ViewScoped the passing of
+    information from CustomerLController to CustomerEController fails whether or
+    not redirect is applied. This is due to the change of view from the first page
+    to the second and can be observed by noticing the output of the logging messages
+    emitted in the UserEController class (methods 'getTheEdited' and 'setTheEdited')
+    where the instance of the bean is also showed. It can then be seen in the output
+    of the application server that #setTheEdited is called on a DIFFERENT instance
+    than #getTheEdited when the scope of the UserEController bean is "ViewScoped"
+    but called on the SAME instance when the scope is "RequestScoped".
+problems:
+[1] since the 2nd bean is request-scoped the "save" button doesn't exist when 
+    trying to save the changes (the backing bean's 'theUser' field is set to null).

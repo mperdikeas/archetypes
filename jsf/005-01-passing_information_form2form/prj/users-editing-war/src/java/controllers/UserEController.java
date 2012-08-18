@@ -37,7 +37,7 @@ import facades.*;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UserEController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=UserEController.class.getName();
@@ -51,7 +51,13 @@ public class UserEController implements Serializable {
 
     private User theEdited;
     public User getTheEdited() {
-        l.info("getting the edited in UserEController instance: #"+this);        
+        l.info("getting the edited in UserEController instance: #"+this);
+        if (theEdited==null) {
+            l.info("the edited is null, obtaining it from flash");
+            theEdited = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("theEdited");
+        } else {
+            l.info("the edited is not null, using that value");
+        }
         return theEdited;
     }
     public void setTheEdited(User theEdited) {
@@ -63,11 +69,11 @@ public class UserEController implements Serializable {
     }
 
     public String save() {
-        /*
-        Integer id = current.getId();
+        /*        Integer id = current.getId();
         User user = getFacade().find(id);
         l.info("found user: "+user);
         getFacade().remove(user); */
+        getFacade().edit(theEdited);
         return "null";
     }
 

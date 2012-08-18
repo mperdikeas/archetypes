@@ -42,11 +42,11 @@ public class UserLController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=UserLController.class.getName();
 
-    @ManagedProperty(value="#{userEController}")    
+    /*@ManagedProperty(value="#{userEController}")    
     private UserEController userEController;
     public void setUserEController(UserEController userEController) {
         this.userEController = userEController;
-    }
+    }*/
 
     @EJB
     private UserFacade userFacade;
@@ -79,7 +79,8 @@ public class UserLController implements Serializable {
         Integer id = current.getId();
         User user = getFacade().find(id);
         l.info("found user: "+user);
-        userEController.setTheEdited(user);
+        // userEController.setTheEdited(user);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("theEdited", user);
         boolean redirect = booleanToggler.getValueAndToggle();
         l.info("redirecting = "+redirect);
         return "userEdit"+(redirect?"?faces-redirect=true":"");
