@@ -92,6 +92,9 @@ public class UserLController implements Serializable {
 
     public String create() {
         User user = new User();
+        user.setFirstname("");
+        user.setSurname("");
+        user.setAge(0);
         final int MAX_RETRIES = 3;
         boolean haveSucceeded = false;
         int _i = 0 ;
