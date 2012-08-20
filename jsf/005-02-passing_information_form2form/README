@@ -1,0 +1,12 @@
+In this stage I should aim to showcase the following:
+[1] passing of information using the flush on an identifier
+    instead of the entity bean (should be the same)
+[2] "add" button to create a new entity
+[3] establish the limitations of the @ManagedProperty
+    pattern as the 2nd bean would have to be of Request scope
+    to survive the transition to the new view, and yet, of
+    View scope to survive save / edits on the second page
+    and one can't have both (unless perhaps a separate "view" bean
+    is used for that, i.e. one "request" bean to carry the value
+    and a second "view" bean perhaps obtained from the first or
+    copied to hold it).

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> <!-- we need an empty head for composition purposes -->
+<h:body>
+   <h:panelGrid columns="1" cellpadding="5">
+       <h:outputText id="user-id"          value="id is: #{userEController.theEdited.id}"/>
+       <h:form id="userDetails">
+         <h:inputText value="#{userEController.theEdited.firstname}" required="true"/>
+         <h:inputText value="#{userEController.theEdited.surname}"   required="true"/>
+         <h:inputText value="#{userEController.theEdited.age}"       required="true"/>
+         <p:commandButton action="#{userEController.save}" value="save"/> <!-- maybe we should update a growl message -->
+       </h:form>
+       <h:link value="first page" outcome="index"/>
+   </h:panelGrid>
+</h:body>
+</html>
