@@ -37,7 +37,6 @@
                         <p:commandButton ajax="false"    action="#{userLController.edit}" value="edit">
                             <f:setPropertyActionListener value="#{item}" target="#{userLController.current}" />
                         </p:commandButton>
-                        <p:commandButton ajax="false"    action="#{userLController.create}" value="create"/>
                         <p:spacer width="20" height="0" />
                         <p:commandButton update=":userList" ajax="false" action="#{userLController.remove}" value="remove">
                             <f:setPropertyActionListener value="#{item}" target="#{userLController.current}" />
@@ -45,6 +44,7 @@
                     </p:column>
                 </p:dataTable>  
              </p:outputPanel>
+         <p:commandButton ajax="false"    action="#{userLController.create}" value="create"/>
          <p:commandButton update=":userList:userListOutputPanel" ajax="false" action="null" value="reload"/>
          </h:form>
      </p:layoutUnit>

@@ -1,8 +1,11 @@
-In this stage I should aim to showcase the following:
+In this stage we are showcase the following:
 [1] passing of information using the flush on an identifier
     instead of the entity bean (should be the same)
 [2] "add" button to create a new entity
-[3] establish the limitations of the @ManagedProperty
+
+Ideas for work in future stages:
+
+[1] establish the limitations of the @ManagedProperty
     pattern as the 2nd bean would have to be of Request scope
     to survive the transition to the new view, and yet, of
     View scope to survive save / edits on the second page
@@ -10,3 +13,6 @@ In this stage I should aim to showcase the following:
     is used for that, i.e. one "request" bean to carry the value
     and a second "view" bean perhaps obtained from the first or
     copied to hold it).
+[2] experiment to try and identify the impact (if any) of the
+    [ajax="false"] attribute setting in the <p:commandButton>
+[3] include an option to cancel the creation on the second page.
