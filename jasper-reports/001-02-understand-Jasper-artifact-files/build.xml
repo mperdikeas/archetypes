@@ -86,6 +86,7 @@
       <delete>
         <fileset dir="${reports.dir}" includes="*.jasper"/>
         <fileset dir="${reports.dir}" includes="*.jrprint"/>
+        <fileset dir="${reports.dir}" includes="*.pdf"/>
       </delete>
       <delete file="${build.dir}/reports/AlterDesignReport.jrprint"/>
     </target>
