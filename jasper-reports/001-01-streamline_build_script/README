@@ -1,3 +1,12 @@
-In this stage (001-01) I should aim to streamline
-the Ant build.xml script and understand the difference
-between the various files that JasperReports generate.
+In this stage (001-01) I have managed to streamline
+the Ant build.xml file driving the creation of the PDF
+and have demonstrated:
+[1] using three separate classpaths (compile classpath,
+    jasper compile classpath, runtime classpath)
+[2] I have discovered that the "jasper compile" classpath
+    is identical to the "compile" classpath and THEREFORE
+    there is no dependency between the Jasper jrxml file
+    and the Java files driving the report.
+[3] The second part of point [2] is further evidenced
+    by the "compile-jasper" Ant target not having
+    a dependency on the "compile" target.

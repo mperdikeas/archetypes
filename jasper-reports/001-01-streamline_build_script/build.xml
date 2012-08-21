@@ -1,16 +1,17 @@
 <project name="jasper-reports-001" basedir="." default="pdf">
 
 
-    <property name="project.distname" value="${ant.project.name}"/>
-    <property name="jar-artefact.name" value="${ant.project.name}.jar"/>
-    <property name="build.dir" value="${basedir}/build"/>
-    <property name="dist.dir" value="${basedir}/dist"/>
-    <property name="jar-artefact" value="${dist.dir}/${jar-artefact.name}"/>
-    <property name="src.dir" value="${basedir}/src"/>
-    <property name="javasource.dir" value="${src.dir}"/>
-    <property name="compilelibs.dir" value="${basedir}/lib"/>
-    <property name="runtimelibs.dir" value="${basedir}/lib-runtime"/>
-    <property name="reports.dir" value="${basedir}/reports"/>
+    <property name="project.distname"       value="${ant.project.name}"/>
+    <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
+    <property name="build.dir"              value="${basedir}/build"/>
+    <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="src.dir"                value="${basedir}/src"/>
+    <property name="javasource.dir"         value="${src.dir}"/>
+    <property name="compilelibs.dir"        value="${basedir}/lib"/>
+    <property name="jasper-compilelibs.dir" value="${basedir}/lib-jaspercompile"/>
+    <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+    <property name="reports.dir"            value="${basedir}/reports"/>
 
     <path id = "compile.classpath">
       <fileset dir="${compilelibs.dir}">
@@ -47,14 +48,11 @@
       />
     </target>
 
-	<path id="jasper-compile.classpath">
-		<pathelement location="${build.dir}"/>
-		<fileset dir="${compilelibs.dir}" erroronmissingdir="true">
-			<include name="*.jar"/>
-		</fileset>
-		<pathelement location="${build.dir}/classes" />
-		<!--pathelement location="fonts" /-->
-	</path>
+    <path id="jasper-compile.classpath">
+        <fileset dir="${jasper-compilelibs.dir}">
+            <include name ="*.jar"/>
+        </fileset>
+    </path>
 
 
 
