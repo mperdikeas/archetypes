@@ -1,0 +1,3 @@
+In this stage (001-01) I should aim to streamline
+the Ant build.xml script and understand the difference
+between the various files that JasperReports generate.

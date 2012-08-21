@@ -1,0 +1,116 @@
+<project name="jasper-reports-001" basedir="." default="pdf">
+
+
+    <property name="project.distname" value="${ant.project.name}"/>
+    <property name="jar-artefact.name" value="${ant.project.name}.jar"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="dist.dir" value="${basedir}/dist"/>
+    <property name="jar-artefact" value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="javasource.dir" value="${src.dir}"/>
+    <property name="compilelibs.dir" value="${basedir}/lib"/>
+    <property name="runtimelibs.dir" value="${basedir}/lib-runtime"/>
+    <property name="reports.dir" value="${basedir}/reports"/>
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <!-- Normal build of application -->
+    <target name="compile" depends="prepare"
+            description="Compile java sources">
+        <mkdir  dir="${build.dir}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
+	<path id="jasper-compile.classpath">
+		<pathelement location="${build.dir}"/>
+		<fileset dir="${compilelibs.dir}" erroronmissingdir="true">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement location="${build.dir}/classes" />
+		<!--pathelement location="fonts" /-->
+	</path>
+
+
+
+	<target name="compile-jasper" description="compile the Jasper reports">
+		<mkdir dir="${build.dir}/reports"/> 
+		<taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask"> 
+			<classpath refid="jasper-compile.classpath"/>
+		</taskdef>
+		<jrc 
+			destdir="${build.dir}/reports"
+			tempdir="${build.dir}/reports"
+			keepjava="false">
+			<src>
+				<fileset dir="${reports.dir}">
+					<include name="**/*.jrxml"/>
+				</fileset>
+			</src>
+			<classpath refid="jasper-compile.classpath"/>
+		</jrc> 
+		<copy todir="${reports.dir}">
+			<fileset dir="${build.dir}/reports">
+				<exclude name="**/*.jrxml"/>
+			</fileset>
+		</copy>
+	</target>
+
+    <target name="clean"
+            description="Prepare for clean build">
+      <delete dir="${build.dir}"/>
+      <delete dir="${dist.dir}"/>
+      <delete>
+        <fileset dir="${reports.dir}" includes="*.jasper"/>
+        <fileset dir="${reports.dir}" includes="*.jrprint"/>
+      </delete>
+      <delete file="${build.dir}/reports/AlterDesignReport.jrprint"/>
+    </target>
+
+
+    <path id = "run.classpath">
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+        <pathelement path = "${build.dir}"/>
+    </path>
+
+    <target name="pdf" depends="jar, compile-jasper">
+       <property name="classpath.msg" refid="run.classpath"/>
+       <echo message="classpath = ${classpath.msg}"/>
+        <java classname ="AlterDesignApp">
+            <classpath refid="run.classpath"/>
+        </java>
+    </target>
+
+
+    <!-- Rebuild project -->
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+    <target name="all" depends="clean,jar,compile-jasper" description="clean, jar and compile Jasper report"/>
+</project>
