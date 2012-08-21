@@ -1,15 +1,15 @@
-<project name="jasper-reports-001" basedir="." default="all">
+<project name="jasper-reports-001" basedir="." default="pdf">
 
-    <!-- Project settings -->
+
     <property name="project.distname" value="${ant.project.name}"/>
-
-    <!-- Local system paths -->
-    <property file="build.properties"/>
+    <property name="jar-artefact.name" value="${ant.project.name}.jar"/>
     <property name="build.dir" value="${basedir}/build"/>
     <property name="dist.dir" value="${basedir}/dist"/>
+    <property name="jar-artefact" value="${dist.dir}/${jar-artefact.name}"/>
     <property name="src.dir" value="${basedir}/src"/>
     <property name="javasource.dir" value="${src.dir}"/>
     <property name="compilelibs.dir" value="${basedir}/lib"/>
+    <property name="runtimelibs.dir" value="${basedir}/lib-runtime"/>
     <property name="reports.dir" value="${basedir}/reports"/>
 
     <path id = "compile.classpath">
@@ -57,6 +57,7 @@
 	</path>
 
 
+
 	<target name="compile-jasper" description="compile the Jasper reports">
 		<mkdir dir="${build.dir}/reports"/> 
 		<taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask"> 
@@ -86,8 +87,27 @@
       <delete dir="${dist.dir}"/>
       <delete>
         <fileset dir="${reports.dir}" includes="*.jasper"/>
+        <fileset dir="${reports.dir}" includes="*.jrprint"/>
       </delete>
+      <delete file="${build.dir}/reports/AlterDesignReport.jrprint"/>
     </target>
+
+
+    <path id = "run.classpath">
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+        <pathelement path = "${build.dir}"/>
+    </path>
+
+    <target name="pdf" depends="jar, compile-jasper">
+       <property name="classpath.msg" refid="run.classpath"/>
+       <echo message="classpath = ${classpath.msg}"/>
+        <java classname ="AlterDesignApp">
+            <classpath refid="run.classpath"/>
+        </java>
+    </target>
+
 
     <!-- Rebuild project -->
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>

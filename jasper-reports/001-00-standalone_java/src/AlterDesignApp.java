@@ -57,13 +57,14 @@ public class AlterDesignApp
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
 	}
 
-
+       
+    /*
 	public static void print() throws JRException {
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("build/reports/AlterDesignReport.jrprint", true);
 		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
-
+    */
 	
 	public static void pdf() throws JRException {
 		long start = System.currentTimeMillis();
