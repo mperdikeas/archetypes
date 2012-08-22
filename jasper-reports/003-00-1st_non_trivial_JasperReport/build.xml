@@ -37,6 +37,11 @@
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
         </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
     </target>
 
 
@@ -94,6 +99,8 @@
     </path>
 
     <target name="pdf" depends="jar" description="create the PDF">
+       <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+       <delete dir="${build.dir}"/>
        <mkdir  dir="${reports-out.dir}"/>
        <property name="classpath.msg" refid="run.classpath"/>
        <echo message="classpath = ${classpath.msg}"/>

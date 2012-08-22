@@ -66,8 +66,33 @@ public class JasperApp
                 String sourceFileLocation = "reports/"+compiledReportName();
 		System.err.println(" sourceFileLocation : " + sourceFileLocation);
 		JasperReport jasperReport = (JasperReport)JRLoader.loadObjectFromLocation(sourceFileLocation);
+
+
+                Map parameters = null;
+                {
+		Image image = 
+			Toolkit.getDefaultToolkit().createImage(
+				JRLoader.loadBytesFromResource("dukesign.jpg")
+				);
+		MediaTracker traker = new MediaTracker(new Panel());
+		traker.addImage(image, 0);
+		try
+		{
+			traker.waitForID(0);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, (JRDataSource)null);
+		parameters = new HashMap();
+		parameters.put("ReportTitle", "The First Jasper Report Ever");
+		parameters.put("MaxOrderID", new Integer(10500));
+		parameters.put("SummaryImage", image);
+                }
+
+		
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, (JRDataSource)null);
                 File destTempFile = null;
                 try {
                     destTempFile = File.createTempFile("jasper-"+className(), ".jrprint");
@@ -77,6 +102,11 @@ public class JasperApp
 		JRSaver.saveObject(jasperPrint, destTempFile);
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
                 return destTempFile;
+
+		
+
+
+
 	}
 
        
