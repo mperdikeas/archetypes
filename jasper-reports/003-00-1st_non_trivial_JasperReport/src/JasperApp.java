@@ -8,8 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -43,6 +44,7 @@ import net.sf.jasperreports.engine.util.JRSaver;
 
 import mutil.base.ExceptionAdapter;
 
+
 public class JasperApp
 {
 	
@@ -60,6 +62,25 @@ public class JasperApp
         private static String compiledReportName() { return reportCoreName()+".jasper"; }
         private static String pdfReportName     () { return reportCoreName()+".pdf"   ; }
 
+
+	private static Connection getHsqlConnection() throws JRException {
+		Connection conn;
+		try {
+			String driver = "org.hsqldb.jdbcDriver";
+			String connectString = "jdbc:hsqldb:hsql://localhost";
+			String user = "sa";
+			String password = "";
+			Class.forName(driver);
+			conn = DriverManager.getConnection(connectString, user, password);
+		}
+		catch (ClassNotFoundException e) {
+			throw new JRException(e);
+		}
+		catch (SQLException e) {
+			throw new JRException(e);
+		}
+		return conn;
+	}
 
         private static File fill() throws JRException {
 		long start = System.currentTimeMillis();
@@ -92,7 +113,7 @@ public class JasperApp
                 }
 
 		
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, (JRDataSource)null);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, getHsqlConnection());
                 File destTempFile = null;
                 try {
                     destTempFile = File.createTempFile("jasper-"+className(), ".jrprint");
@@ -102,11 +123,6 @@ public class JasperApp
 		JRSaver.saveObject(jasperPrint, destTempFile);
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
                 return destTempFile;
-
-		
-
-
-
 	}
 
        
