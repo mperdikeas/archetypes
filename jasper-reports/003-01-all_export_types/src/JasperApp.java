@@ -149,6 +149,13 @@ public class JasperApp
             html(whereToProduceExport);
             rtf(whereToProduceExport);
             xls(whereToProduceExport);
+            csvMetadata(whereToProduceExport);
+            odt(whereToProduceExport);
+            ods(whereToProduceExport);
+            docx(whereToProduceExport);
+            xlsx(whereToProduceExport);
+            pptx(whereToProduceExport);
+            xhtml(whereToProduceExport);
         }
 	
 	private static void pdf(String whereToProduceExport) throws JRException {
@@ -204,8 +211,7 @@ public class JasperApp
 		System.err.println("RTF creation time : " + (System.currentTimeMillis() - start));
 	}
 	
-	public static void xls(String whereToProduceExport) throws JRException
-	{
+	public static void xls(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
 		Map dateFormats = new HashMap();
 		dateFormats.put("EEE, MMM d, yyyy", "ddd, mmm d, yyyy");
@@ -219,275 +225,81 @@ public class JasperApp
 		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
 	}
 
-}
-
-/*            
-	
-	
-	
-	
-	
-	
-	public void jxl() throws JRException
-	{
+	public static void csvMetadata(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".jxl.xls");
-
-		Map dateFormats = new HashMap();
-		dateFormats.put("EEE, MMM d, yyyy", "ddd, mmm d, yyyy");
-
-		JExcelApiExporter exporter = new JExcelApiExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-		exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
-		exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
-		exporter.setParameter(JRXlsExporterParameter.FORMAT_PATTERNS_MAP, dateFormats);
-
-		exporter.exportReport();
-
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	public void jxlMetadata() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".jxl.metadata.xls");
-
-		Map dateFormats = new HashMap();
-		dateFormats.put("EEE, MMM d, yyyy", "ddd, mmm d, yyyy");
-
-		JExcelApiMetadataExporter exporter = new JExcelApiMetadataExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-		exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
-		exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
-		exporter.setParameter(JRXlsExporterParameter.FORMAT_PATTERNS_MAP, dateFormats);
-
-		exporter.exportReport();
-
-		System.err.println("XLS creation time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	
-	
-	public void csvMetadata() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".metadata.csv");
-		
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".metadata.csv");
 		JRCsvMetadataExporter exporter = new JRCsvMetadataExporter();
-		
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-		
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "metadata.csv").toString());
 		exporter.exportReport();
-
 		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
 	}
-	
-	
-	public void odt() throws JRException
-	{
+
+	public static void odt(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".odt");
-
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".odt");
 		JROdtExporter exporter = new JROdtExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "odt").toString());
 		exporter.exportReport();
-
 		System.err.println("ODT creation time : " + (System.currentTimeMillis() - start));
 	}
 	
-	
-	public void ods() throws JRException
-	{
+	public static void ods(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".ods");
-
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".ods");
 		JROdsExporter exporter = new JROdsExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "ods").toString());
 		exporter.exportReport();
-
 		System.err.println("ODS creation time : " + (System.currentTimeMillis() - start));
 	}
-	
-	
-	public void docx() throws JRException
-	{
+
+	public static void docx(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".docx");
-
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".docx");
 		JRDocxExporter exporter = new JRDocxExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "docx").toString());
 		exporter.exportReport();
-
 		System.err.println("DOCX creation time : " + (System.currentTimeMillis() - start));
 	}
-	
-	
-	public void xlsx() throws JRException
-	{
+
+	public static void xlsx(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xlsx");
-
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".xlsx");
 		Map dateFormats = new HashMap();
 		dateFormats.put("EEE, MMM d, yyyy", "ddd, mmm d, yyyy");
-
 		JRXlsxExporter exporter = new JRXlsxExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "xlsx").toString());
 		exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
 		exporter.setParameter(JRXlsExporterParameter.FORMAT_PATTERNS_MAP, dateFormats);
-
 		exporter.exportReport();
-
 		System.err.println("XLSX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
-	
-	public void pptx() throws JRException
-	{
+
+	public static void pptx(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".pptx");
-		
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".pptx");
 		JRPptxExporter exporter = new JRPptxExporter();
-		
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "pptx").toString());
 		exporter.exportReport();
-
 		System.err.println("PPTX creation time : " + (System.currentTimeMillis() - start));
 	}
 	
-	
-	public void xhtml() throws JRException
-	{
+	public static void xhtml(String whereToProduceExport) throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".x.html");
-
+                //		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".x.html");
 		JRXhtmlExporter exporter = new JRXhtmlExporter();
-
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, getJasperPrintObject());
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile(whereToProduceExport, "x.html").toString());
 		exporter.exportReport();
-
 		System.err.println("XHTML creation time : " + (System.currentTimeMillis() - start));
 	}
 	
-	public void pdfa1() throws JRException
-	{
-		long start = System.currentTimeMillis();
 
-		try{
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			JRPdfExporter exporter = new JRPdfExporter();
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, os);
-			
-			JasperPrint jp = (JasperPrint)JRLoader.loadObject(new File("build/reports/FirstJasper.jrprint"));
-			
-			// Exclude transparent images when exporting to PDF; elements marked with the key 'TransparentImage'
-			// will be excluded from the exported PDF
-			jp.setProperty("net.sf.jasperreports.export.pdf.exclude.key.TransparentImage", null);
-			
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
-			
-			// Include structure tags for PDF/A-1a compliance; unnecessary for PDF/A-1b
-			exporter.setParameter(JRPdfExporterParameter.IS_TAGGED, Boolean.TRUE);
-			
-			exporter.setParameter(JRPdfExporterParameter.PDFA_CONFORMANCE, JRPdfExporterParameter.PDFA_CONFORMANCE_1A);
-			
-			// Uncomment the following line and specify a valid path for the ICC profile
-//			exporter.setParameter(JRPdfExporterParameter.PDFA_ICC_PROFILE_PATH, "path/to/ICC/profile");
-			
-			exporter.exportReport();
-
-			FileOutputStream fos = new FileOutputStream("build/reports/FirstJasper_pdfa.pdf");
-			os.writeTo(fos);
-			fos.close();
-		}catch(Exception e){
-			 e.printStackTrace();
-		}
-				
-		System.err.println("PDF/A-1a creation time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	public void run() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		//Preparing parameters
-		Image image = Toolkit.getDefaultToolkit().createImage("dukesign.jpg");
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		Map parameters = new HashMap();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", new Integer(10500));
-		parameters.put("SummaryImage", image);
-		
-		JasperRunManager.runReportToPdfFile("build/reports/FirstJasper.jasper", parameters, getDemoHsqldbConnection());
-		System.err.println("PDF running time : " + (System.currentTimeMillis() - start));
-	}
 }
-*/
+
