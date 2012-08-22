@@ -1,3 +1,5 @@
-In this stage (01) of Jasper case (002) (which I re-opened) I want to be
-able to place the compiled report in the jar file so that the Jasper report
+In this stage (01) of Jasper case (002) (which I re-opened) I managed to
+place the compiled report in the jar file so that the Jasper report
 can be run fron anywhere without requiring access to an external file.
+
+This is a more realistic deployment pattern.
