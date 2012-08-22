@@ -55,6 +55,7 @@ public class JasperApp
                 default:
                     throw new RuntimeException("unrecognized case");
             }
+            System.err.println("exiting "+JasperApp.class.getName()+"#main");
 	}
 
         private static String className         () { return JasperApp.class.getName() ; }
@@ -572,7 +573,5 @@ public class JasperApp extends AbstractSampleApp
 		JasperRunManager.runReportToPdfFile("build/reports/FirstJasper.jasper", parameters, getDemoHsqldbConnection());
 		System.err.println("PDF running time : " + (System.currentTimeMillis() - start));
 	}
-
-
 }
 */

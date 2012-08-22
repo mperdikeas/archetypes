@@ -13,6 +13,7 @@
     <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
     <property name="reports.dir"            value="${basedir}/reports"/>
     <property name="reports-out.dir"        value="${basedir}/reports-out"/>
+    <property name="hsqldb-instance.dir"    value="${basedir}/hsqldb-instance"/>
 
     <path id = "compile.classpath">
       <fileset dir="${compilelibs.dir}">
@@ -90,7 +91,6 @@
       <delete file="${build.dir}/reports/${project.MainClass.name}Report.jrprint"/>
     </target>
 
-
     <path id = "run.classpath">
         <fileset dir="${runtimelibs.dir}">
           <include name ="*.jar"/>
@@ -99,18 +99,29 @@
     </path>
 
     <target name="pdf" depends="jar" description="create the PDF">
-       <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
-       <delete dir="${build.dir}"/>
-       <mkdir  dir="${reports-out.dir}"/>
-       <property name="classpath.msg" refid="run.classpath"/>
-       <echo message="classpath = ${classpath.msg}"/>
-        <java classname ="${project.MainClass.name}">
-            <arg value="pdf"/>
-            <arg value="${reports-out.dir}"/>
-            <classpath refid="run.classpath"/>
-        </java>
+       <parallel>
+            <ant antfile="${hsqldb-instance.dir}/build.xml"
+                 target="runServer" 
+                 useNativeBasedir="true"
+                 />
+            <sequential>
+                <property name="secondsToPause" value="3"/>
+                <echo message="pausing for ${secondsToPause} seconds to give HSQLDB time to come up"/>
+                <sleep seconds="${secondsToPause}"/>
+                <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                <delete dir="${build.dir}"/>
+                <mkdir  dir="${reports-out.dir}"/>
+                <property name="classpath.msg" refid="run.classpath"/>
+                <echo message="classpath = ${classpath.msg}"/>
+                <echo message="when you see the message that indicates exiting from ${project.MainClass.name}#main you may CTRL+C to close both the HSQLDB instance and the Ant task"/>
+                <java classname ="${project.MainClass.name}">
+                     <arg value="pdf"/>
+                     <arg value="${reports-out.dir}"/>
+                     <classpath refid="run.classpath"/>
+                </java>
+            </sequential>
+       </parallel>
     </target>
-
 
     <!-- Rebuild project -->
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
