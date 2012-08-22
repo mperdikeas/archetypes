@@ -50,6 +50,8 @@ public class JasperApp
 	
 	public static void main(String[] args) throws JRException {
             switch (args[0]) {
+                case "all": allExportFormats(args[1]);
+                    break;
                 case "pdf": pdf(args[1]); 
                     break;
                 default:
@@ -61,7 +63,6 @@ public class JasperApp
         private static String className         () { return JasperApp.class.getName() ; }
         private static String reportCoreName    () { return "FirstJasper"             ; }
         private static String compiledReportName() { return reportCoreName()+".jasper"; }
-        private static String pdfReportName     () { return reportCoreName()+".pdf"   ; }
 
 
 	private static Connection getHsqlConnection() throws JRException {
@@ -92,7 +93,7 @@ public class JasperApp
 
                 Map parameters = null;
                 {
-		Image image = 
+        	Image image = 
 			Toolkit.getDefaultToolkit().createImage(
 				JRLoader.loadBytesFromResource("dukesign.jpg")
 				);
@@ -114,17 +115,27 @@ public class JasperApp
                 }
 
 		
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, getHsqlConnection());
+		pixelPerfectJasperPrintObject = JasperFillManager.fillReport(jasperReport, parameters, getHsqlConnection());
                 File destTempFile = null;
                 try {
                     destTempFile = File.createTempFile("jasper-"+className(), ".jrprint");
                 } catch (IOException e) {
                     throw new ExceptionAdapter(e);
                 }
-		JRSaver.saveObject(jasperPrint, destTempFile);
+		JRSaver.saveObject(pixelPerfectJasperPrintObject, destTempFile);
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
                 return destTempFile;
 	}
+        
+        private static JasperPrint pixelPerfectJasperPrintObject = null;
+        private static JasperPrint getJasperPrintObject() {return pixelPerfectJasperPrintObject;}
+
+        private static File pixelPerfectJRPrintFile = null;
+        private static File getJRPrintFile() throws JRException {
+            if (pixelPerfectJRPrintFile == null) 
+                pixelPerfectJRPrintFile = fill();
+            return pixelPerfectJRPrintFile;
+        }
 
        
         // the below method actually prints in a printer (I should test it at home - but is now broken cause the .jrprint
@@ -135,94 +146,48 @@ public class JasperApp
 		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
 
+        public static void allExportFormats(String whereToProduceExport) throws JRException {
+            pdf(whereToProduceExport);
+            csv(whereToProduceExport);
+            xml(whereToProduceExport);
+        }
 	
-	public static void pdf(String whereToProducePDF) throws JRException {
-                File jrprintFile = fill();
+	private static void pdf(String whereToProduceExport) throws JRException {
+                File jrprintFile = getJRPrintFile();
 		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToPdfFile(jrprintFile.getAbsolutePath(), whereToProducePDF+"/"+pdfReportName());
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
+		JasperExportManager.exportReportToPdfFile(jrprintFile.getAbsolutePath(), whereToProduceExport+"/"+reportCoreName()+".pdf");
+		System.err.println("PDF creation time is : " + (System.currentTimeMillis() - start));
 	}
+
+        private static File destFile(String whereToProduceExport, String extension) {
+            return new File(whereToProduceExport, reportCoreName()+"."+extension);
+        }
+
+	private static void csv(String whereToProduceExport) throws JRException {
+		long start = System.currentTimeMillis();
+                File sourceFile = getJRPrintFile();
+		JasperPrint jasperPrint = (JasperPrint) JRLoader.loadObject(sourceFile);
+		//File destFile = new File(whereToProduceExport, reportCoreName()+".csv");
+                File destFile = destFile(whereToProduceExport, "csv");
+                System.err.println("csv destFile is: "+destFile.getAbsolutePath());
+		JRCsvExporter exporter = new JRCsvExporter();
+		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
+		exporter.exportReport();
+		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
+	}
+
+	public static void xml(String whereToProduceExport) throws JRException {
+		long start = System.currentTimeMillis();
+		JasperExportManager.exportReportToXmlFile(getJasperPrintObject(), destFile(whereToProduceExport, "xml").getAbsolutePath(), false);
+		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
+	}
+	
+
+
 }
 
 /*            
-public class JasperApp extends AbstractSampleApp
-{
-
-
-	public static void main(String[] args) 
-	{
-		main(new JasperApp(), args);
-	}
-	
-	
-
-	public void test() throws JRException
-	{
-		fill();
-		pdf();
-		xmlEmbed();
-		xml();
-		html();
-		rtf();
-		xls();
-		jxl();
-		csv();
-		csvMetadata();
-		jxlMetadata();
-		odt();
-		ods();
-		docx();
-		xlsx();
-		pptx();
-		xhtml();
-	}
-	
-	
-	public void fill() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		//Preparing parameters
-		Image image = 
-			Toolkit.getDefaultToolkit().createImage(
-				JRLoader.loadBytesFromResource("dukesign.jpg")
-				);
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		Map parameters = new HashMap();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", new Integer(10500));
-		parameters.put("SummaryImage", image);
-		
-		JasperFillManager.fillReportToFile("build/reports/FirstJasper.jasper", parameters, getDemoHsqldbConnection());
-		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	public void print() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		JasperPrintManager.printReport("build/reports/FirstJasper.jrprint", true);
-		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
-	public void pdf() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToPdfFile("build/reports/FirstJasper.jrprint");
-		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
-	}
-	
-	
 	public void pdfa1() throws JRException
 	{
 		long start = System.currentTimeMillis();
@@ -261,13 +226,6 @@ public class JasperApp extends AbstractSampleApp
 		System.err.println("PDF/A-1a creation time : " + (System.currentTimeMillis() - start));
 	}
 	
-	
-	public void xml() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToXmlFile("build/reports/FirstJasper.jrprint", false);
-		System.err.println("XML creation time : " + (System.currentTimeMillis() - start));
-	}
 	
 	
 	public void xmlEmbed() throws JRException
@@ -384,24 +342,6 @@ public class JasperApp extends AbstractSampleApp
 	}
 	
 	
-	public void csv() throws JRException
-	{
-		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/FirstJasper.jrprint");
-
-		JasperPrint jasperPrint = (JasperPrint)JRLoader.loadObject(sourceFile);
-
-		File destFile = new File(sourceFile.getParent(), jasperPrint.getName() + ".csv");
-		
-		JRCsvExporter exporter = new JRCsvExporter();
-		
-		exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-		exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destFile.toString());
-		
-		exporter.exportReport();
-
-		System.err.println("CSV creation time : " + (System.currentTimeMillis() - start));
-	}
 	
 	
 	public void csvMetadata() throws JRException

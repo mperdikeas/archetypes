@@ -115,7 +115,7 @@
                 <echo message="classpath = ${classpath.msg}"/>
                 <echo message="when you see the message that indicates exiting from ${project.MainClass.name}#main you may CTRL+C to close both the HSQLDB instance and the Ant task"/>
                 <java classname ="${project.MainClass.name}">
-                     <arg value="pdf"/>
+                     <arg value="all"/>
                      <arg value="${reports-out.dir}"/>
                      <classpath refid="run.classpath"/>
                 </java>
