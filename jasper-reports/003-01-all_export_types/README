@@ -1,8 +1,10 @@
-In this Jasper case (003) I should aim to produce
-all kinds of exports and maybe troubleshoot the
+In this Jasper case and stage (003#01) I managed to produce
+nearly all possible kinds of exports (some seemed too exotic that
+I didn't bother to try) but didn't troubleshoot the
 blocking thing at the Ant file.
 
-Points for next stages:
-[1] make minimal web reporting archetype (that should
+Ideas for next stages:
+[1] troubleshoot Ant file blocking thing.
+[2] make minimal web reporting archetype (that should
     actually be a new jasper-reports case, not just 
     a new stage).
