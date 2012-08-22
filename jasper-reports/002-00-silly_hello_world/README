@@ -1,8 +1,10 @@
 In this Jasper case (002) I managed to put together a silly HelloWorld report
 and have clarified:
+
 [1] why the following API works:
 	JasperExportManager.exportReportToPdfFile("build/reports/HelloWorld.jrprint");
     ... which is it works by creating the exported PDF file next to the *.jprint file
     (there's also another version that can explicitly take a different argument)
+
 [2] what is the role of the JasperPrintManager class (it does the actual printing of
     a physical page - maybe we don't need that).
