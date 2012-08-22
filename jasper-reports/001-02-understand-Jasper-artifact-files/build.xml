@@ -72,11 +72,6 @@
 			</src>
 			<classpath refid="jasper-compile.classpath"/>
 		</jrc> 
-		<copy todir="${reports.dir}">
-			<fileset dir="${build.dir}/reports">
-				<exclude name="**/*.jrxml"/>
-			</fileset>
-		</copy>
 	</target>
 
     <target name="clean"
@@ -99,10 +94,20 @@
         <pathelement path = "${build.dir}"/>
     </path>
 
-    <target name="pdf" depends="jar, compile-jasper">
+    <target name="fill" depends="jar,compile-jasper" description="fill-in the values">
        <property name="classpath.msg" refid="run.classpath"/>
        <echo message="classpath = ${classpath.msg}"/>
         <java classname ="AlterDesignApp">
+            <arg value="fill"/>
+            <classpath refid="run.classpath"/>
+        </java>        
+    </target>
+
+    <target name="pdf" depends="fill" description="create the PDF">
+       <property name="classpath.msg" refid="run.classpath"/>
+       <echo message="classpath = ${classpath.msg}"/>
+        <java classname ="AlterDesignApp">
+            <arg value="pdf"/>
             <classpath refid="run.classpath"/>
         </java>
     </target>

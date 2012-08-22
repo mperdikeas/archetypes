@@ -19,12 +19,14 @@ public class AlterDesignApp
 {
 	
 	public static void main(String[] args) throws JRException {
-                test();
-	}
-
-	public static void test() throws JRException {
-                fill();
-	        pdf();
+            switch (args[0]) {
+            case "fill": fill();
+                break; 
+            case "pdf": pdf(); 
+                break;
+            default:
+                throw new RuntimeException("unrecognized case");
+            }
 	}
 
 	public static void fill() throws JRException {
@@ -58,7 +60,7 @@ public class AlterDesignApp
 	}
 
        
-    /*
+    /*  // what's the following code supposed to be doing ?
 	public static void print() throws JRException {
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("build/reports/AlterDesignReport.jrprint", true);
@@ -71,6 +73,5 @@ public class AlterDesignApp
 		JasperExportManager.exportReportToPdfFile("build/reports/AlterDesignReport.jrprint");
 		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
-
-	
 }
+            

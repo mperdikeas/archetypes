@@ -1,4 +1,7 @@
-In this stage (001-02) I should aim to understand the 
-import of each of the four (4) different types of files
-generated as part of the PDF creation process, these
-being: jrxml, jasper, jrprint and pdf.
+In this stage (001-02) I cleaned-up the Ant build-file
+and have managed to clarify the role of the four (4) Jasper
+files being used:
+*.jrxml     report source
+*.jasper    report in compiled form
+*.jrprint   pixel-perfect filled-in report ready to be printed
+*.pdf       final artifact
