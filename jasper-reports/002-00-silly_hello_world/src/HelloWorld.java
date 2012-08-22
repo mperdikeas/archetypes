@@ -15,7 +15,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRSaver;
 
 
-public class AlterDesignApp
+public class HelloWorld
 {
 	
 	public static void main(String[] args) throws JRException {
@@ -31,26 +31,10 @@ public class AlterDesignApp
 
 	public static void fill() throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/AlterDesignReport.jasper");
+		File sourceFile = new File("build/reports/"+HelloWorld.class.getName()+"Report.jasper");
 		System.err.println(" : " + sourceFile.getAbsolutePath());
 		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
 		
-		JRRectangle rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("first.rectangle");
-		rectangle.setForecolor(new Color((int)(16000000 * Math.random())));
-		rectangle.setBackcolor(new Color((int)(16000000 * Math.random())));
-
-		rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("second.rectangle");
-		rectangle.setForecolor(new Color((int)(16000000 * Math.random())));
-		rectangle.setBackcolor(new Color((int)(16000000 * Math.random())));
-
-		rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("third.rectangle");
-		rectangle.setForecolor(new Color((int)(16000000 * Math.random())));
-		rectangle.setBackcolor(new Color((int)(16000000 * Math.random())));
-
-		JRStyle style = jasperReport.getStyles()[0];
-		style.setFontSize(16);
-		style.setItalic(true);
-
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, (JRDataSource)null);
 		
 		File destFile = new File(sourceFile.getParent(), jasperReport.getName() + ".jrprint");
@@ -60,17 +44,18 @@ public class AlterDesignApp
 	}
 
        
-    /*  // what's the following code supposed to be doing ?
+        // the below method actually prints at a printer (I should test it at home).
 	public static void print() throws JRException {
 		long start = System.currentTimeMillis();
-		JasperPrintManager.printReport("build/reports/AlterDesignReport.jrprint", true);
+		JasperPrintManager.printReport("build/reports/"+HelloWorld.class.getName()+"Report.jrprint", true);
 		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
 	}
-    */
+
 	
 	public static void pdf() throws JRException {
 		long start = System.currentTimeMillis();
-		JasperExportManager.exportReportToPdfFile("build/reports/AlterDesignReport.jrprint");
+                // the below method as a convenience takes only one parameter and produces the PDF file next to it
+		JasperExportManager.exportReportToPdfFile("build/reports/"+HelloWorld.class.getName()+"Report.jrprint");
 		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 }

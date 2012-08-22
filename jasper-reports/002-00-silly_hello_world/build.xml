@@ -1,6 +1,6 @@
-<project name="jasper-reports-001" basedir="." default="pdf">
+<project name="jasper-reports-002" basedir="." default="pdf">
 
-
+    <property name="project.MainClass.name" value="HelloWorld"/>
     <property name="project.distname"       value="${ant.project.name}"/>
     <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
     <property name="build.dir"              value="${basedir}/build"/>
@@ -83,7 +83,7 @@
         <fileset dir="${reports.dir}" includes="*.jrprint"/>
         <fileset dir="${reports.dir}" includes="*.pdf"/>
       </delete>
-      <delete file="${build.dir}/reports/AlterDesignReport.jrprint"/>
+      <delete file="${build.dir}/reports/${project.MainClass.name}Report.jrprint"/>
     </target>
 
 
@@ -97,7 +97,7 @@
     <target name="fill" depends="jar,compile-jasper" description="fill-in the values">
        <property name="classpath.msg" refid="run.classpath"/>
        <echo message="classpath = ${classpath.msg}"/>
-        <java classname ="AlterDesignApp">
+        <java classname ="${project.MainClass.name}">
             <arg value="fill"/>
             <classpath refid="run.classpath"/>
         </java>        
@@ -106,7 +106,7 @@
     <target name="pdf" depends="fill" description="create the PDF">
        <property name="classpath.msg" refid="run.classpath"/>
        <echo message="classpath = ${classpath.msg}"/>
-        <java classname ="AlterDesignApp">
+        <java classname ="${project.MainClass.name}">
             <arg value="pdf"/>
             <classpath refid="run.classpath"/>
         </java>
