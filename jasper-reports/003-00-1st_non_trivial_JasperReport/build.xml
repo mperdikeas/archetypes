@@ -1,6 +1,6 @@
-<project name="jasper-reports-002" basedir="." default="pdf">
+<project name="jasper-reports-003" basedir="." default="pdf">
 
-    <property name="project.MainClass.name" value="HelloWorld"/>
+    <property name="project.MainClass.name" value="JasperApp"/>
     <property name="project.distname"       value="${ant.project.name}"/>
     <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
     <property name="build.dir"              value="${basedir}/build"/>
