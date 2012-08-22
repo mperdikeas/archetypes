@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -14,37 +15,47 @@ import net.sf.jasperreports.engine.util.AbstractSampleApp;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRSaver;
 
+import mutil.base.ExceptionAdapter;
 
 public class HelloWorld
 {
 	
 	public static void main(String[] args) throws JRException {
             switch (args[0]) {
-            case "fill": fill();
-                break; 
-            case "pdf": pdf(); 
-                break;
-            default:
-                throw new RuntimeException("unrecognized case");
+                case "pdf": pdf(args[1]); 
+                    break;
+                default:
+                    throw new RuntimeException("unrecognized case");
             }
 	}
 
-	public static void fill() throws JRException {
+        private static String className         () { return HelloWorld.class.getName(); }
+        private static String reportCoreName    () { return className()+"Report"      ; }
+        private static String compiledReportName() { return reportCoreName()+".jasper"; }
+        private static String pdfReportName     () { return reportCoreName()+".pdf"   ; }
+
+
+        private static File fill() throws JRException {
 		long start = System.currentTimeMillis();
-		File sourceFile = new File("build/reports/"+HelloWorld.class.getName()+"Report.jasper");
-		System.err.println(" : " + sourceFile.getAbsolutePath());
-		JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
+                String sourceFileLocation = "reports/"+compiledReportName();
+		System.err.println(" sourceFileLocation : " + sourceFileLocation);
+		JasperReport jasperReport = (JasperReport)JRLoader.loadObjectFromLocation(sourceFileLocation);
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, (JRDataSource)null);
-		
-		File destFile = new File(sourceFile.getParent(), jasperReport.getName() + ".jrprint");
-		JRSaver.saveObject(jasperPrint, destFile);
-		
+                File destTempFile = null;
+                try {
+                    destTempFile = File.createTempFile("jasper-"+className(), ".jrprint");
+                } catch (IOException e) {
+                    throw new ExceptionAdapter(e);
+                }
+		JRSaver.saveObject(jasperPrint, destTempFile);
 		System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+                return destTempFile;
 	}
 
        
-        // the below method actually prints at a printer (I should test it at home).
+        // the below method actually prints in a printer (I should test it at home - but is now broken cause the .jrprint
+        // file is located in a temporary folder - to fix it I'll have to change its signature like the pdf() method
 	public static void print() throws JRException {
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("build/reports/"+HelloWorld.class.getName()+"Report.jrprint", true);
@@ -52,10 +63,10 @@ public class HelloWorld
 	}
 
 	
-	public static void pdf() throws JRException {
+	public static void pdf(String whereToProducePDF) throws JRException {
+                File jrprintFile = fill();
 		long start = System.currentTimeMillis();
-                // the below method as a convenience takes only one parameter and produces the PDF file next to it
-		JasperExportManager.exportReportToPdfFile("build/reports/"+HelloWorld.class.getName()+"Report.jrprint");
+		JasperExportManager.exportReportToPdfFile(jrprintFile.getAbsolutePath(), whereToProducePDF+"/"+pdfReportName());
 		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
 	}
 }
