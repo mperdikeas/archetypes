@@ -84,38 +84,33 @@ public class JasperApp
 		return conn;
 	}
 
+        private static Map parametersMap() throws JRException {
+            Map parameters = null;
+            {
+                Image image = Toolkit.getDefaultToolkit().createImage(JRLoader.loadBytesFromResource("dukesign.jpg"));
+                MediaTracker traker = new MediaTracker(new Panel());
+                traker.addImage(image, 0);
+                try {
+                    traker.waitForID(0);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+                parameters = new HashMap();
+                parameters.put("ReportTitle", "The First Jasper Report Ever");
+                parameters.put("MaxOrderID", new Integer(10500));
+                parameters.put("SummaryImage", image);
+           }
+           return parameters;
+        }
+
         private static File fill() throws JRException {
 		long start = System.currentTimeMillis();
                 String sourceFileLocation = "reports/"+compiledReportName();
 		System.err.println(" sourceFileLocation : " + sourceFileLocation);
 		JasperReport jasperReport = (JasperReport)JRLoader.loadObjectFromLocation(sourceFileLocation);
-
-
-                Map parameters = null;
-                {
-        	Image image = 
-			Toolkit.getDefaultToolkit().createImage(
-				JRLoader.loadBytesFromResource("dukesign.jpg")
-				);
-		MediaTracker traker = new MediaTracker(new Panel());
-		traker.addImage(image, 0);
-		try
-		{
-			traker.waitForID(0);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		parameters = new HashMap();
-		parameters.put("ReportTitle", "The First Jasper Report Ever");
-		parameters.put("MaxOrderID", new Integer(10500));
-		parameters.put("SummaryImage", image);
-                }
-
-		
-		pixelPerfectJasperPrintObject = JasperFillManager.fillReport(jasperReport, parameters, getHsqlConnection());
+		pixelPerfectJasperPrintObject = JasperFillManager.fillReport(jasperReport, parametersMap(), getHsqlConnection());
                 File destTempFile = null;
                 try {
                     destTempFile = File.createTempFile("jasper-"+className(), ".jrprint");
@@ -188,44 +183,6 @@ public class JasperApp
 }
 
 /*            
-	public void pdfa1() throws JRException
-	{
-		long start = System.currentTimeMillis();
-
-		try{
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-			JRPdfExporter exporter = new JRPdfExporter();
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, os);
-			
-			JasperPrint jp = (JasperPrint)JRLoader.loadObject(new File("build/reports/FirstJasper.jrprint"));
-			
-			// Exclude transparent images when exporting to PDF; elements marked with the key 'TransparentImage'
-			// will be excluded from the exported PDF
-			jp.setProperty("net.sf.jasperreports.export.pdf.exclude.key.TransparentImage", null);
-			
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
-			
-			// Include structure tags for PDF/A-1a compliance; unnecessary for PDF/A-1b
-			exporter.setParameter(JRPdfExporterParameter.IS_TAGGED, Boolean.TRUE);
-			
-			exporter.setParameter(JRPdfExporterParameter.PDFA_CONFORMANCE, JRPdfExporterParameter.PDFA_CONFORMANCE_1A);
-			
-			// Uncomment the following line and specify a valid path for the ICC profile
-//			exporter.setParameter(JRPdfExporterParameter.PDFA_ICC_PROFILE_PATH, "path/to/ICC/profile");
-			
-			exporter.exportReport();
-
-			FileOutputStream fos = new FileOutputStream("build/reports/FirstJasper_pdfa.pdf");
-			os.writeTo(fos);
-			fos.close();
-		}catch(Exception e){
-			 e.printStackTrace();
-		}
-				
-		System.err.println("PDF/A-1a creation time : " + (System.currentTimeMillis() - start));
-	}
-	
 	
 	
 	public void xmlEmbed() throws JRException
@@ -486,6 +443,44 @@ public class JasperApp
 		exporter.exportReport();
 
 		System.err.println("XHTML creation time : " + (System.currentTimeMillis() - start));
+	}
+	
+	public void pdfa1() throws JRException
+	{
+		long start = System.currentTimeMillis();
+
+		try{
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+			JRPdfExporter exporter = new JRPdfExporter();
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, os);
+			
+			JasperPrint jp = (JasperPrint)JRLoader.loadObject(new File("build/reports/FirstJasper.jrprint"));
+			
+			// Exclude transparent images when exporting to PDF; elements marked with the key 'TransparentImage'
+			// will be excluded from the exported PDF
+			jp.setProperty("net.sf.jasperreports.export.pdf.exclude.key.TransparentImage", null);
+			
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
+			
+			// Include structure tags for PDF/A-1a compliance; unnecessary for PDF/A-1b
+			exporter.setParameter(JRPdfExporterParameter.IS_TAGGED, Boolean.TRUE);
+			
+			exporter.setParameter(JRPdfExporterParameter.PDFA_CONFORMANCE, JRPdfExporterParameter.PDFA_CONFORMANCE_1A);
+			
+			// Uncomment the following line and specify a valid path for the ICC profile
+//			exporter.setParameter(JRPdfExporterParameter.PDFA_ICC_PROFILE_PATH, "path/to/ICC/profile");
+			
+			exporter.exportReport();
+
+			FileOutputStream fos = new FileOutputStream("build/reports/FirstJasper_pdfa.pdf");
+			os.writeTo(fos);
+			fos.close();
+		}catch(Exception e){
+			 e.printStackTrace();
+		}
+				
+		System.err.println("PDF/A-1a creation time : " + (System.currentTimeMillis() - start));
 	}
 	
 	
