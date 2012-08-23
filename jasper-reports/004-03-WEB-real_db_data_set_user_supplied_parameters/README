@@ -1,5 +1,8 @@
-In this Jasper case (004) and in this stage (03) I should aim
-for a web application using Jasper reports with
+In this Jasper case (004) and in this stage (03) I managed to
+build a web application using Jasper reports with
 real HSQLDB access and user-supplied parameters at the form.
-Also, as an added bonus to possibly fix the report name thing.
+
+Ideas for future stages or use-cases:
+
+* fix the report file name thing.
 

@@ -53,6 +53,15 @@ public class IndexController implements Serializable {
     public IndexController() {
     }
 
+
+    private Integer from;
+    public Integer getFrom() { return from; }
+    public void setFrom(Integer from) { this.from = from; }
+
+    private Integer to;
+    public Integer getTo() { return to; }
+    public void setTo(Integer to) { this.to = to ; }
+
     private static Connection getHsqlConnection() throws JRException {
         Connection conn;
         try {
@@ -82,6 +91,8 @@ public class IndexController implements Serializable {
         Map parameters = new HashMap();
         parameters.put("ReportTitle", "2nd Prime Numbers report");
         parameters.put("BaseDir", reportFile.getParentFile());
+        parameters.put("from", from);
+        parameters.put("to"  , to  );
         JasperPrint jasperPrint = 
                 JasperFillManager.fillReport(
                           reportFileName, 

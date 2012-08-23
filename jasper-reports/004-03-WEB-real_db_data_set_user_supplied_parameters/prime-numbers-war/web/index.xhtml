@@ -12,6 +12,10 @@
    <h:panelGrid columns="1" cellpadding="50">
      <p:layoutUnit position="center">
          <h:form id="userList" styleClass="jsfcrud_list_form">
+             <h:outputLabel for="from" value="Από:"/>
+             <h:inputText value="#{indexController.from}" required="true" label="from"/>
+             <h:outputLabel for="to" value="Έως:"/>
+             <h:inputText value="#{indexController.to}"   required="true" label="to"/>
              <p:commandButton ajax="false" action="#{indexController.exportPrimes}" value="Export Primes"/>
          </h:form>
      </p:layoutUnit>

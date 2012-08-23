@@ -2,6 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrimeNumbersReportFoo" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30">
 	<style name="Sans_Normal" isDefault="true" fontName="DejaVu Sans" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 	<parameter name="ReportTitle" class="java.lang.String"></parameter>
+	<parameter name="from" class="java.lang.Integer"></parameter>
+	<parameter name="to" class="java.lang.Integer"></parameter>
 <!--	<title>
 		<band height="782">
 			<textField isBlankWhenNull="true">
@@ -23,7 +25,7 @@
 		<![CDATA[SELECT
 PRIMES.ID AS Number,
 PRIMES.PRIMENAME AS Name
-FROM PRIMES]]>
+FROM PRIMES WHERE ID > $P{from} AND ID < $P{to}]]>
 	</queryString>
 
 	<field name="Number" class="java.lang.Integer"/>
