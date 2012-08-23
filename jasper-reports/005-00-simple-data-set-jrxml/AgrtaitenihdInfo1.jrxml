@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgrtaitenihdInfo1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="0.9090909090909095"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.jasperserver.reportUnit" value="/reports/Agroper/AgrtaitenihdInfo1"/>
+	<property name="ireport.jasperserver.url" value="http://10.40.4.96:8080/jasperserver/services/repository"/>
+	<parameter name="P_ENSTASH_FLAG" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_RECORDTYPE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_MANAGEMENTAUDIT_FLAG" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_AMEDR_KODIKOS" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ARAPOFPROK" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+AGRTAITENIHD.ID,
+AGRTAITENIHD.USRINSERT,
+AGRTAITENIHD.AFM,
+AGRTAITENIHD.FIRSTNAME,
+AGRTAITENIHD.LASTNAME,
+AGRTAITENIHD.NAME,
+AGRTAITENIHD.AMEDR_ID,
+AGRTMETDRAS.KODIKOS AMEDR_KODIKOS,
+AGRTMETDRAS.TITLOS AMEDR_TITLOS,
+MSRTDAA.KODIKOS DAA_KODIKOS,
+MSRTDAA.DESCRIPTION DAA_DESCRIPTION,
+AGRTMETDRAS.ARAPOFPROK,
+DECODE(AGRTAITENIHD.ENSTASH_FLAG,1,'ΝΑΙ',0,'OXI') ENSTASH_FLAG,
+DECODE(AGRTAITENIHD.MANAGEMENTAUDIT_FLAG ,1,'ΝΑΙ',0,'OXI') MANAGEMENTAUDIT_FLAG,
+DECODE (AGRTMETDRAS.EXTENSION_FLAG,1,'ΝΑΙ',0,'OXI') EXTENSION_FLAG,
+DECODE(AGRTAITENIHD.RECORDTYPE,1,'Οριστική',0,'Πρόχειρη',2,'Άκυρη') RECORDTYPE,
+SUM(AGRTAITENIAGROI.EPILEKTASH) SUM_EPILEKTASH,
+COUNT(AGRTAITENIAGROI.ID) COUNT_AGRTAITENIAGROI
+FROM AGRTAITENIHD,AGRTMETDRAS,MSRTDAA,AGRTAITENIAGROI
+WHERE AGRTAITENIHD.AMEDR_ID =  AGRTMETDRAS.ID
+AND AGRTMETDRAS.DAA_KODIKOS = MSRTDAA.KODIKOS
+AND AGRTAITENIHD.ID = AGRTAITENIAGROI.AENHD_ID (+)
+AND  AGRTMETDRAS.KODIKOS = DECODE ($P{P_AMEDR_KODIKOS}, NULL, AGRTMETDRAS.KODIKOS, $P{P_AMEDR_KODIKOS})
+AND  AGRTMETDRAS.ARAPOFPROK = DECODE ($P{P_ARAPOFPROK}, NULL, AGRTMETDRAS.ARAPOFPROK, $P{P_ARAPOFPROK})
+AND  AGRTAITENIHD.RECORDTYPE = DECODE ($P{P_RECORDTYPE}, NULL, AGRTAITENIHD.RECORDTYPE,$P{P_RECORDTYPE} )
+AND  NVL(AGRTAITENIHD.ENSTASH_FLAG,-1) = DECODE ($P{P_ENSTASH_FLAG}, NULL,NVL(AGRTAITENIHD.ENSTASH_FLAG,-1),$P{P_ENSTASH_FLAG} )
+AND  NVL(AGRTAITENIHD.MANAGEMENTAUDIT_FLAG,-1) = DECODE ($P{P_MANAGEMENTAUDIT_FLAG}, NULL,NVL(AGRTAITENIHD.MANAGEMENTAUDIT_FLAG,-1),$P{P_MANAGEMENTAUDIT_FLAG} )
+GROUP BY
+AGRTAITENIHD.ID,
+AGRTAITENIHD.USRINSERT,
+AGRTAITENIHD.AFM,
+AGRTAITENIHD.FIRSTNAME,
+AGRTAITENIHD.LASTNAME,
+AGRTAITENIHD.NAME,
+AGRTAITENIHD.AMEDR_ID,
+AGRTMETDRAS.KODIKOS ,
+AGRTMETDRAS.TITLOS,
+MSRTDAA.KODIKOS,
+MSRTDAA.DESCRIPTION ,
+AGRTMETDRAS.ARAPOFPROK,
+AGRTAITENIHD.ENSTASH_FLAG,
+AGRTAITENIHD.MANAGEMENTAUDIT_FLAG,
+EXTENSION_FLAG,
+RECORDTYPE
+ORDER BY AMEDR_KODIKOS,ARAPOFPROK,FIRSTNAME,LASTNAME,NAME,AFM,RECORDTYPE]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="USRINSERT" class="java.lang.String"/>
+	<field name="AFM" class="java.lang.String"/>
+	<field name="FIRSTNAME" class="java.lang.String"/>
+	<field name="LASTNAME" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="AMEDR_ID" class="java.math.BigDecimal"/>
+	<field name="AMEDR_KODIKOS" class="java.lang.String"/>
+	<field name="AMEDR_TITLOS" class="java.lang.String"/>
+	<field name="DAA_KODIKOS" class="java.lang.String"/>
+	<field name="DAA_DESCRIPTION" class="java.lang.String"/>
+	<field name="ARAPOFPROK" class="java.lang.String"/>
+	<field name="ENSTASH_FLAG" class="java.lang.String"/>
+	<field name="MANAGEMENTAUDIT_FLAG" class="java.lang.String"/>
+	<field name="EXTENSION_FLAG" class="java.lang.String"/>
+	<field name="RECORDTYPE" class="java.lang.String"/>
+	<field name="SUM_EPILEKTASH" class="java.math.BigDecimal"/>
+	<field name="COUNT_AGRTAITENIAGROI" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="77" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Α.Φ.Μ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="305" y="0" width="57" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Κωδικός Δράσης]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="245" y="0" width="60" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Αριθμός Απόφ. Πρόσκ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="61" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Επέκταση]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="661" y="0" width="55" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Είδος Εγγραφής]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="56" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Όνομα]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="77" y="0" width="58" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Επώνυμο]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="191" y="0" width="54" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Επωνυμία]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="716" y="0" width="45" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Σύνολο Επιλέξ. Ψηφ. Έκτ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="761" y="0" width="41" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Σύνολο Αγρ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="362" y="0" width="95" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Περιγραφή Δράσης]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="55" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Κωδικός
+Δ.Α.Ο.Κ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="512" y="0" width="88" height="40" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Περιγραφή
+Δ.Α.Ο.Κ.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="77" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{AFM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{FIRSTNAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="55" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DAA_KODIKOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="61" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{EXTENSION_FLAG}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="191" y="0" width="54" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="77" y="0" width="58" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LASTNAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="512" y="0" width="88" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DAA_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="362" y="0" width="95" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{AMEDR_TITLOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="716" y="0" width="45" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SUM_EPILEKTASH}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="305" y="0" width="57" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{AMEDR_KODIKOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="761" y="0" width="41" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{COUNT_AGRTAITENIAGROI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="661" y="0" width="55" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{RECORDTYPE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="245" y="0" width="60" height="20" isPrintInFirstWholeBand="true"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ARAPOFPROK}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
