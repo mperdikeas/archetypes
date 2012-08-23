@@ -59,7 +59,7 @@ public class IndexController implements Serializable {
         if (!reportFile.exists())
             throw new JRRuntimeException("File WebappReport.jasper not found. The report design must be compiled first and bundled in the war.");
         Map parameters = new HashMap();
-        parameters.put("ReportTitle", "This is the 2nd Prime Numbers Report");
+        parameters.put("ReportTitle", "2nd Prime Numbers Report");
         parameters.put("BaseDir", reportFile.getParentFile());
         JasperPrint jasperPrint = 
                 JasperFillManager.fillReport(
