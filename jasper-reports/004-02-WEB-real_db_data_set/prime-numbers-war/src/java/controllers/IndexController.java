@@ -32,6 +32,9 @@ import java.util.HashMap;
 import javax.faces.event.ComponentSystemEvent;
 import java.util.Collection;
 import java.util.Date;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.DriverManager;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRRuntimeException;
@@ -40,7 +43,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.j2ee.servlets.BaseHttpServlet;
 
-import datasets.PrimeNumbersDataSet;
 
 @ManagedBean
 @RequestScoped
@@ -51,6 +53,24 @@ public class IndexController implements Serializable {
     public IndexController() {
     }
 
+    private static Connection getHsqlConnection() throws JRException {
+        Connection conn;
+        try {
+                String driver        = "org.hsqldb.jdbcDriver";
+                String connectString = "jdbc:hsqldb:hsql://localhost";
+                String user          = "sa";
+                String password      = "";
+                Class.forName(driver);
+                conn = DriverManager.getConnection(connectString, user, password);
+        }
+        catch (ClassNotFoundException e) {
+                throw new JRException(e);
+        }
+        catch (SQLException e) {
+                throw new JRException(e);
+        }
+        return conn;
+    }
 
     private void putPrintObjectInSession() throws JRException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -60,13 +80,13 @@ public class IndexController implements Serializable {
         if (!reportFile.exists())
             throw new JRRuntimeException("File WebappReport.jasper not found. The report design must be compiled first and bundled in the war.");
         Map parameters = new HashMap();
-        parameters.put("ReportTitle", "2nd Prime Numbers Report");
+        parameters.put("ReportTitle", "2nd Prime Numbers report");
         parameters.put("BaseDir", reportFile.getParentFile());
         JasperPrint jasperPrint = 
                 JasperFillManager.fillReport(
                           reportFileName, 
                           parameters, 
-                          new PrimeNumbersDataSet()
+                          getHsqlConnection()
                         );
         ((HttpSession) externalContext.getSession(false)).setAttribute(BaseHttpServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, jasperPrint);
     }
