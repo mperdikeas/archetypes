@@ -1,0 +1,9 @@
+In this Jasper case (004) and in this stage (02) I should aim to
+produce a web application using Jasper reports with
+real HSQLDB access, with the following features:
+
+
+* HSQLDB access
+* fix report name at download prompt
+* solve blocking issue on HSQLDB which is bound
+  to pop-up again.
