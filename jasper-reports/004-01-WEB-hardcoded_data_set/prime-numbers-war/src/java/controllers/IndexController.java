@@ -40,6 +40,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.j2ee.servlets.BaseHttpServlet;
 
+import datasets.PrimeNumbersDataSet;
 
 @ManagedBean
 @RequestScoped
@@ -65,7 +66,7 @@ public class IndexController implements Serializable {
                 JasperFillManager.fillReport(
                           reportFileName, 
                           parameters, 
-                          (JRDataSource) null // new WebappDataSource()
+                          new PrimeNumbersDataSet()
                         );
         ((HttpSession) externalContext.getSession(false)).setAttribute(BaseHttpServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, jasperPrint);
     }

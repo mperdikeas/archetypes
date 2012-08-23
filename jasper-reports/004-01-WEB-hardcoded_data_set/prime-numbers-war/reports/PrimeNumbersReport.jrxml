@@ -19,8 +19,8 @@
 			</staticText>
 		</band>
 	</title> -->
-	<field name="AFM" class="java.lang.String"/>
-	<field name="FIRSTNAME" class="java.lang.String"/>
+	<field name="Number" class="java.lang.Integer"/>
+	<field name="Name" class="java.lang.String"/>
 	<title> 
 		<band height="40">
 			<textField isBlankWhenNull="true">
@@ -41,7 +41,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[VAT]]></text>
+				<text><![CDATA[NUMBER]]></text>
 			</staticText>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="377" y="0" width="56" height="40" isPrintInFirstWholeBand="true"/>
@@ -53,7 +53,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Name]]></text>
+				<text><![CDATA[NAME]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -69,7 +69,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{AFM}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Number}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="56" height="20" isPrintInFirstWholeBand="true"/>
@@ -81,7 +81,7 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{FIRSTNAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

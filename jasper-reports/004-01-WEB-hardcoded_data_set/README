@@ -1,3 +1,9 @@
-In this Jasper case (004) and in this stage (01) I should aim to
+In this Jasper case (004) and in this stage (01) I managed to
 produce a web application using Jasper reports,
-with a hard-coded data set.
+with a hard-coded data set (no HSQLDB).
+
+Ideas for next stage (02):
+* HSQLDB access
+* fix report name at download prompt
+* solve blocking issue on HSQLDB which is bound
+  to pop-up again.
