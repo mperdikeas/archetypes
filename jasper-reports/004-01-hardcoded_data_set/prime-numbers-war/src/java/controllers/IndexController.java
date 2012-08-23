@@ -54,7 +54,7 @@ public class IndexController implements Serializable {
     private void putPrintObjectInSession() throws JRException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         ServletContext context = (ServletContext) externalContext.getContext();
-        String reportFileName = context.getRealPath("/reports/WebappReport.jasper");
+        String reportFileName = context.getRealPath("/reports/PrimeNumbersReport.jasper");
         File reportFile = new File(reportFileName);
         if (!reportFile.exists())
             throw new JRRuntimeException("File WebappReport.jasper not found. The report design must be compiled first and bundled in the war.");
