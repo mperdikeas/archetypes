@@ -2,3 +2,5 @@ tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/200
 (adapted cause they are available for Eclipse / Maven).
 
 This stage is for Tutorial Part 1.
+I have managed to adapt the tutorial from its native format (Maven / Jetty / Derby) to (Ant / JBoss AS / HSQLDB).
+Next step is to move on and adapt part 2 of the tutorial that starts implementing Shiro stuff.
