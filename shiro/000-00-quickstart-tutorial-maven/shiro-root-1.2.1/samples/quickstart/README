@@ -1,0 +1,6 @@
+mp notes @24.VIII.2012
+
+You can try:
+* mvn clean
+* mvn compile
+* mvn exec:java
