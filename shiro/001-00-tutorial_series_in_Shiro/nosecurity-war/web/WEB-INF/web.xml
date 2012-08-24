@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>nosecurity</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description>Finds all users in the data store</description>
+    <display-name>GetAllUsers</display-name>
+    <servlet-name>GetAllUsers</servlet-name>
+    <servlet-class>name.brucephillips.nosecurity.servlet.GetAllUsers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllUsers</servlet-name>
+    <url-pattern>/GetAllUsers</url-pattern>
+  </servlet-mapping>
+
+<!-- disabled, for now
+  <resource-ref>
+        <description>My DataSource Reference</description>
+        <res-ref-name>jdbc/security</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+  </resource-ref>
+-->
+
+</web-app>
