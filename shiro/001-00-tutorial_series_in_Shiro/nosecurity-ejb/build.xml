@@ -38,7 +38,7 @@
             <classpath refid="compile.classpath"/>
         </javac>
         <copy file="${conf.dir}/persistence.xml" todir="${build.dir}/META-INF"/>
-        <copy file="${conf.dir}/hsqldb-ds.xml"   todir="${build.dir}/META-INF"/>
+        <copy file="${conf.dir}/hsqldb_foo-ds.xml"   todir="${build.dir}/META-INF"/>
     </target>
 
     <target name="jar" depends="compile"
