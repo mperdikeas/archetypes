@@ -4,7 +4,7 @@
 <!--      <connection-url>jdbc:postgresql://127.0.0.1:5432/jsf005db</connection-url> -->
       <connection-url>jdbc:hsqldb:hsql://localhost</connection-url>
       <driver-class>org.hsqldb.jdbcDriver</driver-class>
-      <driver>hsqldb-driver</driver>
+      <driver>hsqldb-2.2.9-driver</driver>
       <security>
         <user-name>sa</user-name>
         <password></password>
