@@ -26,8 +26,8 @@
     <target name="compile" depends="prepare"
             description="Compile java sources">
         <mkdir  dir="${build.dir}"/>
-        <property name="classpath.msg" refid="compile.classpath"/>
-        <echo message="compiling with classpath = ${classpath.msg}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
         <javac srcdir="${javasource.dir}" 
                destdir="${build.dir}"
                source="1.7"
@@ -76,8 +76,8 @@
                     <delete dir="${build.dir}"/>
                 </then> 
             </if>
-        <property name="classpath.msg" refid="run.classpath"/>
-        <echo message="running the app with classpath = ${classpath.msg}"/>
+        <property name="classpath-run.msg" refid="run.classpath"/>
+        <echo message="running the app with classpath = ${classpath-run.msg}"/>
         <java classname ="${project.MainClass.name}">
              <classpath refid="run.classpath"/>
         </java>
@@ -92,7 +92,6 @@
         <run-generic paranoid="true"/>
     </target>
 
-    <!-- Rebuild project -->
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
 
 </project>
