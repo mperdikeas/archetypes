@@ -1,0 +1,35 @@
+
+NB: BE SURE TO HAVE THE TOOLS/ant-contrib-1.0b3.jar file available
+
+
+<project name="shiro-quickstart" basedir="." default="run">
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+
+    <macrodef name="run-generic">
+        <attribute name="paranoid" />
+        <sequential>
+            <if>
+                <equals arg1="@{paranoid}" arg2="true" />
+                <then>
+                    <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                    <delete dir="${build.dir}"/>
+                </then> 
+            </if>
+        <property name="classpath.msg" refid="run.classpath"/>
+        <echo message="running the app with classpath = ${classpath.msg}"/>
+        <java classname ="${project.MainClass.name}">
+             <classpath refid="run.classpath"/>
+        </java>
+        </sequential>
+    </macrodef>
+
+    <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="run-paranoid" depends="jar" description="run the jared application (paranoid mode)">
+        <run-generic paranoid="true"/>
+    </target>
+
+
+</project>
