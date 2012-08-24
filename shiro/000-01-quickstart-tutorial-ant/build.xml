@@ -92,17 +92,6 @@
         <run-generic paranoid="true"/>
     </target>
 
-    <!--target name="run" depends="jar" description="run the jared application">
-        <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
-        <delete dir="${build.dir}"/>
-        <property name="classpath.msg" refid="run.classpath"/>
-        <echo message="running the app with classpath = ${classpath.msg}"/>
-        <java classname ="${project.MainClass.name}">
-             <classpath refid="run.classpath"/>
-        </java>
-    </target-->
-
-    <!-- Rebuild project -->
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
 
 </project>
