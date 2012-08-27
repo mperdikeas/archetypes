@@ -58,7 +58,7 @@
   	<description> Log in user using username and password provided</description>
         <display-name>LoginUser</display-name>
   	<servlet-name>LoginUser</servlet-name>
-  	<servlet-class>name.brucephillips.somesecurity.servlet.LoginUser</servlet-class>
+  	<servlet-class>name.brucephillips.nosecurity.servlet.LoginUser</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>LoginUser</servlet-name>
@@ -69,7 +69,7 @@
   	<description>Logs user out</description>
         <display-name>LogoutUser</display-name>
   	<servlet-name>LogoutUser</servlet-name>
-  	<servlet-class>name.brucephillips.somesecurity.servlet.LogoutUser</servlet-class>
+  	<servlet-class>name.brucephillips.nosecurity.servlet.LogoutUser</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>LogoutUser</servlet-name>

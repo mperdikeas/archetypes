@@ -21,7 +21,8 @@ public class RoleSecurityJdbcRealm extends JdbcRealm {
 
         try {
             ic = new InitialContext();
-            dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/security");
+            //        dataSource = (DataSource) ic.lookup("java:/comp/env/jdbc/security");
+            dataSource = (DataSource) ic.lookup("java:/jsf005db");
             this.setDataSource(dataSource);
         } catch (NamingException e) {
             e.printStackTrace();
