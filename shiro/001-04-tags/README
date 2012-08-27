@@ -1,0 +1,20 @@
+Tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
+(adapted cause they were initially available for Eclipse / Maven).
+
+This stage is for Tutorial Part 4.
+
+NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
+to fix this right now but should be trivial.
+
+In this step I am trying to use custom JSP tags to control the display of content
+based on user status and permission.
+
+Ideas for this and possibly future stages:
+[i]    implement the same using JSF / PrimeFaces
+[ii]   print a greeting with the subject's name
+[iii]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+[iv]   use permissions
+
+
+
+
