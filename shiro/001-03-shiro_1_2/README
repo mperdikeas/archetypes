@@ -1,0 +1,17 @@
+tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
+(adapted cause they were initially available for Eclipse / Maven).
+
+This stage is for Tutorial Part 3.
+
+NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
+to fix this right now but should be trivial.
+
+The goal here is to copy the functionality of Tutorial Part 3 in the new Shiro 1_2
+and get rid of the deprecated API for the IniShiroFilter.
+
+Ideas for this and possibly future stages:
+[i]    implement the same using PrimeFaces
+[ii]   implement the same using the latest Shiro lib (2.* instead of 1*)
+[iii]   use the new mechanism for IniShiroFilter (related to [ii])
+[iv]    understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+
