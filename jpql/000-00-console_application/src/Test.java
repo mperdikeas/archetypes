@@ -7,6 +7,8 @@ import mutil.base.Pair;
 
 import java.util.Map;
 import java.util.HashMap;
+
+import gr.neuropublic.neurojsfpilot.customerservice.entities.Customer;
 public class Test {
     
     public static void main(String[] args) {
@@ -24,6 +26,9 @@ public class Test {
         String query6 = "SELECT c FROM Customer c WHERE c.dateOfBirth = :dateOfBirth";
         String query7 = "SELECT c FROM Customer c WHERE c.streetNo = :streetNo";
         Pair<String, Map<String, Object>> jpql_and_params = Pair.create(query1, (Map<String, Object>) new HashMap<String,Object>());
-        QualifiedResultList<?> result = JPQLUtil.getResults(em , jpql_and_params , 10);
+        QualifiedResultList<Customer> result = JPQLUtil.getResults(em , jpql_and_params , 10);
+        System.out.println(String.format("%d results returned%s, these being:\n", result.limit, (result.theresMore?" (there's more)":"")));
+        for (Customer customer : result.data)
+            System.out.println(customer.toString());
     }
 }
