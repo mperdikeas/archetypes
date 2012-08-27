@@ -1,0 +1,3 @@
+In this stage (01) I should aim to make the JPQL application more dynamic.
+Perhaps I can get the persistence.xml from the Orders-ejb.jar, perhaps the
+Orders-ejb.jar can be provided at runtime, I dunno.

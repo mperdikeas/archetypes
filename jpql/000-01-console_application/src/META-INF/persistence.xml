@@ -1,0 +1,23 @@
+<persistence  version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="league"  
+                      transaction-type="RESOURCE_LOCAL"> 
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Customer</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Municipality</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Municipalitystreet</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.OrderDetail</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Orders</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Payment</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Postal</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Product</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Specialty</class>
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Street</class>
+
+        <properties> 
+            <property name="javax.persistence.jdbc.driver"   value="org.postgresql.Driver"/> 
+            <property name="javax.persistence.jdbc.url"      value="jdbc:postgresql://localhost:5432/orders"/> 
+            <property name="javax.persistence.jdbc.user"     value="hr"/> 
+            <property name="javax.persistence.jdbc.password" value="hr"/> 
+        </properties> 
+    </persistence-unit> 
+</persistence> 
