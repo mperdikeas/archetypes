@@ -16,7 +16,7 @@
                 #create an object of the RoleSecurityJdbcRealm
                 #IniShiroFilter will inject that object into the SecurityManager
                 [main]
-                realmA = name.brucephillips.somesecurity.dao.RoleSecurityJdbcRealm
+                realmA = name.brucephillips.nosecurity.dao.RoleSecurityJdbcRealm
                 
                 #this application will use all the default
                 #filters (see link above)
