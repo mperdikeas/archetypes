@@ -18,6 +18,10 @@
                 [main]
                 realmA = name.brucephillips.nosecurity.dao.RoleSecurityJdbcRealm
                 
+                # following two lines added by MP (http://stackoverflow.com/questions/8754800/cachemanager-properties-have-been-set-apache-shiro)
+                builtInCacheManager = org.apache.shiro.cache.MemoryConstrainedCacheManager
+                securityManager.cacheManager = $builtInCacheManager
+
                 #this application will use all the default
                 #filters (see link above)
                 #for example the default login page is /login.jsp

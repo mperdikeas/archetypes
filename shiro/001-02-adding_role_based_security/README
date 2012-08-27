@@ -6,10 +6,14 @@ This stage is for Tutorial Part 3.
 NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
 to fix this right now but should be trivial.
 
-The goal is to implement role-based authorization and to also consider the following ideas:
+In this stage I managed to implement role-based authorization and I've gotten rid
+of the ehcache.xml file while also configuring a memory cache for the Shiro security
+manager. I 've also left behind me a petrified snapshot (001-02-adding_role_based_security-STRANGE-FEATURE-SNAPSHOT)
+that exhibits an interesting behaviour (bordering on a bug or bad practice) - see the README.
+
+Ideas for future stages:
 [i]    implement the same using PrimeFaces
 [ii]   implement the same using the latest Shiro lib (2.* instead of 1*)
-[iii]  verify the utility or redundancy of ehcache.xml
-[iv]   use the new mechanism for IniShiroFilter
-[v]    understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+[iii]   use the new mechanism for IniShiroFilter (related to [ii])
+[iv]    understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
 
