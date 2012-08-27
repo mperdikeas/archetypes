@@ -1,10 +1,10 @@
 <persistence  version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="league"  
                       transaction-type="RESOURCE_LOCAL"> 
-        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-<!--        <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
-<!--        <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
-<!--
+<!--        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+           <provider>org.hibernate.ejb.HibernatePersistence</provider> 
+
+
         <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Customer</class>
         <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Municipality</class>
         <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Municipalitystreet</class>
@@ -14,7 +14,7 @@
         <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Postal</class>
         <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Product</class>
         <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Specialty</class>
-        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Street</class> -->
+        <class>gr.neuropublic.neurojsfpilot.customerservice.entities.Street</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties> 
             <property name="javax.persistence.jdbc.driver"   value="org.postgresql.Driver"/> 
