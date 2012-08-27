@@ -1,6 +1,16 @@
 tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
 (adapted cause they are available for Eclipse / Maven).
 
-This stage is for Tutorial Part 1.
-I have managed to adapt the tutorial from its native format (Maven / Jetty / Derby) to (Ant / JBoss AS / HSQLDB).
-Next step is to move on and adapt part 2 of the tutorial that starts implementing Shiro stuff.
+This stage is for Tutorial Part 2.
+I've managed to implement authentication.
+NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
+to fix this right now but should be trivial.
+
+Ideas for next stages:
+[i]    implement the same using PrimeFaces
+[ii]   implement the same using the latest Shiro lib (2.* instead of 1*)
+[iii]  verify the utility or redundancy of ehcache.xml
+[iv]   use the new mechanism for IniShiroFilter
+[v]    understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+
+(at the moment I don't know which direction to take).
