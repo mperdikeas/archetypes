@@ -53,16 +53,29 @@ public class GetAllUsers extends javax.servlet.http.HttpServlet implements javax
         
         String url = "/login.jsp";
         
-        //check if the user is logged in
-        if (currentUser.isAuthenticated() ) {
-            //user is logged in 
-            //get users from data store
-            //and forward to /secure/users.jsp
-            url = "/secure/users.jsp";
-                    
-            List<User> userList = UserDAO.getAllUsers();
-            request.setAttribute("userList", userList);
-        }
+
+		if (currentUser.isAuthenticated() && ! currentUser.hasRole("admin") ) {
+			
+			//user is authenticated but doesn't have a role that
+			//allows her to access this feature
+			url = "/unauthorized.jsp";
+			
+			
+		}
+		
+		//check if the user is logged in
+		//and has a role of admin
+		if (currentUser.isAuthenticated() && currentUser.hasRole("admin") ) {
+			//user is logged in 
+			//get users from data store
+			//and forward to /admin/users.jsp
+	        url = "/admin/users.jsp";
+	        
+	        List<User> userList = UserDAO.getAllUsers();
+	        
+	        request.setAttribute("userList", userList);
+        
+		}
         
         // forward the request and response to the view
         RequestDispatcher dispatcher =

@@ -102,8 +102,12 @@ import org.apache.shiro.subject.Subject;
 			//clear the information stored in the token
 
 			token.clear();
-			
-			url = "/secure/index.jsp";
+
+                        // this if statement is my improvement over the original example sources.
+                        if ((subject.isAuthenticated())&& (subject.hasRole("user")))
+                            url = "/secure/index.jsp";
+                        else 
+                            url = "/unauthorized.jsp";
 
 		} catch (UnknownAccountException ex) {
 			//username provided was not found

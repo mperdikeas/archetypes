@@ -24,16 +24,15 @@
                 #users who try to access a page protected by Shiro
                 #will be sent to /login.jsp
                 [filters]
-
+                roles.unauthorizedUrl = /unauthorized.jsp
 
                 #only let authenticated users
                 #with the appropriate role
                 #view the web pages in the secure
                 #and admin areas
                 [urls]
-                /secure/** = authc
-               
-
+                /secure/** = authc, roles[user]
+                /admin/** = authc, roles[admin]               
             </param-value>
         </init-param>
     </filter>
