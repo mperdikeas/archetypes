@@ -4,6 +4,45 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+
+  <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.IniShiroFilter</filter-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>
+                #See Shiro API http://shiro.apache.org/static/current/apidocs/org/apache/shiro/web/servlet/IniShiroFilter.html
+                
+                #create an object of the RoleSecurityJdbcRealm
+                #IniShiroFilter will inject that object into the SecurityManager
+                [main]
+                realmA = name.brucephillips.somesecurity.dao.RoleSecurityJdbcRealm
+                
+                #this application will use all the default
+                #filters (see link above)
+                #for example the default login page is /login.jsp
+                #users who try to access a page protected by Shiro
+                #will be sent to /login.jsp
+                [filters]
+
+
+                #only let authenticated users
+                #with the appropriate role
+                #view the web pages in the secure
+                #and admin areas
+                [urls]
+                /secure/** = authc
+               
+
+            </param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
   <servlet>
     <description>Finds all users in the data store</description>
     <display-name>GetAllUsers</display-name>
@@ -13,6 +52,28 @@
   <servlet-mapping>
     <servlet-name>GetAllUsers</servlet-name>
     <url-pattern>/GetAllUsers</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+  	<description> Log in user using username and password provided</description>
+        <display-name>LoginUser</display-name>
+  	<servlet-name>LoginUser</servlet-name>
+  	<servlet-class>name.brucephillips.somesecurity.servlet.LoginUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LoginUser</servlet-name>
+  	<url-pattern>/LoginUser</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+  	<description>Logs user out</description>
+        <display-name>LogoutUser</display-name>
+  	<servlet-name>LogoutUser</servlet-name>
+  	<servlet-class>name.brucephillips.somesecurity.servlet.LogoutUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LogoutUser</servlet-name>
+  	<url-pattern>/LogoutUser</url-pattern>
   </servlet-mapping>
 
 <!-- disabled, for now
