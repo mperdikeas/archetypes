@@ -104,7 +104,7 @@ import org.apache.shiro.subject.Subject;
 			token.clear();
 
                         // this if statement is my improvement over the original example sources.
-                        if ((subject.isAuthenticated())&& (subject.hasRole("user")))
+                        if ((subject.isAuthenticated())&& ((subject.hasRole("user")) || (subject.hasRole("admin"))))
                             url = "/secure/index.jsp";
                         else 
                             url = "/unauthorized.jsp";
