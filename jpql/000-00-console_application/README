@@ -1,0 +1,2 @@
+Console JPQL application with hardcoded compile-time dependencies
+(should now aim to make it more dynamic) in later stages.
