@@ -18,7 +18,8 @@ public class Test {
 
         //     public static <T> QualifiedResultList<T> getResults(EntityManager em, Pair<String, Map<String, Object>> jpql_and_params, Integer recordLimit) {
 
-        String query1 = "SELECT c FROM Customer c";
+        //       String query1 = "SELECT c FROM gr.neuropublic.neurojsfpilot.customerservice.entities.Customer c";
+         String query1 = "SELECT c FROM Customer c";
         String query2 = "SELECT c FROM Customer c WHERE c.id = :id";
         String query3 = "SELECT c FROM Customer c WHERE c.name = :name";
         String query4 = "SELECT c FROM Customer c WHERE c.surname = :surname";
@@ -27,8 +28,8 @@ public class Test {
         String query7 = "SELECT c FROM Customer c WHERE c.streetNo = :streetNo";
         Pair<String, Map<String, Object>> jpql_and_params = Pair.create(query1, (Map<String, Object>) new HashMap<String,Object>());
         QualifiedResultList<Object> result = JPQLUtil.getResults(em , jpql_and_params , 10);
-        System.out.println(String.format("%d results returned%s, these being:\n", result.limit, (result.theresMore?" (there's more)":"")));
+        System.out.println(String.format("%d results returned%s, these being:\n", result.data.size(), (result.theresMore?" (there's more)":"")));
         for (Object object : result.data)
-            System.out.println(object.toString());
+            System.out.println("result: "+object.toString());
     }
 }
