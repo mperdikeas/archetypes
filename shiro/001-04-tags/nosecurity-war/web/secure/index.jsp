@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -10,10 +11,12 @@
 </head>
 <body>
 <h3>Secure Area Main Page</h3>
-<p>Since our web site DOES have some security only logged in users can visit this web page because it's in our secure area.</p>
-<h3>simple href links:</h3><p>
-<a href='/nosecurity/index.jsp'>Home</a> | <a href="/nosecurity/GetAllUsers">Get All Users</a> | <a href="/nosecurity/LogoutUser">Log Out</a><p>
-<h3>links using core:url</h3><p>
-<a href="<c:url value='/index.jsp' />">Home</a> | <a href="<c:url value='/GetAllUsers' />">Get All Users</a> | <a href="<c:url value='/LogoutUser' />">Log Out</a><p>
+<h3>Welcome <jsec:principal/> </h3>
+<p>Since our web site DOES have security, including access by role, only logged in users with a role of 'user' can visit this web page because it's in our secure area.</p>
+<p><a href="<c:url value='/index.jsp' />">Home</a>
+ <shiro:hasRole name="admin">
+ | <a href="<c:url value='/admin/index.jsp' />"> Admin Area </a>
+ </shiro:hasRole>
+| <a href="<c:url value='/LogoutUser' />">Log Out</a></p>
 </body>
 </html>

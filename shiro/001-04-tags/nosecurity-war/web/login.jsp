@@ -5,10 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Some Security Login Page</title>
+<title>Role Security Login Page</title>
 </head>
 <body>
-<h3>Welcome to The Some Security Login Page</h3>
+<h3>Welcome to The Role Security Login Page</h3>
 <p>You must login to visit pages in our secure area</p>
 <p style="color:red">${error}</p>
 <form action="LoginUser" method="post">

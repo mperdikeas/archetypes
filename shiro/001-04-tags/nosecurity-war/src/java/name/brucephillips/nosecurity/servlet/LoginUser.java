@@ -103,10 +103,12 @@ import org.apache.shiro.subject.Subject;
 
 			token.clear();
 
-                        // this if statement is my improvement over the original example sources.
-                        if ((subject.isAuthenticated())&& ((subject.hasRole("user")) || (subject.hasRole("admin"))))
+                        // fixed bug I had in previous version
+                        if ((subject.isAuthenticated())&& (subject.hasRole("user")))
                             url = "/secure/index.jsp";
-                        else 
+                        else if  ((subject.isAuthenticated()) && (subject.hasRole("admin")))
+                            url = "/admin/index.jsp";
+                        else
                             url = "/unauthorized.jsp";
 
 		} catch (UnknownAccountException ex) {
