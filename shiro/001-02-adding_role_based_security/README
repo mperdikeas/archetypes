@@ -1,0 +1,15 @@
+tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
+(adapted cause they were initially available for Eclipse / Maven).
+
+This stage is for Tutorial Part 3.
+
+NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
+to fix this right now but should be trivial.
+
+The goal is to implement role-based authorization and to also consider the following ideas:
+[i]    implement the same using PrimeFaces
+[ii]   implement the same using the latest Shiro lib (2.* instead of 1*)
+[iii]  verify the utility or redundancy of ehcache.xml
+[iv]   use the new mechanism for IniShiroFilter
+[v]    understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+
