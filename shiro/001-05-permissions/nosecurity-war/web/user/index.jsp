@@ -7,16 +7,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Secure Area Main Page</title>
+<title>User Area Main Page</title>
 </head>
 <body>
-<h3>Secure Area Main Page</h3>
-<h3>Welcome <jsec:principal/> </h3>
-<p>Since our web site DOES have security, including access by role, only logged in users with a role of 'user' can visit this web page because it's in our secure area.</p>
+<h3>User Area Main Page</h3>
+<h3>Welcome <shiro:principal /></h3> <!-- <h3>Welcome <jsec:principal/> </h3> I believe that, previously, this tag didn't work -->
+<p>Since our web site DOES have security, including access by role, only people logged in with a role of user can visit this web page because it's in our user area.</p>
 <p><a href="<c:url value='/index.jsp' />">Home</a>
  <shiro:hasRole name="admin">
  | <a href="<c:url value='/admin/index.jsp' />"> Admin Area </a>
  </shiro:hasRole>
-| <a href="<c:url value='/LogoutUser' />">Log Out</a></p>
+ <shiro:hasPermission name="secure">
+ | <a href="<c:url value='/staff/index.jsp' />" > Staff Area</a>
+ </shiro:hasPermission>
+ | <a href="<c:url value='/LogoutUser' />">Log Out</a></p>
 </body>
 </html>

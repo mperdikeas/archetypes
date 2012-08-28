@@ -7,11 +7,12 @@
 <head>
 <!-- do we need that? - it was present in the original file -->
 <!--meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /-->
-<title>Role Security Home Page</title>
+<title>Role and Permissions Security Home Page</title>
 </head>
 <body>
-<h3>Welcome to The Role Security Home Page</h3>
-<p>Our web site does have security and it includes security by ROLE, so NOT everyone
+<h3>Welcome to The Role and Permissions Security Home Page</h3>
+<p>Our web site does have security and it includes security by ROLE
+and by PERMISSION, so NOT everyone
 who is logged in can visit all our pages.</p>
 
 <shiro:guest>
@@ -20,8 +21,11 @@ who is logged in can visit all our pages.</p>
 
 <shiro:authenticated>
     <shiro:hasRole name="user">
-        <a href="secure/index.jsp">Secure Area</a>
+        <a href="user/index.jsp">User Area</a>
     </shiro:hasRole>
+    <shiro:hasPermission>
+        <a href="staff/index.jsp">Secure Area (for staff)</a>
+    </shiro:hasPermission>
     <shiro:hasRole name="admin">
         <a href="admin/index.jsp" >Admin Area</a>
     </shiro:hasRole>

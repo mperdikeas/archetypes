@@ -103,13 +103,10 @@ import org.apache.shiro.subject.Subject;
 
 			token.clear();
 
-                        // fixed bug I had in previous version
-                        if ((subject.isAuthenticated())&& (subject.hasRole("user")))
-                            url = "/secure/index.jsp";
-                        else if  ((subject.isAuthenticated()) && (subject.hasRole("admin")))
-                            url = "/admin/index.jsp";
-                        else
-                            url = "/unauthorized.jsp";
+                        if       (subject.isAuthenticated() && subject.isPermitted("secure"))  url = "/staff/index.jsp";
+                        else if  (subject.isAuthenticated() && subject.hasRole    ("user"  ))  url = "/user/index.jsp";
+                        else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  url = "/admin/index.jsp";
+                        else                                                                   url = "/unauthorized.jsp";
 
 		} catch (UnknownAccountException ex) {
 			//username provided was not found
