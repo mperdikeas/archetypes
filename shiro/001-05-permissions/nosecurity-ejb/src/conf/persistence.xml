@@ -4,6 +4,8 @@
     <!--provider>org.hibernate.ejb.HibernatePersistence</provider-->
     <jta-data-source>java:/jsf005db</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+    </properties>
   </persistence-unit>
 </persistence>
