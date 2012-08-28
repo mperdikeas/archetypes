@@ -1,16 +1,14 @@
 Tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
 (adapted cause they were initially available for Eclipse / Maven).
 
-This stage is frozen for Tutorial Part 5. No new functionality is added - I'm just trying
-to migrate it to JSF/Prime Faces.
+This stage is frozen for Tutorial Part 5. No new functionality is added - it's just
+about migrating it to JSF/Prime Faces.
 
 NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
 to fix this right now but should be trivial.
 
-Ideas for this, and possible, future stages:
-[i]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
-
-
-
-
+Ideas for this, and possible, future stages or perhaps different use cases:
+[i]    add row-level permission, if possible
+[ii]   integrate with LDAP
+[iii]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
 
