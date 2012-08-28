@@ -27,15 +27,17 @@ to the request
 <!-- <p><a href="<c:url value='/index.jsp' />">Home </a> | <a href="<c:url value='/LogoutUser' />">Log Out</a></p> -->
 
 <!-- these don't seem to work .. why ? -->
-<p><h:outputText value="#{sessionScope['foo']}" /></p>
-<p><h:outputText value="#{param['foo']}" /></p>
-<p><h:outputText value="#{paramCheck['foo']}" /></p>
+<p><h:outputText value="try 1: #{sessionScope['foo']}" /></p>
+<p><h:outputText value="try 2: #{param['foo']}" /></p>
+<p><h:outputText value="try 3: #{request.getParameter('foo')}" /></p>
+<p><h:outputText value="try 4: #{request.getAttribute('foo')}" /></p>
+<!-- but this apparently works -->
+<p><h:outputText value="try 5: #{requestScope.foo}" /></p> <!-- http://stackoverflow.com/questions/12162696/how-to-set-request-attributes-from-a-servlet-and-retrieve-them-from-a-jsf-xhtml -->
 
 <!-- the following DOES work and is the only way I've found so far to obtain an attribute from the HTTP Request -->
-<p><h:outputText value="#{request.getParameter('foo')}" /></p>
+<p>
 
-
-<h:outputText value="Hidden message is: #{usersController.message}"/>
+<h:outputText value="try 5: #{usersController.message}"/>
                         <p:outputPanel id="custDataTable">            
                             <h:panelGroup id="customersTablePanelGroup">
                                 <p:dataTable var="item" value="#{usersController.users}" rowKey="#{item.username}" paginator="true" rows="10"
@@ -56,10 +58,11 @@ to the request
                         </p:outputPanel>
 
 
-
+</p>
 <p>
-<h:link value="Home" outcome="/index.xhtml"/>
-         <h:form id="logOutIdDummyForm">
+         <h:link value="Home" outcome="/index.xhtml"/>
+         | <h:link value="Admin" outcome="goToAdminArea"/>
+         | <h:form id="logOutIdDummyForm">
              <p:commandLink ajax="false" action="#{loginController.logout}" value="Log Out"/>
          </h:form>
 </p>

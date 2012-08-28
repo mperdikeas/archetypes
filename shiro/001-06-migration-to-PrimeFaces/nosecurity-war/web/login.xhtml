@@ -22,7 +22,7 @@
              <p:outputLabel for="username-inpT" value="username: " />
              <h:inputText      value="#{loginController.username}"   required="true" id="username-inpT"/>
              <p:outputLabel for="password-inpT" value="password: " />
-             <h:inputText      value="#{loginController.password}"   required="true" id="password-inpT"/>
+             <p:password      value="#{loginController.password}"   required="true" id="password-inpT"/>
          </h:panelGrid>
          <p:commandButton action="#{loginController.login}"      value="login"/> <!-- maybe we should update a growl message -->
        </h:form>
