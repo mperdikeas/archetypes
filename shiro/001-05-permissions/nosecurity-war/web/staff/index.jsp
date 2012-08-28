@@ -12,14 +12,15 @@
 <body>
 <h3>Staff Area Main Page</h3>
 <h3>Welcome <shiro:principal /></h3>
-<p>Since our web site DOES have security, including access by role, only people logged in with a permission of secure can visit this web page because it's in our user area.</p>
+<p>Since our web site DOES have security, including access by role, only people logged in with a permission of secure (that includes but is NOT
+limited to members of the 'staff' role) can visit this web page because it's in our staff area.</p>
 <p><a href="<c:url value='/index.jsp' />">Home</a>
  <shiro:hasRole name="admin">
  | <a href="<c:url value='/admin/index.jsp' />"> Admin Area </a>
  </shiro:hasRole>
  <shiro:hasRole name="user">
  | <a href="<c:url value='/user/index.jsp' />" > User Area</a>
- </shiro:hasPermission>
+ </shiro:hasRole>
  | <a href="<c:url value='/LogoutUser' />">Log Out</a></p>
 </body>
 </html>

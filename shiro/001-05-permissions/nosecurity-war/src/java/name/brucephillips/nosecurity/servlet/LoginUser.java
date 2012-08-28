@@ -103,6 +103,14 @@ import org.apache.shiro.subject.Subject;
 
 			token.clear();
 
+                        if ( subject.hasRole("admin") ) System.out.println(subject.getPrincipal() + " has admin role");
+                        else                            System.out.println(subject.getPrincipal() +  " doesn't have admin role");
+                        if (subject.hasRole("user"))    System.out.println(subject.getPrincipal() + " has user role");
+                        else                            System.out.println(subject.getPrincipal() + " doesn't have user role");
+                        if (subject.hasRole("staff"))   System.out.println(subject.getPrincipal() + " has staff role");
+                        else                            System.out.println(subject.getPrincipal() + " doesn't have staff role");
+                        
+                        if (subject.isPermitted("secure")) System.out.println(subject.getPrincipal()+" has the 'secure' permission");
                         if       (subject.isAuthenticated() && subject.isPermitted("secure"))  url = "/staff/index.jsp";
                         else if  (subject.isAuthenticated() && subject.hasRole    ("user"  ))  url = "/user/index.jsp";
                         else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  url = "/admin/index.jsp";

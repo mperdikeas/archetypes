@@ -23,7 +23,7 @@ who is logged in can visit all our pages.</p>
     <shiro:hasRole name="user">
         <a href="user/index.jsp">User Area</a>
     </shiro:hasRole>
-    <shiro:hasPermission>
+    <shiro:hasPermission name="secure">
         <a href="staff/index.jsp">Secure Area (for staff)</a>
     </shiro:hasPermission>
     <shiro:hasRole name="admin">
