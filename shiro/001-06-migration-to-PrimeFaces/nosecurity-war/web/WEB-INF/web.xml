@@ -69,27 +69,6 @@
     <url-pattern>/GetAllUsers</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-  	<description> Log in user using username and password provided</description>
-        <display-name>LoginUser</display-name>
-  	<servlet-name>LoginUser</servlet-name>
-  	<servlet-class>name.brucephillips.nosecurity.servlet.LoginUser</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>LoginUser</servlet-name>
-  	<url-pattern>/LoginUser</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-  	<description>Logs user out</description>
-        <display-name>LogoutUser</display-name>
-  	<servlet-name>LogoutUser</servlet-name>
-  	<servlet-class>name.brucephillips.nosecurity.servlet.LogoutUser</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>LogoutUser</servlet-name>
-  	<url-pattern>/LogoutUser</url-pattern>
-  </servlet-mapping>
 
 <!-- disabled, for now
   <resource-ref>

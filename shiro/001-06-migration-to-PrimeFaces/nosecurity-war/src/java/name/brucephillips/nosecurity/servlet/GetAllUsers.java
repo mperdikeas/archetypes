@@ -41,26 +41,19 @@ public class GetAllUsers extends javax.servlet.http.HttpServlet implements javax
     }   
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         doPost(request, response);
     }  
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         //Get the user associated with this request
         //see: http://jsecurity.org/api/index.html?org/jsecurity/subject/Subject.html
         Subject currentUser = SecurityUtils.getSubject();
+        String url = "/login.xhtml";
         
-        String url = "/login.jsp";
-        
-
 		if (currentUser.isAuthenticated() && ! currentUser.hasRole("admin") ) {
-			
 			//user is authenticated but doesn't have a role that
 			//allows her to access this feature
-			url = "/unauthorized.jsp";
-			
-			
+			url = "/unauthorized.xhtml";
 		}
 		
 		//check if the user is logged in
@@ -69,19 +62,13 @@ public class GetAllUsers extends javax.servlet.http.HttpServlet implements javax
 			//user is logged in 
 			//get users from data store
 			//and forward to /admin/users.jsp
-	        url = "/admin/users.jsp";
-	        
-	        List<User> userList = UserDAO.getAllUsers();
-	        
-	        request.setAttribute("userList", userList);
-        
+                    url = "/admin/users.xhtml";
+                    List<User> userList = UserDAO.getAllUsers();
+                    request.setAttribute("userList", userList);
 		}
         
         // forward the request and response to the view
-        RequestDispatcher dispatcher =
-            getServletContext().getRequestDispatcher(url);
-        
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);   
-        
     }         
 }

@@ -27,7 +27,7 @@ import java.util.HashMap;
 import javax.faces.event.ComponentSystemEvent;
 import java.util.Collection;
 import java.util.Date;
-
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -80,9 +80,9 @@ public class LoginController implements Serializable {
                                 else                            System.out.println(subject.getPrincipal() + " doesn't have staff role");
                                 
                                 if       (subject.isPermitted("secure")) System.out.println(subject.getPrincipal()+" has the 'secure' permission");
-                                if       (subject.isAuthenticated() && subject.isPermitted("secure"))  navOutcome = "/staff/index.xhtml";
+                                if       (subject.isAuthenticated() && subject.isPermitted("secure"))  navOutcome = "goToStaffArea";
                                 else if  (subject.isAuthenticated() && subject.hasRole    ("user"  ))  navOutcome = "goToUserArea";
-                                else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  navOutcome = "/admin/index.xhtml";
+                                else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  navOutcome = "goToAdminArea";
                                 else                                                                   navOutcome = "unauthorized";
                             } catch (Exception e) { // due to the 'if' above we shouldn't see any exceptions in the above section
                                 e.printStackTrace();
@@ -104,5 +104,19 @@ public class LoginController implements Serializable {
 		}
                 System.out.println("returning: "+navOutcome);
                 return navOutcome;
+    }
+
+    public String logout() {
+	Subject subject = SecurityUtils.getSubject();
+        if (subject != null) {
+            //see:  http://jsecurity.org/api/index.html?org/jsecurity/web/DefaultWebSecurityManager.html
+            subject.logout();
+        }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        if( session != null ) {
+            session.invalidate();
+        }        
+        return "logOut";
     }
 }
