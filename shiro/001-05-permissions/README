@@ -6,12 +6,17 @@ This stage is for Tutorial Part 5.
 NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
 to fix this right now but should be trivial.
 
-In this I am trying to implement role-based permissions in Shiro.
+In this stage I managed to implement role- and permissions-based security for Shiro.
+I also fixed the buggy thingy that resulted in inability to deploy the EAR if the 
+database wasn't up and running. It turned out I had to add a "hibernate-dialect" property
+in my persistence.xml. Now the application can be deployed and started with the database
+down, and the database can come up in the middle of a session.
+Finally, I've established that subjects are definitely properly greeted with their 
+principal's name in this stage.
 
-Ideas for this and possibly, future stages:
+Ideas for future stages:
 [i]    implement the same using JSF / PrimeFaces
-[ii]   print a greeting with the subject's name (current a bug - doesn't work - hmm.. maybe I've fixed that)
-[iii]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+[ii]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
 
 
 
