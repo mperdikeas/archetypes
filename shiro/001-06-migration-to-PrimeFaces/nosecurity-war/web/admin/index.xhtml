@@ -14,10 +14,16 @@
 <p>Since our web site DOES have security, including securing areas by role,
 only logged in users with the admin role can visit this web page because it's in our admin area.</p>
 <p>
-<h:link value="Home" outcome="/index.xhtml"/>          <!-- <a href="<c:url value='/index.jsp' />">Home</a> -->
-|<h:outputLink value="/nosecurity/GetAllUsers">Get all users</h:outputLink> <!-- that works but I have to embed the name 'nosecurity' in the link -->
-<!-- |<h:link value="Get all users" outcome="GetAllUsers"/> --> <!-- that doesn't work even if a navigation rule is defined -->
-| <!-- <a href="<c:url value='/LogoutUser' />">Log Out</a></p> -->
+<h:link value="Home" outcome="/index.xhtml"/> 
+
+<!-- all the following options are discussed here: http://stackoverflow.com/questions/7978601/is-there-something-better-to-generate-absolute-links -->
+|<h:outputLink value="/nosecurity/GetAllUsers">                                       Get all users</h:outputLink>
+|<h:outputLink value="#{facesContext.externalContext.requestContextPath}/GetAllUsers">Get all users</h:outputLink>
+|<h:outputLink value="#{request.contextPath}/GetAllUsers">                            Get all users</h:outputLink>
+<!-- one can also use the base tag: http://stackoverflow.com/questions/1889076/is-it-recommended-to-use-the-base-html-tag/1889957#1889957 -->
+
+<!-- |<h:link value="Get all users" outcome="GetAllUsers"/> --> <!-- that doesn't work even if a navigation rule is defined, so I was unable to use the Servlet with an <h:link> -->
+| 
          <h:form id="logOutIdDummyForm">
              <p:commandLink ajax="false" action="#{loginController.logout}" value="Log Out"/>
          </h:form>
