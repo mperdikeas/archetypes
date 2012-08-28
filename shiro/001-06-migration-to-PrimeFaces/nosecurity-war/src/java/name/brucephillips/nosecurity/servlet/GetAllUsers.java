@@ -66,7 +66,8 @@ public class GetAllUsers extends javax.servlet.http.HttpServlet implements javax
                     List<User> userList = UserDAO.getAllUsers();
                     request.setAttribute("userList", userList);
 		}
-        
+
+        request.setAttribute("foo", "foo test");
         // forward the request and response to the view
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);   
