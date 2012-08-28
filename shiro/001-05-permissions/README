@@ -1,0 +1,19 @@
+Tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
+(adapted cause they were initially available for Eclipse / Maven).
+
+This stage is for Tutorial Part 5.
+
+NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
+to fix this right now but should be trivial.
+
+In this I am trying to implement role-based permissions in Shiro.
+
+Ideas for this and possibly, future stages:
+[i]    implement the same using JSF / PrimeFaces
+[ii]   print a greeting with the subject's name (current a bug - doesn't work - hmm.. maybe I've fixed that)
+[iii]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+
+
+
+
+
