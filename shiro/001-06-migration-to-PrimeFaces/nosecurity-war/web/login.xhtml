@@ -16,28 +16,17 @@
 <p>You must login to visit pages in our secure area</p>
 <p style="color:red">${error}</p>
 
-   <h:panelGrid columns="1" cellpadding="5">
+
        <h:form id="loginForm">
-         <h:inputText      value="#{loginController.username}"   required="true"/>
-         <h:inputText      value="#{loginController.password}"   required="true"/>
+         <h:panelGrid columns="2" cellspacing="10px" >
+             <p:outputLabel for="username-inpT" value="username: " />
+             <h:inputText      value="#{loginController.username}"   required="true" id="username-inpT"/>
+             <p:outputLabel for="password-inpT" value="password: " />
+             <h:inputText      value="#{loginController.password}"   required="true" id="password-inpT"/>
+         </h:panelGrid>
          <p:commandButton action="#{loginController.login}"      value="login"/> <!-- maybe we should update a growl message -->
        </h:form>
-   </h:panelGrid>
-<!--form action="LoginUser" method="post">
-    <table align="left" border="0" cellspacing="0" cellpadding="3">
-        <tr>
-            <td>Username:</td>
-            <td><input type="text" name="username" maxlength="50" /></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" name="password" maxlength="50" /></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right"><input type="submit" name="submit" value="Login" /></td>
-        </tr>
-    </table>
-</form-->
+
 <br clear="left" />
 <p><a href='index.xhtml'>Home</a></p>
 </h:body>
