@@ -7,7 +7,7 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Production</param-value>
+        <param-value>Development</param-value> <!-- changed from 'Production' 28.VIII.2012 -->
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

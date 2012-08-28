@@ -9,4 +9,14 @@
         <phase-listener>mutil.jsf.LifeCycleListener</phase-listener>
         <!--phase-listener>mutil.jsf.PrintComponentTree</phase-listener-->
     </lifecycle>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToUserArea</from-outcome>
+        <to-view-id>/user/index.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
 </faces-config>
