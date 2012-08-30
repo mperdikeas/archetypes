@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ehcache name="ColorCache">
+<ehcache name="TranslationCache">
   <defaultCache
       maxElementsInMemory="10000"
       eternal="false"
@@ -12,7 +12,7 @@
       diskPersistent="false"
       diskExpiryThreadIntervalSeconds="120"
       memoryStoreEvictionPolicy="LRU"/>
-  <cache name="colors"
+  <cache name="dictionary"
          maxElementsInMemory="100"
          maxElementsOnDisk="0"
          eternal="false"
