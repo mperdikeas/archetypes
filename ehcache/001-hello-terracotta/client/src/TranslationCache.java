@@ -5,12 +5,21 @@ import net.sf.ehcache.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.net.URL;
 
 public class TranslationCache {
-  private static final CacheManager        cacheManager        = new CacheManager();
-  private static final TranslationDatabase translationDatabase = new TranslationDatabase();
 
+    private static final TranslationDatabase translationDatabase = new TranslationDatabase();
 
+    private static CacheManager cacheManager = null;
+    private CacheManager getCacheManager() {
+        if (cacheManager==null) {
+            URL url = this.getClass().getResource("/ehcache.xml");
+            System.out.println("URL calculated as: "+url);
+            cacheManager = CacheManager.create(url);
+        }
+        return cacheManager;
+    }
 
   public String getTranslation(String word) {
     Element elem = getCache().get(word);
@@ -54,7 +63,7 @@ public class TranslationCache {
 
   private Ehcache getCache() {
       final String cacheName = "dictionary";
-      Ehcache retValue = cacheManager.getEhcache(cacheName);
+      Ehcache retValue = getCacheManager().getEhcache(cacheName);
       if (retValue == null) throw new RuntimeException("unable to find cache: "+ cacheName);
       return retValue;
   }
