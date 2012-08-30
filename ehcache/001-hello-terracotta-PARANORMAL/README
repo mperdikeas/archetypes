@@ -1,0 +1,11 @@
+This is a paranormal snapshot.
+It exhibits strange and unnatural behavior.
+Specifically:
+
+ (i) the Ant <java> task fails although the console-run java invocation (in file ./runWithoutAnt) succeeds
+(ii) I am not able to correctly set the -D parameters in the <java><jvmarg> so as to point to the location of the
+     Terracota license file ALTHOUGH I can do so from a console invocation (I think).
+
+Concluding, this curious SNAPSHOT exhibits two cases of inconsistent behaviour between the <Java Ant> run and
+the console java run which I suspect are related and are perhaps triggered by advanced stuff in the terracota
+libraries.
