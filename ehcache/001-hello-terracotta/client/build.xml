@@ -1,4 +1,6 @@
 <project name="ehcache-helloworld" basedir="." default="run">
+
+
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
 
     <property name="project.MainClass.name" value="TranslationClient"/>
@@ -11,6 +13,7 @@
     <property name="javasource.dir"         value="${src.dir}"/>
     <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
     <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+    <property name="runtime-resources.dir"  value="${basedir}/runtime-resources"/>
 
     <path id = "compile.classpath">
       <fileset dir="${compilelibs.dir}">
@@ -61,6 +64,7 @@
 
     <path id = "run.classpath">
         <pathelement path = "${jar-artefact}"/>
+        <pathelement path = "${runtime-resources.dir}"/>
         <fileset dir="${runtimelibs.dir}">
           <include name ="*.jar"/>
         </fileset>
@@ -78,8 +82,17 @@
             </if>
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
+        <echo message="Java version used (ant.java.version): ${ant.java.version}"/>
+        <echo message="Java version used (    java.version): ${java.version}"/>
         <java classname ="${project.MainClass.name}">
+            <permissions>
+                <grant class="javax.management.MBeanTrustPermission" name="register"/>
+                <grant class="java.security.AllPermission"/>
+            </permissions>
              <classpath refid="run.classpath"/>
+             <!-- why do these don't work AND YET work from the command line? -->
+             <!--jvmarg line="-Dcom.tc.productkey.path=/home/mperdikeas/terracotta-license.key"/-->
+             <!--jvmarg line="-Dcom.tc.productkey.path=/home/mperdikeas/software_deployed/terracotta/terracotta-license.key"/-->
         </java>
         </sequential>
     </macrodef>
