@@ -1,8 +1,3 @@
-
-
-
-
-
 import net.sf.ehcache.*;
 
 public class HelloEhcache {
