@@ -64,7 +64,8 @@ public class LoginController implements Serializable {
     }
 
     public String login() {
-        return "terracotatest";
+        l.info("about to return from the login button with value: 'goToEhCacheTest'");
+        return "goToEhCacheTest";
         /*
 		String navOutcome = null;
 		UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());

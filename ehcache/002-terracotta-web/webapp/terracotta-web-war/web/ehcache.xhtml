@@ -12,21 +12,24 @@
 
 
 <h:body>
-<h3>Welcome to Shiro / Terracotta Login Page (dummy for now)</h3>
-<p>You must login to visit pages in our secure area</p>
+<h3>Welcome to EhCache Test page</h3>
+<p>You must have the permission 'canehcachetest' to visit this page</p>
 <p style="color:red">${error}</p>
 
 
-
-       <h:form id="loginForm">
+       <h:form>
+         Enter new key:
          <h:panelGrid columns="2" cellspacing="10px" >
-             <p:outputLabel for="username-inpT" value="username: " />
-             <h:inputText      value="#{loginController.username}"   required="true" id="username-inpT"/>
-             <p:outputLabel for="password-inpT" value="password: " />
-             <p:password      value="#{loginController.password}"   required="true" id="password-inpT"/>
+             <p:outputLabel for="key-inpT" value="key: " />
+             <h:inputText      value="#{ehCacheTestController.key}"   required="true" id="key-inpT"/>
+             <ui:remove>
+                 <p:outputLabel for="password-inpT" value="value: " />
+                 <p:password      value="#{ehCacheTestController.password}"   required="true" id="password-inpT"/>
+             </ui:remove>
          </h:panelGrid>
-         <p:commandButton action="#{loginController.login}"      value="login"/> <!-- maybe we should update a growl message -->
+         <p:commandButton action="#{ehCacheTestController.queryCache}"      value="query cache"/> <!-- maybe we should update a growl message -->
        </h:form>
+
 
 <br clear="left" />
 <p><a href='index.xhtml'>Home</a></p>
