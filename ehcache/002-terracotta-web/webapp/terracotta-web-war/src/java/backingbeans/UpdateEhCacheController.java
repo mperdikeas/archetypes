@@ -42,7 +42,7 @@ import translation.TranslationCache;
 public class UpdateEhCacheController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     
-    private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
+    // private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
 
     private String newWord;
     
@@ -76,7 +76,7 @@ public class UpdateEhCacheController implements Serializable {
     public String updateCache() {
         l.info("flash content is:"        +getFlashContent());
         l.info("provided translation is: "+translation);
-        tc.putTranslation(newWord, translation);
+        TranslationCache.getTranslationCache().putTranslation(newWord, translation);
         return "goToEhCacheTest";
     }
 }

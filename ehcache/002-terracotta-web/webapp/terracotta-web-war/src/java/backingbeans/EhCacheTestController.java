@@ -43,7 +43,7 @@ public class EhCacheTestController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=EhCacheTestController.class.getName();
     
-    private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
+    // private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
 
     private String msg;
     
@@ -68,8 +68,8 @@ public class EhCacheTestController implements Serializable {
 
 
     public String queryCache() {
-        l.info(String.format("cache contains: %d elements", tc.getSizeOfTranslationDictionary()));
-        String translation = tc.getTranslation(key);
+        l.info(String.format("cache contains: %d elements", TranslationCache.getTranslationCache().getSizeOfTranslationDictionary()));
+        String translation = TranslationCache.getTranslationCache().getTranslation(key);
         l.info(String.format("%s --> %s", key, translation));
         msg = (translation==null)?String.format("translation for key '%s' not found", key):
                                   String.format("translation for '%s' is '%s'"      , key, translation);
