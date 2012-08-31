@@ -64,8 +64,12 @@ public class UpdateEhCacheController implements Serializable {
         this.translation = translation;
     }
 
+    @PostConstruct
+    public void init() {
+          this.newWord = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("newWord");
+    }
+
     public String updateCache() {
-        String newWord = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("newWord");
         tc.putTranslation(newWord, translation);
         return "goToEhCacheTest";
     }
