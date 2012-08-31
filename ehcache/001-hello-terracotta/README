@@ -1,0 +1,3 @@
+This is a very simple use case showing
+two ehcaches being synchronized with a 
+Terracotta server at the back.
