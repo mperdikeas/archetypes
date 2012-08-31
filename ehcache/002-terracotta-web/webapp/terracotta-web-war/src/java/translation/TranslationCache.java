@@ -44,6 +44,7 @@ public class TranslationCache {
 
     public void putTranslation(String word, String translation) {
         getCache().put(new Element(word, translation));
+        l.info(String.format("just put a new element (%s,%s), into the cache", word, translation));
     }
 
   private String getCachedTranslation(String name) {

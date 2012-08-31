@@ -38,7 +38,7 @@ import org.apache.shiro.subject.Subject;
 import translation.TranslationCache;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class UpdateEhCacheController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     
@@ -66,10 +66,16 @@ public class UpdateEhCacheController implements Serializable {
 
     @PostConstruct
     public void init() {
-          this.newWord = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("newWord");
+        this.newWord = getFlashContent();
+    }
+
+    public String getFlashContent() {
+        return (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("newWord");
     }
 
     public String updateCache() {
+        l.info("flash content is:"        +getFlashContent());
+        l.info("provided translation is: "+translation);
         tc.putTranslation(newWord, translation);
         return "goToEhCacheTest";
     }
