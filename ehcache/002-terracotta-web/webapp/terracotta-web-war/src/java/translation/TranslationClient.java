@@ -1,3 +1,4 @@
+package translation;
 import java.io.Console;
 import java.io.IOException;
 public class TranslationClient {

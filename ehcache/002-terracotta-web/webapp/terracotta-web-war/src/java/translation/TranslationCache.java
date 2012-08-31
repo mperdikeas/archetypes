@@ -1,3 +1,5 @@
+package translation;
+
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -8,6 +10,13 @@ import java.util.List;
 import java.net.URL;
 
 public class TranslationCache {
+
+    private static TranslationCache tc = null;
+    public static TranslationCache getTranslationCache() {
+        if (tc == null) 
+            tc = new TranslationCache();
+        return tc;
+    }
 
     private static final TranslationDatabase translationDatabase = new TranslationDatabase();
 
@@ -35,6 +44,10 @@ public class TranslationCache {
     Element elem = getCache().get(name);
     return elem != null ? (String) elem.getValue() : null;
   }
+
+    public int getSizeOfTranslationDictionary() {
+        return getOriginalWordsInCache().length;
+    }
 
   public String[] getOriginalWordsInCache() {
     @SuppressWarnings("unchecked")

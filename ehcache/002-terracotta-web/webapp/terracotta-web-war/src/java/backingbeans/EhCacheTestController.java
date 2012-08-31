@@ -35,13 +35,15 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+import translation.TranslationCache;
 
 @ManagedBean
 @RequestScoped
 public class EhCacheTestController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=EhCacheTestController.class.getName();
-
+    
+    private TranslationCache tc = TranslationCache.getTranslationCache();
     private String key;
     
     public String getKey() {
@@ -53,7 +55,8 @@ public class EhCacheTestController implements Serializable {
     }
 
     public String queryCache() {
-        l.info("unimplemented for now");
+        l.info(String.format("cache contains: %d elements", tc.getSizeOfTranslationDictionary()));
+        // tc.getTranslation(getKey());
         return null;
     }
 }
