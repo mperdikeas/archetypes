@@ -38,45 +38,36 @@ import org.apache.shiro.subject.Subject;
 import translation.TranslationCache;
 
 @ManagedBean
-@ViewScoped
-public class EhCacheTestController implements Serializable {
+@RequestScoped
+public class UpdateEhCacheController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
-    private static final String CLASSNAME=EhCacheTestController.class.getName();
     
     private TranslationCache tc = TranslationCache.getTranslationCache();
 
-    private String msg;
+    private String newWord;
     
-    public String getMsg() {
-        return msg;
+    public String getNewWord() {
+        return newWord;
     }
     
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setNewWord(String newWord) {
+       this.newWord = newWord;
     }
 
-
-    private String key;
+    private String translation;
     
-    public String getKey() {
-        return key;
+    public String getTranslation() {
+        return translation;
     }
     
-    public void setKey(String key) {
-        this.key = key;
+    public void setTranslation(String translation) {
+        this.translation = translation;
     }
 
-
-    public String queryCache() {
-        l.info(String.format("cache contains: %d elements", tc.getSizeOfTranslationDictionary()));
-        String translation = tc.getTranslation(key);
-        l.info(String.format("%s --> %s", key, translation));
-        msg = (translation==null)?String.format("translation for key '%s' not found", key):
-                                  String.format("translation for '%s' is '%s'"      , key, translation);
-        if (translation==null) {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put("newWord", getKey());
-            return "goToUpdateCache";
-        } else return null;
+    public String updateCache() {
+        String newWord = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("newWord");
+        tc.putTranslation(newWord, translation);
+        return "goToEhCacheTest";
     }
 }
 

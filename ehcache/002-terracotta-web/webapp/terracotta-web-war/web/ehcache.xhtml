@@ -27,6 +27,7 @@
              </ui:remove>
          </h:panelGrid>
 
+         <!-- the two forms (ajax set to false or explicit update) are equivalent -->
          <p:commandButton action="#{ehCacheTestController.queryCache}" value="query cache" ajax="false"/>
          <ui:remove>
              <p:commandButton action="#{ehCacheTestController.queryCache}" value="query cache" update=":commentary"/>

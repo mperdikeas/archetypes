@@ -42,6 +42,10 @@ public class TranslationCache {
     return (String) elem.getValue();
   }
 
+    public void putTranslation(String word, String translation) {
+        getCache().put(new Element(word, translation));
+    }
+
   private String getCachedTranslation(String name) {
     Element elem = getCache().get(name);
     return elem != null ? (String) elem.getValue() : null;

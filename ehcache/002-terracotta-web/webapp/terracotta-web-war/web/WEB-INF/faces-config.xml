@@ -19,6 +19,15 @@
     </navigation-case>
 </navigation-rule>
 
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToUpdateCache</from-outcome>
+        <to-view-id>/updateehcache.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
 
 <!-- SHIRO NAVIGATION RULES
 <navigation-rule>
