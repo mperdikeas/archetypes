@@ -34,6 +34,7 @@
                 <include name="**/*.conf"/>
                 <include name="**/*.properties"/>
                 <include name="**/*.xml"/>
+                <include name="**/*.key"/> <!-- terracota license key -->
             </patternset>
             </fileset>
         </copy>

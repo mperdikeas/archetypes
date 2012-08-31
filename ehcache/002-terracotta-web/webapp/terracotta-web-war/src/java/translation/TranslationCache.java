@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.net.URL;
-
+import java.util.logging.Logger;
 public class TranslationCache {
+
+    private final Logger l = Logger.getLogger(this.getClass().getName());
 
     private static TranslationCache tc = null;
     public static TranslationCache getTranslationCache() {
@@ -55,9 +57,18 @@ public class TranslationCache {
     List<String> list = new ArrayList<String>();
     while (keys.hasNext()) {
       String name = keys.next();
-      if (getCachedTranslation(name) != null) {
-        list.add(name);
-      } else throw new RuntimeException("very rare - wasn't expecting that - race condition?");
+      l.info(String.format("checking for the translation of word: '%s'", name));
+      
+      boolean showWeirdCondition = false;
+      if (showWeirdCondition) {
+          if (getCachedTranslation(name) != null) {
+            list.add(name);
+          } else throw new RuntimeException("very rare - wasn't expecting that - race condition?");
+                  // this is really happening with my terracotta installation
+                  // how is it possible that a key is found in the cache without the value ?
+                  // I should investigate into it.
+      }
+      else list.add(name);
     }
     return list.toArray(new String[list.size()]);
   }
