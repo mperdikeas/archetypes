@@ -11,24 +11,28 @@ import java.net.URL;
 import java.util.logging.Logger;
 public class TranslationCache {
 
-    private final Logger l = Logger.getLogger(this.getClass().getName());
+    private static final Logger l = Logger.getLogger(TranslationCache.class.getName());
 
     private static TranslationCache tc = null;
     public static TranslationCache getTranslationCache() {
-        if (tc == null) 
+        l.info(" I am here (TranslationCache#getTranslationCache())" );
+        if (tc == null) {
+            l.info("TranslationCache#getTranslationCache(): tc is null, setting it");
             tc = new TranslationCache();
+        } else l.info("TranslationCache#TranslationCache(): tc is not null");
         return tc;
     }
 
     private static final TranslationDatabase translationDatabase = new TranslationDatabase();
 
-    private static CacheManager cacheManager = null;
+    private static final transient CacheManager cacheManager = CacheManager.create(TranslationCache.class.getResource("/ehcache.xml"));
     private CacheManager getCacheManager() {
+        /*
         if (cacheManager==null) {
             URL url = this.getClass().getResource("/ehcache.xml");
             System.out.println("URL calculated as: "+url);
             cacheManager = CacheManager.create(url);
-        }
+        }*/
         return cacheManager;
     }
 

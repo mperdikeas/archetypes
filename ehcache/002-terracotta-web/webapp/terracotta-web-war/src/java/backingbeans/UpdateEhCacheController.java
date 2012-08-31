@@ -42,7 +42,7 @@ import translation.TranslationCache;
 public class UpdateEhCacheController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     
-    private TranslationCache tc = TranslationCache.getTranslationCache();
+    private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
 
     private String newWord;
     

@@ -43,7 +43,7 @@ public class EhCacheTestController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=EhCacheTestController.class.getName();
     
-    private TranslationCache tc = TranslationCache.getTranslationCache();
+    private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
 
     private String msg;
     
