@@ -17,7 +17,6 @@ only logged in users with the admin role can visit this web page because it's in
 <h:link value="Home" outcome="/index.xhtml"/> 
 
 <!-- all the following options are discussed here: http://stackoverflow.com/questions/7978601/is-there-something-better-to-generate-absolute-links -->
-|<h:outputLink value="/nosecurity/GetAllUsers">                                       Get all users</h:outputLink>
 |<h:outputLink value="#{facesContext.externalContext.requestContextPath}/GetAllUsers">Get all users</h:outputLink>
 |<h:outputLink value="#{request.contextPath}/GetAllUsers">                            Get all users</h:outputLink>
 <!-- one can also use the base tag: http://stackoverflow.com/questions/1889076/is-it-recommended-to-use-the-base-html-tag/1889957#1889957 -->
