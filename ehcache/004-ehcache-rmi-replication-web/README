@@ -2,3 +2,7 @@ In this use case I am trying to setup a small example using
 EhCache on a web application (no Shiro yet). The method
 to achieve replication is not a Terracotta server array
 but rather EhCache RMI replication.
+
+NB: the name terracotta that appears in the folders, deployment
+artefacts and the application's context is a misnomer.
+I don't have the luxury to worry about this right now.
