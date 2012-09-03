@@ -42,6 +42,15 @@ public class LoginController implements Serializable {
     private final Logger l = Logger.getLogger(this.getClass().getName());
     private static final String CLASSNAME=LoginController.class.getName();
 
+    private String message;
+    
+    public String getMessage() {
+        return message;
+    }
+    
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     private String username;
     
@@ -96,16 +105,13 @@ public class LoginController implements Serializable {
                            }
                        }
 	} catch (UnknownAccountException ex) {
-		ex.printStackTrace();
-		// request.setAttribute("error", ex.getMessage() );
-		
+            setMessage("account does not exist - please try again.");
 	} catch (IncorrectCredentialsException ex) {
-		ex.printStackTrace();
-		// request.setAttribute("error", ex.getMessage());
+            setMessage("wrong password - please try again.");
 	}
-	
 	catch (Exception ex) {
 		ex.printStackTrace();
+                throw new RuntimeException(); // panic
 		// request.setAttribute("error", "Login NOT SUCCESSFUL - cause not known!");
 	}
         System.out.println("returning: "+navOutcome);

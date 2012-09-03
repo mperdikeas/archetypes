@@ -12,11 +12,11 @@
 
 
 <h:body>
-<h3>Welcome to Shiro / Terracotta Login Page (dummy for now)</h3>
+<h3>Welcome to EhCache / Shiro Login Page</h3>
 <p>You must login to visit pages in our secure area</p>
 <p style="color:red">${error}</p>
 
-
+       <h:outputText id="message" value="${loginController.message}"/>
 
        <h:form id="loginForm">
          <h:panelGrid columns="2" cellspacing="10px" >
@@ -25,7 +25,7 @@
              <p:outputLabel for="password-inpT" value="password: " />
              <p:password      value="#{loginController.password}"   required="true" id="password-inpT"/>
          </h:panelGrid>
-         <p:commandButton action="#{loginController.login}"      value="login"/> <!-- maybe we should update a growl message -->
+         <p:commandButton action="#{loginController.login}" value="login" update=":message"/> <!-- maybe we should update a growl message -->
        </h:form>
 
 <br clear="left" />
