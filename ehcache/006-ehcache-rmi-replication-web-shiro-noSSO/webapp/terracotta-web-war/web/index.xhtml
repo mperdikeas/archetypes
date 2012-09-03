@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<h:head><title>Terracotta on the Web Home Page</title></h:head>
+
+<body>
+<h3>Welcome to the Terracotta on the Web Home Page</h3>
+<p>This web site demonstrates the use of EhCache and Terracotta for web caching </p>
+
+<h:link value="login" outcome="/login.xhtml"/>
+
+<ui:remove> DELME not used for non-shiro
+<shiro:guest>
+    <p><a href="login.xhtml">Please login.</a></p>
+</shiro:guest>
+</ui:remove>
+
+
+
+<ui:remove>
+DELME <shiro:authenticated> 
+    <shiro:hasRole name="user">
+        <a href="user/index.xhtml">User Area</a>
+    </shiro:hasRole>
+    <shiro:hasPermission name="secure">
+        <a href="staff/index.xhtml">Secure Area (for staff)</a>
+    </shiro:hasPermission>
+    <shiro:hasRole name="admin">
+        <a href="admin/index.xhtml" >Admin Area</a>
+    </shiro:hasRole>
+    | 
+         <h:form id="logOutIdDummyForm">
+             <p:commandLink ajax="false" action="#{loginController.logout}" value="Log out when you're finished."/>
+         </h:form>
+</shiro:authenticated>
+</ui:remove>
+
+</body>
+</html>

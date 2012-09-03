@@ -1,0 +1,4 @@
+In this use case I will need to combine Shiro with EhCache 
+with Shiro using the JdbcRealm, independently from EhCache and
+having both applications share the same Database but with no 
+SSO functionality yet.
