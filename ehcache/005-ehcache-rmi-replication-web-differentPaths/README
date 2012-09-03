@@ -1,8 +1,13 @@
-In this use case I am trying to expand upon the
+In this use case I managed to expand upon the
 previous example of using EhCache on a web application (no Shiro yet) using
 RMI replication (no Terracotta server array).
-The difference in this use case is that I plan to deploy on different paths
+The difference in this use case is that I managed to deploy on different paths
 so as to test that tabbed browsing of different applications is possible.
+And is indeed possible (see my SO post: http://stackoverflow.com/questions/12247265/cookie-storing-strategies-and-tabbed-browsing-of-different-jsf-applications-givi). It turns out that session mixup is happening
+when an application is deployed on the same IP, same root context (path), port does not
+come into play. So to avoid mixing up sessions when doing tabbed browsing on the same
+browser one has to either use a different IP or a different path or both. Differentiating
+on the basis of the port won't cut it as cookies are not stored per port.
 
 NB: the name terracotta that appears in the folders, deployment
 artefacts and the application's context is a misnomer.
