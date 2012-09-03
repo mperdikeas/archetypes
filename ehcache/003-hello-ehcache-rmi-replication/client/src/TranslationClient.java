@@ -9,7 +9,13 @@ public class TranslationClient {
         while (true) {
             System.out.println("word to translate: ");
             String word = c.readLine();
-            System.out.println("translation is: "+tc.getTranslation(word));
+            if (tc.getTranslation(word) == null) {
+                System.out.println(String.format("word %s is unknown in cache, add translation:", word));
+                String translation = c.readLine();
+                tc.putTranslation(word, translation);
+                System.out.println(String.format("translation %s --> %s added in cache", word, translation));
+            } else
+                System.out.println("translation is: "+tc.getTranslation(word));
         }
     }
 }
