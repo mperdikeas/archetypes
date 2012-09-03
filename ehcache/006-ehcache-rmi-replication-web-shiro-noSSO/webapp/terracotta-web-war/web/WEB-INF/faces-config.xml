@@ -28,8 +28,6 @@
     </navigation-case>
 </navigation-rule>
 
-
-<!-- SHIRO NAVIGATION RULES
 <navigation-rule>
     <from-view-id>*</from-view-id>
     <navigation-case>
@@ -65,6 +63,5 @@
         <redirect/>
     </navigation-case>
 </navigation-rule>
--->
 
 </faces-config>

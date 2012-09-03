@@ -10,21 +10,20 @@
 <h:head><title>Terracotta on the Web Home Page</title></h:head>
 
 <body>
-<h3>Welcome to the Terracotta on the Web Home Page</h3>
-<p>This web site demonstrates the use of EhCache and Terracotta for web caching </p>
+<h3>Welcome to the EhCache / Shiro on the Web Home Page</h3>
+<p>This web site demonstrates the use of EhCache for web caching and Shiro for authorization / authentication (no SSO yet)</p>
 
-<h:link value="login" outcome="/login.xhtml"/>
 
-<ui:remove> DELME not used for non-shiro
+
+
 <shiro:guest>
     <p><a href="login.xhtml">Please login.</a></p>
 </shiro:guest>
-</ui:remove>
 
 
 
-<ui:remove>
-DELME <shiro:authenticated> 
+
+<shiro:authenticated> 
     <shiro:hasRole name="user">
         <a href="user/index.xhtml">User Area</a>
     </shiro:hasRole>
@@ -39,7 +38,7 @@ DELME <shiro:authenticated>
              <p:commandLink ajax="false" action="#{loginController.logout}" value="Log out when you're finished."/>
          </h:form>
 </shiro:authenticated>
-</ui:remove>
+
 
 </body>
 </html>

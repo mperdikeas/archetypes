@@ -64,55 +64,52 @@ public class LoginController implements Serializable {
     }
 
     public String login() {
-        l.info("about to return from the login button with value: 'goToEhCacheTest'");
-        return "goToEhCacheTest";
-        /*
-		String navOutcome = null;
-		UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
-		try {
-			Subject subject = SecurityUtils.getSubject();
-			subject.login(token);
-			token.clear();
-                        if (subject.isAuthenticated()) {
-                            try {
-                                if ( subject.hasRole("admin") ) System.out.println(subject.getPrincipal() + " has admin role");
-                                else                            System.out.println(subject.getPrincipal() +  " doesn't have admin role");
-                                if (subject.hasRole("user"))    System.out.println(subject.getPrincipal() + " has user role");
-                                else                            System.out.println(subject.getPrincipal() + " doesn't have user role");
-                                if (subject.hasRole("staff"))   System.out.println(subject.getPrincipal() + " has staff role");
-                                else                            System.out.println(subject.getPrincipal() + " doesn't have staff role");
-                                
-                                if       (subject.isPermitted("secure")) System.out.println(subject.getPrincipal()+" has the 'secure' permission");
-                                if       (subject.isAuthenticated() && subject.isPermitted("secure"))  navOutcome = "goToStaffArea";
-                                else if  (subject.isAuthenticated() && subject.hasRole    ("user"  ))  navOutcome = "goToUserArea";
-                                else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  navOutcome = "goToAdminArea";
-                                else                                                                   navOutcome = "unauthorized";
-                            } catch (Exception e) { // due to the 'if' above we shouldn't see any exceptions in the above section
-                                e.printStackTrace();
-                                throw new RuntimeException("panic: "+e);
-                            }
-                        }
-		} catch (UnknownAccountException ex) {
-			ex.printStackTrace();
-			// request.setAttribute("error", ex.getMessage() );
-			
-		} catch (IncorrectCredentialsException ex) {
-			ex.printStackTrace();
-			// request.setAttribute("error", ex.getMessage());
-		}
+	String navOutcome = null;
+	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
+	try {
+		Subject subject = SecurityUtils.getSubject();
+		subject.login(token);
+		token.clear();
+                       if (subject.isAuthenticated()) {
+                           try {
+                               if ( subject.hasRole("admin") ) System.out.println(subject.getPrincipal() + " has admin role");
+                               else                            System.out.println(subject.getPrincipal() +  " doesn't have admin role");
+                               if (subject.hasRole("user"))    System.out.println(subject.getPrincipal() + " has user role");
+                               else                            System.out.println(subject.getPrincipal() + " doesn't have user role");
+                               if (subject.hasRole("staff"))   System.out.println(subject.getPrincipal() + " has staff role");
+                               else                            System.out.println(subject.getPrincipal() + " doesn't have staff role");
+                               if (subject.hasRole("cacher"))   System.out.println(subject.getPrincipal() + " has cacher role");
+                               else                            System.out.println(subject.getPrincipal() + " doesn't have cacher role");
+                               
+                               if       (subject.isPermitted("secure")) System.out.println(subject.getPrincipal()+" has the 'secure' permission");
+                               if       (subject.isAuthenticated() && subject.isPermitted("secure"))  navOutcome = "goToStaffArea";
+                               else if  (subject.isAuthenticated() && subject.hasRole    ("user"  ))  navOutcome = "goToUserArea";
+                               else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  navOutcome = "goToAdminArea";
+                               else if  (subject.isAuthenticated() && subject.hasRole    ("cacher" )) navOutcome = "goToEhCacheTest";
+                               else                                                                   navOutcome = "unauthorized";
+                           } catch (Exception e) { // due to the 'if' above we shouldn't see any exceptions in the above section
+                               e.printStackTrace();
+                               throw new RuntimeException("panic: "+e);
+                           }
+                       }
+	} catch (UnknownAccountException ex) {
+		ex.printStackTrace();
+		// request.setAttribute("error", ex.getMessage() );
 		
-		catch (Exception ex) {
-			ex.printStackTrace();
-			// request.setAttribute("error", "Login NOT SUCCESSFUL - cause not known!");
-		}
-                System.out.println("returning: "+navOutcome);
-                return navOutcome;
-        */
+	} catch (IncorrectCredentialsException ex) {
+		ex.printStackTrace();
+		// request.setAttribute("error", ex.getMessage());
+	}
+	
+	catch (Exception ex) {
+		ex.printStackTrace();
+		// request.setAttribute("error", "Login NOT SUCCESSFUL - cause not known!");
+	}
+        System.out.println("returning: "+navOutcome);
+        return navOutcome;
     }
 
     public String logout() {
-        return null;
-        /*
 	Subject subject = SecurityUtils.getSubject();
         if (subject != null) {
             //see:  http://jsecurity.org/api/index.html?org/jsecurity/web/DefaultWebSecurityManager.html
@@ -124,6 +121,5 @@ public class LoginController implements Serializable {
             session.invalidate();
         }        
         return "logOut";
-        */
     }
 }

@@ -48,7 +48,7 @@
 
 
 
-<!-- disabled for the non-SHIRO-scenario DELME
+
   <listener>
        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
   </listener>
@@ -63,6 +63,7 @@
         <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+<!--
   <servlet>
     <description>Finds all users in the data store</description>
     <display-name>GetAllUsers</display-name>
