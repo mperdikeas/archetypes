@@ -1,0 +1,9 @@
+In this use case I am trying to expand upon the
+previous example of using EhCache on a web application (no Shiro yet) using
+RMI replication (no Terracotta server array).
+The difference in this use case is that I plan to deploy on different paths
+so as to test that tabbed browsing of different applications is possible.
+
+NB: the name terracotta that appears in the folders, deployment
+artefacts and the application's context is a misnomer.
+I don't have the luxury to worry about this right now.
