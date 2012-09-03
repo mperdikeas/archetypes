@@ -1,4 +1,12 @@
-In this use case I will need to combine Shiro with EhCache 
+In this use case I managed to combine Shiro with EhCache 
 with Shiro using the JdbcRealm, independently from EhCache and
 having both applications share the same Database but with no 
 SSO functionality yet.
+
+Note: some of the navigation logic and options is sub-standard 
+but I don't have the time to fix that just now.
+Also, the name 'terracotta' is a misnomer (no terracotta is involved)
+but I don't have the time to fix that either.
+
+Next, and hopefully final step would be to implement SSO with Shiro
+using EhCache.
