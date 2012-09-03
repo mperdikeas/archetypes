@@ -2,3 +2,8 @@ This is a very simple use case showing
 two ehcaches being synchronized without
 using Terracotta Server Array at the back,
 just EhCache replication with RMI.
+I've also built upon the previous foundation
+and now the user is prompted to add a translation
+in the cache is the word is not found, and the word
+becomes immediately available to the other cache 
+as well.
