@@ -1,0 +1,2 @@
+In this use case I am trying to expand on top of use case 006
+by providing SSO support with Shiro using distributed EhCache.
