@@ -1,0 +1,1 @@
+ant -f client/build.xml -Dehcache_config=ehcache-2.xml

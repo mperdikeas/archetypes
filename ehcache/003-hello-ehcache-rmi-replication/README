@@ -1,0 +1,4 @@
+This is a very simple use case showing
+two ehcaches being synchronized without
+using Terracotta Server Array at the back,
+just EhCache replication with RMI.
