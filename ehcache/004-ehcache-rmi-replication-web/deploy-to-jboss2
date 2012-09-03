@@ -1,0 +1,1 @@
+ant -Dehcache_conf=ehcache-2.xml -Dpublish.dir=/home/mperdikeas/jboss-standalone-deployments2 -f webapp/build.xml
