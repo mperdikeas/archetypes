@@ -37,10 +37,8 @@
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
         </javac>
-        <!-- we don't need these for the non-Shiro build
         <copy file="${conf.dir}/persistence.xml" todir="${build.dir}/META-INF"/>
         <copy file="${conf.dir}/hsqldb_foo-ds.xml"   todir="${build.dir}/META-INF"/>
-        -->
     </target>
 
     <target name="jar" depends="compile"

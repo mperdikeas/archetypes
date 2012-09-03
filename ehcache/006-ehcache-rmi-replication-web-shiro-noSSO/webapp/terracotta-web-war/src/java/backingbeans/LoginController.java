@@ -67,8 +67,11 @@ public class LoginController implements Serializable {
 	String navOutcome = null;
 	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
 	try {
+                System.out.println("1");
 		Subject subject = SecurityUtils.getSubject();
+                System.out.println("2");
 		subject.login(token);
+                System.out.println("3");
 		token.clear();
                        if (subject.isAuthenticated()) {
                            try {
