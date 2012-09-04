@@ -1,0 +1,17 @@
+Please also see the README of use case 007 (without the "*-b" at the end).
+****************************************************************
+
+In this Use Case I am frantically trying to solve the instability of Use Case 7
+by modifying EhCache source code to replace logging with System.out.printlns
+(hence, the file "ehcache-core-2.7.0-SNAPSHOT.jar" one sees in the libs of
+this Use Case is produced by my own modified EhCache sources).
+
+But apparently this strategy is failing so I am left with three options:
+
+[  i] try to troubleshoot JBoss AS logging problem with renewed vigor
+      as this is now where the crux of the matter lies.
+
+[ ii] modify JBoss AS sources instead and solve the logging problem there.
+
+[iii] drop the EhCache approach and implement my own Shiro Cache Manager
+      using MemCache.
