@@ -9,7 +9,6 @@ import java.net.URL;
 
 public class EhCacheFacade {
 
-
     private String ehcacheConfigFileName;
     public EhCacheFacade(String ehcacheConfigFileName) {
         this.ehcacheConfigFileName = ehcacheConfigFileName;
@@ -29,11 +28,15 @@ public class EhCacheFacade {
         return cacheManager;
     }
 
-
-
   private String getValueAsString(String name) {
     Element elem = getCache().get(name);
-    return elem != null ? (String) elem.getValue() : null;
+    if (elem != null) {
+        Object key   = elem.getObjectKey();
+        Object value = elem.getObjectValue();
+        System.out.println("key class is: "+key.getClass());
+        System.out.println("value class is: "+value.getClass());
+    }
+    return elem != null ? elem.toString() : "null";
   }
 
   public String[] getCacheContents() {

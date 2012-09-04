@@ -121,14 +121,16 @@ public class LoginController implements Serializable {
     public String logout() {
 	Subject subject = SecurityUtils.getSubject();
         if (subject != null) {
-            //see:  http://jsecurity.org/api/index.html?org/jsecurity/web/DefaultWebSecurityManager.html
             subject.logout();
         }
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        if( session != null ) {
-            session.invalidate();
-        }        
+        final boolean containerSessions = false;
+        if (containerSessions)  {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            if( session != null ) {
+                session.invalidate();
+            }        
+        }
         return "logOut";
     }
 }

@@ -65,6 +65,7 @@
     <path id = "run.classpath">
         <pathelement path = "${jar-artefact}"/>
         <pathelement path = "${runtime-resources.dir}"/>
+        <pathelement path = "../webapp/terracotta-web-war/web/WEB-INF/classes"/> <!-- this is ugly - will need to create a backing beans jar to link to -->
         <fileset dir="${runtimelibs.dir}">
           <include name ="*.jar"/>
         </fileset>
