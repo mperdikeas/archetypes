@@ -20,6 +20,8 @@ public class ShiroMemCacheConsoleClient {
                             break;
             case "remove" : remove(command[1]);
                             break;
+            case "clear"  : clear();
+                            break;
             case "keys"   : keys();
                             break;
             default:
@@ -39,6 +41,10 @@ public class ShiroMemCacheConsoleClient {
 
     private static void remove(String key) {
         c.remove(key);
+    }
+
+    private static void clear() {
+        c.clear();
     }
 
     private static void keys() {

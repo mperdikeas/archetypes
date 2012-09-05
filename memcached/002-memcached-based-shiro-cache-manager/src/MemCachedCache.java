@@ -23,24 +23,36 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         return retValue;
     }
 
-    private void addToKeys(K key) throws Exception {
+    private void synchKeys() {
+        OperationFuture<Boolean> result = memcachedClient.set(shiroCacheName, keysExpiry, keys);
+        try {
+            if (!result.get()) throw new CacheException();
+        } catch (Exception e) {
+            throw new CacheException(e.getMessage());
+        }
+    }
+
+    private void addToKeys(K key) {
         System.out.format("asked to add key: %s to the list of keys", key);
         this.keys = getKeys();
         if (this.keys==null)
             this.keys = new TreeSet<K>();
         this.keys.add(key);
-        OperationFuture<Boolean> result = memcachedClient.set(shiroCacheName, keysExpiry, keys);
-        System.out.format("\n %s to add to memcache, under key %s the structure: %s", (result.get()?"managed":"did not manage"), shiroCacheName, keys);
+        synchKeys();
     }
 
-    private void removeFromKeys(K key) throws Exception {
+    private void removeFromKeys(K key) {
         System.out.format("asked to remove key: %s from the list of keys", key);
         this.keys = getKeys();
         if (this.keys==null)
             this.keys = new TreeSet<K>();
         this.keys.remove(key);
-        OperationFuture<Boolean> result = memcachedClient.set(shiroCacheName, keysExpiry, keys);
-        System.out.format("\n %s to add to memcache, under key %s the structure: %s", (result.get()?"managed":"did not manage"), shiroCacheName, keys);
+        synchKeys();
+    }
+
+    private void clearKeys() {
+        this.keys = new TreeSet<K>();
+        synchKeys();
     }
 
     public MemCachedCache(MemcachedClient memcachedClient, String shiroCacheName) {
@@ -50,7 +62,11 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     }
 
     public void clear() {
-        throw new UnsupportedOperationException();
+        this.keys = getKeys();
+        for (K key : keys) {
+            memcachedClient.delete(memCacheKey(key));
+        }
+        clearKeys();
     }
 
     public V get(K key) {
@@ -73,10 +89,8 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         OperationFuture<Boolean> result = memcachedClient.set(memCacheKey, expiry, value);
         try {
             if (!result.get()) throw new CacheException(String.format("failed to set key / value pair = %s / %s (original key=%s)", key, value, memCacheKey));
-            addToKeys(key);
-        } catch (Exception e) {
-            throw new CacheException(e.getMessage());
-        }
+        } catch (Exception e) { throw new CacheException(e.getMessage()); }
+        addToKeys(key);
         return prevValue;
     }
 
@@ -85,10 +99,8 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         OperationFuture<Boolean> removeResult = memcachedClient.delete(memCacheKey(key));
         try {
             if (!removeResult.get()) throw new CacheException("failed to remove key: "+key);
-            removeFromKeys(key);
-        } catch (Exception e) {
-            throw new CacheException(e.getMessage());
-        }
+        } catch (Exception e) { throw new CacheException(e.getMessage()); }
+        removeFromKeys(key);
         return prevValue;
     }
 
