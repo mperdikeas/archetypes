@@ -1,0 +1,3 @@
+In this use case I am building upon USE CASE 002 to 
+implement a Shiro CacheManager based on memcache as
+a separate jar.
