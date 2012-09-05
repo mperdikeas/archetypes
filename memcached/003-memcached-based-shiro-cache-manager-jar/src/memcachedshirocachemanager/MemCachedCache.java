@@ -1,7 +1,7 @@
 package memcachedshirocachemanager;
 
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.HashSet;
 import java.util.Collection;
 import java.net.InetSocketAddress;
 
@@ -45,7 +45,7 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         System.out.format("asked to add key: %s to the list of keys", key);
         this.keys = getKeys();
         if (this.keys==null)
-            this.keys = new TreeSet<K>();
+            this.keys = new HashSet<K>();
         this.keys.add(key);
         synchKeys();
     }
@@ -54,13 +54,13 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         System.out.format("asked to remove key: %s from the list of keys", key);
         this.keys = getKeys();
         if (this.keys==null)
-            this.keys = new TreeSet<K>();
+            this.keys = new HashSet<K>();
         this.keys.remove(key);
         synchKeys();
     }
 
     private void clearKeys() {
-        this.keys = new TreeSet<K>();
+        this.keys = new HashSet<K>();
         synchKeys();
     }
 
@@ -117,7 +117,7 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
 
     public Collection<V> values() {
         this.keys = getKeys();
-        Set<V> retValue = new TreeSet<V>();
+        Set<V> retValue = new HashSet<V>();
         if (this.keys != null)
             for (K key : this.keys)
                 retValue.add(get(key));
