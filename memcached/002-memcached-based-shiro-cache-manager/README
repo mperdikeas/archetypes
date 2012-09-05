@@ -1,0 +1,9 @@
+In this use case I managed to implement a fully-functional
+interface to memcached that's supporting Shiro's CacheManager and Cache
+interfaces. Next steps could be to:
+
+(a) try it with composite types to make sure that memcached serialization 
+    plays nicely.
+(b) understand the import of all those K, V and how exactly is genericity
+    used in this project.
+(c) try it as a drop-on replacement to Shiro's default cache manager.
