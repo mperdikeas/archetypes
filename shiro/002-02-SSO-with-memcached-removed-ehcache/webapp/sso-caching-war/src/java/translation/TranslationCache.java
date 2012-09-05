@@ -4,6 +4,7 @@ package translation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -31,7 +32,7 @@ public class TranslationCache {
     private CacheManager getCacheManager() {
         try {
             if (cacheManager==null) {
-                cacheManager = new MemCachedCacheManager();
+                cacheManager = MemCachedCacheManager.createMemCachedCacheManager();
             }
             return cacheManager;
         } catch (Exception e) {
@@ -65,22 +66,25 @@ public class TranslationCache {
 
   public String[] getOriginalWordsInCache() {
     @SuppressWarnings("unchecked")
-    Iterator<String> keys = ((List<String>) getCache().keys()).iterator();
     List<String> list = new ArrayList<String>();
-    while (keys.hasNext()) {
-      String name = keys.next();
-      l.info(String.format("checking for the translation of word: '%s'", name));
-      
-      boolean showWeirdCondition = false;
-      if (showWeirdCondition) {
-          if (getCachedTranslation(name) != null) {
-            list.add(name);
-          } else throw new RuntimeException("very rare - wasn't expecting that - race condition?");
-                  // this has only happened to me once with a terracotta server array
-                  // how is it possible that a key is found in the cache without the value ?
-                  // I should investigate into it.
-      }
-      else list.add(name);
+    Set<String> keysSet = getCache().keys();
+    if (keysSet != null) {
+        Iterator<String> keys = keysSet.iterator();
+        while (keys.hasNext()) {
+          String name = keys.next();
+          l.info(String.format("checking for the translation of word: '%s'", name));
+          
+          boolean showWeirdCondition = false;
+          if (showWeirdCondition) {
+              if (getCachedTranslation(name) != null) {
+                list.add(name);
+              } else throw new RuntimeException("very rare - wasn't expecting that - race condition?");
+                      // this has only happened to me once with a terracotta server array
+                      // how is it possible that a key is found in the cache without the value ?
+                      // I should investigate into it.
+          }
+          else list.add(name);
+        }
     }
     return list.toArray(new String[list.size()]);
   }

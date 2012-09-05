@@ -39,8 +39,9 @@ import org.apache.shiro.subject.Subject;
 @ManagedBean
 @RequestScoped
 public class LoginController implements Serializable {
-    private final Logger l = Logger.getLogger(this.getClass().getName());
+
     private static final String CLASSNAME=LoginController.class.getName();
+    private static final Logger l = Logger.getLogger(CLASSNAME);
 
     private String message;
     
