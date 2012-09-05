@@ -1,4 +1,4 @@
-<project name="terracotta-web-ejb" basedir="." default="rejar">
+<project name="sso-caching-ejb" basedir="." default="rejar">
 
     <!-- Project settings -->
     <property name="project.distname" value="${ant.project.name}"/>

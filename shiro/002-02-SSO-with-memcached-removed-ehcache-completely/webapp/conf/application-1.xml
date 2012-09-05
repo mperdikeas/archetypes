@@ -5,14 +5,14 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
  
 
 <module>
- <ejb>terracotta-web-ejb.jar</ejb>
+ <ejb>sso-caching-ejb.jar</ejb>
 </module>
 
 
 <module>
  <web>
-   <web-uri>terracotta-web-war.war</web-uri>
-   <context-root>terracotta-web-1</context-root>
+   <web-uri>sso-caching-war.war</web-uri>
+   <context-root>sso-caching-1</context-root>
  </web>
 </module>
  

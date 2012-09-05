@@ -1,4 +1,4 @@
-<project name="terracotta-web-war" basedir="." default="rewar">
+<project name="sso-caching-war" basedir="." default="rewar">
 
     <property file="build.properties"/>
     <property name="project.distname"          value="${ant.project.name}"/>
@@ -9,7 +9,7 @@
     <property name="src.dir"                   value="${basedir}/src"/>
     <property name="javasource.dir"            value="${src.dir}/java"/>
     <property name="compilelibs.dir"           value="${basedir}/lib"/>
-    <property name="name.of.ejb.submodule"     value="terracotta-web-ejb"/>
+    <property name="name.of.ejb.submodule"     value="sso-caching-ejb"/>
     <property name="path.to.orders-ejb"        value="../${name.of.ejb.submodule}"/>
 
     <path id = "compile.classpath.without-ejb">

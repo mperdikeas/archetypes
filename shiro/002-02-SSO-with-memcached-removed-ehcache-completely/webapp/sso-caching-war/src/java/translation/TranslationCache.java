@@ -76,7 +76,7 @@ public class TranslationCache {
           if (getCachedTranslation(name) != null) {
             list.add(name);
           } else throw new RuntimeException("very rare - wasn't expecting that - race condition?");
-                  // this is really happening with my terracotta installation
+                  // this has only happened to me once with a terracotta server array
                   // how is it possible that a key is found in the cache without the value ?
                   // I should investigate into it.
       }
