@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<h:head><title>Admin Area Main Page</title></h:head>
+
+<body>
+<h3>Admin Area Main Page</h3>
+<p>Since our web site DOES have security, including securing areas by role,
+only logged in users with the admin role can visit this web page because it's in our admin area.</p>
+<p>
+<h:link value="Home" outcome="/index.xhtml"/> 
+
+<!-- the way shown below and the way shown in 'line B' is discussed here: http://stackoverflow.com/questions/7978601/is-there-something-better-to-generate-absolute-links -->
+|<h:outputLink value="#{facesContext.externalContext.requestContextPath}/GetAllUsers">Get all users</h:outputLink> <!-- line A: equivalent technique with line B -->
+<!-- one can also use the base tag: http://stackoverflow.com/questions/1889076/is-it-recommended-to-use-the-base-html-tag/1889957#1889957 -->
+
+    <shiro:hasPermission name="can_cache">
+|
+        <a href="#{request.contextPath}/cacher/ehcache.xhtml">Cache Area</a> <!-- line B: equivalent technique with line A -->
+    </shiro:hasPermission>
+| 
+         <h:form id="logOutIdDummyForm">
+             <p:commandLink ajax="false" action="#{loginController.logout}" value="Log Out"/>
+         </h:form>
+</p>
+</body>
+</html>
