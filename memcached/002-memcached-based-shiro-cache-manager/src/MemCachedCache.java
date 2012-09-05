@@ -33,6 +33,16 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         System.out.format("\n %s to add to memcache, under key %s the structure: %s", (result.get()?"managed":"did not manage"), shiroCacheName, keys);
     }
 
+    private void removeFromKeys(K key) throws Exception {
+        System.out.format("asked to remove key: %s from the list of keys", key);
+        this.keys = getKeys();
+        if (this.keys==null)
+            this.keys = new TreeSet<K>();
+        this.keys.remove(key);
+        OperationFuture<Boolean> result = memcachedClient.set(shiroCacheName, keysExpiry, keys);
+        System.out.format("\n %s to add to memcache, under key %s the structure: %s", (result.get()?"managed":"did not manage"), shiroCacheName, keys);
+    }
+
     public MemCachedCache(MemcachedClient memcachedClient, String shiroCacheName) {
         this.memcachedClient = memcachedClient;
         this.shiroCacheName  = shiroCacheName;
@@ -58,14 +68,11 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
 
     // according to specs: returns the previous value associated with the given key or null if there was no previous value 
     public V put(K key, V value) {
-        long t0 = System.currentTimeMillis();
-        V prevValue = (V) memcachedClient.get(memCacheKey(key));
-        long t1 = System.currentTimeMillis();
-        System.out.format("got the previous object in %d millis", t1 - t0);
-        OperationFuture<Boolean> result = memcachedClient.set(memCacheKey(key), expiry, value);
-        long t2 = System.currentTimeMillis();
-        System.out.format("set the object in %d milliseconds", t2 - t1);
+        String memCacheKey = memCacheKey(key);
+        V prevValue = (V) memcachedClient.get(memCacheKey);
+        OperationFuture<Boolean> result = memcachedClient.set(memCacheKey, expiry, value);
         try {
+            if (!result.get()) throw new CacheException(String.format("failed to set key / value pair = %s / %s (original key=%s)", key, value, memCacheKey));
             addToKeys(key);
         } catch (Exception e) {
             throw new CacheException(e.getMessage());
@@ -74,7 +81,15 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     }
 
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        V prevValue = (V) memcachedClient.get(memCacheKey(key));
+        OperationFuture<Boolean> removeResult = memcachedClient.delete(memCacheKey(key));
+        try {
+            if (!removeResult.get()) throw new CacheException("failed to remove key: "+key);
+            removeFromKeys(key);
+        } catch (Exception e) {
+            throw new CacheException(e.getMessage());
+        }
+        return prevValue;
     }
 
     public int size() {

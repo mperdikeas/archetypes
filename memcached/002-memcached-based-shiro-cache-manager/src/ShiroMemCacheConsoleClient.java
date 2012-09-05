@@ -14,12 +14,14 @@ public class ShiroMemCacheConsoleClient {
             String line = console.readLine();
             String[] command = line.split(" ");
             switch (command[0]) {
-            case "put" : put(command[1], command[2]);
-                         break;
-            case "get" : get(command[1]);
-                         break;
-            case "keys": keys();
-                         break;
+            case "put"    : put(command[1], command[2]);
+                            break;
+            case "get"    : get(command[1]);
+                            break;
+            case "remove" : remove(command[1]);
+                            break;
+            case "keys"   : keys();
+                            break;
             default:
                 throw new RuntimeException();
             }
@@ -33,6 +35,10 @@ public class ShiroMemCacheConsoleClient {
 
     private static void get(String key) {
         System.out.println("value is: "+c.get(key));
+    }
+
+    private static void remove(String key) {
+        c.remove(key);
     }
 
     private static void keys() {
