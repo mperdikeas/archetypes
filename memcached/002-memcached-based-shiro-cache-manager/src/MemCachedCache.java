@@ -17,6 +17,13 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     private final int keysExpiry = 3*24*3600;
     private Set<K> keys;
 
+    public MemCachedCache(MemcachedClient memcachedClient, String shiroCacheName) {
+        this.memcachedClient = memcachedClient;
+        this.shiroCacheName  = shiroCacheName;
+        keys = getKeys();
+    }
+
+
     private Set<K> getKeys() {
         Set<K> retValue = (Set<K>) memcachedClient.get(shiroCacheName);
         System.out.format("\nretrieved the set %s from memcache under key '%s'\n", retValue, shiroCacheName);
@@ -55,17 +62,12 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         synchKeys();
     }
 
-    public MemCachedCache(MemcachedClient memcachedClient, String shiroCacheName) {
-        this.memcachedClient = memcachedClient;
-        this.shiroCacheName  = shiroCacheName;
-        keys = getKeys();
-    }
 
     public void clear() {
         this.keys = getKeys();
-        for (K key : keys) {
-            memcachedClient.delete(memCacheKey(key));
-        }
+        if (keys != null) 
+            for (K key : keys)
+                memcachedClient.delete(memCacheKey(key));
         clearKeys();
     }
 
@@ -114,8 +116,9 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     public Collection<V> values() {
         this.keys = getKeys();
         Set<V> retValue = new TreeSet<V>();
-        for (K key : this.keys)
-            retValue.add(get(key));
+        if (this.keys != null)
+            for (K key : this.keys)
+                retValue.add(get(key));
         return retValue;
     }
 
