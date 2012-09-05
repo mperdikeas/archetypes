@@ -24,6 +24,9 @@ public class ShiroMemCacheConsoleClient {
                             break;
             case "keys"   : keys();
                             break;
+            case "size"   : size();
+                            break;
+
             default:
                 throw new RuntimeException();
             }
@@ -54,5 +57,9 @@ public class ShiroMemCacheConsoleClient {
                 System.out.print(key+" ");
             System.out.println();
         } else System.out.println("keyset is null");
+    }
+    
+    private static void size() {
+        c.size();
     }
 }

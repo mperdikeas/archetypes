@@ -105,7 +105,10 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     }
 
     public int size() {
-        throw new UnsupportedOperationException();
+        this.keys = getKeys();
+        int retValue = this.keys.size();
+        System.out.format("size is %d\n", retValue);
+        return retValue;
     }
 
     public Collection<V> values() {
