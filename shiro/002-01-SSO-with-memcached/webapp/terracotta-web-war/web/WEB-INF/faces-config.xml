@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <lifecycle>
+        <phase-listener>mutil.jsf.LifeCycleListener</phase-listener>
+        <!--phase-listener>mutil.jsf.PrintComponentTree</phase-listener-->
+    </lifecycle>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToEhCacheTest</from-outcome>
+        <to-view-id>/cacher/ehcache.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToUpdateCache</from-outcome>
+        <to-view-id>/cacher/updateehcache.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToUserArea</from-outcome>
+        <to-view-id>/user/index.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToStaffArea</from-outcome>
+        <to-view-id>/staff/index.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>goToAdminArea</from-outcome>
+        <to-view-id>/admin/index.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+        <from-outcome>logOut</from-outcome>
+        <to-view-id>/index.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
+
+</faces-config>

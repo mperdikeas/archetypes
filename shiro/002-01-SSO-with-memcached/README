@@ -1,0 +1,34 @@
+In this use case I DID manage to expand on top of use case 006
+and provide SSO support with Shiro using distributed EhCache.
+
+This use case (007) definitely and DETERMINISTICALLY works
+and does SSO by virtue of using a distributed cache.
+
+HOWEVER, due to a misconfiguration / bug (?) or either JBoss 7
+or EhCache, at some point when the "jack paranoid" user logs
+in and tries to view user data, perhaps due to some data
+not being serializable, who knows the following sequence of
+events occurs according to my understanding:
+
+[1] EhCache code tries to log
+[2] A logger exception is thrown in JBoss (I submitted a SO question [i]
+as well as a JBoss AS JIRA [ii]
+[3] EhCache replication FAILS
+[4] The caches are no longer synchronized and Shiro SSO breaks.
+
+To investigate this issue I have created a "*-b" branch of this 
+use case where I frantically tried to modify the EhCache sources
+by replacing LOG.info and LOG.warn calls with System.out.println.
+That's why I also created file:  "../../repo-wide-libs/ehcache-core-2.7.0-SNAPSHOT.jar"
+from modified EhCache sources.
+This strategy failed to eliminate all logger exceptions and then
+I thought that maybe I should instead change the Logger implementation
+in JBoss AS. And there the matter, for now, rests.
+
+
+
+--
+see relevant links:
+
+[i ] http://stackoverflow.com/questions/12261742/jboss-7-1-as-the-logmanager-was-not-properly-installed
+[ii] https://issues.jboss.org/browse/AS7-5488?page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel
