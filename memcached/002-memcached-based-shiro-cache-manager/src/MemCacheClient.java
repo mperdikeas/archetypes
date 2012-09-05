@@ -1,7 +1,7 @@
 
 import java.net.InetSocketAddress;
 import java.io.Console;
-import org.apache.shiro.cache.CacheManager
+import org.apache.shiro.cache.CacheManager;
 
 public class MemCacheClient {
     private static CacheManager c ;

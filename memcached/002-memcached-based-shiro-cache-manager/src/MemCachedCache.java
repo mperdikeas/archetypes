@@ -2,7 +2,8 @@ import net.spy.memcached.MemcachedClient;
 
 import java.net.InetSocketAddress;
 import org.apache.shiro.cache.Cache;
-
+import java.util.Set;
+import java.util.Collection;
 
 public class MemCachedCache<K,V> implements Cache<K,V> {
 
