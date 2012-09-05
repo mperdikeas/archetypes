@@ -1,3 +1,29 @@
-In this use case I should build upon SHIRO USE CASE 002-01 and
-completely remove EhCache from the setup.
+In this use case I built upon SHIRO USE CASE 002-01 and
+managed to completely remove EhCache from the setup.
+I did that, and further, thanks to that reply:
+
+https://community.jboss.org/message/757952#757952
+
+(from the JBoss forums)
+
+I managed to SOLVE the dreaded LogManager problem in JBoss.
+Apparently the thing was that Logger members had to be static.
+Once I changed them (in the JSF backing beans) from non-static
+to static, it all worked like magic.
+
+Moreover, I managed to do a lot more than simple SSO with Shiro
+as in the application I am also using the MemCachedCacheManager
+for non-Shiro caching. Maybe I shouldn't be doing that, maybe
+for non-Shiro caching I could directly use the library I am 
+using for Java client to memcached.
+
+Ideas for future steps:
+[  i] establish that this solution works for both EhCache and Memcached
+      (it should, it should be agnostic) - perhaps I could implement
+      a project with two different targets, one deploying to JBoss
+      with EhCache and the other deploying to JBoss with Memcached
+[ ii] stress-testing
+[iii] understand what Shiro's got to do with session-clustering.
+      I don't see the connection between authentication/authorization
+      and session clustering.
 
