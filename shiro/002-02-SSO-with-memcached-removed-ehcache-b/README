@@ -1,0 +1,14 @@
+This is a petrified snapshot to exhibit an interesting
+behavior. When an appopriately authorized user visits
+the GetAllUsers page an Exception is thrown because
+class User is not declared as java.io.Serializable.
+Once this is changed (User implements Serializable)
+we are faced with the horrendous LogManager problem.
+
+Thing to chew on:
+[1] it appears that Shiro does more than authentication/authorization
+    and is also into session clustering which is a different beast
+    I am beginning to understand.
+[2] maybe it is a best practice that all servlet-container backing
+    beans should be serializable.
+
