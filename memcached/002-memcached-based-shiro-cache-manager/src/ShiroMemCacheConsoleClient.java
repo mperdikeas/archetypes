@@ -1,6 +1,7 @@
 import java.net.InetSocketAddress;
 import java.io.Console;
 import java.util.Set;
+import java.util.Collection;
 
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.Cache;
@@ -26,7 +27,8 @@ public class ShiroMemCacheConsoleClient {
                             break;
             case "size"   : size();
                             break;
-
+            case "values" : values();
+                            break;
             default:
                 throw new RuntimeException();
             }
@@ -61,5 +63,12 @@ public class ShiroMemCacheConsoleClient {
     
     private static void size() {
         c.size();
+    }
+
+    private static void values() {
+        Collection<String> values = (Collection<String>) c.values();
+        for (String value : values)
+                System.out.print(value+" ");
+        System.out.println();
     }
 }

@@ -112,7 +112,11 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     }
 
     public Collection<V> values() {
-        throw new UnsupportedOperationException();
+        this.keys = getKeys();
+        Set<V> retValue = new TreeSet<V>();
+        for (K key : this.keys)
+            retValue.add(get(key));
+        return retValue;
     }
 
 }
