@@ -15,19 +15,19 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
     private final String shiroCacheName;
     private final int expiry = 3600;
     private final int keysExpiry = 3*24*3600;
-    private Set<String> keys;
+    private Set<K> keys;
 
-    private Set<String> getKeys() {
-        Set<String> retValue = (Set<String>) memcachedClient.get(shiroCacheName);
+    private Set<K> getKeys() {
+        Set<K> retValue = (Set<K>) memcachedClient.get(shiroCacheName);
         System.out.format("\nretrieved the set %s from memcache under key '%s'\n", retValue, shiroCacheName);
         return retValue;
     }
 
-    private void addToKeys(String key) throws Exception {
+    private void addToKeys(K key) throws Exception {
         System.out.format("asked to add key: %s to the list of keys", key);
         this.keys = getKeys();
         if (this.keys==null)
-            this.keys = new TreeSet<String>();
+            this.keys = new TreeSet<K>();
         this.keys.add(key);
         OperationFuture<Boolean> result = memcachedClient.set(shiroCacheName, keysExpiry, keys);
         System.out.format("\n %s to add to memcache, under key %s the structure: %s", (result.get()?"managed":"did not manage"), shiroCacheName, keys);
@@ -66,7 +66,7 @@ public class MemCachedCache<K,V> implements Cache<K,V> {
         long t2 = System.currentTimeMillis();
         System.out.format("set the object in %d milliseconds", t2 - t1);
         try {
-            addToKeys(memCacheKey(key));
+            addToKeys(key);
         } catch (Exception e) {
             throw new CacheException(e.getMessage());
         }
