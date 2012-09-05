@@ -15,7 +15,7 @@ public class MemCachedCacheManager implements CacheManager {
     }
 
     public <K,V> Cache<K,V> getCache(String name) {
-        throw new UnsupportedOperationException();
+        return new MemCachedCache(c, name);
     }
 
 

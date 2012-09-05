@@ -1,7 +1,7 @@
 <project name="memcachetesting" basedir="." default="run">
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
 
-    <property name="project.MainClass.name" value="MemCacheClient"/>
+    <property name="project.MainClass.name" value="ShiroMemCacheConsoleClient"/>
     <property name="project.distname"       value="${ant.project.name}"/>
     <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
     <property name="build.dir"              value="${basedir}/build"/>
