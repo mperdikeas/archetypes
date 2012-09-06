@@ -42,8 +42,10 @@ import model.User;
 @ManagedBean
 @ViewScoped
 public class UsersController implements Serializable {
-    private final Logger l = Logger.getLogger(this.getClass().getName());
+
     private static final String CLASSNAME=LoginController.class.getName();
+    private final static Logger l = Logger.getLogger(CLASSNAME);
+
 
 
     @PostConstruct

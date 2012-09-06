@@ -40,7 +40,7 @@ import translation.TranslationCache;
 @ManagedBean
 @ViewScoped
 public class UpdateEhCacheController implements Serializable {
-    private final Logger l = Logger.getLogger(this.getClass().getName());
+    private final static Logger l = Logger.getLogger(UpdateEhCacheController.class.getName());
     
     // private static final transient TranslationCache tc = TranslationCache.getTranslationCache();
 
