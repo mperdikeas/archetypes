@@ -40,6 +40,9 @@ public class HardcodedJdbcRealm extends JdbcRealm {
             e.printStackTrace();
             throw new RuntimeException(); // if we can't find the source, we should panic
         }
+        setAuthenticationQuery(DEFAULT_AUTHENTICATION_QUERY);
+        setUserRolesQuery(DEFAULT_USER_ROLES_QUERY);
+        setPermissionsQuery(DEFAULT_PERMISSIONS_QUERY);
     }
 }
 
