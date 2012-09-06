@@ -1,0 +1,4 @@
+In this example I am trying to test Shiro's 
+authorization and authentication with a custom
+JDBC database. In particular, the database is
+that designed and provided from YK for GAIA.
