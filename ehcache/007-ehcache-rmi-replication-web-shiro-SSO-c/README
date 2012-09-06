@@ -1,0 +1,10 @@
+(see the README in usecase '007-ehcache-rmi-replication-web-shiro-SSO' to
+ understand the context).
+
+In this sub-stage I believe I'll manage to solve the problem of EHCACHE USECASE 007
+by replacing the non-static Logger members in my backing beans with
+static Logger members. And while I'm at it, I'll also make User serializable
+so that all JSF-backing beans are serializable.
+
+The answer regarding the problem was provided here:
+https://community.jboss.org/message/757952#757952
