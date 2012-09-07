@@ -1,4 +1,9 @@
-In this example I am trying to test Shiro's 
-authorization and authentication with a custom
-JDBC database. In particular, the database is
+In this use case (003) and stage (01) I managed to test Shiro's authorization
+and authentication with a custom JDBC database. In particular, the database is
 that designed and provided from YK for GAIA.
+
+Ideas for future stages:
+[1] establish that persistence.xml files are redundant and remove them
+[2] use Shiro's hashed passwords
+[3] use Shiro's hashed passwords with SALT
+[4] add SSO on top of that and verify it's working.
