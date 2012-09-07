@@ -36,6 +36,7 @@ public class HardcodedJdbcRealm extends JdbcRealm {
             System.out.println("data source is: "+dataSource);
             this.setDataSource(dataSource);
             System.out.println("4");
+            this.setSaltStyle(JdbcRealm.SaltStyle.NO_SALT);
         } catch (NamingException e) {
             e.printStackTrace();
             throw new RuntimeException(); // if we can't find the source, we should panic
