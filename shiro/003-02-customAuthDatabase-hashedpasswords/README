@@ -1,8 +1,10 @@
-In this use case (003) and stage (02) I should try to expand upon the
-previous stage (01) by implementing hashed passwords.
+In this use case (003) and stage (02) I expanded upon the
+previous stage (01) by:
+(a) implementing hashed passwords, using a custom (not the Shiro-default) PasswordMatcher
+    that uses 1 iteration of SHA-256 with no salt.
+(b) establishing that persistence.xml is indeed redundant in this setup and excluding
+   it from the deployed artefact.
 
-Ideas for this and future stages:
-[1] establish that persistence.xml files are redundant and remove them
-[2] use Shiro's hashed passwords
+Ideas for future stages:
 [3] use Shiro's hashed passwords with SALT
 [4] add SSO on top of that and verify it's working.
