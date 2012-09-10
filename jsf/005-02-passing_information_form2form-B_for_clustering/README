@@ -1,0 +1,6 @@
+In this stage (which is initiated after the TERMINAL of JSF # 005 # 02)
+I am trying to deploy the EAR application in a clustered environment.
+In my understanding, the only thing that needs be done is include
+the <distributable/> tag inside <web-app> in web.xml. Otherwise, 
+the source in this sub-stage (005-02/B) and those of the original (005-02)
+should be identical (I'll need to check that).
