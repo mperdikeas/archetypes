@@ -84,7 +84,7 @@ public class UserLController implements Serializable {
         l.info("found user: "+user);
         // userEController.setTheEdited(user);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("theEditedId", user.getId());
-        boolean redirect = booleanToggler.getValueAndToggle();
+        boolean redirect = false ; // booleanToggler.getValueAndToggle();
         l.info("redirecting = "+redirect);
         return "userEdit"+(redirect?"?faces-redirect=true":"");
     }

@@ -42,4 +42,5 @@
         <param-name>com.sun.faces.writeStateAtFormEnd</param-name>
         <param-value>false</param-value>
     </context-param>
+    <distributable/>
 </web-app>

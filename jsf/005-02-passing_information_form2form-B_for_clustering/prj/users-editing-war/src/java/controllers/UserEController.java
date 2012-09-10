@@ -54,7 +54,10 @@ public class UserEController implements Serializable {
         l.info("getting the edited in UserEController instance: #"+this);
         if (theEdited==null) {
             l.info("the edited is null, obtaining it from flash");
-            theEdited = getFacade().find(FacesContext.getCurrentInstance().getExternalContext().getFlash().get("theEditedId"));
+            Integer id = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("theEditedId");
+            l.info("obtained flash value 'theEditedId' as: "+id);
+            theEdited = getFacade().find(id);
+            l.info("obtained theEdited from database querying with " + id + " as: " + theEdited);
         } else {
             l.info("the edited is not null, using that value");
         }
