@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> <!-- we need an empty head for composition purposes -->
+
+<h:body>
+   <h:panelGrid columns="1" cellpadding="50">
+     <p:layoutUnit position="center">
+         <h:form id="userList" styleClass="jsfcrud_list_form">
+             <p:outputPanel id="userListOutputPanel">            
+                <p:dataTable var="item" value="#{userLController.items}" rowKey="#{item.id}"
+                                        paginator="true" rows="10"
+                                selection="#{userLController.current}" selectionMode="single"
+                                           id="userTable"
+                                style="width: 98%;margin-left: 1%;margin-right: 1%;"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                                   {PageLinks} {NextPageLink}  {LastPageLink} {RowsPerPageDropdown}">
+                    <p:column headerText="Id" sortBy="#{item.id}" filterBy="#{item.id}" id="id">  
+                        #{item.id}
+                    </p:column>  
+                    <p:column headerText="Firstname" sortBy="#{item.firstname}" filterBy="#{item.firstname}" id="firstname">
+                        #{item.firstname}
+                    </p:column>  
+                    <p:column headerText="Surname" sortBy="#{item.surname}" filterBy="#{item.surname}" id="surname">  
+                        #{item.surname}
+                    </p:column>  
+                    <p:column headerText="Age" sortBy="#{item.age}" filterBy="#{item.age}" id="age">  
+                        #{item.age}
+                    </p:column>  
+                    <p:column headerText="&nbsp;">
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton ajax="false"    action="#{userLController.edit}" value="edit">
+                            <f:setPropertyActionListener value="#{item}" target="#{userLController.current}" />
+                        </p:commandButton>
+                        <p:spacer width="20" height="0" />
+                        <p:commandButton update=":userList" ajax="false" action="#{userLController.remove}" value="remove">
+                            <f:setPropertyActionListener value="#{item}" target="#{userLController.current}" />
+                         </p:commandButton>
+                    </p:column>
+                </p:dataTable>  
+             </p:outputPanel>
+         <p:commandButton ajax="false"    action="#{userLController.create}" value="create"/>
+         <p:commandButton update=":userList:userListOutputPanel" ajax="false" action="null" value="reload"/>
+         </h:form>
+     </p:layoutUnit>
+    </h:panelGrid>
+</h:body>
+</html>

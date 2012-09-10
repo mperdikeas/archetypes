@@ -1,0 +1,6 @@
+I am keeping this branched-off petrified SNAPSHOT because it exhibits
+the behavior complained at in the following post:
+
+http://stackoverflow.com/questions/12354404/flash-object-not-surviving-a-redirect-in-jboss-as-7-1-1-standalone-ha-xml-config
+
+The root of this bug lies in file UserLController.java, line 87.
