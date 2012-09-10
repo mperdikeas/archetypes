@@ -109,7 +109,7 @@ public class UserLController implements Serializable {
         }
         Util.panicIf(!haveSucceeded);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("theEditedId", user.getId());
-        boolean redirect = booleanToggler.getValueAndToggle();
+        boolean redirect = false; // booleanToggler.getValueAndToggle(); // see http://stackoverflow.com/questions/12354404/flash-object-not-surviving-a-redirect-in-jboss-as-7-1-1-standalone-ha-xml-config
         l.info("redirecting = "+redirect);
         return "userEdit"+(redirect?"?faces-redirect=true":"");
     }

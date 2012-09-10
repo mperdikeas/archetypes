@@ -1,6 +1,40 @@
 In this stage (which is initiated after the TERMINAL of JSF # 005 # 02)
-I am trying to deploy the EAR application in a clustered environment.
-In my understanding, the only thing that needs be done is include
-the <distributable/> tag inside <web-app> in web.xml. Otherwise, 
-the source in this sub-stage (005-02/B) and those of the original (005-02)
-should be identical (I'll need to check that).
+I am did manage to deploy an EAR application in a clustered environment 
+of 2 JBoss AS7.1.1. servers by fronting it with an nginx server.
+(I've kep the nginx.conf file as a reference - it goes in /etc/nginx).
+
+It turned out that I did ofcourse had to add the <distributable/> inside
+<web-app> in web.xml (I verified that it wouldn't distribute in the cluster
+otherwise), but that wasn't all. I also discovered that passing information
+with the Flash object can't be done with a redirect when the JBoss AS7.1.1.
+uses the standalone-ha.xml configuration. See more here:
+
+http://stackoverflow.com/questions/12354404/flash-object-not-surviving-a-redirect-in-jboss-as-7-1-1-standalone-ha-xml-config
+
+Other than those two changes above and some immaterial logging 
+there is no other difference between the code of this sub-stage (005-02/B)
+and that of the original stage (005-02).
+
+The code in this example appeared to be unreliable but this is in fact not
+so and I am now happy to terminate this sub-stage. The instances of unreliability
+were on account of two things:
+[1] At one point I launched three servers in the cluster, two of which had the
+    same name and that apparently unbalanced the cluster.
+[2] Occassionally, when very aggresive reloading is used and as the user session
+    bounces from server to server, I get the following trace:
+````````````````````````````````````````````````````````````````
+Caused by: org.jboss.as.clustering.lock.TimeoutException: JBAS010223: Cannot acquire lock //default-host//users-editing/WE5+3hlKT2QznsFtmOqm0c0u from cluster
+       at org.jboss.as.clustering.lock.SharedLocalYieldingClusterLockManager.lock(SharedLocalYieldingClusterLockManager.java:439)
+       at org.jboss.as.clustering.web.infinispan.DistributedCacheManager.acquireSessionOwnership(DistributedCacheManager.java:372)
+       at org.jboss.as.web.session.ClusteredSession.acquireSessionOwnership(ClusteredSession.java:520) [jboss-as-web-7.1.1.Final.jar:7.1.1.Final]
+       ... 17 more
+````````````````````````````````````````````````````````````````
+   which is an open acknowledged bug in JBoss AS (AS7-4260) (see https://issues.jboss.org/browse/AS7-4260)
+   and for which, there's nothing I can do.
+
+
+Things to consider for the future:
+[1] how to instruct nginx to not do round-robin but have sticky sessions
+    and use the other server in the cluster only in the case of failures.
+    Maybe that'll improve performance and also reduce instances of 'Exception
+    acquiring ownership'.
