@@ -1,0 +1,25 @@
+In this use case (007) stage (01), and sub-stage (B) I am trying
+to utilize ttsiod's python script (test-baskets.py) for stress-testing
+to verify the stability of session clustering.
+
+To run the script you have to:
+    (1) install twill (sudo apt-get install python-twill)
+    (2) deploy the EAR artefact to the 'deployments' location of the
+        two JBoss AS instances.
+    (3) make sure the script is collocated with the launch scripts it calls
+        in line 44.
+    (4) make sure the nginx front-end is up and running and properly configured
+        (I've kept a copy of the nginx.conf here - it's supposed to go to: /etc/nginx/nginx.conf)
+
+Common causes of problems:
+[1] nginx misconfiguration
+[2] launch script names are different
+[3] EAR artefact has not been deployed
+
+Also, JBoss complains at some point for some network settings.
+That's why its advisable you do the following before starting the tests:
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+sudo sysctl net.core.rmem_max=31457280
+sudo sysctl net.core.wmem_max=1048576
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

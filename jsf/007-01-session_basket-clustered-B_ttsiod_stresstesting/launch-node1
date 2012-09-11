@@ -1,0 +1,1 @@
+exec xterm -e ./bin/standalone.sh -c standalone-ha.xml -b 172.31.129.29 -u 230.0.0.4 -Djboss.server.base.dir=standalone-node1 -Djboss.node.name=node1 -Djboss.socket.binding.port-offset=100

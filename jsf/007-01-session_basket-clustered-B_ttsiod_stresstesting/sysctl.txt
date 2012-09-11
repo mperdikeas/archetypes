@@ -1,0 +1,500 @@
+   12  l
+   13  cd Archive/
+   14  l
+   15  cd Books/
+   16  l
+   17  cd Downloads/
+   18  l
+   19  cd OReilly\ -\ 3\ Gb\ Set\ of\ O\'Reilly\ books\,\ chm\'s\ and\ pdf\'s/
+   20  ls
+   21  l
+   22  file O\'Reilly\ books.daa 
+   23  cd ..
+   24  l
+   25  cd OReilly_A\ _to_Z/
+   26  l
+   27  cd O\'Reilly\ 
+   28  cd O\'Reilly\ A\ \ to\ L/
+   29  l
+   30  ls
+   31  ls Clo*
+   32  evince Cloud\ Application\ Architectures.pdf 
+   33  evince Cloud\ Security\ and\ Privacy.pdf 
+   34  l
+   35  cd ..
+   36  ls
+   37  cd ..
+   38  ls -la
+   39  du -s -m OReilly_A\ _to_Z/
+   40  cp -a Cloud* /var/tmp/
+   41  l
+   42  cp -a OReilly_A\ _to_Z/ /var/tmp/
+   43  l  /var/tmp/
+   44  sudo umount /iso2/
+   45  cd
+   46  sudo umount /iso2/
+   47  df
+   48  df
+   49  vmplayer  /var/lib/vmware/VM_WinXP/Windows\ XP\ Professional.vmx
+   50  ps auxf
+   51  kill -9 2782
+   52  cd /opt/DMT
+   53  l
+   54  cd aadl2glueC/
+   55  l
+   56  cmpDir1andDir2andRemoveSamesFromDir1 ./ /home/ttsiod/tool-src/DMT/aadl2glueC/
+   57  l
+   58  diff AadlLexer.py  /home/ttsiod/tool-src/DMT/aadl2glueC/
+   59  rm AadlLexer.py 
+   60  diff AadlParser.py  /home/ttsiod/tool-src/DMT/aadl2glueC/
+   61  rm AadlParser.py 
+   62  l
+   63  cmpDir1andDir2andRemoveSamesFromDir1 ./ /home/ttsiod/tool-src/DMT/smp2/
+   64  l
+   65  l
+   66  rm commonPy
+   67  l
+   68  rm dumpable.py 
+   69  l
+   70  cd ..
+   71  rmdir aadl2glueC/
+   72  l
+   73  cmpDir1andDir2andRemoveSamesFromDir1 asn2dataModel/ /home/ttsiod/tool-src/DMT/asn2dataModel/
+   74  cd asn2dataModel/
+   75  l
+   76  grep dumpable.py python_A_mapper.py 
+   77  rm dumpable.py 
+   78  l
+   79  vimdiff python_A_mapper.py /home/ttsiod/tool-src/DMT/asn2dataModel/
+   80  l
+   81  rm python_A_mapper.py 
+   82  l
+   83  rm recursiveMapper.py commonPy
+   84  l
+   85  cd ..
+   86  rmdir asn2dataModel/
+   87  l
+   88  cmpDir1andDir2andRemoveSamesFromDir1 asn1scc/ /home/ttsiod/tool-src/DMT/asn1scc/
+   89  l asn1scc/
+   90  cd  asn1scc/
+   91  l
+   92  cmpDir1andDir2andRemoveSamesFromDir1 ./ /home/ttsiod/tool-src/DMT/asn1scc/
+   93  l
+   94  diff LICENSE.txt /home/ttsiod/tool-src/
+   95  diff LICENSE.txt /home/ttsiod/tool-src/DMT/
+   96  rm LICENSE.txt 
+   97  l
+   98  cd /opt/DMT
+   99  l
+  100  rmdir *
+  101  l
+  102  l asn2aadlPlus/
+  103  cd asn2aadlPlus/
+  104  cmpDir1andDir2andRemoveSamesFromDir1 ./ /home/ttsiod/tool-src/DMT/asn1scc/
+  105  cmpDir1andDir2andRemoveSamesFromDir1 ./ /home/ttsiod/tool-src/DMT/asn2aadlPlus/
+  106  l
+  107  cat fetchFromGeorge.sh 
+  108  rm fetchFromGeorge.sh 
+  109  l
+  110  rm commonPy
+  111  l
+  112  rm LICENSE.txt 
+  113  l
+  114  cd ..
+  115  rmdir asn2aadlPlus/
+  116  l
+  117  rm License.txt 
+  118  l
+  119  rm README 
+  120  l
+  121  l docs/
+  122  cd  docs/
+  123  l
+  124  evince ACN-UserManual.pdf 
+  125  l
+  126  l
+  127  cd ..
+  128  rm -rf docs/
+  129  l
+  130  l commonPy/
+  131  cmpDir1andDir2andRemoveSamesFromDir1 commonPy/ /home/ttsiod/tool-src/DMT/commonPy/
+  132  cd commonPy/
+  133  l
+  134  cd ..
+  135  rmdir commonPy/
+  136  l
+  137  l OG/
+  138  df
+  139  cd /home/
+  140  l
+  141  l
+  142  cd ttsiod/l
+  143  cd ttsiod/
+  144  l
+  145  find . | grep mp4
+  146  3
+  147  find . | grep mp3
+  148  r
+  149  find / | grep -i mp3
+  150  find / | grep -i encfs
+  151  cd /iso2/Archive/Books/Downloads/
+  152  l
+  153  l
+  154  cd OReilly\ -\ 3\ Gb\ Set\ of\ O\'Reilly\ books\,\ chm\'s\ and\ pdf\'s/
+  155  l
+  156  file O\'Reilly\ books.daa 
+  157  mount -o loop O\'Reilly\ books.daa /iso3/
+  158  l
+  159  apt-cache search daa
+  160  l
+  161  cd ..
+  162  l
+  163  cd O\'Reilly\ Ultimate\ Collection/
+  164  l
+  165  ls
+  166  ls | wc -l
+  167  l ../OReilly_A\ _to_Z/*ash*
+  168  mydu.sh  .
+  169  cd ..
+  170  cp -a O\'Reilly\ Ultimate\ Collection/ /var/tmp/
+  171  dmesg
+  172  df
+  173  dmesg
+  174  dmesg
+  175  mount.exfat /dev/sdb4 /iso2/
+  176  l  /iso2/
+  177  cd  /iso2/
+  178  l
+  179  cd Music/
+  180  l
+  181  cd ../
+  182  l
+  183  cd Archive/
+  184  l
+  185  cd Books/
+  186  l
+  187  l Ebooks.For.Dummies.Collection/
+  188  l
+  189  cd Software\ Engineering\ -\ 1/
+  190  l
+  191  cd ..
+  192  l
+  193  find . | grep -i reil
+  194  find . | grep -i reil | less
+  195  l
+  196  cd Downloads/
+  197  l
+  198  cp -a OReilly_A\ _to_Z/ /var/tmp/
+  199  ls
+  200  cp -a Cloud* Artificial\ Intelligence* /var/tmp/
+  201  cd
+  202  umount /iso2
+  203  df
+  204  ls -ltra
+  205  cd /opt/DMT-remaining/
+  206  l
+  207  cmpDir1andDir2andRemoveSamesFromDir1 AutoGUI/ /home/ttsiod/ASSERT/Codegen-A/AutoGUI/
+  208  cd AutoGUI/
+  209  l
+  210  cd ..
+  211  rmdir AutoGUI/
+  212  l
+  213  l
+  214  cd OG/
+  215  l
+  216  cmpDir1andDir2andRemoveSamesFromDir1 ./ /home/ttsiod/tool-src/DMT/AutoGUI/
+  217  l
+  218  rm *pyc
+  219  l
+  220  l commonAADL/
+  221  cd ..
+  222  l
+  223  l OG/
+  224  cd OG/
+  225  l
+  226  vmplayer  /var/lib/vmware/VM_WinXP/Windows\ XP\ Professional.vmx
+  227  /etc/init.d/vmware start
+  228  vmplayer  /var/lib/vmware/VM_WinXP/Windows\ XP\ Professional.vmx
+  229  cd /iso2/
+  230  l
+  231  l
+  232  cd iPhoto/
+  233  l
+  234  l
+  235  cd ..
+  236  l
+  237  l .Trashes/
+  238  cd Seagate/
+  239  l
+  240  cd Video/
+  241  l
+  242  cd ..
+  243  l
+  244  cd ..
+  245  l
+  246  cd Archive/
+  247  l
+  248  cd Software/
+  249  l
+  250  cd ..
+  251  l
+  252  cd Books/
+  253  l
+  254  cd ..
+  255  l
+  256  cd ..
+  257  l
+  258  cd Downloads\ \(mba\)/
+  259  l
+  260  cd ..
+  261  l
+  262  cd Music/
+  263  l
+  264  cd ..
+  265  l
+  266  cd /var/tmp/
+  267  du -s -m OReilly_A\ _to_Z/
+  268  du -s -m OReilly_A\ _to_Z/
+  269  du -s -m OReilly_A\ _to_Z/
+  270  du -s -m OReilly_A\ _to_Z/
+  271  du -s -m OReilly_A\ _to_Z/
+  272  l
+  273  df
+  274  sync
+  275  l
+  276  mkdir books
+  277  cd  books
+  278  mv ../Artificial\ Intelligence* .
+  279  mv ../O* .
+  280  l
+  281  cd ..
+  282  l
+  283  mv Cloud* books/
+  284  l
+  285  cd books/
+  286  l
+  287  find . -type f -iname \*pdf -exec chmod 644 '{}' ';'
+  288  find . -type f -iname \*chm -exec chmod 644 '{}' ';'
+  289  find . -type f -iname \*djvu -exec chmod 644 '{}' ';'
+  290  find . -perm +111
+  291  cd Artificial\ Intelligence\,\ Neural\ Networks\ and\ Genetic\ Algorithms/
+  292  l
+  293  cd ..
+  294  find . -iname '*DS_Store*'
+  295  find . -iname '*DS_Store*' -exec rm -f '{}' ';'
+  296  find . -iname '*DS_Store*'
+  297  l
+  298  cd Artificial\ Intelligence\,\ Neural\ Networks\ and\ Genetic\ Algorithms/
+  299  l
+  300  rm Torrent\ downloaded\ from\ Demonoid.com.txt 
+  301  find . -perm +111
+  302  cd \[\ AI\ Ebook\ \]\ Fusion\ of\ Neural\ Networks\,\ Fuzzy\ Systems\ and\ Genetic\ Algorithms\ in\ Industrial\ Applications/
+  303  ls
+  304  l
+  305  cd ch01/
+  306  l
+  307  cd ..
+  308  l
+  309  cd ..
+  310  l
+  311  cd ..
+  312  find . -type f -iname \*jpg -exec chmod 644 '{}' ';'
+  313  find . -perm +111
+  314  find . -type f -iname \*html -exec chmod 644 '{}' ';'
+  315  find . -perm +111
+  316  find . -type f -perm +111
+  317  find . -type f -iname \*htm -exec chmod 644 '{}' ';'
+  318  find . -type f -perm +111
+  319  find . -type f -iname \*gif -exec chmod 644 '{}' ';'
+  320  find . -type f -perm +111
+  321  find . -type f -iname \*doc -exec chmod 644 '{}' ';'
+  322  find . -type f -perm +111
+  323  rm Artificial\ Intelligence\ \,\ Lisp\ and\ Prolog\ Complete/Torrent_downloaded_from_Demonoid.com.txt 
+  324  rm Artificial\ Intelligence\ \,\ Lisp\ and\ Prolog\ Complete/readme.nfo 
+  325  rm OReilly_A\ _to_Z/O\'Reilly\ A\ \ to\ L/Torrent\ downloaded\ from\ Demonoid.me.txt 
+  326  rm OReilly_A\ _to_Z/O\'Reilly\ M\ to\ Z/Torrent\ downloaded\ from\ Demonoid.me.txt 
+  327  rm Cloud\ Computing\ Bible/Torrent\ downloaded\ from\ Demonoid.me.txt 
+  328  rm Cloud\ Computing\ Bible/Openmirrors.com_Cloud_Computing_Bible.epub 
+  329  l Cloud\ Computing\ Bible/
+  330  rmdir  Cloud\ Computing\ Bible/
+  331  l
+  332  mkdir Cloud.Computing
+  333  mv  Cloud*  Cloud.Computing
+  334  l
+  335  mkdir Artificial\ Intelligence
+  336  mv  Artificial\ Intelligence*  Artificial\ Intelligence
+  337  l
+  338  cd OReilly_A\ _to_Z/
+  339  l
+  340  mv -i O\'Reilly\ */* ../O\'Reilly\ Ultimate\ Collection/
+  341  l
+  342  rmdir *
+  343  l
+  344  cd ..
+  345  rmdir OReilly_A\ _to_Z/
+  346  l
+  347  cd O\'Reilly\ Ultimate\ Collection/
+  348  l
+  349  ls
+  350  ls | wc -l
+  351  l
+  352  cd ..
+  353  l
+  354  find . -type f -perm +111
+  355  rm O\'Reilly\ Ultimate\ Collection/_list 
+  356  rm Cloud.Computing/Cloud.Computing.for.Enterprise.Architectures.eBook-TRN/file_id.diz 
+  357  rm Cloud.Computing/Cloud.Computing.for.Enterprise.Architectures.eBook-TRN/tyranny.nfo 
+  358  rm Cloud.Computing/Cloud.Computing.for.Enterprise.Architectures.eBook-TRN/www.ebookshare.net.url 
+  359  find . -type f -perm +111
+  360  rm Artificial\ Intelligence/Artificial\ Intelligence\ -\ A\ Modern\ Approach/Torrent\ downloaded\ from\ Demonoid.com.txt 
+  361  rm Artificial\ Intelligence/Artificial\ Intelligence\,\ Neural\ Networks\ and\ Genetic\ Algorithms/Idea\ -\ Artificial\ Neural\ Networks\ in\ Real\ life\ Applications\ -\ 2005\ Nov/Torrent_downloaded_from_Demonoid_com.txt 
+  362  rm Artificial\ Intelligence/Artificial\ Intelligence\ and\ Expert\ Systems\ for\ Engineers\ -\ allbooksfree.tk/ProgrammersHeaven.tk.URL 
+  363  rm Artificial\ Intelligence/Artificial\ Intelligence\ and\ Expert\ Systems\ for\ Engineers\ -\ allbooksfree.tk/allbooksfree.tk.URL 
+  364  rm Artificial\ Intelligence/Artificial\ Intelligence\ and\ Expert\ Systems\ for\ Engineers\ -\ allbooksfree.tk/allbooksfree.tk.URL 
+  365  find . -type f -perm +111
+  366  rm Artificial\ Intelligence/Artificial\ Intelligence\,\ Neural\ Networks\ and\ Genetic\ Algorithms/Idea\ -\ Artificial\ Neural\ Networks\ in\ Real\ life\ Applications\ -\ 2005\ Nov/LinG.nfo 
+  367  find . -type f -perm +111
+  368  l
+  369  cd ..
+  370  rar a -hpcrap123 -m0 -r -v1000000000c books.rar books/
+  371  rar a -hpcrap123  -r -v1000000000c books.rar books/
+  372  l
+  373  rar a -hpcrap123  -r -m0 -v1000000k books.rar books/
+  374  l
+  375  df
+  376  cd /var/tmp/
+  377  l
+  378  cp books.part0{1,2,3}.rar /iso4/misc-ttsiod/
+  379  l  /iso4/misc-ttsiod/
+  380  l
+  381  cp books.part0{4,5,6,7,8,9}.rar /iso4/misc-ttsiod/
+  382  l  /iso4/misc-ttsiod/
+  383  l
+  384  l /iso4/misc-ttsiod/
+  385  cp books.part1*  /iso4/misc-ttsiod/
+  386  λ  /iso4/misc-ttsiod/
+  387  cd  /iso4/misc-ttsiod/
+  388  l
+  389  mydu.sh .
+  390  mydu.sh /var/tmp/books
+  391  l
+  392  rar l books.part01.rar 
+  393  rar l books.part01.rar 
+  394  rar l books.part01.rar 
+  395  l
+  396  cd
+  397  df
+  398  sudo umount /iso4/
+  399  df
+  400  vmplayer  /var/lib/vmware/VM_WinXP/Windows\ XP\ Professional.vmx
+  401  df
+  402  df
+  403  cd /opt/l_ccompxe_ia32_2013.0.079/
+  404  l
+  405  mkdir /opt/intel
+  406  mkdir /opt/intel/licenses
+  407  cat >  /opt/intel/licenses/adsf
+  408  mv  /opt/intel/licenses/adsf  /opt/intel/licenses/license.lic
+  409  l
+  410  ./install.sh 
+  411  cd ..
+  412  sudo rm -rf l_ccompxe_ia32_2013.0.079/
+  413  ls -ltra
+  414  sudo rm -rf DMT-remaining/
+  415  ls -ltra
+  416  vmplayer  /var/lib/vmware/VM_WinXP/Windows\ XP\ Professional.vmx
+  417  cd /opt/intel/
+  418  l
+  419  l
+  420  rm -rf composer_xe_2013.0.079/ipp/
+  421  rm -rf composer_xe_2013.0.079/mkl/
+  422  rm -rf composer_xe_2013.0.079/debugger/
+  423  find -L . -type l
+  424  find -L . -type l | xargs rm
+  425  find -L . -type l
+  426  l
+  427  du -s -m .
+  428  cd /
+  429  find . -xdev -maxdepth 1 -type d
+  430  find . -xdev -maxdepth 1 -type d | sed 1d
+  431  find . -xdev -maxdepth 1 -type d | sed 1d | sort
+  432  apt-get install xdiskusage
+  433  apt-get clean
+  434  xdiskusage 
+  435  apt-get clean
+  436  xdiskusage 
+  437  su - slash
+  438  ifconfig 
+  439  ifconfig eth0:1 172.31.129.121
+  440  ifconfig 
+  441  ping 172.31.129.121
+  442  ifconfig eth0:2 172.31.129.121 hw 00:1b:21:49:d8:fb
+  443  /etc/init.d/vmware
+  444  ping 172.31.129.121
+  445  route -n
+  446  route add 224.0.0.0 netmask 240.0.0.0 dev eth0
+  447  route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+  448  route -n
+  449  cat /proc/net/igmp
+  450  cat /proc/net/igmp
+  451  find /proc/ | grep multic
+  452  apt-cache search multicast
+  453  apt-cache search multicast | grepp ool
+  454  apt-cache search multicast | grep tool
+  455  sudo apt-get install multicat
+  456  dpkg -L  multicat
+  457  apt-get remove  multicat
+  458  apt-get clean
+  459  df
+  460  xdiskusage 
+  461  cd /opt/
+  462  rm -rf thunderbird.old/
+  463  mv thunderbird  thunderbird.old
+  464  tar jtvf /home/ttsiod/Downloads/thunderbird-15.0.1.tar.bz2
+  465  tar jxvf /home/ttsiod/Downloads/thunderbird-15.0.1.tar.bz2
+  466  rm  /home/ttsiod/Downloads/thunderbird-15.0.1.tar.bz2
+  467  l
+  468  cd /usr/local/bin/
+  469  cat > testme
+  470  chmod +x  testme
+  471  cd
+  472  vi /usr/local/bin/testme 
+  473  l
+  474  cd /home/ttsiod/
+  475  l
+  476  java --version
+  477  java -version
+  478  export PATH=/opt/jdk1.7.0_02/jre/bin:$PATH
+  479  java -version
+  480  l
+  481  cd /home/ttsiod/
+  482  l
+  483  cd work/cluster/
+  484  l
+  485  cd jboss-as-7.1.1.Final.git/
+  486  l
+  487  cd jboss-as-7.1.1.Final/
+  488  l
+  489  ./launch-node1 
+  490  bg
+  491  ./launch-node2 &
+  492  l
+  493  cd ..
+  494  l
+  495  l
+  496  cd jboss-as-7.1.1.Final/
+  497  l
+  498  ./launch-node1 & ; ./launch-node2 &
+  499  (./launch-node1 & ); ( ./launch-node2 &)
+  500  (./launch-node1 & )
+  501  sysctl -a | grep  net.core.wmem_max on Linux
+  502  sysctl -a | grep  net.core.wmem_max 
+  503  sysctl net.core.wmem_max 1048576
+  504  sysctl net.core.wmem_max=1048576
+  505  sysctl net.core.rmem_max=1048576
+  506  sysctl net.core.rmem_max=1048576
+  507  bc -l
+  508  sysctl net.core.rmem_max=26214400
+  509  echo '1048576*30' | bc -l
+  510  sysctl net.core.rmem_max=31457280
+  511  history > /var/tmp/sysctl.txt
