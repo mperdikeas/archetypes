@@ -9,9 +9,9 @@
 <h:head></h:head> <!-- we need an empty head for composition purposes -->
 
 <h:body>
-   <h:panelGrid columns="1" cellpadding="50">
+   <h:panelGrid columns="1" cellpadding="50" id="basketListGrid" rendered="#{userLController.state.renderBasketList}">
      <p:layoutUnit position="center">
-         <h:form id="userList" styleClass="jsfcrud_list_form">
+         <h:form id="basketList" styleClass="jsfcrud_list_form">
              <p:outputPanel id="userListOutputPanel">            
                 <p:dataTable var="item" value="#{userLController.items}" rowKey="#{item}"
                                         paginator="true" rows="10"
@@ -21,7 +21,7 @@
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                    {PageLinks} {NextPageLink}  {LastPageLink} {RowsPerPageDropdown}">
                     <p:column headerText="Item" sortBy="#{item}" filterBy="#{item}" id="item">
-                        #{item.firstname}
+                        #{item}
                     </p:column>  
                     <ui:remove> <!-- for remove -->
                         <p:column headerText="&nbsp;">
@@ -37,12 +37,22 @@
                     </ui:remove>
                 </p:dataTable>  
              </p:outputPanel>
-         <ui:remove>
              <p:commandButton ajax="false"    action="#{userLController.create}" value="create"/>
-         </ui:remove>
          <p:commandButton update=":userList:userListOutputPanel" ajax="false" action="null" value="reload"/>
          </h:form>
      </p:layoutUnit>
     </h:panelGrid>
+
+
+   <h:panelGrid id="newItemGrid" columns="1" cellpadding="5" rendered="#{userLController.state.renderNewItemGrid}">
+       <ui:remove> <h:outputText id="user-id"          value="id is: #{userEController.theEdited.id}"/> </ui:remove>
+       <h:form id="newItem">
+         <h:inputText     value ="#{userLController.newItem}" required="true"/>
+         <p:commandButton action="#{userLController.save}"    value   ="save" ajax="false"/> <ui:remove> update=":basketListGrid, :basketList, :newItemGrid"/> </ui:remove>
+         <p:commandButton action="#{userLController.done}"    value   ="done" ajax="false"/> <ui:remove> update=":basketListGrid, :basketList, :newItemGrid"/> </ui:remove>
+       </h:form>
+       <ui:remove><h:link value="first page" outcome="index"/></ui:remove>
+   </h:panelGrid>
+
 </h:body>
 </html>

@@ -1,4 +1,4 @@
-package gr.neuropublic.neurojsfpilot.customerservice.backingBeans;
+package controllers;
 
 
 import mutil.base.Util;
@@ -35,22 +35,37 @@ import mutil.base.Triad;
 import mutil.base.ExceptionAdapter;
 import mutil.base.BooleanToggler;
 
-
-
-
 @ManagedBean
 @SessionScoped
 public class UserLController implements Serializable {
-    private final Logger l = Logger.getLogger(this.getClass().getName());
-    private static final String CLASSNAME=UserLController.class.getName();
 
+    private static final String CLASSNAME=UserLController.class.getName();
+    private static final Logger l = Logger.getLogger(CLASSNAME);
+
+
+    private UserLControllerEnum state;
+
+    public UserLControllerEnum getState() {
+        return state;
+    }
 
     public UserLController() {
         items = new ArrayList<String>();
+        state = UserLControllerEnum.LIST;
     }
 
 
     private List<String> items;
+
+    private String newItem;
+    
+    public String getNewItem() {
+        return newItem;
+    }
+    
+    public void setNewItem(String newItem) {
+        this.newItem = newItem;
+    }
 
     private String current;
     
@@ -66,10 +81,23 @@ public class UserLController implements Serializable {
         return items;
     }
 
-    public void addItem(String item) {
+    private void addItem(String item) {
         items.add(item);
     }
 
+    public String create() {
+        state = UserLControllerEnum.OPEN_FOR_CREATION;
+        return null;
+    }
 
+    public String save() {
+        addItem(getNewItem());
+        state = UserLControllerEnum.LIST;
+        return null;
+    }
 
+    public String done() {
+        state = UserLControllerEnum.LIST;
+        return null;
+    }
 }
