@@ -1,0 +1,9 @@
+In this use case (007) and stage (03) I am trying to
+expand upon the previous stage (02) by implementing 
+a Shiro-based SSO solution on top of the previous
+JBoss-clustered solution.
+
+I am trying to gauge whether there may be any conflict
+with the Shiro-based sessions used as part of the SSO
+solution (when implemented using a distributed EhCache
+or my own MemCached driver).
