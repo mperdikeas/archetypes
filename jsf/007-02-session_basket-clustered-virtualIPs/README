@@ -1,0 +1,13 @@
+I created two new virtual interfaces using:
+$ sudo ifconfig eth0:1 172.31.129.200
+$ sudo ifconfig eth0:2 172.31.129.201
+
+In this folder I also keep the nginx.conf files I used
+before (no VIPs) and after (two new VIPs) the change
+as well as the JBoss AS71.1.1 launch scripts (both before
+and after the change).
+
+The result of the test was that nginx* and clustering 
+works just fine with virtual IP addresses.
+
+
