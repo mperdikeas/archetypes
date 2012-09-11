@@ -45,11 +45,12 @@
 
 
    <h:panelGrid id="newItemGrid" columns="1" cellpadding="5" rendered="#{userLController.state.renderNewItemGrid}">
+       <p:growl id="growl" showDetail="true" sticky="true" />
        <ui:remove> <h:outputText id="user-id"          value="id is: #{userEController.theEdited.id}"/> </ui:remove>
        <h:form id="newItem">
          <h:inputText     value ="#{userLController.newItem}" required="true"/>
-         <p:commandButton action="#{userLController.save}"    value   ="save" ajax="false"/> <ui:remove> update=":basketListGrid, :basketList, :newItemGrid"/> </ui:remove>
-         <p:commandButton action="#{userLController.done}"    value   ="done" ajax="false"/> <ui:remove> update=":basketListGrid, :basketList, :newItemGrid"/> </ui:remove>
+         <p:commandButton action="#{userLController.save}"    actionListener="#{userLController.saveGrowl}" value   ="save" ajax="true" update=":growl"/> <ui:remove> update=":basketListGrid, :basketList, :newItemGrid"/> </ui:remove>
+         <p:commandButton action="#{userLController.done}"                                                  value   ="back to list" ajax="false"/>        <ui:remove> update=":basketListGrid, :basketList, :newItemGrid"/> </ui:remove>
        </h:form>
        <ui:remove><h:link value="first page" outcome="index"/></ui:remove>
    </h:panelGrid>

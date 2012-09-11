@@ -30,6 +30,10 @@ import javax.faces.event.ComponentSystemEvent;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.faces.application.FacesMessage;  
+import javax.faces.context.FacesContext;  
+import javax.faces.event.ActionEvent;
+
 import mutil.base.Pair;
 import mutil.base.Triad;
 import mutil.base.ExceptionAdapter;
@@ -92,11 +96,18 @@ public class UserLController implements Serializable {
 
     public String save() {
         addItem(getNewItem());
-        state = UserLControllerEnum.LIST;
+        state = UserLControllerEnum.OPEN_FOR_CREATION;
         return null;
     }
 
+  
+    public void saveGrowl(ActionEvent actionEvent) {
+        FacesContext context = FacesContext.getCurrentInstance();  
+        context.addMessage(null, new FacesMessage("Successfully added: '"+getNewItem()+"'"));
+    }
+
     public String done() {
+        setNewItem(""); // if I set this to null I get a "newItem:j_idt11: Validation Error: Value is required.  newItem:j_idt11: Validation Error: Value is required." exception
         state = UserLControllerEnum.LIST;
         return null;
     }
