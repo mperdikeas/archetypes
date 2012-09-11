@@ -10,7 +10,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 <module>
  <web>
    <web-uri>session-basket-war.war</web-uri>
-   <context-root>session-basket</context-root>
+   <context-root>session-basket-1</context-root>
  </web>
 </module>
  

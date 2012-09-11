@@ -2,11 +2,13 @@
 
     <!-- Project settings -->
     <property name="project.distname" value="${ant.project.name}"/>
-    <property name="project.artefact" value="${project.distname}.ear"/>
+    <property name="project.artefact" value="${project.distname}-${project.preffix}.ear"/>
     <property name="dist.dir" value="dist"/>
     <property name="ear-lib.src.dir"       value="lib"/>
     <property name="ear-lib.dest.preffix"  value="lib"/>
     <property name="project.artefact.path" value="./${dist.dir}/${project.artefact}"/>
+    <property name="conf.file.core-part"   value="application"/>
+
 
     <!-- Local system paths -->
     <property file="build.properties"/>
@@ -14,9 +16,6 @@
     <property name="war-project.name" value="${project.distname}-war"/>
     <property name="ejb-project.dir" value="./${ejb-project.name}"/>
     <property name="war-project.dir" value="./${war-project.name}"/>
-
-     
-
 
     <target name="clean"
       description="Prepare for clean build">
@@ -29,9 +28,16 @@
       <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false"/>
     </target>
 
-    <target name="ear" description="Building the ear file" depends="build-war"> <!-- building the war also builds the ejb .jar -->
+    <target name="property-check">
+        <condition property="project.preffix.set" value="true" else="false">
+            <isset property="project.preffix"/>
+        </condition>
+        <fail message="The 'project.preffix' property is not set" unless="${project.preffix.set}"/>
+    </target>
+
+    <target name="ear" description="Building the ear file" depends="build-war, property-check"> <!-- building the war also builds the ejb .jar -->
       <mkdir dir="${dist.dir}"/>
-      <ear destfile="${project.artefact.path}" appxml="conf/application.xml">
+      <ear destfile="${project.artefact.path}" appxml="conf/${conf.file.core-part}-${project.preffix}.xml">
 
         <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
               <include name="commons-lang3-3.1.jar"/>
