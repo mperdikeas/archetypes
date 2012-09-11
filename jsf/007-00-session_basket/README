@@ -1,4 +1,5 @@
 In this use case (007) I am setting out to implement
 a simple clustered application with a web basket.
 
-In this first stage (00) I am building the non-clustered version.
+In this first stage (00) I managed to build a passable non-clustered version.
+In the next stage (01) I should aim to build the clustered version.
