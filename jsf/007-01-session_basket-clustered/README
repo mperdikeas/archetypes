@@ -1,4 +1,5 @@
-In this use case (007) and stage (01) I aim to expand on the
-previous stage (00) so as to build the clustered version of the
-basket. I hope that I only need to add the <distributable> tag
-in web.xml.
+In this use case (007) and stage (01) I managed to
+expand on the previous stage (00) by implementing the clustered
+version of the basket. Actually, no modification at all was
+needed because the <distributable> tag alredy existed in web.xml
+from the previous version (where it was not needed ofcourse).
