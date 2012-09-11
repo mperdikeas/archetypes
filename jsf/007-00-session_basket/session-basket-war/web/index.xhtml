@@ -13,7 +13,7 @@
      <p:layoutUnit position="center">
          <h:form id="userList" styleClass="jsfcrud_list_form">
              <p:outputPanel id="userListOutputPanel">            
-                <p:dataTable var="item" value="#{userLController.items}"
+                <p:dataTable var="item" value="#{userLController.items}" rowKey="#{item}"
                                         paginator="true" rows="10"
                                 selection="#{userLController.current}" selectionMode="single"
                                            id="userTable"
@@ -37,7 +37,9 @@
                     </ui:remove>
                 </p:dataTable>  
              </p:outputPanel>
-         <!-- <p:commandButton ajax="false"    action="#{userLController.create}" value="create"/> -->
+         <ui:remove>
+             <p:commandButton ajax="false"    action="#{userLController.create}" value="create"/>
+         </ui:remove>
          <p:commandButton update=":userList:userListOutputPanel" ajax="false" action="null" value="reload"/>
          </h:form>
      </p:layoutUnit>
