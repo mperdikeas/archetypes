@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <datasources>
-    <datasource jta="true" jndi-name="java:/jsf005db" pool-name="jsf005dbPool" enabled="true" use-ccm="false">
+    <datasource jta="true" jndi-name="java:/carsDS" pool-name="carsPool-foo" enabled="true" use-ccm="false">
       <connection-url>jdbc:hsqldb:hsql://localhost</connection-url>
       <driver-class>org.hsqldb.jdbcDriver</driver-class>
       <driver>hsqldb-2.2.9-driver</driver>

@@ -22,7 +22,7 @@ import entities.Car;
 @Stateless
 @Remote(ICarFacade.class)
 public class CarFacade extends AbstractFacade<Car> implements ICarFacade {
-    @PersistenceContext(unitName = "user01dbPU")
+    @PersistenceContext(unitName = "carsPU")
     private EntityManager em;
 
     private static final String CLASSNAME = CarFacade.class.getName();
