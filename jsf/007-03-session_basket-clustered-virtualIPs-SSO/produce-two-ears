@@ -1,0 +1,2 @@
+ant -Dproject.preffix=1
+ant -Dproject.preffix=2

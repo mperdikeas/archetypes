@@ -7,3 +7,9 @@ I am trying to gauge whether there may be any conflict
 with the Shiro-based sessions used as part of the SSO
 solution (when implemented using a distributed EhCache
 or my own MemCached driver).
+
+However, I couldn't proceed any farther due to a bug
+in the community edition of JBoss (7.1.1) that's only
+fixed in the EAP edition (7.1.3). Bottom line is that
+this kind of exploration cannot proceed without a 
+proper subscription to the real product.

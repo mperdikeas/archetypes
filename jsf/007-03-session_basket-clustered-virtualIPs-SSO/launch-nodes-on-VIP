@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+import os
+import sys
+import time
+import random
+import threading
+from twill import get_browser, commands
+#from lxml import etree
+#from StringIO import StringIO
+import subprocess
+
+g_jbosses = [None, None]
+
+
+def panic(x):
+    if not x.endswith("\n"):
+        x += "\n"
+    sys.stderr.write("\n"+chr(27)+"[32m" + x + chr(27) + "[0m\n")
+    sys.exit(1)
+
+
+def StartJBoss(newBossIndex):
+    # Don't use os.system - see my SO question
+    # http://stackoverflow.com/questions/6773456/why-is-this-code-behaving-differently-across-various-distros-unixes
+    g_jbosses[newBossIndex] = \
+        subprocess.Popen("./launch-node" + str(newBossIndex+1)+"-on-VIP-exec", shell=True, executable="/bin/bash")
+
+def SpawnDistributedCluster():
+    lines = filter(lambda x: "java" in x and "boss" in x and "230" in x, os.popen("COLUMNS=4000 ps aux").readlines())
+    if 0 != len(lines):
+        panic("Please stop your JBoss instance in the 230... multicast group")
+    StartJBoss(0)
+    StartJBoss(1)
+
+
+def main():
+    try:
+        SpawnDistributedCluster()
+    finally:
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

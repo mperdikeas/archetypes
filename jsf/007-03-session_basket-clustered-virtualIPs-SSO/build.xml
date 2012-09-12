@@ -1,4 +1,4 @@
-<project name="session-basket" basedir="." default="publish">
+<project name="session-basket" basedir="." default="ear">
 
     <!-- Project settings -->
     <property name="project.distname" value="${ant.project.name}"/>
@@ -54,19 +54,19 @@
 
     <target name="reear" depends="clean, ear"/>
 
-    <target name="publish" depends="ear" description="publish to local configured web server">
+    <!--target name="publish" depends="ear" description="publish to local configured web server">
       <echo message="copying ${project.artefact.path} to ${publish.dir}"/>
       <copy file="${project.artefact.path}" todir="${publish.dir}"/>
-    </target>
+    </target-->
 
-    <target name="republish" depends="clean, publish"/>
+    <!--target name="republish" depends="clean, publish"/-->
 
-    <target name="unpublish">
+    <!--target name="unpublish">
         <delete quiet="true" verbose="true">
             <fileset dir="${publish.dir}" includes="${project.artefact}"/>
             <fileset dir="${publish.dir}" includes="${project.artefact}.*"/>
         </delete>
-    </target>
+    </target-->
     
 
 </project>
