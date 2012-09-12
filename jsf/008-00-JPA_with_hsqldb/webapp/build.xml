@@ -12,11 +12,9 @@
     <!-- Local system paths -->
     <property environment="env" />
     <property file="build.properties"/>
-    <property name="ejb-project.name"     value="${project.distname}-ejb"/>
-    <property name="war-project.name"     value="${project.distname}-war"/>
-    <property name="ejb-project.dir"      value="./${ejb-project.name}"/>
-    <property name="war-project.dir"      value="./${war-project.name}"/>
-    <!--property name="application_xml"      value="OVERRIDE IT"/-->
+    <property name="ejb-project.dir"      value="./${ejb-project.name}"         />
+    <property name="war-project.dir"      value="./${war-project.name}"         />
+    <property name="application_xml"      value="application.xml"               />
     <property name="application_xml.file" value="${conf.dir}/${application_xml}"/>
 
     <target name="clean"

@@ -1,0 +1,78 @@
+<project name="${war-project.name}" basedir="." default="rewar">
+
+    <property file="build.properties"/>        <!-- IMPORTANT: at the top -->
+    <property name="project.distname"          value="${war-project.name}"/>
+    <property name="webroot.dir"               value="${basedir}/web"/>
+    <property name="webinf.dir"                value="${webroot.dir}/WEB-INF"/>
+    <property name="build.dir"                 value="${basedir}/build"/>
+    <property name="conf.dir"                  value="${basedir}/conf"/>
+    <property name="src.dir"                   value="${basedir}/src"/>
+    <property name="javasource.dir"            value="${src.dir}/java"/>
+    <property name="compilelibs.dir"           value="${basedir}/lib"/>
+
+    <property name="path.to.orders-ejb"        value="../${ejb-project.name}"/>
+
+    <path id = "compile.classpath.without-ejb">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <path id = "compile.classpath">
+        <path refid = "compile.classpath.without-ejb"/>
+    </path>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
+            <fileset dir="${javasource.dir}">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile" depends="prepare,resources">
+        <echo message="compile classpath is: ${toString:compile.classpath}"/>
+        <echo message="invoking ${name-of-ejb-submodule} build.xml Ant file"/>
+        <ant antfile = "${path.to.orders-ejb}/build.xml" target="jar" inheritAll="false"/>
+        <echo message="done invoking ${name-of-ejb-submodule} build.xml Ant file"/>
+        <mkdir  dir="${webinf.dir}/classes"/>
+        <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+               source="1.6"
+               target="1.6"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+
+
+    <target name="clean" description="Prepare for clean build">
+      <delete dir="${webinf.dir}/classes"/>
+      <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="rewar" depends="clean,war"/>
+
+    <target name="war" depends="compile">
+      <mkdir dir="${build.dir}"/>
+      <war
+        needxmlfile="false"
+        basedir="${webroot.dir}"
+        warfile="${build.dir}/${project.distname}.war">
+        <exclude name="WEB-INF/src/**"/>
+       </war>
+    </target>
+
+</project>
