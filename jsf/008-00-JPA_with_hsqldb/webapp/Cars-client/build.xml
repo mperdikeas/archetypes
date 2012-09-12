@@ -1,4 +1,4 @@
-<project name="cars-ejb" basedir="." default="rejar">
+<project name="Users-client" basedir="." default="rejar">
 
     <!-- Project settings -->
     <property name="project.distname" value="${ant.project.name}"/>
@@ -8,7 +8,6 @@
     <property name="build.dir" value="build"/>
     <property name="dist.dir" value="dist"/>
     <property name="src.dir" value="${basedir}/src"/>
-    <property name="conf.dir" value="${src.dir}/conf"/>
     <property name="javasource.dir" value="${src.dir}/java"/>
     <property name="compilelibs.dir" value="${basedir}/lib"/>
 
@@ -37,17 +36,17 @@
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
         </javac>
-        <copy file="${conf.dir}/persistence.xml" todir="${build.dir}/META-INF"/>
-        <copy file="${conf.dir}/hsqldb_foo-ds.xml"   todir="${build.dir}/META-INF"/>
     </target>
 
     <target name="jar" depends="compile"
             description="jar class files">
+      <mkdir dir="${build.dir}/META-INF"/>
       <mkdir  dir="${dist.dir}"/>
       <jar destfile="${dist.dir}/${project.distname}.jar"
            basedir="${build.dir}"
       />
     </target>
+
 
     <target name="clean"
             description="Prepare for clean build">
@@ -57,4 +56,5 @@
 
     <!-- Rebuild project -->
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
 </project>
