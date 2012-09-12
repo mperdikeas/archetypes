@@ -10,7 +10,7 @@
     <property name="javasource.dir"            value="${src.dir}/java"/>
     <property name="compilelibs.dir"           value="${basedir}/lib"/>
 
-    <property name="path.to.orders-ejb"        value="../${ejb-project.name}"/>
+    <property name="client-project.path"        value="../${client-project.name}"/>
 
     <path id = "compile.classpath.without-ejb">
       <fileset dir="${compilelibs.dir}">
@@ -42,9 +42,9 @@
 
     <target name="compile" depends="prepare,resources">
         <echo message="compile classpath is: ${toString:compile.classpath}"/>
-        <echo message="invoking ${name-of-ejb-submodule} build.xml Ant file"/>
-        <ant antfile = "${path.to.orders-ejb}/build.xml" target="jar" inheritAll="false"/>
-        <echo message="done invoking ${name-of-ejb-submodule} build.xml Ant file"/>
+        <echo message="invoking '${client-project.name}' build file, target: jar"/>
+        <ant antfile = "${client-project.path}/build.xml" target="jar" inheritAll="false"/>
+        <echo message="done invoking '${client-project.name}' build file"/>
         <mkdir  dir="${webinf.dir}/classes"/>
         <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
                source="1.6"
@@ -59,6 +59,9 @@
 
 
     <target name="clean" description="Prepare for clean build">
+      <echo message="invoking '${client-project.name}' build file, target: clean"/>
+      <ant antfile = "${client-project.path}/build.xml" target="clean" inheritAll="false"/>
+      <echo message="done invoking '${client-project.name}' build.xml Ant file"/>
       <delete dir="${webinf.dir}/classes"/>
       <delete dir="${build.dir}"/>
     </target>

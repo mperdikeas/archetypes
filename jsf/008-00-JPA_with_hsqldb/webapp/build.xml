@@ -14,14 +14,16 @@
     <property file="build.properties"/>
     <property name="ejb-project.dir"      value="./${ejb-project.name}"         />
     <property name="war-project.dir"      value="./${war-project.name}"         />
+    <property name="client-project.dir"   value="./${client-project.name}"      />
     <property name="application_xml"      value="application.xml"               />
     <property name="application_xml.file" value="${conf.dir}/${application_xml}"/>
 
     <target name="clean"
       description="Prepare for clean build">
       <delete dir="${dist.dir}"/>
-      <ant antfile = "${ejb-project.dir}/build.xml" target="clean" inheritAll="false"/>
-      <ant antfile = "${war-project.dir}/build.xml" target="clean" inheritAll="false"/>
+      <ant antfile = "${ejb-project.dir}/build.xml"    target="clean" inheritAll="false"/>
+      <ant antfile = "${war-project.dir}/build.xml"    target="clean" inheritAll="false"/>
+      <ant antfile = "${client-project.dir}/build.xml" target="clean" inheritAll="false"/>
     </target>
 
    <!--target name="test_application_xml">   
@@ -32,13 +34,15 @@
              unless="${application_xml.file.exists}"/>
    </target-->
 
-
-    <target name="build-war" > <!-- depends="test_application_xml"-->
+    <target name="build-ejb" > 
+      <ant antfile = "${ejb-project.dir}/build.xml" target="ear" inheritAll="false"/>
+    </target>
+    <target name="build-war" > 
       <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false"/>
     </target>
 
 
-    <target name="ear" description="Building the ear file" depends="build-war">
+    <target name="ear" description="Building the ear file" depends="build-ejb, build-war">
       <mkdir dir="${dist.dir}"/>
       <ear destfile="${project.artefact.path}" appxml="${application_xml.file}">
         <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
