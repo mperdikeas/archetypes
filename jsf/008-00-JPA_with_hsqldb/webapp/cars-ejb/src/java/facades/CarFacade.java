@@ -20,7 +20,7 @@ import mutil.base.Pair;
 import entities.Car;
 
 @Stateless
-@Remote(ICarFacade.class)
+@Remote(ICarFacade.class) I am left here
 public class CarFacade extends AbstractFacade<Car> implements ICarFacade {
     @PersistenceContext(unitName = "carsPU")
     private EntityManager em;

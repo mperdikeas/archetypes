@@ -53,6 +53,10 @@ public class Car implements Serializable {
     public void setPrice(Integer price) {
         this.price = price;
     }
+    
+    public int getHashCode() {
+        return hashCode();
+    }
 
     @Override
     public int hashCode() {

@@ -7,64 +7,31 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:shiro="http://shiro.apache.org/tags">
 
-<h:head><title>Admin Users Administration</title></h:head>
+<h:head><title>CAR</title></h:head>
 <body>
-<h3>Admin Area Users Administration</h3>
-<p>Since our web site DOES have security, including securing areas by role,
-only logged in users with the admin role can visit this web page because it's in our admin area.</p>
-<p>Here is information on our users from the data store:</p>
-
-Here, I have to access the information that the GetAllUsers Servlet added as an attribute
-to the request 
-
-<!--
-<c:forEach var="user" items="${userList}">
-<p>User ID: ${user.userID} <br />
-   Username: ${user.username} <br />
-   Password: ${user.password} </p>
-</c:forEach>
--->
-<!-- <p><a href="<c:url value='/index.jsp' />">Home </a> | <a href="<c:url value='/LogoutUser' />">Log Out</a></p> -->
-
-<!-- these don't seem to work .. why ? -->
-<p><h:outputText value="try 1: #{sessionScope['foo']}" /></p>
-<p><h:outputText value="try 2: #{param['foo']}" /></p>
-<p><h:outputText value="try 3: #{request.getParameter('foo')}" /></p>
-<p><h:outputText value="try 4: #{request.getAttribute('foo')}" /></p>
-<!-- but this apparently works -->
-<p><h:outputText value="try 5: #{requestScope.foo}" /></p> <!-- http://stackoverflow.com/questions/12162696/how-to-set-request-attributes-from-a-servlet-and-retrieve-them-from-a-jsf-xhtml -->
-
-<!-- the following DOES work and is the only way I've found so far to obtain an attribute from the HTTP Request -->
-<p>
-
-<h:outputText value="try 5: #{usersController.message}"/>
-                        <p:outputPanel id="custDataTable">            
-                            <h:panelGroup id="customersTablePanelGroup">
-                                <p:dataTable var="item" value="#{usersController.users}" rowKey="#{item.username}" paginator="true" rows="10"
-                                                style="width: 98%;margin-left: 1%;margin-right: 1%;"
-                                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                                                   {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                    <f:facet name="header">  
-                                        Χρήστες του συστήματος
-                                    </f:facet>  
-                                    <p:column headerText="Όνομα Χρήστη" sortBy="#{item.username}" filterBy="#{item.username}" id="username">  
-                                        #{item.username}
-                                    </p:column>  
-                                    <p:column headerText="Συνθηματικό" sortBy="#{item.password}" filterBy="#{item.password}" id="password">
-                                        #{item.password}
-                                    </p:column>
-                                </p:dataTable>  
-                            </h:panelGroup>
-                        </p:outputPanel>
+<h3>maintaining the CAR table</h3>
 
 
-</p>
-<p>
-         <h:link value="Home" outcome="/index.xhtml"/>
-         | <h:link value="Admin" outcome="goToAdminArea"/>
-         | <h:form id="logOutIdDummyForm">
-             <p:commandLink ajax="false" action="#{loginController.logout}" value="Log Out"/>
-         </h:form>
-</p>
+<p:outputPanel id="CAR-table">            
+    <h:panelGroup id="CAR-panelGroup">
+        <p:dataTable var="item" value="#{CarsCELVController.items}" rowKey="#{item.hashCode}" paginator="true" rows="10"
+                        style="width: 98%;margin-left: 1%;margin-right: 1%;"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                           {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+            <f:facet name="header">  
+                Rows in the table
+            </f:facet>  
+            <p:column headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}" id="model">  
+                #{item.model}
+            </p:column>  
+            <p:column headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}" id="price">
+                #{item.price}
+            </p:column>
+        </p:dataTable>  
+    </h:panelGroup>
+</p:outputPanel>
+
+
+
 </body>
 </html>

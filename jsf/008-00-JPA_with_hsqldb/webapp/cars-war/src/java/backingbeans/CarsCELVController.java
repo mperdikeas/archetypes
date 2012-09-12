@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
 
-
+import facades.ICarFacadeLocal;
 
 @ManagedBean
 @ViewScoped
@@ -37,6 +37,9 @@ public class CarsCELVController implements Serializable {
 
     private static final String CLASSNAME=CarsCELVController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
+
+    @EJB(beanName = "CarFacade")
+    private ICarFacadeLocal
     
 
 }
