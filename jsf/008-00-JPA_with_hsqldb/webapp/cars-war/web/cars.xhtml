@@ -19,7 +19,7 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="CAR-form" styleClass="jsfcrud_list_form">
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}">
                 <p:outputPanel id="CAR-outputpanel">            
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">
@@ -45,9 +45,25 @@
                         </p:dataTable> 
                     </h:panelGroup>
                 </p:outputPanel>
-                <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
-                <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
+                <p:commandButton update=":CAR-form:CAR-outputpanel"   ajax="true" action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
+                <p:commandButton update=":CAR-form:CAR-outputpanel"   ajax="true" action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
+                <p:commandButton update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"         value="add"/>
             </h:form>
+
+            <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <h:form id="newItem">
+                  <h:outputText    value = "model:"/>
+                  <h:inputText     value ="#{carsCELVController.newItem.model}" required="false"/>
+                  <h:outputText    value = "price:"/>
+                  <h:inputText     value ="#{carsCELVController.newItem.price}" required="false"/>
+                  <p:commandButton action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
+                  <p:commandButton action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/>
+                </h:form>
+            </h:panelGrid>
+
+
+
         </ui:define>
     </ui:composition>
 </html>

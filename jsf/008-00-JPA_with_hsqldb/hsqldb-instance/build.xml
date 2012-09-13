@@ -1,4 +1,4 @@
-<project name="HSQLDB" default="runServer" basedir=".">
+<project name="HSQLDB" default="runServerOriginal" basedir=".">
 
 	<description>Helps starting up the HSQLDB demo database.</description>
 
@@ -13,6 +13,15 @@
 			<classpath refid="hsql-classpath"/>
 		</java>
 	</target>
+
+
+	<target name="runServerOriginal" description="Launches the HSQLDB database server with the original (static) rows to load">
+                <copy file="test.script.ORIGINAL" tofile="test.script"/>
+		<java classname="org.hsqldb.Server" fork="true">
+			<classpath refid="hsql-classpath"/>
+		</java>
+	</target>
+
 
 	<target name="runManager" description="Launches the HSQLDB manager.">
 		<java classname="org.hsqldb.util.DatabaseManager" fork="true">

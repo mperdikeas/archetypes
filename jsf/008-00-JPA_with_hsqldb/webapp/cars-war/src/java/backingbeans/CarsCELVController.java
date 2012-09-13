@@ -47,7 +47,18 @@ public class CarsCELVController implements Serializable {
     @EJB(beanName = "CarFacade")
     private ICarFacade.ILocal carFacade;
 
+    private CarsCELVControllerEnum state = CarsCELVControllerEnum.LIST;
+    public CarsCELVControllerEnum getState() { 
+        l.info("state queried; returning: "+state);
+        return state;
+    }
+
     private boolean loadDatabase = true;
+
+    private Car newItem = new Car();
+    public Car getNewItem ()            { return newItem; }
+    public void setNewItem(Car newItem) { this.newItem = newItem; }
+
 
     private Car current;                                                                                                                                    
     public Car getCurrent() {return current;}                                                                                                               
@@ -57,6 +68,7 @@ public class CarsCELVController implements Serializable {
     }    
 
     List<Car> removedItems = new ArrayList<Car>();
+    List<Car> createdItems = new ArrayList<Car>();
     List<Car> items;
     List<Car> backupItems;
 
@@ -100,6 +112,37 @@ public class CarsCELVController implements Serializable {
         for (Car car : removedItems) {
             removeFromDB(car); 
         }
+        removedItems = new ArrayList();
+        for (Car car : createdItems) {
+            createInDB(car);
+        }
+        createdItems = new ArrayList();
+    }
+
+    public String add() {
+        state = CarsCELVControllerEnum.OPEN_FOR_CREATION;
+        return null;
+    }
+
+    public void newItemDone() {
+        items.add(newItem);
+        createdItems.add(newItem);
+        newItem = new Car();
+        state = CarsCELVControllerEnum.LIST;
+    }
+
+    private void createInDB(Car car) {
+        try {
+            carFacade.create(car);
+            FacesContext.getCurrentInstance().addMessage("foo", new FacesMessage(FacesMessage.SEVERITY_INFO, "row added","row added"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage("CAR-form:messagePanel", new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                                                                                   "row could not be deleted","row could not be deleted"));
+        }
+    }
+
+    public void newItemCancel() {
+        state = CarsCELVControllerEnum.LIST;
     }
 
 }
