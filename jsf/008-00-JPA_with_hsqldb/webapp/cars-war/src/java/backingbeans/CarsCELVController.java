@@ -47,8 +47,8 @@ public class CarsCELVController implements Serializable {
     @EJB(beanName = "CarFacade")
     private ICarFacade.ILocal carFacade;
 
-    private CarsCELVControllerEnum state = CarsCELVControllerEnum.LIST;
-    public CarsCELVControllerEnum getState() { 
+    private CELVControllerEnum state = CELVControllerEnum.LIST;
+    public CELVControllerEnum getState() { 
         l.info("state queried; returning: "+state);
         return state;
     }
@@ -123,7 +123,7 @@ public class CarsCELVController implements Serializable {
     }
 
     public String add() {
-        state = CarsCELVControllerEnum.OPEN_FOR_CREATION;
+        state = CELVControllerEnum.OPEN_FOR_CREATION;
         return null;
     }
 
@@ -131,11 +131,11 @@ public class CarsCELVController implements Serializable {
         items.add(newItem);
         createdItems.add(newItem);
         newItem = new Car();
-        state = CarsCELVControllerEnum.LIST;
+        state = CELVControllerEnum.LIST;
     }
 
     public String newItemCancel() {
-        state = CarsCELVControllerEnum.LIST;
+        state = CELVControllerEnum.LIST;
         return null;
     }
 
@@ -162,16 +162,16 @@ public class CarsCELVController implements Serializable {
 
     public void modify() {
         modifiedItems.add(current);
-        state = CarsCELVControllerEnum.OPEN_FOR_MOD;
+        state = CELVControllerEnum.OPEN_FOR_MOD;
     }
 
     public void modItemDone() {
-        state = CarsCELVControllerEnum.LIST;
+        state = CELVControllerEnum.LIST;
     }
 
 
     public void modItemCancel() {
-        state = CarsCELVControllerEnum.LIST;
+        state = CELVControllerEnum.LIST;
     }
 
 }
