@@ -7,33 +7,35 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:shiro="http://shiro.apache.org/tags">
 
-<h:head><title>CAR</title></h:head>
-<body>
-<h3>maintaining the CAR table</h3>
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">CAR</ui:define>
+        <ui:define name="header">
+            <h3>maintaining the CAR table</h3>
+        </ui:define>
 
 
-<h:form id="CAR-form">
-    <p:outputPanel id="CAR-table">            
-        <h:panelGroup id="CAR-panelGroup">
-            <p:dataTable var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" paginator="true" rows="10"
+        <ui:define name="body">
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form">
+                <p:outputPanel id="CAR-table">            
+                    <h:panelGroup id="CAR-panelGroup">
+                        <p:dataTable var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" paginator="true" rows="10"
                             style="width: 45%;margin-left: 1%;margin-right: 1%;"
                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                <f:facet name="header">  
-                    Rows in the table
-                </f:facet>  
-                <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
-                    #{item.model}
-                </p:column>  
-                <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
-                    #{item.price}
-                </p:column>
-            </p:dataTable>  
-        </h:panelGroup>
-    </p:outputPanel>
-</h:form>
+                            <f:facet name="header">  
+                                Rows in the table
+                            </f:facet>  
+                            <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
+                                #{item.model}
+                            </p:column>  
+                            <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
+                                #{item.price}
+                            </p:column>
+                        </p:dataTable>  
+                    </h:panelGroup>
+                </p:outputPanel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 
-
-
-</body>
 </html>
