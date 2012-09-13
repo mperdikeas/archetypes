@@ -14,9 +14,12 @@
 		</java>
 	</target>
 
+        <target name="restoreToOriginal" description="overwrite test.script with test.script.ORIGINAL">
+            <copy file="test.script.ORIGINAL" tofile="test.script" overwrite="true"/>
+        </target>
 
-	<target name="runServerOriginal" description="Launches the HSQLDB database server with the original (static) rows to load">
-                <copy file="test.script.ORIGINAL" tofile="test.script"/>
+	<target name="runServerOriginal" description="Launches the HSQLDB database server with the original (static) rows to load" 
+                depends="restoreToOriginal">
 		<java classname="org.hsqldb.Server" fork="true">
 			<classpath refid="hsql-classpath"/>
 		</java>
