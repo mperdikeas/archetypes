@@ -41,17 +41,20 @@
                                 <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.remove}" value="remove">
                                     <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
                                 </p:commandButton>
+                                <p:commandButton                                    ajax="false" action="#{carsCELVController.modify}" value="modify">
+                                    <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
+                                </p:commandButton>
                             </p:column>    
                         </p:dataTable> 
                     </h:panelGroup>
                 </p:outputPanel>
-                <p:commandButton update=":CAR-form:CAR-outputpanel"   ajax="true" action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
-                <p:commandButton update=":CAR-form:CAR-outputpanel"   ajax="true" action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
-                <p:commandButton update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"         value="add"/>
+                <p:commandButton update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
+                <p:commandButton update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
+                <p:commandButton update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"           value="add"/>
             </h:form>
 
             <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
-                <p:growl id="growl" showDetail="true" sticky="true" />
+                <p:growl id="growl-new" showDetail="true" sticky="true" />
                 <h:form id="newItem">
                   <h:outputText    value = "model:"/>
                   <h:inputText     value ="#{carsCELVController.newItem.model}" required="false"/>
@@ -59,6 +62,16 @@
                   <h:inputText     value ="#{carsCELVController.newItem.price}" required="false"/>
                   <p:commandButton action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
                   <p:commandButton action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/>
+                </h:form>
+            </h:panelGrid>
+
+            <h:panelGrid id="CAR-modItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderModItem}">
+                <p:growl id="growl-mod" showDetail="true" sticky="true" />
+                <h:form id="modItem">
+                  <h:outputText    value = "price:"/>
+                  <h:inputText     value ="#{carsCELVController.current.price}" required="false"/>
+                  <p:commandButton action="#{carsCELVController.modItemDone}"   value ="enter"  ajax="false"/>
+                  <p:commandButton action="#{carsCELVController.modItemCancel}" value ="cancel" ajax="false"/>
                 </h:form>
             </h:panelGrid>
 

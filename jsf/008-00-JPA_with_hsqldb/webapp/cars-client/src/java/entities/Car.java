@@ -33,12 +33,6 @@ public class Car implements Serializable {
 
     public Car() {}
 
-    public Car(Car other) {
-        this.model = other.model;
-        this.price = other.price;
-    }
-
-
     public Car(String model, Integer price) {
         this.model = model;
         this.price = price;

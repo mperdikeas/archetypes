@@ -67,17 +67,17 @@ public class CarsCELVController implements Serializable {
         this.current = current;
     }    
 
-    List<Car> removedItems = new ArrayList<Car>();
-    List<Car> createdItems = new ArrayList<Car>();
+    List<Car> removedItems  = new ArrayList<Car>();
+    List<Car> createdItems  = new ArrayList<Car>();
+    List<Car> modifiedItems = new ArrayList<Car>();
     List<Car> items;
-    List<Car> backupItems;
+
 
     public void synchItemsFromDB() {
         items = carFacade.findAll();
-        backupItems = new ArrayList();
-        removedItems = new ArrayList();
-        for (Car car : items)
-            backupItems.add(new Car(car));
+        removedItems  = new ArrayList();
+        createdItems  = new ArrayList();
+        modifiedItems = new ArrayList();
     }
 
     public List<Car> getItems() { 
@@ -95,7 +95,6 @@ public class CarsCELVController implements Serializable {
 
     public void restoreFromDB() {
         synchItemsFromDB();
-        backupItems = null;
     }
     
     private void removeFromDB(Car car) {
@@ -117,6 +116,10 @@ public class CarsCELVController implements Serializable {
             createInDB(car);
         }
         createdItems = new ArrayList();
+        for (Car car : modifiedItems) {
+            editInDB(car);
+        }
+        modifiedItems = new ArrayList();
     }
 
     public String add() {
@@ -131,17 +134,43 @@ public class CarsCELVController implements Serializable {
         state = CarsCELVControllerEnum.LIST;
     }
 
+    public String newItemCancel() {
+        state = CarsCELVControllerEnum.LIST;
+        return null;
+    }
+
     private void createInDB(Car car) {
         try {
             carFacade.create(car);
             FacesContext.getCurrentInstance().addMessage("foo", new FacesMessage(FacesMessage.SEVERITY_INFO, "row added","row added"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage("CAR-form:messagePanel", new FacesMessage(FacesMessage.SEVERITY_FATAL,
-                                                                                   "row could not be deleted","row could not be deleted"));
+                                                                                   "row could not be created","row could not be created"));
         }
     }
 
-    public void newItemCancel() {
+    private void editInDB(Car car) {
+        try {
+            carFacade.edit(car);
+            FacesContext.getCurrentInstance().addMessage("foo", new FacesMessage(FacesMessage.SEVERITY_INFO, "row edited","row edited"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage("CAR-form:messagePanel", new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                                                                                   "row could not be edited","row could not be edited"));
+        }
+    }
+
+
+    public void modify() {
+        modifiedItems.add(current);
+        state = CarsCELVControllerEnum.OPEN_FOR_MOD;
+    }
+
+    public void modItemDone() {
+        state = CarsCELVControllerEnum.LIST;
+    }
+
+
+    public void modItemCancel() {
         state = CarsCELVControllerEnum.LIST;
     }
 
