@@ -20,6 +20,7 @@
 
     <path id = "compile.classpath">
         <path refid = "compile.classpath.without-ejb"/>
+        <pathelement location="${client-project.path}/dist/${client-project.name}.jar"/>
     </path>
 
     <!-- Check timestamp on files -->

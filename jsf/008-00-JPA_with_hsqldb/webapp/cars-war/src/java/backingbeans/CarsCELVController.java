@@ -27,9 +27,11 @@ import java.util.HashMap;
 import javax.faces.event.ComponentSystemEvent;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import facades.ICarFacadeLocal;
+import entities.Car;
 
 @ManagedBean
 @ViewScoped
@@ -39,8 +41,10 @@ public class CarsCELVController implements Serializable {
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
     @EJB(beanName = "CarFacade")
-    private ICarFacadeLocal
-    
+    private ICarFacadeLocal carFacade;
+
+    List<Car> items;
+    public List<Car> getItems() { return items; }
 
 }
 

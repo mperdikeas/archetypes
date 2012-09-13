@@ -6,6 +6,7 @@ import mutil.jpapersutil.QualifiedResultList;
 import mutil.jpapersutil.JPQLUtil;
 import javax.ejb.Stateless;
 import javax.ejb.Remote;
+import javax.ejb.Local;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.logging.Logger;
@@ -20,8 +21,9 @@ import mutil.base.Pair;
 import entities.Car;
 
 @Stateless
-@Remote(ICarFacade.class) I am left here
-public class CarFacade extends AbstractFacade<Car> implements ICarFacade {
+@Local(ICarFacadeLocal.class)
+@Remote(ICarFacadeRemote.class)
+public class CarFacade extends AbstractFacade<Car> implements ICarFacadeLocal {
     @PersistenceContext(unitName = "carsPU")
     private EntityManager em;
 
