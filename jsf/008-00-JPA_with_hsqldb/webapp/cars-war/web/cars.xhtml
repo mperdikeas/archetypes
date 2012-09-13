@@ -11,14 +11,19 @@
         <ui:define name="title">CAR</ui:define>
         <ui:define name="header">
             <h3>maintaining the CAR table</h3>
+                <ui:remove>
+                    <h:panelGroup id="messagePanel" layout="block">                                                                                          
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
+                    </h:panelGroup> 
+                </ui:remove>
         </ui:define>
-
 
         <ui:define name="body">
             <h:form id="CAR-form" styleClass="jsfcrud_list_form">
-                <p:outputPanel id="CAR-table">            
+                <p:outputPanel id="CAR-outputpanel">            
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">
-                        <p:dataTable var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" paginator="true" rows="10"
+                        <p:dataTable id="CAR-data-table" var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" paginator="true" rows="10"
                             style="width: 45%;margin-left: 1%;margin-right: 1%;"
                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
@@ -31,11 +36,18 @@
                             <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
                                 #{item.price}
                             </p:column>
-                        </p:dataTable>  
+                            <p:column headerText="&nbsp;">                                                                           
+                                <p:spacer width="20" height="0" />                                                                   
+                                <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.remove}" value="remove">
+                                    <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
+                                </p:commandButton>
+                            </p:column>    
+                        </p:dataTable> 
                     </h:panelGroup>
                 </p:outputPanel>
+                <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
+                <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
             </h:form>
         </ui:define>
     </ui:composition>
-
 </html>

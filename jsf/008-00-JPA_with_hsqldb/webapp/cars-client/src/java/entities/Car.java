@@ -30,8 +30,14 @@ public class Car implements Serializable {
     @Column(name = "PRICE")
     private Integer price;
 
-    public Car() {
+
+    public Car() {}
+
+    public Car(Car other) {
+        this.model = other.model;
+        this.price = other.price;
     }
+
 
     public Car(String model, Integer price) {
         this.model = model;
