@@ -43,8 +43,20 @@ public class CarsCELVController implements Serializable {
     @EJB(beanName = "CarFacade")
     private ICarFacadeLocal carFacade;
 
+    private boolean loadDatabase = true;
+
     List<Car> items;
-    public List<Car> getItems() { return items; }
+    public void synchItemsFromDB() {
+        items = carFacade.findAll();
+    }
+
+    public List<Car> getItems() { 
+        if (loadDatabase) {
+            synchItemsFromDB();
+            loadDatabase = false;
+        }
+        return items;
+    }
 
 }
 
