@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-import facades.ICarFacadeLocal;
+import facades.ICarFacade;
 import entities.Car;
 
 @ManagedBean
@@ -41,7 +41,7 @@ public class CarsCELVController implements Serializable {
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
     @EJB(beanName = "CarFacade")
-    private ICarFacadeLocal carFacade;
+    private ICarFacade.ILocal carFacade;
 
     private boolean loadDatabase = true;
 

@@ -21,9 +21,9 @@ import mutil.base.Pair;
 import entities.Car;
 
 @Stateless
-@Local(ICarFacadeLocal.class)
-@Remote(ICarFacadeRemote.class)
-public class CarFacade extends AbstractFacade<Car> implements ICarFacadeLocal {
+@Local (ICarFacade.ILocal.class)
+@Remote(ICarFacade.IRemote.class)
+public class CarFacade extends AbstractFacade<Car> implements ICarFacade.ILocal {
     @PersistenceContext(unitName = "carsPU")
     private EntityManager em;
 
