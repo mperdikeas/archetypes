@@ -31,7 +31,7 @@ function hitEnter(event) {
 processKeyEvent = function (eventType, event) {
     if (event.keyCode==F3_KEY_UP) {
         $("#CAR-form\\:BtnAdd").click();
-        return false;
+        return false; // I am not quite sure what is the import of these return statements; I've experimented but didn't arrive at any results.
     } else
         return true;
 }
