@@ -1,0 +1,58 @@
+/*
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
+
+var ENTER_KEY_CODE = 13;
+
+function focusToNextInput(event, element) {
+if(event.keyCode==ENTER_KEY_CODE){
+$(":input:eq("+($(":input").index(element)+1)+")").focus();
+return false;
+}
+return true;
+}
+
+//TO DO FOCUS TO NEW ROW
+function createNewRow(event) {
+if(event.keyCode==ENTER_KEY_CODE){
+$(".insertRowBtn").click();
+return false;
+}
+return true;
+}
+
+
+
+
+
+
+
+<p:dataTable id="productTbl" var="item" value="#{productTableController.items}" rowKey="#{item.id}" paginator="true" rows="10" lazy="true"
+selection="#{productTableController.selected}" selectionMode="single" resizableColumns="true"
+paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" filterEvent="enter"
+currentPageReportTemplate="(#{msg['DatatableEntries']}: {startRecord} - {endRecord} of {totalRecords})">
+<f:facet name="header">
+<h:outputText value="Προϊόντα"/>
+<p:toolbar>
+<p:toolbarGroup align="left">
+<p:commandButton value="#{msg['NewButtonLabel']}" icon="ui-icon ui-icon-plus" id="insertRowBtn" styleClass="insertRowBtn"
+actionListener="#{productTableController.addRow}" update="productTbl">
+</p:commandButton>
+<p:separator/>
+<p:commandButton type="button" title="Print" icon="ui-icon-print"/>
+</p:toolbarGroup>
+</p:toolbar>
+</f:facet>
+<p:column headerText="Όνομα" sortBy="#{item.name}" filterBy="#{item.name}" id="name">
+<p:inputText value="#{item.name}" onkeypress="return focusToNextInput(event, this);"/>
+</p:column>
+<p:column headerText="Τιμή Μονάδος" sortBy="#{item.unitPriceInCents}" filterBy="#{item.unitPriceInCents}" id="unitPriceInCents">
+<p:inputText value="#{item.unitPriceInCents}" onkeypress="return createNewRow(event);"/>
+</p:column>
+<p:column headerText="#{msg['DeleteButtonLabel']}" >
+<p:commandButton icon="ui-icon ui-icon-closethick" actionListener="#{productTableController.delete(item)}"
+update="productTbl"/>
+</p:column>
+</p:dataTable> 
