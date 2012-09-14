@@ -8,6 +8,9 @@
       xmlns:shiro="http://shiro.apache.org/tags">
 
     <ui:composition template="/template.xhtml">
+        <ui:define name="javascript">
+            <h:outputScript name="js/script.js"/>
+        </ui:define>
         <ui:define name="title">CAR</ui:define>
         <ui:define name="header">
             <h3>maintaining the CAR table</h3>
@@ -31,10 +34,10 @@
                                 Rows in the table
                             </f:facet>  
                             <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
-                                <h:outputText value="#{item.model}"/>
+                                <h:inputText value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
-                                <p:inputText value="#{item.price}"/>
+                                <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
@@ -48,8 +51,9 @@
                 <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
                 <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
                 <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"           value="add"/>
-
-                <p:defaultCommand target="BtnCommit" />
+                <ui:remove>
+                    <p:defaultCommand target="BtnCommit" />
+                </ui:remove>
             </h:form>
 
             <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
