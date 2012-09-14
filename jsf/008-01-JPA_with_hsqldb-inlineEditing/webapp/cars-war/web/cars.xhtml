@@ -23,6 +23,7 @@
 
         <ui:define name="body">
             <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}">
+                <p:focus for=":CAR-form:CAR-data-table"/>
                 <p:outputPanel id="CAR-outputpanel">            
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">
@@ -34,7 +35,7 @@
                                 Rows in the table
                             </f:facet>  
                             <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
-                                <p:inputText value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
+                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
                                 <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
