@@ -36,8 +36,9 @@
                 <p:outputPanel id="CAR-outputpanel">            
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">
-                        <p:dataTable id="CAR-data-table" var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" paginator="true" rows="10"
-                            style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                        <p:dataTable id="CAR-data-table" var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" 
+                            paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                            selection="#{carsCELVController.current}" selectionMode="single"
                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                             <f:facet name="header">  
@@ -58,9 +59,11 @@
                         </p:dataTable> 
                     </h:panelGroup>
                 </p:outputPanel>
-                <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}" value="restore from DB"/>
-                <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"    value="commit to DB"/>
-                <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"           value="add (F3)"/>
+                <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}"  value="restore from DB"/>
+                <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"     value="commit to DB"/>
+                <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F3)"/>
+
+                <p:commandButton id="RowNext"    visible="true" update=":CAR-form"                 action="#{carsCELVController.advanceCurrent}" value="foo"/>
                 <ui:remove>
                     <p:defaultCommand target="BtnCommit" />
                 </ui:remove>

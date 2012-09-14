@@ -61,15 +61,40 @@ public class CarsCELVController implements Serializable {
 
 
     private Car current;                                                                                                                                    
-    public Car getCurrent() {return current;}                                                                                                               
-    public void setCurrent(Car current) {                                                                                                                   
+    public Car getCurrent() {
+        if (current==null) {
+            current = getSafe(items, 0);
+        }
+        return current;
+    }
+    public void setCurrent(Car current) {
         l.info("setCurrent("+current+")");
         this.current = current;
     }    
 
+    public void advanceCurrent() {
+        if (current==null)
+            current = getCurrent();
+        int _i = 0;
+        for (Car car : items) {
+            _i ++;
+            if (car.equals(current)) break;
+        }
+        if (_i == items.size())
+            current = getSafe(items, 0); // go round back at the beginning
+        else
+            current = getSafe(items, _i);
+    }
+
+
     List<Car> removedItems  = new ArrayList<Car>();
     List<Car> createdItems  = new ArrayList<Car>();
     List<Car> items;
+
+    private Car getSafe(List<Car> items, int i) {
+        if ((items==null)||(i>(items.size()-1))) return null;
+        return items.get(i);
+    }
 
 
     public void synchItemsFromDB() {
