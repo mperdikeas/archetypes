@@ -34,7 +34,7 @@
                                 Rows in the table
                             </f:facet>  
                             <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
-                                <h:inputText value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
+                                <p:inputText value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
                                 <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
