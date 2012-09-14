@@ -1,3 +1,10 @@
-In this simple use case I am trying to 
+In this use case (008) and stage (00) I managed to 
 get JPA to work with a HSQLDB database.
+
+And I also managed to build another simple
+exemplary project for Java EE applications.
+
+Ideas for future stages:
+* change table to inline editing
+* add JavaScript so that 'enter' can be used.
 
