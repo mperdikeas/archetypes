@@ -72,6 +72,21 @@ public class CarsCELVController implements Serializable {
         this.current = current;
     }    
 
+    public void backstepCurrent() {
+        if (current==null)
+            current = getCurrent();
+        int _i = 0;
+        for (Car car : items) {
+            _i ++;
+            if (car.equals(current)) break;
+        }
+        if (_i == 1)
+            current = getSafe(items, items.size()-1); // go round back at the end
+        else
+            current = getSafe(items, _i-2);
+    }
+
+
     public void advanceCurrent() {
         if (current==null)
             current = getCurrent();

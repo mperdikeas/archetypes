@@ -1,5 +1,7 @@
-var ENTER_KEY_CODE = 13;
-var F3_KEY_UP      = 114;
+var ENTER_KEY_CODE   = 13;
+var F3_KEY_UP        = 114;
+var ARROWUP_KEY_UP   = 38;
+var ARROWDOWN_KEY_UP = 40;
 
 function focusToNextInput(event, element) {
     if(event.keyCode==ENTER_KEY_CODE){
@@ -25,13 +27,21 @@ function hitEnter(event) {
         $("#newItem\\:enter").click();
         return false;
     } else
-        return true;
+        return true; // I am not quite sure what is the import of these return statements; I've experimented but didn't arrive at any results.
 }
 
 processKeyEvent = function (eventType, event) {
     if (event.keyCode==F3_KEY_UP) {
         $("#CAR-form\\:BtnAdd").click();
-        return false; // I am not quite sure what is the import of these return statements; I've experimented but didn't arrive at any results.
+        return false; 
+    } else
+    if (event.keyCode==ARROWUP_KEY_UP) {
+        $("#CAR-form\\:RowPrev").click();
+        return false; 
+    } else
+    if (event.keyCode==ARROWDOWN_KEY_UP) {
+        $("#CAR-form\\:RowNext").click();
+        return false; 
     } else
         return true;
 }

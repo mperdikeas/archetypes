@@ -63,7 +63,8 @@
                 <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"     value="commit to DB"/>
                 <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F3)"/>
 
-                <p:commandButton id="RowNext"    visible="true" update=":CAR-form"                 action="#{carsCELVController.advanceCurrent}" value="foo"/>
+                <p:commandButton id="RowNext"    visible="true" update=":CAR-form"                 action="#{carsCELVController.advanceCurrent}"  value="foo"/>
+                <p:commandButton id="RowPrev"    visible="true" update=":CAR-form"                 action="#{carsCELVController.backstepCurrent}" value="foo"/>
                 <ui:remove>
                     <p:defaultCommand target="BtnCommit" />
                 </ui:remove>
