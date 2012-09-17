@@ -55,9 +55,29 @@ public class CarsCELVController implements Serializable {
 
     private boolean loadDatabase = true;
 
-    private Car newItem = new Car();
+    /*    private Car newItem = new Car();
     public Car getNewItem ()            { return newItem; }
-    public void setNewItem(Car newItem) { this.newItem = newItem; }
+    public void setNewItem(Car newItem) { this.newItem = newItem; } */
+
+    private String newItemModel = new String();
+    
+    public String getNewItemModel() {
+        return newItemModel;
+    }
+    
+    public void setNewItemModel(String newItemModel) {
+        this.newItemModel = newItemModel;
+    }
+
+    private Integer newItemPrice = new Integer(0);
+    
+    public Integer getNewItemPrice() {
+        return newItemPrice;
+    }
+    
+    public void setNewItemPrice(Integer newItemPrice) {
+        this.newItemPrice = newItemPrice;
+    }
 
 
     private Car current;                                                                                                                                    
@@ -167,9 +187,11 @@ public class CarsCELVController implements Serializable {
     }
 
     public void newItemDone() {
+        Car newItem = new Car(newItemModel, newItemPrice);
         items.add(newItem);
         createdItems.add(newItem);
-        newItem = new Car();
+        newItemModel = new String();
+        newItemPrice = new Integer(0);
         state = CELVControllerEnum.LIST;
     }
 

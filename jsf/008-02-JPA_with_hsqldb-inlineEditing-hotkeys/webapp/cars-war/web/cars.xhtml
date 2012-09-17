@@ -97,12 +97,12 @@ $(document).ready(function() {initActions();});
                 <h:form id="newItem" onkeyup="return cancel(event);">
                   <p:focus/>
                   <h:outputText    value = "model:"/>
-                  <h:inputText     value ="#{carsCELVController.newItem.model}" required="false" onkeypress="return focusToNextInput(event, this);"/>
+                  <h:inputText     value ="#{carsCELVController.newItemModel}" required="false" onkeypress="return focusToNextInput(event, this);"/>
                   <h:outputText    value = "price:"/>
-                  <h:inputText     value ="#{carsCELVController.newItem.price}" required="false" onkeypress="return hitEnter(event);"/>
-                  <p:commandButton id="enter" action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
-<ui:remove>       <p:commandButton            action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/> </ui:remove>
-                  <h:button        id="cancelBtn" outcome="cancel"                         value ="cancel" />
+                  <h:inputText     value ="#{carsCELVController.newItemPrice}" required="false" onkeypress="return hitEnter(event);"/>
+                  <p:commandButton id="enter"     action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
+                  <p:commandButton id="cancelBtn" action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/>
+<ui:remove>   <!--               <h:button        id="cancelBtn" outcome="cancel"                         value ="cancel" /> --> </ui:remove>
                 </h:form>
             </h:panelGrid>
 
