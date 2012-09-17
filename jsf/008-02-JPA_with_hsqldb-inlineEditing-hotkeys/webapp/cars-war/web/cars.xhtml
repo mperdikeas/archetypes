@@ -94,7 +94,7 @@ $(document).ready(function() {initActions();});
 
             <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
                 <p:growl id="growl-new" showDetail="true" sticky="true" />
-                <h:form id="newItem">
+                <h:form id="newItem" onkeyup="return cancel(event);">
                   <p:focus/>
                   <h:outputText    value = "model:"/>
                   <h:inputText     value ="#{carsCELVController.newItem.model}" required="false" onkeypress="return focusToNextInput(event, this);"/>
@@ -102,7 +102,7 @@ $(document).ready(function() {initActions();});
                   <h:inputText     value ="#{carsCELVController.newItem.price}" required="false" onkeypress="return hitEnter(event);"/>
                   <p:commandButton id="enter" action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
 <ui:remove>       <p:commandButton            action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/> </ui:remove>
-                  <h:button                   outcome="cancel"                               value ="cancel" />
+                  <h:button        id="cancelBtn" outcome="cancel"                         value ="cancel" />
                 </h:form>
             </h:panelGrid>
 

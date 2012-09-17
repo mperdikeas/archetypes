@@ -2,6 +2,7 @@ var ENTER_KEY_CODE   = 13;
 var F3_KEY_UP        = 114;
 var ARROWUP_KEY_UP   = 38;
 var ARROWDOWN_KEY_UP = 40;
+var ESCAPE_KEY_CODE  = 27;
 
 function initActions() { // focusing does not yet work as I need to find a way to
                         // only focus the very first time the page is loaded and
@@ -28,7 +29,12 @@ function createNewRow(event) {
         return true;
 }
 
-
+function cancel(event) {
+    if (event.keyCode==ESCAPE_KEY_CODE) {
+        $('#newItem\\:cancelBtn').click();
+    }
+    return false;
+}
 
 function hitEnter(event) {
     if(event.keyCode==ENTER_KEY_CODE){
@@ -38,7 +44,9 @@ function hitEnter(event) {
         return true; // I am not quite sure what is the import of these return statements; I've experimented but didn't arrive at any results.
 }
 
-processKeyEvent = function (eventType, event) {
+
+
+processKeyUp = function(event) {
     if (event.keyCode==F3_KEY_UP) {
         $("#CAR-form\\:BtnAdd").click();
         return false; 
@@ -52,9 +60,5 @@ processKeyEvent = function (eventType, event) {
         return false; 
     } else
         return true;
-}
-
-processKeyUp = function(event) {
-       return processKeyEvent("onkeyup", event);
 };
 
