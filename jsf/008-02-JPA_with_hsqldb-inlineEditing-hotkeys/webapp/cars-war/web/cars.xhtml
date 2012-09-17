@@ -85,6 +85,7 @@ $(document).ready(function() {initActions();});
                 <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}"  value="restore from DB (F2)"/>
                 <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"     value="commit to DB (F4)"/>
                 <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F3)"/>
+                <p:commandButton id="BtnDel"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.remove}"         value="delete selected row (F8)"/>
 
                 <p:commandButton id="RowNext"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.advanceCurrent}"  value="foo"/>
                 <p:commandButton id="RowPrev"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.backstepCurrent}" value="foo"/>
@@ -102,7 +103,7 @@ $(document).ready(function() {initActions();});
                   <h:outputText    value = "price:"/>
                   <h:inputText     value ="#{carsCELVController.newItemPrice}" required="false" onkeypress="return hitEnter(event);"/>
                   <p:commandButton id="enter"     action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
-                  <p:commandButton id="cancelBtn" action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/>
+                  <p:commandButton id="cancelBtn" action="#{carsCELVController.newItemCancel}" value ="cancel (ESC)" ajax="false"/>
 <ui:remove>   <!--               <h:button        id="cancelBtn" outcome="cancel"                         value ="cancel" /> --> </ui:remove>
                 </h:form>
             </h:panelGrid>

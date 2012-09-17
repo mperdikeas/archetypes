@@ -149,6 +149,7 @@ public class CarsCELVController implements Serializable {
     }
 
     public void remove() {
+        l.info("**************************************************************** inside remove");
         ListUtil.remove(items, current);
         removedItems.add(current);
     }
