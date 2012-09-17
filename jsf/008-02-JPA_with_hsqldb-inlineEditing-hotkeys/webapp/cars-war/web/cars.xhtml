@@ -47,7 +47,8 @@ $(document).ready(function() {initActions();});
 </ui:remove>
 
 
-            <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}" onkeyup="return processKeyUp(event)">
+<ui:remove> <!--            <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}" onkeyup="return processKeyUp(event)"> -->  </ui:remove>
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}">
                 <ui:remove> <!-- <p:focus for=":CAR-form:CAR-data-table"/> -->  </ui:remove>
                 <ui:remove>
                     <!-- sometimes it seems to be firing more than one event

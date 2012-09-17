@@ -14,6 +14,7 @@ function initActions() { // focusing does not yet work as I need to find a way t
     $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus();
     $('#CAR-form\\:RowNext').hide();
     $('#CAR-form\\:RowPrev').hide();
+    $('html').keyup(processKeyUp);
 }
 
 function focusToNextInput(event, element) {
