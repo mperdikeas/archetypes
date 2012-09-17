@@ -35,6 +35,8 @@
 
             <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}" onkeyup="return processKeyUp(event)">
                 <p:focus for=":CAR-form:CAR-data-table"/>
+                <p:hotkey bind="down" update=":CAR-form:CAR-data-table" action="#{carsCELVController.advanceCurrent()}" />
+                <p:hotkey bind="up"   update=":CAR-form:CAR-data-table" action="#{carsCELVController.backstepCurrent()}"/>
                 <p:outputPanel id="CAR-outputpanel">            
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">

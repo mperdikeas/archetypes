@@ -1,7 +1,7 @@
 var ENTER_KEY_CODE   = 13;
 var F3_KEY_UP        = 114;
-var ARROWUP_KEY_UP   = 38;
-var ARROWDOWN_KEY_UP = 40;
+/*var ARROWUP_KEY_UP   = 38;
+  var ARROWDOWN_KEY_UP = 40;*/
 
 var not_yet_focused = true;
 
@@ -43,14 +43,14 @@ processKeyEvent = function (eventType, event) {
         $("#CAR-form\\:BtnAdd").click();
         return false; 
     } else
-    if (event.keyCode==ARROWUP_KEY_UP) {
+/*    if (event.keyCode==ARROWUP_KEY_UP) {
         $("#CAR-form\\:RowPrev").click();
         return false; 
     } else
     if (event.keyCode==ARROWDOWN_KEY_UP) {
         $("#CAR-form\\:RowNext").click();
         return false; 
-    } else
+    } else */
         return true;
 }
 
