@@ -24,12 +24,14 @@
 
         <ui:define name="body">
 
-<ui:remove> <!-- supposedly I could use the notation shown below instead of litering the code with 'onkeyup' -->
+
+<ui:remove>
 <SCRIPT>
   window.onload=focusInput;
   document.getElementById("CAR-form").onkeyup=processKeyUp;
 </SCRIPT>
 </ui:remove>
+
 
             <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}" onkeyup="return processKeyUp(event)">
                 <p:focus for=":CAR-form:CAR-data-table"/>

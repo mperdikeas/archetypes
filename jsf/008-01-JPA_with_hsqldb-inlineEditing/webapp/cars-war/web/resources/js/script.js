@@ -3,6 +3,14 @@ var F3_KEY_UP        = 114;
 var ARROWUP_KEY_UP   = 38;
 var ARROWDOWN_KEY_UP = 40;
 
+var not_yet_focused = true;
+
+function focusInput() { // focusing does not yet work as I need to find a way to
+                        // only focus the very first time the page is loaded and
+                        // rely on arrow key navigation.
+    $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus();
+}
+
 function focusToNextInput(event, element) {
     if(event.keyCode==ENTER_KEY_CODE){
         $(":input:eq("+($(":input").index(element)+1)+")").focus();
