@@ -1,11 +1,14 @@
 In this use case (008) and stage (02) I 
-am using <p:hotkey> to bind the ARROW_UP and
+am tried and failed to use <p:hotkey> to bind the ARROW_UP and
 ARROW_DOWN keys to a change in the selected row in the
 datatable.
 
-However, for the ARROW_UP and ARROW_DOWN keys to work,
+The reason being that, for the ARROW_UP and ARROW_DOWN keys to work,
 the form shouldn't have received focus in any of the
 input elements. On the other hand, for the F3 key to 
 work (insert a new row), the form *needs* to have 
 received focus.
+
+So I settled with various other improvements.
+
 
