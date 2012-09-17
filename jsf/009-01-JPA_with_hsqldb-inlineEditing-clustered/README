@@ -1,0 +1,8 @@
+In this use case (009) and stage (01) we are trying to 
+see whether JBoss AS clustering works when 
+the web application also uses a database in the background.
+In this first stage, a simple HSQLDB is used. At the next
+stage I should perhaps change that to a PostgreSQL for
+added realism.
+
+
