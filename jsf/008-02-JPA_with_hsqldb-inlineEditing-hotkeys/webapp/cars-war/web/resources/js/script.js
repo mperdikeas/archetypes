@@ -1,8 +1,12 @@
 var ENTER_KEY_CODE   = 13;
-var F3_KEY_UP        = 114;
 var ARROWUP_KEY_UP   = 38;
 var ARROWDOWN_KEY_UP = 40;
 var ESCAPE_KEY_CODE  = 27;
+
+var F2_KEY_CODE      = 113;
+var F3_KEY_CODE      = 114;
+var F4_KEY_CODE      = 115;
+
 
 function initActions() { // focusing does not yet work as I need to find a way to
                         // only focus the very first time the page is loaded and
@@ -47,18 +51,12 @@ function hitEnter(event) {
 
 
 processKeyUp = function(event) {
-    if (event.keyCode==F3_KEY_UP) {
-        $("#CAR-form\\:BtnAdd").click();
-        return false; 
-    } else
-    if (event.keyCode==ARROWUP_KEY_UP) {
-        $("#CAR-form\\:RowPrev").click();
-        return false; 
-    } else
-    if (event.keyCode==ARROWDOWN_KEY_UP) {
-        $("#CAR-form\\:RowNext").click();
-        return false; 
-    } else
-        return true;
+           if (event.keyCode==F3_KEY_CODE)      { $("#CAR-form\\:BtnAdd").click();
+    } else if (event.keyCode==F2_KEY_CODE)      { $("#CAR-form\\:BtnRestore").click();
+    } else if (event.keyCode==F4_KEY_CODE)      { $("#CAR-form\\:BtnCommit").click();
+    } else if (event.keyCode==ARROWUP_KEY_UP)   { $("#CAR-form\\:RowPrev").click();
+    } else if (event.keyCode==ARROWDOWN_KEY_UP) { $("#CAR-form\\:RowNext").click();
+    } else return true;
+    return false;
 };
 
