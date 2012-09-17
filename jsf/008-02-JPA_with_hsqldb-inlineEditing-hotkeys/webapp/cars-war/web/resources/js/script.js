@@ -1,14 +1,14 @@
 var ENTER_KEY_CODE   = 13;
 var F3_KEY_UP        = 114;
-/*var ARROWUP_KEY_UP   = 38;
-  var ARROWDOWN_KEY_UP = 40;*/
+var ARROWUP_KEY_UP   = 38;
+var ARROWDOWN_KEY_UP = 40;
 
-var not_yet_focused = true;
-
-function focusInput() { // focusing does not yet work as I need to find a way to
+function initActions() { // focusing does not yet work as I need to find a way to
                         // only focus the very first time the page is loaded and
                         // rely on arrow key navigation.
     $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus();
+    $('#CAR-form\\:RowNext').hide();
+    $('#CAR-form\\:RowPrev').hide();
 }
 
 function focusToNextInput(event, element) {
@@ -43,14 +43,14 @@ processKeyEvent = function (eventType, event) {
         $("#CAR-form\\:BtnAdd").click();
         return false; 
     } else
-/*    if (event.keyCode==ARROWUP_KEY_UP) {
+    if (event.keyCode==ARROWUP_KEY_UP) {
         $("#CAR-form\\:RowPrev").click();
         return false; 
     } else
     if (event.keyCode==ARROWDOWN_KEY_UP) {
         $("#CAR-form\\:RowNext").click();
         return false; 
-    } else */
+    } else
         return true;
 }
 

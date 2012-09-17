@@ -20,23 +20,41 @@
                         <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     </h:panelGroup> 
                 </ui:remove>
+
+<ui:remove>
+<!--
+<SCRIPT>
+  window.onload=initActions;
+</SCRIPT>
+-->
+</ui:remove>
+<SCRIPT>
+$(document).ready(function() {initActions();});
+</SCRIPT>
+
         </ui:define>
 
         <ui:define name="body">
 
 
 <ui:remove>
+<!--
 <SCRIPT>
-  window.onload=focusInput;
+  window.onload=initActions;
   document.getElementById("CAR-form").onkeyup=processKeyUp;
 </SCRIPT>
+-->
 </ui:remove>
 
 
             <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}" onkeyup="return processKeyUp(event)">
-                <p:focus for=":CAR-form:CAR-data-table"/>
-                <p:hotkey bind="down" update=":CAR-form:CAR-data-table" action="#{carsCELVController.advanceCurrent()}" />
-                <p:hotkey bind="up"   update=":CAR-form:CAR-data-table" action="#{carsCELVController.backstepCurrent()}"/>
+                <ui:remove> <!-- <p:focus for=":CAR-form:CAR-data-table"/> -->  </ui:remove>
+                <ui:remove>
+                    <!-- sometimes it seems to be firing more than one event
+                    <p:hotkey bind="down" update=":CAR-form:CAR-data-table" action="#{carsCELVController.advanceCurrent()}" />
+                    <p:hotkey bind="up"   update=":CAR-form:CAR-data-table" action="#{carsCELVController.backstepCurrent()}"/>
+                    -->
+                </ui:remove>
                 <p:outputPanel id="CAR-outputpanel">            
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">
@@ -67,8 +85,8 @@
                 <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"     value="commit to DB"/>
                 <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F3)"/>
 
-                <p:commandButton id="RowNext"    visible="true" update=":CAR-form"                 action="#{carsCELVController.advanceCurrent}"  value="foo"/>
-                <p:commandButton id="RowPrev"    visible="true" update=":CAR-form"                 action="#{carsCELVController.backstepCurrent}" value="foo"/>
+                <p:commandButton id="RowNext"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.advanceCurrent}"  value="foo"/>
+                <p:commandButton id="RowPrev"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.backstepCurrent}" value="foo"/>
                 <ui:remove>
                     <p:defaultCommand target="BtnCommit" />
                 </ui:remove>
@@ -83,7 +101,8 @@
                   <h:outputText    value = "price:"/>
                   <h:inputText     value ="#{carsCELVController.newItem.price}" required="false" onkeypress="return hitEnter(event);"/>
                   <p:commandButton id="enter" action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
-                  <p:commandButton            action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/>
+<ui:remove>       <p:commandButton            action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/> </ui:remove>
+                  <h:button                   outcome="cancel"                               value ="cancel" />
                 </h:form>
             </h:panelGrid>
 

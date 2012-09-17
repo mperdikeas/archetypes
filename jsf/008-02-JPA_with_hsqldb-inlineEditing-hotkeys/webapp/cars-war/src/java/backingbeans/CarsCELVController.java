@@ -73,6 +73,7 @@ public class CarsCELVController implements Serializable {
     }    
 
     public void backstepCurrent() {
+        l.info("inside backstep current");
         if (current==null)
             current = getCurrent();
         int _i = 0;
@@ -88,6 +89,7 @@ public class CarsCELVController implements Serializable {
 
 
     public void advanceCurrent() {
+        l.info("inside advance current");
         if (current==null)
             current = getCurrent();
         int _i = 0;
