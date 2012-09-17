@@ -1,4 +1,4 @@
-In this use case (008) and stage (02) I 
+In this USE CASE (008) and STAGE (02) I 
 am tried and failed to use <p:hotkey> to bind the ARROW_UP and
 ARROW_DOWN keys to a change in the selected row in the
 datatable.
@@ -9,6 +9,15 @@ input elements. On the other hand, for the F3 key to
 work (insert a new row), the form *needs* to have 
 received focus.
 
-So I settled with various other improvements.
+So I settled with various other improvements and generally adopted
+the practice to bind the Function keys and the ESC key to the 'html'
+tag directly, using JavaScript.
+
+There is no more room for improvement in this STAGE without fundamentally
+altering its character.
+
+In a possible, future STAGE I should aim to implement the proper placement
+of focus in the form's input text boxes in response to the user's arrow
+key events.
 
 
