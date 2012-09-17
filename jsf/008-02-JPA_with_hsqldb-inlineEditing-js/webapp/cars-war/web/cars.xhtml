@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="javascript">
+            <h:outputScript name="js/script.js"/>
+
+        </ui:define>
+        <ui:define name="title">CAR</ui:define>
+        <ui:define name="header">
+            <h3>maintaining the CAR table</h3>
+                <ui:remove>
+                    <h:panelGroup id="messagePanel" layout="block">                                                                                          
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
+                    </h:panelGroup> 
+                </ui:remove>
+        </ui:define>
+
+        <ui:define name="body">
+
+
+<ui:remove>
+<SCRIPT>
+  window.onload=focusInput;
+  document.getElementById("CAR-form").onkeyup=processKeyUp;
+</SCRIPT>
+</ui:remove>
+
+
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}" onkeyup="return processKeyUp(event)">
+                <p:focus for=":CAR-form:CAR-data-table"/>
+                <p:outputPanel id="CAR-outputpanel">            
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
+                    <h:panelGroup id="CAR-panelGroup">
+                        <p:dataTable id="CAR-data-table" var="item" value="#{carsCELVController.items}" rowKey="#{item.model}" 
+                            paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                            selection="#{carsCELVController.current}" selectionMode="single"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <f:facet name="header">  
+                                Rows in the table
+                            </f:facet>  
+                            <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
+                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
+                            </p:column>  
+                            <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
+                                <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
+                            </p:column>
+                            <p:column headerText="&nbsp;">                                                                           
+                                <p:spacer width="20" height="0" />                                                                   
+                                <p:commandButton update=":CAR-form:CAR-outputpanel" ajax="true" action="#{carsCELVController.remove}" value="remove">
+                                    <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
+                                </p:commandButton>
+                            </p:column>    
+                        </p:dataTable> 
+                    </h:panelGroup>
+                </p:outputPanel>
+                <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}"  value="restore from DB"/>
+                <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"     value="commit to DB"/>
+                <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F3)"/>
+
+                <p:commandButton id="RowNext"    visible="true" update=":CAR-form"                 action="#{carsCELVController.advanceCurrent}"  value="foo"/>
+                <p:commandButton id="RowPrev"    visible="true" update=":CAR-form"                 action="#{carsCELVController.backstepCurrent}" value="foo"/>
+                <ui:remove>
+                    <p:defaultCommand target="BtnCommit" />
+                </ui:remove>
+            </h:form>
+
+            <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
+                <p:growl id="growl-new" showDetail="true" sticky="true" />
+                <h:form id="newItem">
+                  <p:focus/>
+                  <h:outputText    value = "model:"/>
+                  <h:inputText     value ="#{carsCELVController.newItem.model}" required="false" onkeypress="return focusToNextInput(event, this);"/>
+                  <h:outputText    value = "price:"/>
+                  <h:inputText     value ="#{carsCELVController.newItem.price}" required="false" onkeypress="return hitEnter(event);"/>
+                  <p:commandButton id="enter" action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
+                  <p:commandButton            action="#{carsCELVController.newItemCancel}" value ="cancel" ajax="false"/>
+                </h:form>
+            </h:panelGrid>
+
+
+
+
+        </ui:define>
+    </ui:composition>
+</html>
