@@ -1,7 +1,11 @@
-In this use case (008) and stage (01) I am trying to:
-* change table to inline editing
-
+In this use case (008) and stage (01) I managed
+to allow inline editing and some arrow-key-based
+navigation on the rows of the datatable but it is
+rather heavy (because arrow-key selection happens
+at server-side with hidden button) and, thus, unsatisfactory.
+Also, creation of new row doesn't happen inline.
 Ideas for future stages:
+[1] client-side selection of row
+[2] inline editing for new row creation.
 
-* add JavaScript so that 'enter' can be used.
 
