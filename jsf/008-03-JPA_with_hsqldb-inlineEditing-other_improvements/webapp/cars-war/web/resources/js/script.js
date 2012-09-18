@@ -46,7 +46,7 @@ function hitEnter(event) {
 
 
 processKeyUp = function(event) {
-    if (event.keyCode==F3_KEY_CODE)            { $("#CAR-form\\:BtnAdd").click();
+           if (event.keyCode==F3_KEY_CODE)     { $("#CAR-form\\:BtnAdd").click();
     } else if (event.keyCode==F2_KEY_CODE)     { $("#CAR-form\\:BtnRestore").click();
     } else if (event.keyCode==F4_KEY_CODE)     { $("#CAR-form\\:BtnCommit").click();
     } else if (event.keyCode==F8_KEY_CODE)     { $("#CAR-form\\:BtnDel").click();
