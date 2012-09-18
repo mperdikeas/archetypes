@@ -69,7 +69,7 @@ $(document).ready(function() {initActions();});
                                 Rows in the table
                             </f:facet>  
                             <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
-                                <p:inputText id="modelrow" value="#{item.model}" onkeyup="return focusToNextInput(event, this);"/>
+                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
                                 <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
@@ -104,8 +104,8 @@ $(document).ready(function() {initActions();});
                   <h:inputText     value ="#{carsCELVController.newItemModel}" required="false" onkeypress="return focusToNextInput(event, this);"/>
                   <h:outputText    value = "price:"/>
                   <h:inputText     value ="#{carsCELVController.newItemPrice}" required="false" onkeypress="return hitEnter(event);"/>
-                  <p:commandButton id="enter"     action="#{carsCELVController.newItemDone}"   value ="enter"  ajax="false"/>
-                  <p:commandButton id="cancelBtn" action="#{carsCELVController.newItemCancel}" value ="cancel (ESC twice)" ajax="false"/>
+                  <p:commandButton id="enter"     action="#{carsCELVController.newItemDone}"    value ="enter"  ajax="false"/>
+                  <p:commandButton id="cancelBtn" action="#{carsCELVController.newItemCancel}"  value ="cancel (ESC)" ajax="false"/>
 <ui:remove>   <!--               <h:button        id="cancelBtn" outcome="cancel"                         value ="cancel" /> --> </ui:remove>
                 </h:form>
             </h:panelGrid>
