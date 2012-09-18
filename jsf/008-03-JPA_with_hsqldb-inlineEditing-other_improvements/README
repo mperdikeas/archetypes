@@ -4,4 +4,10 @@ on the status of the previous STAGE (02).
 Mostly adding a new row *below* the current one
 and tracking the selected row with the cursor.
 
+Final conclusion: I confirmed with GD that <p:inputText>
+doesn't work with filtering. Did some minor maintenance work
+and decided to close this STAGE. In the next STAGE I should
+experiment with the p:sheet since it appears to be more
+appropriate for the keyboard-heavy functionality I am looking at.
+
 
