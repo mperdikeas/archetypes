@@ -61,17 +61,17 @@ $(document).ready(function() {initActions();});
                     <h:panelGroup id="CAR-panelGroup">
                         <p:dataTable id="CAR-data-table"                 widgetVar="dataTableWidget" var="item"
                                      value="#{carsCELVController.items}" rowKey="#{item.model}" 
-                            paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
-                            selection="#{carsCELVController.current}" selectionMode="single"
-                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                     paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                     selection="#{carsCELVController.current}" selectionMode="single"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                             <f:facet name="header">  
                                 Rows in the table
                             </f:facet>  
-                            <p:column id="model" headerText="Model" sortBy="#{item.model}" filterBy="#{item.model}">  
+                            <p:column id="model" headerText="Model">
                                 <p:inputText id="modelrow" value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
                             </p:column>  
-                            <p:column id="price" headerText="Price" sortBy="#{item.price}" filterBy="#{item.price}">
+                            <p:column id="price" headerText="Price">
                                 <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           

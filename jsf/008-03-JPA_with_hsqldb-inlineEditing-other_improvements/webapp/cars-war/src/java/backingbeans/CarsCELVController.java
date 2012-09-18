@@ -55,10 +55,6 @@ public class CarsCELVController implements Serializable {
 
     private boolean loadDatabase = true;
 
-    /*    private Car newItem = new Car();
-    public Car getNewItem ()            { return newItem; }
-    public void setNewItem(Car newItem) { this.newItem = newItem; } */
-
     private String newItemModel = new String();
     
     public String getNewItemModel() {
