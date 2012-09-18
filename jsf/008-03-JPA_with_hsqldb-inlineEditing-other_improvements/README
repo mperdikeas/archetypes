@@ -1,0 +1,7 @@
+In this USE CASE (008) and STAGE (03) I am trying to 
+implement some miscellaneous, usability improvements 
+on the status of the previous STAGE (02).
+Mostly adding a new row *below* the current one
+and tracking the selected row with the cursor.
+
+
