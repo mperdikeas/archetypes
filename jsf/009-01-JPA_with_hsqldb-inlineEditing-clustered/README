@@ -5,4 +5,28 @@ In this first stage, a simple HSQLDB is used. At the next
 stage I should perhaps change that to a PostgreSQL for
 added realism.
 
+Conclusion: ttsiodras ran some tests with both HsqlDB and PostgreSQL
+and in both cases JBoss AS clustering works but we have some stability
+problems.
 
+Executive summary of results: the fall of one node doesn't impact
+operations, but re-starting the fallen warrior can lead to a
+number of problems:
+
+-  freezes of 15-20 sec (i.e. both app servers are frozen),
+   after which things proceed OK
+-  freezes of 15-20 sec (i.e. both app servers are frozen),
+   after which my test script gets a 404 - and aborts
+
+The frequency of each result depends on whether you run both locally or not
+the problem areas are far more frequent when both appservers are in the same machine
+but 404s happen anyway - their probability is not zero, not even in two-machine config.
+
+The two JBoss AS instances were clustered according to the instructions found
+here:
+
+https://docs.jboss.org/author/display/AS71/AS7+Cluster+Howto
+
+The above link is a more "manual" way of configuring JBoss AS clustering
+and thus, presumably, more stable than the default multicasting groups
+method but the results were the same.
