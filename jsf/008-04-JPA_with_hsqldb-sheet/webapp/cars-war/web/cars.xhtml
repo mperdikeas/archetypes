@@ -65,12 +65,9 @@
                 <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F9)"/>
                 <p:commandButton id="BtnDel"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.remove}"         value="delete selected row (F8)"/>
 
-                <p:commandButton id="RowNext"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.advanceCurrent}"  value="foo"/>
-<!-- demonstrates an alternative way using widgetVar instead of id: -->
-                <p:commandButton id="RowPrev" widgetVar="RowPrev"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.backstepCurrent}" value="foo"/>
-                <ui:remove>
-                    <p:defaultCommand target="BtnCommit" />
-                </ui:remove>
+
+           <p:defaultCommand target="BtnCommit" />
+
             </h:form>
 
             <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
