@@ -14,35 +14,9 @@ function initActions() { // focusing does not yet work as I need to find a way t
                         // only focus the very first time the page is loaded and
                         // rely on arrow key navigation.
     $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's better not have any focus at all
-    $('#CAR-form\\:RowNext').hide();
-    $('#CAR-form\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
 }
 
-function focusToNextInput(event, element) {
-    if (event.keyCode==ENTER_KEY_CODE){
-        $(":input:eq("+($(":input").index(element)+1)+")").focus();
-        return false;
-    } else
-        return true;
-}
-
-//TODO: FOCUS TO NEW ROW
-function createNewRow(event) {
-    if(event.keyCode==ENTER_KEY_CODE){
-        $("#CAR-form\\:BtnAdd").click();
-        return false;
-    } else
-        return true;
-}
-
-function hitEnter(event) {
-    if(event.keyCode==ENTER_KEY_CODE){
-        $("#newItem\\:enter").click();
-        return false;
-    } else
-        return true; 
-}
 
 
 

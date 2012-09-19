@@ -40,9 +40,9 @@
                 <p:outputPanel id="CAR-outputpanel">            
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
                     <h:panelGroup id="CAR-panelGroup">
-                        <p:dataTable id="CAR-data-table"                 widgetVar="dataTableWidget" var="item"
+                        <p:sheet id="CAR-data-table"                     var="item"
                                      value="#{carsCELVController.items}" rowKey="#{item.model}" 
-                                     paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                     paginator="true" rows="10" style="width: 90%;margin-left: 1%;margin-right: 1%;"
                                      selection="#{carsCELVController.current}" selectionMode="single"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
@@ -50,10 +50,10 @@
                                 Rows in the table
                             </f:facet>  
                             <p:column id="model" headerText="Model">
-                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="return focusToNextInput(event, this);"/>
+                                <p:inputText id="modelrow" value="#{item.model}" />
                             </p:column>  
                             <p:column id="price" headerText="Price">
-                                <p:inputText value="#{item.price}" onkeypress="return createNewRow(event);"/>
+                                <p:inputText value="#{item.price}" />
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
@@ -61,7 +61,7 @@
                                     <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
                                 </p:commandButton>
                             </p:column>    
-                        </p:dataTable> 
+                        </p:sheet> 
                     </h:panelGroup>
                 </p:outputPanel>
                 <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}"  value="restore from DB (F2)"/>
