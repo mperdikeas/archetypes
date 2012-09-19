@@ -84,7 +84,7 @@ public class CarsCELVController implements Serializable {
         return current;
     }
     public void setCurrent(Car current) {
-        l.info("setCurrent("+current+")");
+        l.info("setCurrent(****************************************************************"+current+")");
         this.current = current;
     }    
 
