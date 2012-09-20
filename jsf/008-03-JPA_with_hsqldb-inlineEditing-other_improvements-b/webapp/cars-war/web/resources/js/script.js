@@ -75,47 +75,42 @@ selectRow = function( i ) {
 }
 
 isLastChild = function(father, child) {
-    console.log('we are here now');
     var lastChild = $(father).children(':last');
-    console.log('last child is: \n');
-    console.log(lastChild);
-    console.log('this child is: \n');
-    console.log(child);
-    var areEqual = lastChild.equals(child);
-    console.log("areEqual = "+areEqual);
-    return areEqual;
+    return lastChild.equals(child);
+}
+
+isFirstChild = function(father, child) {
+    var firstChild = $(father).children(':first');
+    return firstChild.equals(child);
 }
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
-    var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
-    var father = $(element).closest('tbody');
-    logMessage("number of rows is: "+$(father).children().length);
-    var rowInQuestion = $(element).closest('tr');
-    logMessage("we are now at the "+(isLastChild(father, rowInQuestion)?" last child":" not last child"));
-    if(event.keyCode==ARROWDOWN_KEY_CODE) {
+    if ((event.keyCode != ARROWDOWN_KEY_CODE) && (event.keyCode != ARROWUP_KEY_CODE))
+        return true;
+    else {
+        var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
+        var father = $(element).closest('tbody');
+        logMessage("number of rows is: "+$(father).children().length);
+        var rowInQuestion = $(element).closest('tr');
         var i = $(element).closest('td').index();
-        console.log("index is: "+i);
         var gotoRow = null;
-        if (isLastChild(father, rowInQuestion))
-            gotoRow = $(father).children(':first');
-        else
-            gotoRow = $(rowInQuestion).next('tr');
+    
+        if(event.keyCode==ARROWDOWN_KEY_CODE) {
+            if (isLastChild(father, rowInQuestion))
+                gotoRow = $(father).children(':first');
+            else
+                gotoRow = $(rowInQuestion).next('tr');
+        }
+        else if (event.keyCode==ARROWUP_KEY_CODE) { 
+            if (isFirstChild(father, rowInQuestion))
+                gotoRow = $(father).children(':last');
+            else
+                gotoRow = $(rowInQuestion).prev('tr');
+        }
         $(gotoRow).find('input')[i].focus();
-        // $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
-        // selectRow(rowIndex + 1);
-        // selectRow($(element).closest('tr').next('tr'));
         selectRow(gotoRow);
         return false;
     }
-    else if (event.keyCode==ARROWUP_KEY_CODE) { 
-        if (rowIndex > 0) {
-            $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
-            // selectRow(rowIndex - 1);
-            selectRow($(element).closest('tr').prev('tr'));
-        }
-        return false;
-    }
-    return true;
 }
 
 
