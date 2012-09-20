@@ -23,6 +23,12 @@
 
                 <SCRIPT>
                     $(document).ready(function() {initActions();}); 
+
+    $('#clear-registry').click(function() {
+        $('.mouseevent').remove();
+        return false; // prevent default behaviour
+    });
+
                 </SCRIPT>
         </ui:define>
 
@@ -93,7 +99,7 @@
             </h:panelGrid>
 
 <div class="log">
-<a href=""> I AM LEFT HERE
+<a id="clear-registry" href="foo">clear registry</a>
 <u>log register</u>
 </div>
 

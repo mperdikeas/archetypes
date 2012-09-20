@@ -9,7 +9,6 @@ var F8_KEY_CODE      = 119;
 var F9_KEY_CODE      = 120;
 
 
-
 function initActions() { // focusing does not yet work as I need to find a way to
                         // only focus the very first time the page is loaded and
                         // rely on arrow key navigation.
@@ -44,8 +43,9 @@ function hitEnter(event) {
         return true; 
 }
 
+
 function navigateWithArrows(event, rowIndex) {
-    $(".log").append("<p>inside navigateWithArrows (rowIndex="+rowIndex+")</p>");
+    $(".log").append("<p>class='log-event' inside navigateWithArrows (rowIndex="+rowIndex+")</p>");
     var element = event.target || event.srcElement;
     if(event.keyCode==DOWN_ARROW_KEY_CODE){
         $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
