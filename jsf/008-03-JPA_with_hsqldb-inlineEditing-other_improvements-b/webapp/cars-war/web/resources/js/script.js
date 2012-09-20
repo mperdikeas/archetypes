@@ -3,7 +3,7 @@ var ESCAPE_KEY_CODE  = 27;
 
 
 var ARROWUP_KEY_CODE   =  38;
-var ARROWDOWN_KEY_CODE =  38;
+var ARROWDOWN_KEY_CODE =  40;
 var F2_KEY_CODE        = 113;
 var F4_KEY_CODE        = 115;
 var F8_KEY_CODE        = 119;
@@ -57,18 +57,22 @@ logMessage = function(msg) {
     $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
 }
 
+selectRow = function( i ) {
+    dataTableWidget.unselectAllRows(); 
+    dataTableWidget.selectRow( i );
+}
 
 function navigateWithArrows(event, rowIndex) {
     logMessage("inside navigateWithArrows( rowIndex = "+rowIndex+")");
-    var element = event.target || event.srcElement;
+    // var element = event.target || event.srcElement;
     if(event.keyCode==ARROWDOWN_KEY_CODE){
-        $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
-        selectRow(rowIndex + 1, firstRowIndex);
+        // $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
+        selectRow(rowIndex + 1);
         return false;
     }
     else if (event.keyCode==ARROWUP_KEY_CODE){ 
-        $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
-        selectRow(rowIndex - 1, firstRowIndex);
+        // $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
+        selectRow(rowIndex - 1);
         return false;
     }
     return true;
