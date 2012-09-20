@@ -19,6 +19,18 @@ function initActions() { // focusing does not yet work as I need to find a way t
     $('#CAR-form\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
     $('#clear-registry').click(clearEvents);
+
+    $.fn.equals = function(compareTo) {
+        if (!compareTo || !compareTo.length || this.length!=compareTo.length) {
+            return false;
+        }
+        for (var i=0; i<this .length; i++) {
+            if (this[i]!==compareTo[i]) {
+                return false;
+            }
+        }
+        return true;
+    } 
 }
 
 
@@ -62,17 +74,35 @@ selectRow = function( i ) {
     dataTableWidget.selectRow( i );
 }
 
-function navigateWithArrows(event, rowIndex) {
+isLastChild = function(father, child) {
+    console.log('we are here now');
+    var lastChild = $(father).children(':last');
+    console.log('last child is: \n');
+    console.log(lastChild);
+    console.log('this child is: \n');
+    console.log(child);
+    var areEqual = lastChild.equals(child);
+    console.log("areEqual = "+areEqual);
+    return areEqual;
+}
+
+function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
     var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
+    var father = $(element).closest('tbody');
+    logMessage("number of rows is: "+$(father).children().length);
+    var rowInQuestion = $(element).closest('tr');
+    logMessage("we are now at the "+(isLastChild(father, rowInQuestion)?" last child":" not last child"));
     if(event.keyCode==ARROWDOWN_KEY_CODE) {
         $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
-        selectRow(rowIndex + 1);
+        // selectRow(rowIndex + 1);
+        selectRow($(element).closest('tr').next('tr'));
         return false;
     }
     else if (event.keyCode==ARROWUP_KEY_CODE) { 
         if (rowIndex > 0) {
             $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
-            selectRow(rowIndex - 1);
+            // selectRow(rowIndex - 1);
+            selectRow($(element).closest('tr').prev('tr'));
         }
         return false;
     }
