@@ -93,9 +93,18 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
     var rowInQuestion = $(element).closest('tr');
     logMessage("we are now at the "+(isLastChild(father, rowInQuestion)?" last child":" not last child"));
     if(event.keyCode==ARROWDOWN_KEY_CODE) {
-        $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
+        var i = $(element).closest('td').index();
+        console.log("index is: "+i);
+        var gotoRow = null;
+        if (isLastChild(father, rowInQuestion))
+            gotoRow = $(father).children(':first');
+        else
+            gotoRow = $(rowInQuestion).next('tr');
+        $(gotoRow).find('input')[i].focus();
+        // $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
         // selectRow(rowIndex + 1);
-        selectRow($(element).closest('tr').next('tr'));
+        // selectRow($(element).closest('tr').next('tr'));
+        selectRow(gotoRow);
         return false;
     }
     else if (event.keyCode==ARROWUP_KEY_CODE) { 
