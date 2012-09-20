@@ -63,16 +63,17 @@ selectRow = function( i ) {
 }
 
 function navigateWithArrows(event, rowIndex) {
-    logMessage("inside navigateWithArrows( rowIndex = "+rowIndex+")");
-    // var element = event.target || event.srcElement;
-    if(event.keyCode==ARROWDOWN_KEY_CODE){
-        // $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
+    var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
+    if(event.keyCode==ARROWDOWN_KEY_CODE) {
+        $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
         selectRow(rowIndex + 1);
         return false;
     }
-    else if (event.keyCode==ARROWUP_KEY_CODE){ 
-        // $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
-        selectRow(rowIndex - 1);
+    else if (event.keyCode==ARROWUP_KEY_CODE) { 
+        if (rowIndex > 0) {
+            $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
+            selectRow(rowIndex - 1);
+        }
         return false;
     }
     return true;
