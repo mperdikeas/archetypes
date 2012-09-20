@@ -16,7 +16,15 @@ function initActions() { // focusing does not yet work as I need to find a way t
     $('#CAR-form\\:RowNext').hide();
     $('#CAR-form\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
+    $('#clear-registry').click(clearEvents);
 }
+
+
+clearEvents = function() {
+        $('.logEvent').remove();
+        return false; // cancel default behaviour
+    }
+
 
 function focusToNextInput(event, element) {
     if (event.keyCode==ENTER_KEY_CODE){
@@ -45,7 +53,7 @@ function hitEnter(event) {
 
 
 function navigateWithArrows(event, rowIndex) {
-    $(".log").append("<p>class='log-event' inside navigateWithArrows (rowIndex="+rowIndex+")</p>");
+    $(".log").append("<p class='logEvent'> inside navigateWithArrows (rowIndex="+rowIndex+")</p>");
     var element = event.target || event.srcElement;
     if(event.keyCode==DOWN_ARROW_KEY_CODE){
         $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
