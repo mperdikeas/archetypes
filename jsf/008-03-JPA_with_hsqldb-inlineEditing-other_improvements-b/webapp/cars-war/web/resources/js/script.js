@@ -1,15 +1,15 @@
 var ENTER_KEY_CODE   = 13;
-var ARROWUP_KEY_UP   = 38;
-var ARROWDOWN_KEY_UP = 40;
 var ESCAPE_KEY_CODE  = 27;
 
-var F2_KEY_CODE      = 113;
-var F4_KEY_CODE      = 115;
-var F8_KEY_CODE      = 119;
-var F9_KEY_CODE      = 120;
 
-// single vs. double quotes seems to be immaterial
-// var const LOG_TAG = 'log-event'; // const is not supported by IE.
+var ARROWUP_KEY_CODE   =  38;
+var ARROWDOWN_KEY_CODE =  38;
+var F2_KEY_CODE        = 113;
+var F4_KEY_CODE        = 115;
+var F8_KEY_CODE        = 119;
+var F9_KEY_CODE        = 120;
+
+var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
 
 function initActions() { // focusing does not yet work as I need to find a way to
                         // only focus the very first time the page is loaded and
@@ -23,7 +23,7 @@ function initActions() { // focusing does not yet work as I need to find a way t
 
 
 clearEvents = function() {
-        $('.log-event').remove();
+        $('.'+LOG_TAG).remove();
         return false; // cancel default behaviour
     }
 
@@ -54,19 +54,19 @@ function hitEnter(event) {
 }
 
 logMessage = function(msg) {
-    $(".log").append("<p class='log-event'>"+msg+"</p>");
+    $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
 }
 
 
 function navigateWithArrows(event, rowIndex) {
     logMessage("inside navigateWithArrows( rowIndex = "+rowIndex+")");
     var element = event.target || event.srcElement;
-    if(event.keyCode==DOWN_ARROW_KEY_CODE){
+    if(event.keyCode==ARROWDOWN_KEY_CODE){
         $(element).closest('tr').next('tr').find('input')[$(element).closest('td').index()].focus();
         selectRow(rowIndex + 1, firstRowIndex);
         return false;
     }
-    else if (event.keyCode==UP_ARROW_KEY_CODE){ 
+    else if (event.keyCode==ARROWUP_KEY_CODE){ 
         $(element).closest('tr').prev('tr').find('input')[$(element).closest('td').index()].focus();
         selectRow(rowIndex - 1, firstRowIndex);
         return false;
