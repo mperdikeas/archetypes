@@ -51,10 +51,10 @@
                                 Rows in the table
                             </f:facet>  
                             <p:column id="model" headerText="Model">
-                                <p:inputText id="modelrow" value="#{item.model}" onkeyup="navigateWithArrows(event, #{rowIndex}); focusToNextInput(event, this);"/>
+                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="navigateWithArrows(event, #{rowIndex}); focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price">
-                                <p:inputText value="#{item.price}" onkeyup="navigateWithArrows(event, #{rowIndex}); return createNewRow(event);"/>
+                                <p:inputText value="#{item.price}" onkeypress="navigateWithArrows(event, #{rowIndex}); return createNewRow(event);"/>
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   

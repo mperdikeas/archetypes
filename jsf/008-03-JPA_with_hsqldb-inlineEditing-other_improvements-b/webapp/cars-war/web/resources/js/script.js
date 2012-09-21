@@ -41,6 +41,7 @@ function initActions() { // focusing does not yet work as I need to find a way t
         }
         return true;
     } 
+    alert(' init actions called ');
 }
 
 
@@ -213,7 +214,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         var rowInQuestion = $(element).closest('tr');
         var i = $(element).closest('td').index();
         var gotoRow = null;
-
         if (event.keyCode==ARROWRIGHT_KEY_CODE) {
             caretAtTheBeginningFlag = false;
             if (caretAtTheEndFlag) {
