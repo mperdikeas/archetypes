@@ -50,11 +50,12 @@
                             <f:facet name="header">  
                                 Rows in the table
                             </f:facet>  
-                            <p:column id="model" headerText="Model">
-                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="navigateWithArrows(event, #{rowIndex}); focusToNextInput(event, this);"/>
+                            <p:column id="model" headerText="Model">       <ui:remove> <!-- that used to be (event, #{rowIndex}) but       --> </ui:remove>
+                                                                           <ui:remove> <!-- we don't need to supply the row index any more --> </ui:remove>
+                                <p:inputText id="modelrow" value="#{item.model}" onkeypress="navigateWithArrows(event); return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price">
-                                <p:inputText value="#{item.price}" onkeypress="navigateWithArrows(event, #{rowIndex}); return createNewRow(event);"/>
+                                <p:inputText value="#{item.price}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
@@ -67,7 +68,7 @@
                 </p:outputPanel>
                 <p:commandButton id="BtnRestore" update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.restoreFromDB}"  value="restore from DB (F2)" oncomplete="focusCursor();"/>
                 <p:commandButton id="BtnCommit"  update=":CAR-form:CAR-outputpanel"   ajax="true"  action="#{carsCELVController.commitToDB}"     value="commit to DB (F4)"/>
-                <p:commandButton id="BtnAdd"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.add}"            value="add (F9)"/>
+                <p:commandButton id="BtnAdd"     update=":CAR-form:CAR-outputpanel, :CAR-newItemGrid" ajax="true " action="#{carsCELVController.add}"            value="add (F9)"/>
                 <p:commandButton id="BtnDel"     update=":CAR-form, :CAR-newItemGrid" ajax="false" action="#{carsCELVController.remove}"         value="delete selected row (F8)"/>
 
                 <p:commandButton id="RowNext"    update=":CAR-form"                   ajax="false" action="#{carsCELVController.advanceCurrent}"  value="foo"/>
