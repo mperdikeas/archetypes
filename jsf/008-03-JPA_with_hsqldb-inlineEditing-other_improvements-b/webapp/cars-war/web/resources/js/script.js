@@ -72,9 +72,9 @@ logMessage = function(msg) {
     $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
 }
 
-selectRow = function( i ) {
+selectRow = function(i) {
     dataTableWidget.unselectAllRows(); 
-    dataTableWidget.selectRow( i );
+    dataTableWidget.selectRow(i);
 }
 
 isLastChild = function(father, child) {
@@ -88,14 +88,22 @@ isFirstChild = function(father, child) {
 }
 
 isNthChild = function(father, child, i) {
-    console.log('inside isNthChild('+i+')');
-    var ithChild = $(father).children()[i];
+    var ithChild = nthChild(father, i);
     return $(ithChild).equals(child);
 }
 
 isLastButOneChild = function(father, child) {
+    var lastButOneChildVar = lastButOneChild(father);
+    return $(lastButOneChildVar).equals(child);
+}
+
+lastButOneChild = function(father) {
     var numOfChildren = $(father).children().length;
-    return isNthChild(father, child, numOfChildren - 2);
+    return nthChild(father, numOfChildren - 2);
+}
+
+nthChild = function(father, i) {
+    return $(father).children()[i];
 }
 
 function getInputSelection(el) {
@@ -155,9 +163,16 @@ function paranoidCaretEnd(e) {
 function caretAtTheEnd(e) {
     var inputValue = e.getAttribute("value");
     var caretEnd = paranoidCaretEnd(e);
-    if (caretEnd >inputValue.length) throw "panic";
-    if (caretEnd==inputValue.length) return true;
+    if      (caretEnd >inputValue.length) throw "panic";
+    else if (caretEnd==inputValue.length) return true;
     else                             return false;
+}
+
+function caretAtTheBeginning(e) {
+    var caretEnd = paranoidCaretEnd(e);
+    if      (caretEnd <0                ) throw "panic";
+    else if (caretEnd==0                ) return true;
+    else                                  return false;
 }
 
 focus = function(elem) {
@@ -166,10 +181,15 @@ focus = function(elem) {
 }
 
 
-var caretAtTheEndFlag = false;
+var caretAtTheEndFlag       = false;
+var caretAtTheBeginningFlag = false;
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
-    if ((event.keyCode != ARROWDOWN_KEY_CODE) && (event.keyCode != ARROWUP_KEY_CODE) && (event.keyCode != ARROWRIGHT_KEY_CODE))
+    if ((event.keyCode != ARROWDOWN_KEY_CODE)   && 
+        (event.keyCode != ARROWUP_KEY_CODE)     && 
+        (event.keyCode != ARROWRIGHT_KEY_CODE)  &&
+        (event.keyCode != ARROWLEFT_KEY_CODE))
+//    if ( !(event.keyCode in {ARROWDOWN_KEY_CODE, ARROWUP_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWLEFT_KEY_CODE}) )
         return true;
     else {
         var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
@@ -183,6 +203,7 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         var gotoRow = null;
 
         if (event.keyCode==ARROWRIGHT_KEY_CODE) {
+            caretAtTheBeginningFlag = false;
             if (caretAtTheEndFlag) {
                 // console.log('caretAtTheEndFlag is set and right arrow key pressed');
                 // console.log('the row has: '+$(rowInQuestion).children().length+' children');
@@ -205,7 +226,24 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         }
         if (event.keyCode==ARROWLEFT_KEY_CODE) {
             caretAtTheEndFlag = false;
-
+            if (caretAtTheBeginningFlag) {
+                console.log('at beginning and caretAtTheBeginningFlag set to true');
+                if (isFirstChild(rowInQuestion, $(element).closest('td'))) {
+                    var focusTarget = lastButOneChild(rowInQuestion);
+                    focus(focusTarget);
+                } else {
+                    var focusTarget = $(element).closest('td').prev('td').find('input');
+                    focus(focusTarget);
+                }
+                caretAtTheBeginningFlag = false;
+                return false;
+            }
+            else if (caretAtTheBeginning(element)) {
+                console.log('caretAtBeginning now set to true');
+                caretAtTheBeginningFlag = true;
+                return true;
+            }
+            else return true;
         }
         else if(event.keyCode==ARROWDOWN_KEY_CODE) {
             caretAtTheEndFlag = false;
