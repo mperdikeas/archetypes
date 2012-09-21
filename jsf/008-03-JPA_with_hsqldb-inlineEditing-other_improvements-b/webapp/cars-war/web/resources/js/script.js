@@ -6,10 +6,17 @@ var ARROWLEFT_KEY_CODE =  37;
 var ARROWUP_KEY_CODE   =  38;
 var ARROWRIGHT_KEY_CODE = 39;
 var ARROWDOWN_KEY_CODE =  40;
+var ARROWKEY_CODES = [ARROWLEFT_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE] ;
+
 var F2_KEY_CODE        = 113;
 var F4_KEY_CODE        = 115;
 var F8_KEY_CODE        = 119;
 var F9_KEY_CODE        = 120;
+
+
+
+var zoo = new Array(ARROWLEFT_KEY_CODE);
+var boo = [3];
 
 var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
 
@@ -34,6 +41,12 @@ function initActions() { // focusing does not yet work as I need to find a way t
         }
         return true;
     } 
+    console.log('ARROWKEY_CODES follow:');
+    console.log(ARROWKEY_CODES);
+    console.log('zoo follows:');
+    console.log(zoo);
+    console.log('boo follows:');
+    console.log(boo);
 }
 
 
@@ -181,15 +194,21 @@ focus = function(elem) {
 }
 
 
+isInArray = function (val,arr) {
+    return arr.indexOf(val)>=0;
+}
+
 var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
-    if ((event.keyCode != ARROWDOWN_KEY_CODE)   && 
+/*  if ((event.keyCode != ARROWDOWN_KEY_CODE)   && 
         (event.keyCode != ARROWUP_KEY_CODE)     && 
         (event.keyCode != ARROWRIGHT_KEY_CODE)  &&
-        (event.keyCode != ARROWLEFT_KEY_CODE))
-//    if ( !(event.keyCode in {ARROWDOWN_KEY_CODE, ARROWUP_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWLEFT_KEY_CODE}) )
+        (event.keyCode != ARROWLEFT_KEY_CODE)) */
+//   var ARROWKEYS          = new Array(ARROWDOWN_KEY_CODE, ARROWUP_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWLEFT_KEY_CODE) ;
+ //   if ( !(event.keyCode in ARROWKEYS) )
+    if ( !isInArray(event.keyCode, ARROWKEY_CODES) )
         return true;
     else {
         var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
