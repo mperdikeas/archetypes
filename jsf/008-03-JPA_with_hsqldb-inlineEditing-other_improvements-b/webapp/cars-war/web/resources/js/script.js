@@ -2,7 +2,9 @@ var ENTER_KEY_CODE   = 13;
 var ESCAPE_KEY_CODE  = 27;
 
 
+var ARROWLEFT_KEY_CODE =  37;
 var ARROWUP_KEY_CODE   =  38;
+var ARROWRIGHT_KEY_CODE = 39;
 var ARROWDOWN_KEY_CODE =  40;
 var F2_KEY_CODE        = 113;
 var F4_KEY_CODE        = 115;
@@ -14,7 +16,8 @@ var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
 function initActions() { // focusing does not yet work as I need to find a way to
                         // only focus the very first time the page is loaded and
                         // rely on arrow key navigation.
-    $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's better not have any focus at all
+    $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
+                                                            // better not have any PrimeFaces focus at all - use javascript focus
     $('#CAR-form\\:RowNext').hide();
     $('#CAR-form\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
@@ -84,24 +87,128 @@ isFirstChild = function(father, child) {
     return firstChild.equals(child);
 }
 
+isNthChild = function(father, child, i) {
+    console.log('inside isNthChild('+i+')');
+    var ithChild = $(father).children()[i];
+    return $(ithChild).equals(child);
+}
+
+isLastButOneChild = function(father, child) {
+    var numOfChildren = $(father).children().length;
+    return isNthChild(father, child, numOfChildren - 2);
+}
+
+function getInputSelection(el) {
+    var start = 0, end = 0, normalizedValue, range,
+    textInputRange, len, endRange;
+
+    if (typeof el.selectionStart == "number" && typeof el.selectionEnd == "number") {
+        start = el.selectionStart;
+        end = el.selectionEnd;
+    } else {
+        range = document.selection.createRange();
+
+        if (range && range.parentElement() == el) {
+            len = el.value.length;
+            normalizedValue = el.value.replace(/\r\n/g, "\n");
+
+            // Create a working TextRange that lives only in the input
+            textInputRange = el.createTextRange();
+            textInputRange.moveToBookmark(range.getBookmark());
+
+            // Check if the start and end of the selection are at the very end
+            // of the input, since moveStart/moveEnd doesn't return what we want
+            // in those cases
+            endRange = el.createTextRange();
+            endRange.collapse(false);
+
+            if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
+                start = end = len;
+            } else {
+                start = -textInputRange.moveStart("character", -len);
+                start += normalizedValue.slice(0, start).split("\n").length - 1;
+
+                if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
+                    end = len;
+                } else {
+                    end = -textInputRange.moveEnd("character", -len);
+                    end += normalizedValue.slice(0, end).split("\n").length - 1;
+                }
+            }
+        }
+    }
+
+    return {
+        start: start,
+        end: end
+    };
+}
+
+function paranoidCaretEnd(e) {
+    var caretEndAccordingToGetInputSelection = getInputSelection(e).end;
+    var caretEndAccordingToJCaret            = $(e).caret().end;
+    if (caretEndAccordingToJCaret != caretEndAccordingToGetInputSelection) throw "panic";
+    return 2*caretEndAccordingToGetInputSelection-caretEndAccordingToJCaret; // if they are not the same return a value that's
+                                                                             // neither the one nor the other
+}
+
+function caretAtTheEnd(e) {
+    var inputValue = e.getAttribute("value");
+    var caretEnd = paranoidCaretEnd(e);
+    if (caretEnd >inputValue.length) throw "panic";
+    if (caretEnd==inputValue.length) return true;
+    else                             return false;
+}
+
+var caretAtTheEndFlag = false;
+
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
-    if ((event.keyCode != ARROWDOWN_KEY_CODE) && (event.keyCode != ARROWUP_KEY_CODE))
+    if ((event.keyCode != ARROWDOWN_KEY_CODE) && (event.keyCode != ARROWUP_KEY_CODE) && (event.keyCode != ARROWRIGHT_KEY_CODE))
         return true;
     else {
         var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
+ 
+        // console.log("length of input ("+inputValue+") at this element is: "+inputValue.length+", caret end at: "+getInputSelection(element).end + "according to jCaret: "+ ($(element).caret().end)+", again: "+paranoidCaretEnd(element));
+
         var father = $(element).closest('tbody');
-        logMessage("number of rows is: "+$(father).children().length);
+        // logMessage("number of rows is: "+$(father).children().length);
         var rowInQuestion = $(element).closest('tr');
         var i = $(element).closest('td').index();
         var gotoRow = null;
-    
-        if(event.keyCode==ARROWDOWN_KEY_CODE) {
+
+        if (event.keyCode==ARROWRIGHT_KEY_CODE) {
+            if (caretAtTheEndFlag) {
+                console.log('caretAtTheEndFlag is set and right arrow key pressed');
+                console.log('the row has: '+$(rowInQuestion).children().length+' children');
+                if (isLastButOneChild(rowInQuestion, $(element).closest('td'))) {
+                    console.log('we\'re here now');
+                    $(rowInQuestion).children(':first').find('input').focus();
+                } else {
+                    $(element).closest('td').next('td').find('input').focus();
+                    caretAtTheEndFlag = false;
+                }
+                return false;
+            }
+            else if (caretAtTheEnd(element)) {
+                console.log('caretAtTheEndFlag is now set');
+                caretAtTheEndFlag = true;
+                return true;
+            }
+            else return true;
+        }
+        if (event.keyCode==ARROWLEFT_KEY_CODE) {
+            caretAtTheEndFlag = false;
+
+        }
+        else if(event.keyCode==ARROWDOWN_KEY_CODE) {
+            caretAtTheEndFlag = false;
             if (isLastChild(father, rowInQuestion))
                 gotoRow = $(father).children(':first');
             else
                 gotoRow = $(rowInQuestion).next('tr');
         }
         else if (event.keyCode==ARROWUP_KEY_CODE) { 
+            caretAtTheEndFlag = false;
             if (isFirstChild(father, rowInQuestion))
                 gotoRow = $(father).children(':last');
             else
