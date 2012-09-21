@@ -160,6 +160,12 @@ function caretAtTheEnd(e) {
     else                             return false;
 }
 
+focus = function(elem) {
+    $(elem).focus();
+    $(elem).caret({start:0,end:0});
+}
+
+
 var caretAtTheEndFlag = false;
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
@@ -178,15 +184,16 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
 
         if (event.keyCode==ARROWRIGHT_KEY_CODE) {
             if (caretAtTheEndFlag) {
-                console.log('caretAtTheEndFlag is set and right arrow key pressed');
-                console.log('the row has: '+$(rowInQuestion).children().length+' children');
+                // console.log('caretAtTheEndFlag is set and right arrow key pressed');
+                // console.log('the row has: '+$(rowInQuestion).children().length+' children');
                 if (isLastButOneChild(rowInQuestion, $(element).closest('td'))) {
-                    console.log('we\'re here now');
-                    $(rowInQuestion).children(':first').find('input').focus();
+                    var focusTarget = $(rowInQuestion).children(':first').find('input');
+                    focus(focusTarget);
                 } else {
-                    $(element).closest('td').next('td').find('input').focus();
-                    caretAtTheEndFlag = false;
+                    var focusTarget = $(element).closest('td').next('td').find('input');
+                    focus(focusTarget);
                 }
+                caretAtTheEndFlag = false;
                 return false;
             }
             else if (caretAtTheEnd(element)) {
@@ -214,7 +221,8 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
             else
                 gotoRow = $(rowInQuestion).prev('tr');
         }
-        $(gotoRow).find('input')[i].focus();
+        var focusTarget = $(gotoRow).find('input')[i];
+        focus(focusTarget);
         selectRow(gotoRow);
         return false;
     }
