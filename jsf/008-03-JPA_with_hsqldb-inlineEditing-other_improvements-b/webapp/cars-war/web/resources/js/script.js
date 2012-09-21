@@ -20,11 +20,8 @@ var boo = [3];
 
 var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
 
-function initActions() { // focusing does not yet work as I need to find a way to
-                        // only focus the very first time the page is loaded and
-                        // rely on arrow key navigation.
-    $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
-                                                            // better not have any PrimeFaces focus at all - use javascript focus
+function initActions() {
+    focusCursor();
     $('#CAR-form\\:RowNext').hide();
     $('#CAR-form\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
@@ -41,7 +38,13 @@ function initActions() { // focusing does not yet work as I need to find a way t
         }
         return true;
     } 
-    alert(' init actions called ');
+}
+
+function focusCursor() {
+    dataTableWidget.unselectAllRows();
+    dataTableWidget.selectRow(0);
+    $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
+                                                            // better not have any PrimeFaces focus at all - use javascript focus
 }
 
 
@@ -217,13 +220,13 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         if (event.keyCode==ARROWRIGHT_KEY_CODE) {
             caretAtTheBeginningFlag = false;
             if (caretAtTheEndFlag) {
+                var focusTarget = null;
                 if (isLastButOneChild(rowInQuestion, $(element).closest('td'))) {
-                    var focusTarget = $(rowInQuestion).children(':first').find('input');
-                    focus(focusTarget);
+                    focusTarget = $(rowInQuestion).children(':first').find('input');
                 } else {
-                    var focusTarget = $(element).closest('td').next('td').find('input');
-                    focus(focusTarget);
+                    focusTarget = $(element).closest('td').next('td').find('input');
                 }
+                focus(focusTarget);
                 caretAtTheEndFlag = false;
                 return false;
             }
