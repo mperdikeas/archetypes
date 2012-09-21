@@ -41,12 +41,6 @@ function initActions() { // focusing does not yet work as I need to find a way t
         }
         return true;
     } 
-    console.log('ARROWKEY_CODES follow:');
-    console.log(ARROWKEY_CODES);
-    console.log('zoo follows:');
-    console.log(zoo);
-    console.log('boo follows:');
-    console.log(boo);
 }
 
 
@@ -116,7 +110,9 @@ lastButOneChild = function(father) {
 }
 
 nthChild = function(father, i) {
-    return $(father).children()[i];
+    var children = $(father).children();
+    console.log(children.length+" children returned");
+    return children[i];
 }
 
 function getInputSelection(el) {
@@ -174,7 +170,7 @@ function paranoidCaretEnd(e) {
 }
 
 function caretAtTheEnd(e) {
-    var inputValue = e.getAttribute("value");
+    var inputValue = e.getAttribute("value"); // line lkj29378dskj
     var caretEnd = paranoidCaretEnd(e);
     if      (caretEnd >inputValue.length) throw "panic";
     else if (caretEnd==inputValue.length) return true;
@@ -193,6 +189,13 @@ focus = function(elem) {
     $(elem).caret({start:0,end:0});
 }
 
+focusEnd = function(elem) {
+    $(elem).focus();
+    var inputValue = elem.attr("value"); // elem is a jQuery object, not an HTML object as in line lkj29378dskj
+    var endOfInput = inputValue.length;
+    $(elem).caret( {start:endOfInput, end:endOfInput} );
+}
+
 
 isInArray = function (val,arr) {
     return arr.indexOf(val)>=0;
@@ -202,21 +205,11 @@ var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
-/*  if ((event.keyCode != ARROWDOWN_KEY_CODE)   && 
-        (event.keyCode != ARROWUP_KEY_CODE)     && 
-        (event.keyCode != ARROWRIGHT_KEY_CODE)  &&
-        (event.keyCode != ARROWLEFT_KEY_CODE)) */
-//   var ARROWKEYS          = new Array(ARROWDOWN_KEY_CODE, ARROWUP_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWLEFT_KEY_CODE) ;
- //   if ( !(event.keyCode in ARROWKEYS) )
     if ( !isInArray(event.keyCode, ARROWKEY_CODES) )
         return true;
     else {
         var element = event.target || event.srcElement; // srcElement in Internet Explorer, target in other browsers
- 
-        // console.log("length of input ("+inputValue+") at this element is: "+inputValue.length+", caret end at: "+getInputSelection(element).end + "according to jCaret: "+ ($(element).caret().end)+", again: "+paranoidCaretEnd(element));
-
         var father = $(element).closest('tbody');
-        // logMessage("number of rows is: "+$(father).children().length);
         var rowInQuestion = $(element).closest('tr');
         var i = $(element).closest('td').index();
         var gotoRow = null;
@@ -224,8 +217,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         if (event.keyCode==ARROWRIGHT_KEY_CODE) {
             caretAtTheBeginningFlag = false;
             if (caretAtTheEndFlag) {
-                // console.log('caretAtTheEndFlag is set and right arrow key pressed');
-                // console.log('the row has: '+$(rowInQuestion).children().length+' children');
                 if (isLastButOneChild(rowInQuestion, $(element).closest('td'))) {
                     var focusTarget = $(rowInQuestion).children(':first').find('input');
                     focus(focusTarget);
@@ -248,11 +239,11 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
             if (caretAtTheBeginningFlag) {
                 console.log('at beginning and caretAtTheBeginningFlag set to true');
                 if (isFirstChild(rowInQuestion, $(element).closest('td'))) {
-                    var focusTarget = lastButOneChild(rowInQuestion);
-                    focus(focusTarget);
+                    var focusTarget = $(lastButOneChild(rowInQuestion)).find('input');
+                    focusEnd(focusTarget);
                 } else {
                     var focusTarget = $(element).closest('td').prev('td').find('input');
-                    focus(focusTarget);
+                    focusEnd(focusTarget);
                 }
                 caretAtTheBeginningFlag = false;
                 return false;
