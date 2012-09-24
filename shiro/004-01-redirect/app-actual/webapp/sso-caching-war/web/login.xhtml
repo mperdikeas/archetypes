@@ -24,7 +24,7 @@
              <h:inputText      value="#{loginController.username}"   required="true" id="username-inpT"  />
              <p:outputLabel    value=                  "password:"                for="password-inpT"    />
              <h:inputText      value="#{loginController.password}" required="true" id="password-inpT"    />
-<ui:remove> <!-- is there a way to use the password field when password is automatically set in the backing bean using URL parameters? -->
+<ui:remove> <!-- is there a way to use the password field when password is automatically set in the backing bean using URL parameters? --> </ui:remove>
 <ui:remove> <!--            <p:password      value="#{loginController.password}"   required="true" id="password-inpT"/> --> </ui:remove>
          </h:panelGrid>
          <p:commandButton action="#{loginController.login}" value="login" update=":message"/> <!-- maybe we should update a growl message -->
