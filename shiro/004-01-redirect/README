@@ -2,3 +2,32 @@ Simple redirect from initial login page to
 Shiro authentication / authentication page
 using URL parameters.
 
+This USE-CASE (004) and STAGE (01) demo consists
+of two applications deployed in two separate 
+JBoss AS servers. One that serves as a login portal (app-login)
+and the other one that provides the actual application (app-actual).
+
+Shiro authentication / authorization takes place in the second
+application (that's deployed using the 'deploy-to-jboss2' script).
+
+The first application (that's deployed using a simple 'ant' in the
+'app-login/webapp/' folder), simply redirects the browser to the
+correct application URL based on the 'client' value entered in the
+first web form. That means that the username and password travel
+unencrypted as URL query parameters on the HTTP redirect.
+
+Ideas for future stages:
+[1] solve the security issue in the redirect
+[2] think about potential cookie issues
+[3] do not require a button click on the second page
+    (the login page with the backing bean managed fields
+    already set from the URL parameters)
+[4] ideally the second (login) page should not display 
+    at all, but immediately invoke the login action
+    (perhaps I can use JavaScript for that). If it does
+    display however, I need to find a way to use a proper
+    password field for the password, and not just a
+    <h:inputText> (see login.xhtml, line: 27).
+
+
+
