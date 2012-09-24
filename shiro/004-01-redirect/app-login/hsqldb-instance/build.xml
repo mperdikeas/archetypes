@@ -3,7 +3,7 @@
 	<description>Helps starting up the HSQLDB demo database.</description>
 
 	<path id="hsql-classpath">
-		<fileset dir="../../../repo-wide-libs">
+		<fileset dir="../../../../repo-wide-libs">
 			<include name="hsqldb-2.2.9.jar"/>
 		</fileset>
 	</path>
