@@ -46,7 +46,13 @@ public class Client implements Serializable {
         this.clientName = clientName;
     }
 
+    public String getCoords() {
+        return coords;
+    }
 
+    public void setCoords(String coords) {
+        this.coords = coords;
+    }
     
     public int getHashCode() {
         return hashCode();

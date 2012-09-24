@@ -29,12 +29,16 @@ import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
 
-
-
+import facades.IClientFacade;
+import entities.Client;
 
 @ManagedBean
 @RequestScoped
 public class LoginController implements Serializable {
+
+    @EJB(beanName = "ClientFacade")
+    private IClientFacade.ILocal clientFacade;
+
 
     private static final String CLASSNAME=LoginController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
@@ -70,7 +74,10 @@ public class LoginController implements Serializable {
     }
 
     public String login() throws java.io.IOException {
-        String uri="http://www.google.com";
+        l.info("looking for client with client name=  "+getClient());
+        Client client = clientFacade.getClientByClientName(getClient());
+        l.info("client returned is: "+client);
+        String uri=String.format("http://%s?username=%s&pass=%s", client.getCoords(), getUsername(), getPassword());
         FacesContext.getCurrentInstance().getExternalContext().redirect(uri);
         return null;
     }

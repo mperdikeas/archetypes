@@ -15,15 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
-
 import mutil.base.Pair;
+import mutil.jpapersutil.QualifiedResultList;
 
 import entities.Client;
 
 @Stateless
-@Local(IClientFacadeLocal.class)
-@Remote(IClientFacadeRemote.class)
-public class ClientFacade extends AbstractFacade<Client> implements IClientFacadeLocal {
+@Local (IClientFacade.ILocal.class)
+@Remote(IClientFacade.IRemote.class)
+public class ClientFacade extends AbstractFacade<Client> implements IClientFacade {
     @PersistenceContext(unitName = "clientsPU")
     private EntityManager em;
 
@@ -39,5 +39,12 @@ public class ClientFacade extends AbstractFacade<Client> implements IClientFacad
         super(Client.class);
     }
 
+    public Client getClientByClientName(String clientName) {
+        Pair<String, Map<String, Object>> jpql_and_params = Select.from(Client.class).where().f("clientName").is(clientName).end().getQuery();
+        l.info("ClientFacade::getClientByClientName("+clientName+")");
+        QualifiedResultList<Client> clients = JPQLUtil.getResults(em, jpql_and_params, 1);
+        if (clients.theresMore) throw new RuntimeException();
+        return clients.data.get(0);
+    }
     
 }
