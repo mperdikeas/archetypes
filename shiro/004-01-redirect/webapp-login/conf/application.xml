@@ -5,14 +5,14 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
  
 
 <module>
- <ejb>client-ejb.jar</ejb>
+ <ejb>login-ejb.jar</ejb>
 </module>
 
 
 <module>
  <web>
-   <web-uri>client-war.war</web-uri>
-   <context-root>client</context-root>
+   <web-uri>login-war.war</web-uri>
+   <context-root>client-login</context-root>
  </web>
 </module>
  
