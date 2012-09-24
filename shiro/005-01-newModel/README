@@ -1,0 +1,5 @@
+That's the new script for the Authorization/Authentication module
+given to me by ykoufoudakis on 24.IX.2012.
+I am trying to create a sample application using this new (and
+hopefully final?) schema so as to abstract common Shiro functionality
+into library classes and perhaps recognize patterns.
