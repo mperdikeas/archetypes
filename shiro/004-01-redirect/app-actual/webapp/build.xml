@@ -1,4 +1,4 @@
-<project name="cars" basedir="." default="republish">
+<project name="sso-caching" basedir="." default="republish">
 
     <!-- Project settings -->
     <property name="project.distname"      value="${ant.project.name}"/>
@@ -12,28 +12,35 @@
     <!-- Local system paths -->
     <property environment="env" />
     <property file="build.properties"/>
-    <property name="ejb-project.dir"      value="./${ejb-project.name}"         />
-    <property name="war-project.dir"      value="./${war-project.name}"         />
-    <property name="client-project.dir"   value="./${client-project.name}"      />
-    <property name="application_xml"      value="application.xml"               />
+    <property name="ejb-project.name"     value="${project.distname}-ejb"/>
+    <property name="war-project.name"     value="${project.distname}-war"/>
+    <property name="ejb-project.dir"      value="./${ejb-project.name}"/>
+    <property name="war-project.dir"      value="./${war-project.name}"/>
+    <property name="application_xml"      value="OVERRIDE IT"/>
     <property name="application_xml.file" value="${conf.dir}/${application_xml}"/>
 
     <target name="clean"
       description="Prepare for clean build">
       <delete dir="${dist.dir}"/>
-      <ant antfile = "${ejb-project.dir}/build.xml"    target="clean" inheritAll="false"/>
-      <ant antfile = "${war-project.dir}/build.xml"    target="clean" inheritAll="false"/>
-      <ant antfile = "${client-project.dir}/build.xml" target="clean" inheritAll="false"/>
+      <ant antfile = "${ejb-project.dir}/build.xml" target="clean" inheritAll="false"/>
+      <ant antfile = "${war-project.dir}/build.xml" target="clean" inheritAll="false"/>
     </target>
 
-    <target name="jar-build-ejb" > 
-      <ant antfile = "${ejb-project.dir}/build.xml" target="jar" inheritAll="false"/>
-    </target>
-    <target name="build-war" > 
+   <target name="test_application_xml">   
+       <condition property="application_xml.file.exists" value="true" else="false">
+          <available file="${application_xml.file}"/>
+       </condition>
+       <fail message="application .xml configuration file (${application_xml.file}) does not exist - aborting"
+             unless="${application_xml.file.exists}"/>
+   </target>
+
+
+    <target name="build-war" depends="test_application_xml">
       <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false"/>
     </target>
 
-    <target name="ear" description="Building the ear file" depends="jar-build-ejb, build-war">
+
+    <target name="ear" description="Building the ear file" depends="build-war">
       <mkdir dir="${dist.dir}"/>
       <ear destfile="${project.artefact.path}" appxml="${application_xml.file}">
         <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
@@ -41,11 +48,8 @@
               <include name="mutil.jar"/>
               <include name="joda-time-2.1.jar"/>
         </zipfileset>
-        <zipfileset dir="${client-project.dir}/dist" prefix="${ear-lib.dest.preffix}">
-            <include name="${client-project.name}.jar"/>
-        </zipfileset>
-        <fileset dir="${war-project.dir}/build"    includes="${war-project.name}.war"   />
-        <fileset dir="${ejb-project.dir}/build"    includes="${ejb-project.name}.jar"   />
+        <fileset dir="${war-project.dir}/build" includes="${war-project.name}.war"/>
+        <fileset dir="${ejb-project.dir}/dist" includes="${ejb-project.name}.jar"/>
 
         <include name ="${ejb-project.dir}/dist/${ejb-project.name}.jar"/>  <!-- this is likely not needed - I should remove it -->
         <include name ="${war-project.dir}/build/${war-project.name}.war"/>

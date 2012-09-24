@@ -1,0 +1,1 @@
+ant -Dapplication_xml=application.xml -Dpublish.dir=/home/mperdikeas/jboss-standalone-deployments2 -f webapp/build.xml
