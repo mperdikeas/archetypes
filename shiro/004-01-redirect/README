@@ -1,0 +1,4 @@
+Simple redirect from initial login page to
+Shiro authentication / authentication page
+using URL parameters.
+
