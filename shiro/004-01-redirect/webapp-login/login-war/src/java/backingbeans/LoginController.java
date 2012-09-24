@@ -39,16 +39,6 @@ public class LoginController implements Serializable {
     private static final String CLASSNAME=LoginController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
-    private String message;
-    
-    public String getMessage() {
-        return message;
-    }
-    
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     private String client;
     
     public String getClient() {
@@ -79,7 +69,9 @@ public class LoginController implements Serializable {
         this.password = password;
     }
 
-    public String login() {
+    public String login() throws java.io.IOException {
+        String uri="http://www.google.com";
+        FacesContext.getCurrentInstance().getExternalContext().redirect(uri);
         return null;
     }
 

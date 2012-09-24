@@ -16,15 +16,19 @@
 
         <ui:define name="body">
             <h:form id="LOGIN-form" styleClass="jsfcrud_list_form">         
+                <h:messages showSummary="true"/>
                 <h:panelGrid columns="2" cellspacing="10px" >
                      <p:outputLabel for="client-inpT" value="client: "                                        />
-                     <p:inputText   value="#{loginController.client}"       required="true" id="client-inpT"  />
+                     <p:inputText   value="#{loginController.client}"       required="true" 
+                                    requiredMessage="client must not be null" id="client-inpT"                />
                      <p:outputLabel for="username-inpT" value="username: "                                    />
-                     <p:inputText     value="#{loginController.username}"   required="true" id="username-inpT"/>
+                     <p:inputText     value="#{loginController.username}"   required="true" 
+                                      requiredMessage="username must not be null" id="username-inpT"          />
                      <p:outputLabel for="password-inpT" value="password: "                                    />
-                     <p:password      value="#{loginController.password}"   required="true" id="password-inpT"/>
+                     <p:password      value="#{loginController.password}"   required="true" 
+                                      requiredMessage="password must not be null" id="password-inpT"          />
                 </h:panelGrid>
-             <p:commandButton action="#{loginController.login}" value="login"/>
+             <p:commandButton action="#{loginController.login}" value="login" />
             </h:form>
         </ui:define>
     </ui:composition>
