@@ -1,8 +1,11 @@
-In this USE CASE (010) and STAGE (01) I am trying
+In this USE CASE (010) and STAGE (01) I managed
 to implement a sample Java EE project that is build both
-ways, Ant and NetBeans. I've done that before, only this
+ways, Ant and NetBeans.
+
+I've done that before, only this
 time I am using a more structured way (the project consists
 of three sub-projects: foo-ejb, foo-client and foo-war, and 
 not just two, and as such the NB "import EE project from existing sources"
-cannot be used, instead, I am importing a free-form project.
+cannot be used, instead, I am importing a free-form Java project and
+there's no IDE-generated Ant build file - only my custom build script.
 
