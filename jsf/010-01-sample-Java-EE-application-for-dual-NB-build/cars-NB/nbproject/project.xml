@@ -116,7 +116,7 @@
             </compilation-unit>
             <compilation-unit>
                 <package-root>${project.dir}/cars-ejb/src/java</package-root>
-                <classpath mode="compile">${project.dir}/cars-ejb/lib/commons-lang3-3.1.jar:${project.dir}/cars-ejb/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar:${project.dir}/cars-ejb/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar:${project.dir}/cars-ejb/lib/joda-time-2.1.jar:${project.dir}/cars-ejb/lib/log4j-1.2.17.jar:${project.dir}/cars-ejb/lib/mutil.jar:${project.dir}/cars-ejb/lib/slf4j-api-1.6.6.jar:${project.dir}/cars-ejb/lib/slf4j-log4j12-1.6.6.jar:${project.dir}/cars-ejb/lib/validation-api-1.0.0.GA.jar</classpath>
+                <classpath mode="compile">${project.dir}/cars-ejb/lib/commons-lang3-3.1.jar:${project.dir}/cars-ejb/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar:${project.dir}/cars-ejb/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar:${project.dir}/cars-ejb/lib/joda-time-2.1.jar:${project.dir}/cars-ejb/lib/log4j-1.2.17.jar:${project.dir}/cars-ejb/lib/mutil.jar:${project.dir}/cars-ejb/lib/slf4j-api-1.6.6.jar:${project.dir}/cars-ejb/lib/slf4j-log4j12-1.6.6.jar:${project.dir}/cars-ejb/lib/validation-api-1.0.0.GA.jar:${project.dir}/cars-client/dist/cars-client.jar</classpath>
                 <built-to>${project.dir}/cars-ejb/build/cars-ejb.jar</built-to>
                 <built-to>${project.dir}/cars-ejb/bin</built-to>
                 <source-level>1.5</source-level>
