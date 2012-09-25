@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>cars</name>
+            <properties>
+                <property name="project.dir">../cars</property>
+                <property name="ant.script">${project.dir}/build.xml</property>
+            </properties>
+            <folders>
+                <source-folder>
+                    <label>cars</label>
+                    <location>${project.dir}</location>
+                </source-folder>
+                <source-folder>
+                    <label>cars-client/src/java</label>
+                    <type>java</type>
+                    <location>${project.dir}/cars-client/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>cars-ejb/src/java</label>
+                    <type>java</type>
+                    <location>${project.dir}/cars-ejb/src/java</location>
+                </source-folder>
+                <source-folder>
+                    <label>cars-war/src/java</label>
+                    <type>java</type>
+                    <location>${project.dir}/cars-war/src/java</location>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <script>${ant.script}</script>
+                    <target>ear</target>
+                </action>
+                <action name="clean">
+                    <script>${ant.script}</script>
+                    <target>clean</target>
+                </action>
+                <action name="run">
+                    <script>${ant.script}</script>
+                    <target>publish</target>
+                </action>
+                <action name="rebuild">
+                    <script>${ant.script}</script>
+                    <target>clean</target>
+                    <target>ear</target>
+                </action>
+            </ide-actions>
+            <export>
+                <type>jar</type>
+                <location>${project.dir}/cars-client/dist/cars-client.jar</location>
+                <script>${ant.script}</script>
+                <build-target>ear</build-target>
+            </export>
+            <export>
+                <type>folder</type>
+                <location>${project.dir}/cars-client/build</location>
+                <script>${ant.script}</script>
+                <build-target>ear</build-target>
+            </export>
+            <export>
+                <type>jar</type>
+                <location>${project.dir}/cars-ejb/build/cars-ejb.jar</location>
+                <script>${ant.script}</script>
+                <build-target>ear</build-target>
+            </export>
+            <export>
+                <type>folder</type>
+                <location>${project.dir}/cars-ejb/bin</location>
+                <script>${ant.script}</script>
+                <build-target>ear</build-target>
+            </export>
+            <export>
+                <type>folder</type>
+                <location>${project.dir}/cars-war/web/WEB-INF/classes</location>
+                <script>${ant.script}</script>
+                <build-target>ear</build-target>
+            </export>
+            <view>
+                <items>
+                    <source-folder style="packages">
+                        <label>cars-client/src/java</label>
+                        <location>${project.dir}/cars-client/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>cars-ejb/src/java</label>
+                        <location>${project.dir}/cars-ejb/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>cars-war/src/java</label>
+                        <location>${project.dir}/cars-war/src/java</location>
+                    </source-folder>
+                    <source-file>
+                        <location>${ant.script}</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="run"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+            <compilation-unit>
+                <package-root>${project.dir}/cars-client/src/java</package-root>
+                <classpath mode="compile">${project.dir}/cars-client/lib/commons-lang3-3.1.jar:${project.dir}/cars-client/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar:${project.dir}/cars-client/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar:${project.dir}/cars-client/lib/joda-time-2.1.jar:${project.dir}/cars-client/lib/log4j-1.2.17.jar:${project.dir}/cars-client/lib/mutil.jar:${project.dir}/cars-client/lib/slf4j-api-1.6.6.jar:${project.dir}/cars-client/lib/slf4j-log4j12-1.6.6.jar:${project.dir}/cars-client/lib/validation-api-1.0.0.GA.jar</classpath>
+                <built-to>${project.dir}/cars-client/dist/cars-client.jar</built-to>
+                <built-to>${project.dir}/cars-client/build</built-to>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>${project.dir}/cars-ejb/src/java</package-root>
+                <classpath mode="compile">${project.dir}/cars-ejb/lib/commons-lang3-3.1.jar:${project.dir}/cars-ejb/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar:${project.dir}/cars-ejb/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar:${project.dir}/cars-ejb/lib/joda-time-2.1.jar:${project.dir}/cars-ejb/lib/log4j-1.2.17.jar:${project.dir}/cars-ejb/lib/mutil.jar:${project.dir}/cars-ejb/lib/slf4j-api-1.6.6.jar:${project.dir}/cars-ejb/lib/slf4j-log4j12-1.6.6.jar:${project.dir}/cars-ejb/lib/validation-api-1.0.0.GA.jar</classpath>
+                <built-to>${project.dir}/cars-ejb/build/cars-ejb.jar</built-to>
+                <built-to>${project.dir}/cars-ejb/bin</built-to>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>${project.dir}/cars-war/src/java</package-root>
+                <classpath mode="compile">${project.dir}/cars-war/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar:${project.dir}/cars-war/lib/javaee-web-api-6.0.jar:${project.dir}/cars-war/lib/javax.faces-2.1.8.jar:${project.dir}/cars-war/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar:${project.dir}/cars-war/lib/jboss-el-api_2.2_spec-1.0.0.Final.jar:${project.dir}/cars-war/lib/jboss-jsf-api_2.1_spec-2.0.1.Final.jar:${project.dir}/cars-war/lib/joda-time-2.1.jar:${project.dir}/cars-war/lib/mutil.jar:${project.dir}/cars-war/lib/primefaces-3.4.jar:${project.dir}/cars-war/lib/primefaces-extensions-0.5.1.jar:${project.dir}/cars-war/lib/slf4j-api-1.6.6.jar:${project.dir}/cars-war/lib/slf4j-simple-1.6.1.jar:${project.dir}/cars-war/lib/validation-api-1.0.0.GA.jar:${project.dir}/cars-client/dist/cars-client.jar</classpath>
+                <built-to>${project.dir}/cars-war/build/cars-war.war</built-to>
+                <built-to>${project.dir}/cars-war/web/WEB-INF/classes</built-to>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+        </java-data>
+    </configuration>
+</project>
