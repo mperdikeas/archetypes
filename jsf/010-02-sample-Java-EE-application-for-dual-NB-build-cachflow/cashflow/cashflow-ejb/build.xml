@@ -1,4 +1,4 @@
-<project name="cars-ejb (foo)" basedir="." default="reear">
+<project name="cashflow-ejb (foo)" basedir="." default="reear">
 
     <property file="build.properties"/> <!-- IMPORTANT: at the top -->
     <property name="project.distname" value="${ejb-project.name}"/>

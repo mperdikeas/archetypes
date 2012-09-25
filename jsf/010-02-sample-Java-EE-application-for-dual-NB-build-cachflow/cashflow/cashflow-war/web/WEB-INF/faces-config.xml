@@ -15,7 +15,7 @@
     <from-view-id>*</from-view-id>
     <navigation-case>
         <from-outcome>cancel</from-outcome>
-        <to-view-id>/cars.xhtml</to-view-id>
+        <to-view-id>/cashflow.xhtml</to-view-id>
         <redirect/>
     </navigation-case>
 </navigation-rule>
