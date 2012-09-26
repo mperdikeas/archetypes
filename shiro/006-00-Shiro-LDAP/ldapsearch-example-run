@@ -1,0 +1,1 @@
+ldapsearch -x -h 172.31.128.160 -D cn=orcladmin,cn=Users,dc=neuropublic,dc=gr -w welcome1
