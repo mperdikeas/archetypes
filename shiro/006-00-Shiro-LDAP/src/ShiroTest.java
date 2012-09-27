@@ -21,14 +21,18 @@ public class ShiroTest {
         SecurityUtils.setSecurityManager(securityManager);
 
         Subject user = SecurityUtils.getSubject();
-
+        logger.trace("trace level logging");
         logger.info("User is authenticated:  " + user.isAuthenticated());
+        logger.debug("debug level logging");
+        logger.info("info level logging");
 
-        UsernamePasswordToken token = 
-            new UsernamePasswordToken("cn=orcladmin,cn=Users,dc=neuropublic,dc=gr", "welcome1");
+        //both below lines work (but maybe you'll have to target a different LDAP repository)
+      //UsernamePasswordToken token = new UsernamePasswordToken("cn=orcladmin,cn=Users,dc=neuropublic,dc=gr", "welcome1");
+      //UsernamePasswordToken token = new UsernamePasswordToken("cn=developer,cn=Users,dc=neuropublic,dc=gr", "12345678");
+        UsernamePasswordToken token = new UsernamePasswordToken("cn=developer,cn=Users,dc=neuropublic,dc=gr", "12345678");
 
         user.login(token);
-
         logger.info("User is authenticated:  " + user.isAuthenticated());
+        user.checkRole("cn=Foo,cn=Groups,dc=neuropublic,dc=gr");
     }
 }
