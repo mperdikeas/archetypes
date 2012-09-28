@@ -1,4 +1,6 @@
 import com.unboundid.ldap.sdk.*;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class UnboundIdOperationsTest {
@@ -54,5 +56,37 @@ public class UnboundIdOperationsTest {
         SearchRequest sr = new SearchRequest("dc=neuropublic,dc=gr", SearchScope.SUB, both, "cn");
         printNames(conn, sr, "cn");
     }
+
+    private static List<String> getGroupsWithUser(LDAPConnection conn, String userDN) throws LDAPSearchException {
+        Filter groupfilter        = Filter.createEqualityFilter("objectclass", "orclGroup");
+        Filter uniqueMemberFilter = Filter.createEqualityFilter("uniqueMember", userDN);
+        Filter both               = Filter.createANDFilter(groupfilter, uniqueMemberFilter);
+        SearchRequest sr = new SearchRequest("dc=neuropublic,dc=gr", SearchScope.SUB, both, "cn");
+
+        SearchResult searchResult = conn.search(sr);
+        System.out.println(searchResult.getEntryCount()+" matching entries returned");
+        List<String> retValue = new ArrayList<String>();
+        for (SearchResultEntry entry : searchResult.getSearchEntries())
+            retValue.add(entry.getDN());
+        return retValue;
+    }
+
+    private static List<String> getUsersOfGroup(LDAPConnection conn, String groupDN) throws LDAPSearchException {
+        SearchRequest sr = new SearchRequest(groupDN, SearchScope.SUB, (Filter) null , "uniqueMember");
+
+        SearchResult searchResult = conn.search(sr);
+        System.out.println(searchResult.getEntryCount()+" matching entries returned");
+        List<String> retValue = new ArrayList<String>();
+        List<SearchResultEntry> searchResultEntries = searchResult.getSearchEntries();
+        if (searchResultEntries.size()>1) throw new RuntimeException();
+        SearchResultEntry entry = searchResultEntries.get(0);
+        Attribute uniqueMembers = entry.getAttribute("uniqueMember");
+        String[] uniqueMembersStrArray = uniqueMembers.getValues();
+        for (String member : uniqueMembersStrArray)
+            retValue.add(member);
+        return retValue;
+    }
+
+
 }
 
