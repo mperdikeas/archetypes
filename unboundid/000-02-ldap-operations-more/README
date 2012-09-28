@@ -1,7 +1,9 @@
 In this example I am doing a login against an Oracle LDAP server
 using UnboundId and then am getting all users and all groups.
+I also do so slightly more involved stuff like finding the groups
+a user belongs to and the other users of those groups.
 
 Ideas for next stages:
-* check whether I can do authentication
-* check whether I can do authorization
+* check whether I can do Shiro authentication by implementing my own Shiro authentication class
+* check whether I can do Shiro authorization by implementing my own Shiro authorization class
 * SSO

@@ -17,6 +17,15 @@ public class UnboundIdOperationsTest {
         printUsers(conn);
         System.out.println("/*************** FIND ALL GROUPS TO WHICH A SPECIFIC USER BELONGS ****************\\");
         printGroupsWithUser(conn, "cn=developer,cn=Users,dc=neuropublic,dc=gr");
+        System.out.println("/*************** FIND ALL GROUPS TO WHICH A SPECIFIC USER BELONGS (method two) ***\\");
+        List<String> groups = getGroupsWithUser(conn, "cn=developer,cn=Users,dc=neuropublic,dc=gr");
+        for (String group : groups) {
+            List<String> users = getUsersOfGroup(conn, group);
+            System.out.println(String.format("group: %s, %d users in total. Users follow:", group, users.size()));
+            int _i = 0;
+            for (String user : users) 
+                System.out.println(String.format("          user %d of %d = %s", ++_i, users.size(), user));
+        }
         conn.close();
         System.out.println("connection closed");
     }
@@ -72,7 +81,8 @@ public class UnboundIdOperationsTest {
     }
 
     private static List<String> getUsersOfGroup(LDAPConnection conn, String groupDN) throws LDAPSearchException {
-        SearchRequest sr = new SearchRequest(groupDN, SearchScope.SUB, (Filter) null , "uniqueMember");
+        Filter groupFilter        = Filter.createEqualityFilter("objectclass", "orclGroup");
+        SearchRequest sr = new SearchRequest(groupDN, SearchScope.SUB, groupFilter , "uniqueMember");
 
         SearchResult searchResult = conn.search(sr);
         System.out.println(searchResult.getEntryCount()+" matching entries returned");
@@ -86,7 +96,6 @@ public class UnboundIdOperationsTest {
             retValue.add(member);
         return retValue;
     }
-
 
 }
 
