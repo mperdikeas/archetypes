@@ -7,6 +7,9 @@ public class UnboundIdLoginTest {
         String bindDN = "cn=orcladmin,cn=Users,dc=neuropublic,dc=gr";
         String passwd = "welcome1";
         LDAPConnection conn = new LDAPConnection(host, port, bindDN, passwd);
+        System.out.println("connection established");
+        conn.close();
+        System.out.println("connection closed");
     }
 }
 
