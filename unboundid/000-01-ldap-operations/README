@@ -1,0 +1,6 @@
+Dead simple login against an Oracle LDAP server
+using UnboundId.
+Ideas for next stages:
+* do some operations
+* check whether I can do authorization
+* SSO
