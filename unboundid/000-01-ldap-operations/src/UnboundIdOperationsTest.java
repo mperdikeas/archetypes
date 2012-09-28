@@ -15,7 +15,7 @@ public class UnboundIdOperationsTest {
     }
 
     private static void printUsers(LDAPConnection conn) {
-        Filter filter = Filter.createEqualityFilter("cn", "Users");
+        Filter filter = Filter.createEqualityFilter("objectclass", "person");
         // possible SearchScope values include BASE, ONE, SUB and SUBORDINATE_SUBTREE
         SearchRequest searchRequest = new SearchRequest("dc=neuropublic,dc=gr", SearchScope.SUB, filter, "cn");
         try {
