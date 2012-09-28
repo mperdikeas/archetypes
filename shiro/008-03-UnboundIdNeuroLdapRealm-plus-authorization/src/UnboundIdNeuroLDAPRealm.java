@@ -1,7 +1,14 @@
+import java.util.Set;
+import java.util.LinkedHashSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken; 
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -9,11 +16,17 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.naming.NamingException;
-import com.unboundid.ldap.sdk.*;
+import com.unboundid.ldap.sdk.LDAPException;
+import com.unboundid.ldap.sdk.LDAPSearchException;
+import com.unboundid.ldap.sdk.LDAPConnection;
+import com.unboundid.ldap.sdk.SearchScope;
+import com.unboundid.ldap.sdk.SearchRequest;
+import com.unboundid.ldap.sdk.SearchResult;
+import com.unboundid.ldap.sdk.SearchResultEntry;
+import com.unboundid.ldap.sdk.Filter;
+
 
 public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
 
@@ -78,7 +91,6 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         try {
             return queryForAuthenticationInfo(token, ensureLDAPConnectionFactory());
-
         } catch (LDAPException lde) {
             throw new AuthenticationException("LDAP Authentication over UnboundId failed", lde);
         }
@@ -88,31 +100,70 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
             throws LDAPException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username   = upToken.getUsername();
-        String usernameDN = String.format("%s=%s,%s", principalRDTag, username, principalSuffix);
+        String usernameDN = dnFromUsername(username);
         log.debug(String.format("checking for authentication of '%s'->'%s'", username, usernameDN));
         ldapConnectionFactory.canGetThrowAwayLDAPConnection(usernameDN, String.valueOf(upToken.getPassword()));
         return new SimpleAuthenticationInfo(username, upToken.getPassword(), getName());
     }
 
+    private String dnFromUsername(String username) {
+        String usernameDN = String.format("%s=%s,%s", principalRDTag, username, principalSuffix);
+        log.debug(String.format("translated: '%s' to: '%s'", username, usernameDN));
+        return usernameDN;
+    }
+
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
-    }/*
         AuthorizationInfo info;
         try {
-            info = queryForAuthorizationInfo(principals, ensureContextFactory());
-        } catch (NamingException e) {
-            String msg = "LDAP naming error while attempting to retrieve authorization for user [" + principals + "].";
+            info = queryForAuthorizationInfo(principals, ensureLDAPConnectionFactory());
+        } catch (LDAPException e) {
+            String msg = "LDAP Exception: Authorization over UnboundId failed while attempting to retrieve authorization for user [" + principals + "].";
             throw new AuthorizationException(msg, e);
         }
-
         return info;
-        }*/
+    }
 
 
+    protected AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principals, ILdapConnectionFactory ldapConnectionFactory)
+        throws LDAPException, LDAPSearchException {
+        String username = (String) getAvailablePrincipal(principals);
+        String usernameDN = dnFromUsername(username);
+        LDAPConnection ldapConn = ldapConnectionFactory.getConnection();
+        Set<String> roleNames;
+        try {
+            roleNames = getRoleNamesForUser(ldapConn, usernameDN);
+        } finally {
+            ldapConn.close();
+        }
+        return new SimpleAuthorizationInfo(roleNames);
+    }
 
 
-    /*
-      protected abstract AuthorizationInfo queryForAuthorizationInfo(PrincipalCollection principal, LdapContextFactory ldapContextFactory) throws NamingException;*/
+    private Set<String> getRoleNamesForUser(LDAPConnection ldapConn, String usernameDN) throws LDAPException {
+        // 1st implementation: we don't translate the groups into roles in any manner
+        // or do any sort of clever traversal routine
+        /*Set<String> roleNames;
+          roleNames = new LinkedHashSet<String>();*/
+        return getGroupsWithUser(ldapConn, usernameDN);
+    }
+
+
+    private Set<String> getGroupsWithUser(LDAPConnection conn, String userDN) throws LDAPSearchException {
+        Filter both               = Filter.createANDFilter(
+                                        Filter.createEqualityFilter("objectclass", "orclGroup"),
+                                        Filter.createEqualityFilter("uniqueMember", userDN)
+                                    );
+        SearchRequest sr = new SearchRequest(searchBase, SearchScope.SUB, both, "cn");
+
+        SearchResult searchResult = conn.search(sr);
+        log.debug(searchResult.getEntryCount()+" matching entries returned");
+        Set<String> retValue = new LinkedHashSet<String>();
+        for (SearchResultEntry entry : searchResult.getSearchEntries())
+            retValue.add(entry.getDN());
+        return retValue;
+    }
+
+
 
 }
