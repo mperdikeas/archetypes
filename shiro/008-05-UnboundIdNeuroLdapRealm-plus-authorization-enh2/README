@@ -1,0 +1,16 @@
+GOAL: Trying to provide my own subclass of AbstractLdapRealm
+that will be using UnboundId to do LDAP authentication
+and authorization against the OID (Oracle Internet Directory)
+LDAP server they use at Neuropublic.
+
+
+In this USE-CASE (008) and STAGE (005) I am trying
+to return a richer AuthorizationInfo object comprising both Roles
+and Permissions and distinguishing amongst themselves.
+
+Tasks for next stages:
+[1] streamline the authorization implementation
+[2] upgrade it from a console-applicatoin to a Web application
+[3] SSO
+
+
