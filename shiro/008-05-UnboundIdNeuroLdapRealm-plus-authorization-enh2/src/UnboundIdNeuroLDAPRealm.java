@@ -129,13 +129,13 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         String username = (String) getAvailablePrincipal(principals);
         String usernameDN = dnFromUsername(username);
         LDAPConnection ldapConn = ldapConnectionFactory.getConnection();
-        Pair<Set<String, Set<String>> rolesAndPermissions;
+        Pair<Set<String>, Set<String>> rolesAndPermissions;
         try {
             rolesAndPermissions = getRolesAndPermissionsForUser(ldapConn, usernameDN);
         } finally {
             ldapConn.close();
         }
-        return new SimpleAuthorizationInfo(roleNames.a);
+        return new SimpleAuthorizationInfo(rolesAndPermissions.a);
         // TODO: will have to recursively add groups for permissions as well
         // TODO: will have to replace the DN names of groups with a mapped role and privillige name by dropping the suffix
     }
@@ -181,7 +181,12 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         Set<String> fatherlessGroups = new LinkedHashSet<String>();
         for (SearchResultEntry entry : searchResult.getSearchEntries())
             recursivelyAddGroups(conn, fatherGroups, fatherlessGroups, entry.getDN());
-        log.debug(String.format("User '%s' is an indirect member of %d groups", userDN, retValue.size()-searchResult.getEntryCount()));
+        int numOfFatherGroups     = fatherGroups.size();
+        int numOfFatherlessGroups = fatherlessGroups.size(); MISNOMER THOSE AREN'T FATHERLESS - THEY ARE CHILDLESS GROUPS !!!
+        int numOfDirectGroups     = searchResult.getEntryCount();
+        int numOfIndirectGroups   = numOfFatherGroups + numOfFatherlessGroups - numOfDirectGroups;
+        log.debug(String.format("User '%s' is strictly indirect member of %d groups of which %d are role-groups and %d are permission-groups"
+                                , userDN, numOfIndirectGroups, numOfFatherGroups, numOfFatherlessGroups));
         return Pair.create(fatherGroups, fatherlessGroups);
     }
 
@@ -208,7 +213,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
                 log.trace("examining: "+member);
                 if (isGroup(member)) {
                     foundOneChildGroup = true;
-                    recursivelyAddGroups(conn, retValue, member);
+                    recursivelyAddGroups(conn, fatherGroups, fatherlessGroups, member);
                 }
             }
             if (foundOneChildGroup)
