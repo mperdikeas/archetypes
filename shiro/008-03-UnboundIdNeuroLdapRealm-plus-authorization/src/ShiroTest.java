@@ -36,6 +36,8 @@ public class ShiroTest {
         } catch (AuthenticationException ae) {
             log.info("User fail to authenticate");
         }
-        // user.checkRole("cn=Foo,cn=Groups,dc=neuropublic,dc=gr");
+        String roleName = "cn=Foo,cn=Groups,dc=neuropublic,dc=gr";
+        user.checkRole(roleName);
+        log.info("if you didn't see any exceptions I apparently managed to authorize user for the role: "+roleName);
     }
 }

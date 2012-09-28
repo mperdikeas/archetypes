@@ -4,11 +4,13 @@ and authorization against the OID (Oracle Internet Directory)
 LDAP server they use at Neuropublic.
 
 
-In this USE-CASE (008) and STAGE (003) I am
-trying to implement **authorization** against 
-OID LDAP server.
+In this USE-CASE (008) and STAGE (003) I managed
+to implement **authorization** using Shiro against OID LDAP server.
 
 Tasks for next stages:
-[1] SSO
+[1] streamline the authorization implementation
+[2] return a richer AuthorizationInfo object comprising both Roles and Permissions
+[3] upgrade it from a console-applicatoin to a Web application
+[4] SSO
 
 

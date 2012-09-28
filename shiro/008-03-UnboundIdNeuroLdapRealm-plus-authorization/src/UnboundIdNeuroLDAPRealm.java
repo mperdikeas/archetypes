@@ -142,7 +142,8 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
 
     private Set<String> getRoleNamesForUser(LDAPConnection ldapConn, String usernameDN) throws LDAPException {
         // 1st implementation: we don't translate the groups into roles in any manner
-        // or do any sort of clever traversal routine
+        // or do any sort of clever traversal routine to distinguish between roles (i.e. groups having another group 
+        // as a child) and permissions (i.e. groups not having another group as a child)
         /*Set<String> roleNames;
           roleNames = new LinkedHashSet<String>();*/
         return getGroupsWithUser(ldapConn, usernameDN);
