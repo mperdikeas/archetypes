@@ -1,0 +1,4 @@
+Trying to provide my own subclass of AbstractLdapRealm
+that will be using UnboundId to do LDAP authentication
+and authorization against the OID (Oracle Internet Directory)
+LDAP server they use at Neuropublic.
