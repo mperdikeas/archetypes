@@ -4,8 +4,8 @@ and authorization against the OID (Oracle Internet Directory)
 LDAP server they use at Neuropublic.
 
 
-In this USE-CASE (008) and STAGE (002) the immediate
-goal is to implement principal preffix and RD attribute.
+In this USE-CASE (008) and STAGE (002) I managed to 
+implement principal preffix and RD attribute.
 
 Tasks for next stages:
 [1] support authorization

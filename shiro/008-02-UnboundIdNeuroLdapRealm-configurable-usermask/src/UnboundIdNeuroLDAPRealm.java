@@ -28,11 +28,12 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     /*-------------------------------------------
     |    I N S T A N C E   V A R I A B L E S    |
     ============================================*/
-    protected String principalSuffix = null;
-    protected String searchBase = null;
-    protected String host = null;
-    protected String systemUserDN = null;
-    protected String systemPasswd = null;
+    protected String principalSuffix                    = null;
+    protected String principalRDTag                     = null;
+    protected String searchBase                         = null;
+    protected String host                               = null;
+    protected String systemUserDN                       = null;
+    protected String systemPasswd                       = null;
     private LdapConnectionFactory ldapConnectionFactory = null;
 
     /*-------------------------------------------
@@ -42,11 +43,12 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     /*-------------------------------------------
     |  A C C E S S O R S / M O D I F I E R S    |
     ============================================*/
+    public void setPrincipalSuffix      (String principalSuffix) { this.principalSuffix = principalSuffix; }
+    public void setPrincipalRDTag       (String principalRDTag ) { this.principalRDTag = principalRDTag; }
+    public void setSearchBase           (String searchBase     ) { this.searchBase = searchBase; }
     public void setHost                 (String host           ) { this.host = host ; }
     public void setSystemUserDN         (String systemUserDN   ) { this.systemUserDN = systemUserDN ; }
     public void setSystemPasswd         (String systemPasswd   ) { this.systemPasswd = systemPasswd ; }
-    public void setPrincipalSuffix      (String principalSuffix) { this.principalSuffix = principalSuffix; }
-    public void setSearchBase           (String searchBase     ) { this.searchBase = searchBase; }
     public void setLDAPConnectionFactory(LdapConnectionFactory ldapConnectionFactory) { 
                                                                    this.ldapConnectionFactory = ldapConnectionFactory;
     }
@@ -64,20 +66,9 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         if (this.ldapConnectionFactory == null) {
             log.debug("No LdapConnectionFactory specified - creating a default instance.");
             LdapConnectionFactory defaultFactory = new LdapConnectionFactory();
-            defaultFactory.setHost(this.host);
-            defaultFactory.setSystemUserDN(this.systemUserDN);
-            defaultFactory.setSystemPasswd(this.systemPasswd);
-
-            /*
-            DefaultLdapContextFactory defaultFactory = new DefaultLdapContextFactory();
-            defaultFactory.setPrincipalSuffix(this.principalSuffix);
-            defaultFactory.setSearchBase(this.searchBase);
-            defaultFactory.setUrl(this.url);
-            defaultFactory.setSystemUsername(this.systemUsername);
-            defaultFactory.setSystemPassword(this.systemPassword);
-
-            this.ldapConnectionFactory = defaultFactory;
-            */
+            defaultFactory.setHost           (this.host);
+            defaultFactory.setSystemUserDN   (this.systemUserDN);
+            defaultFactory.setSystemPasswd   (this.systemPasswd);
             this.ldapConnectionFactory = defaultFactory;
         }
         return this.ldapConnectionFactory;
@@ -96,8 +87,11 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     protected AuthenticationInfo queryForAuthenticationInfo(AuthenticationToken token, LdapConnectionFactory ldapConnectionFactory)
             throws LDAPException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-        ldapConnectionFactory.authenticate(upToken.getUsername(), String.valueOf(upToken.getPassword()));
-        return new SimpleAuthenticationInfo(upToken.getUsername(), upToken.getPassword(), getName());
+        String username   = upToken.getUsername();
+        String usernameDN = String.format("%s=%s,%s", principalRDTag, username, principalSuffix);
+        log.debug(String.format("checking for authentication of '%s'->'%s'", username, usernameDN));
+        ldapConnectionFactory.authenticate(usernameDN, String.valueOf(upToken.getPassword()));
+        return new SimpleAuthenticationInfo(username, upToken.getPassword(), getName());
     }
 
 

@@ -29,7 +29,7 @@ public class ShiroTest {
         //both below lines work (but maybe you'll have to target a different LDAP repository)
       //UsernamePasswordToken token = new UsernamePasswordToken("cn=orcladmin,cn=Users,dc=neuropublic,dc=gr", "welcome1");
       //UsernamePasswordToken token = new UsernamePasswordToken("cn=developer,cn=Users,dc=neuropublic,dc=gr", "12345678");
-        UsernamePasswordToken token = new UsernamePasswordToken("cn=developer,cn=Users,dc=neuropublic,dc=gr", "12345678");
+        UsernamePasswordToken token = new UsernamePasswordToken("developer", "12345678");
 
         user.login(token);
         logger.info("User is authenticated:  " + user.isAuthenticated());
