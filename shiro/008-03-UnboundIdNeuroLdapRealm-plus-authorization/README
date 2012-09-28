@@ -1,0 +1,14 @@
+GOAL: Trying to provide my own subclass of AbstractLdapRealm
+that will be using UnboundId to do LDAP authentication
+and authorization against the OID (Oracle Internet Directory)
+LDAP server they use at Neuropublic.
+
+
+In this USE-CASE (008) and STAGE (003) I am
+trying to implement **authorization** against 
+OID LDAP server.
+
+Tasks for next stages:
+[1] SSO
+
+
