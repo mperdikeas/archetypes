@@ -1,0 +1,100 @@
+<project name="foo" basedir="." default="run">
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+
+    <property name="project.MainClass.name" value="ShiroTest"/>
+    <property name="project.distname"       value="${ant.project.name}"/>
+    <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
+    <property name="build.dir"              value="${basedir}/build"/>
+    <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="src.dir"                value="${basedir}/src"/>
+    <property name="javasource.dir"         value="${src.dir}"/>
+    <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
+    <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <target name="compile" depends="prepare"
+            description="Compile java sources">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="jar" depends="compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
+    <target name="clean"
+            description="Prepare for clean build">
+      <delete dir="${build.dir}"/>
+      <delete dir="${dist.dir}"/>
+    </target>
+
+    <path id = "run.classpath">
+        <pathelement path = "${jar-artefact}"/>
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+    </path>
+
+    <macrodef name="run-generic">
+        <attribute name="paranoid" />
+        <sequential>
+            <if>
+                <equals arg1="@{paranoid}" arg2="true" />
+                <then>
+                    <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                    <delete dir="${build.dir}"/>
+                </then> 
+            </if>
+        <property name="classpath-run.msg" refid="run.classpath"/>
+        <echo message="running the app with classpath = ${classpath-run.msg}"/>
+        <java classname ="${project.MainClass.name}" fork="true">
+             <classpath refid="run.classpath"/>
+             <jvmarg value="-Dorg.slf4j.simpleLogger.log.LdapConnectionFactory=trace"/> <!-- for the JVM parameters to work forking must be used (see two lines above) -->
+             <jvmarg value="-Dorg.slf4j.simpleLogger.log.UnboundIdNeuroLDAPRealm=trace"/>
+             <jvmarg value="-Dorg.slf4j.simpleLogger.defaultLogLevel=info"/>
+        </java>
+        </sequential>
+    </macrodef>
+
+    <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="run-paranoid" depends="jar" description="run the jared application (paranoid mode)">
+        <run-generic paranoid="true"/>
+    </target>
+
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+</project>
