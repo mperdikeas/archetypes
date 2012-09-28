@@ -1,17 +1,21 @@
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken; 
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.naming.NamingException;
 import com.unboundid.ldap.sdk.*;
 
-public abstract class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
+public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
 
 
 
@@ -34,7 +38,7 @@ public abstract class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
 
     protected String systemPassword = null;
 
-    private Object ldapConnectionFactory = null;
+    private LdapConnectionFactory ldapConnectionFactory = null;
 
     /*-------------------------------------------
     |         C O N S T R U C T O R S           |
@@ -71,7 +75,7 @@ public abstract class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     }
 
 
-    public void setLDAPConnectionFactory(Object ldapConnectionFactory) {
+    public void setLDAPConnectionFactory(LdapConnectionFactory ldapConnectionFactory) {
         this.ldapConnectionFactory = ldapConnectionFactory;
     }
 
@@ -84,10 +88,11 @@ public abstract class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         ensureLDAPConnectionFactory();
     }
 
-    private Object ensureLDAPConnectionFactory() {
+    private LdapConnectionFactory ensureLDAPConnectionFactory() {
         if (this.ldapConnectionFactory == null) {
             log.debug("No LdapConnectionFactory specified - creating a default instance.");
-
+            LdapConnectionFactory defaultFactory = new LdapConnectionFactory();
+            this.ldapConnectionFactory = defaultFactory;
             /*
             DefaultLdapContextFactory defaultFactory = new DefaultLdapContextFactory();
             defaultFactory.setPrincipalSuffix(this.principalSuffix);
@@ -104,17 +109,19 @@ public abstract class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
 
 
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        AuthenticationInfo info;
         try {
-            info = queryForAuthenticationInfo(token, ensureLDAPConnectionFactory());
-        } catch (javax.naming.AuthenticationException e) {
-            throw new AuthenticationException("LDAP authentication failed.", e);
-        } catch (NamingException e) {
-            String msg = "LDAP naming error while attempting to authenticate user.";
-            throw new AuthenticationException(msg, e);
-        }
+            return queryForAuthenticationInfo(token, ensureLDAPConnectionFactory());
 
-        return info;
+        } catch (LDAPException lde) {
+            throw new AuthenticationException("LDAP Authentication over UnboundId failed", lde);
+        }
+    }
+
+    protected AuthenticationInfo queryForAuthenticationInfo(AuthenticationToken token, LdapConnectionFactory ldapConnectionFactory)
+            throws LDAPException {
+        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        ldapConnectionFactory.authenticate(upToken.getUsername(), String.valueOf(upToken.getPassword()));
+        return new SimpleAuthenticationInfo(upToken.getUsername(), upToken.getPassword(), getName());
     }
 
 
@@ -133,9 +140,6 @@ public abstract class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         }*/
 
 
-    protected AuthenticationInfo queryForAuthenticationInfo(AuthenticationToken token, Object ldapConnectionFactory) throws NamingException {
-        return null;
-    }
 
 
     /*
