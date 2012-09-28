@@ -1,0 +1,17 @@
+GOAL: Trying to provide my own subclass of AbstractLdapRealm
+that will be using UnboundId to do LDAP authentication
+and authorization against the OID (Oracle Internet Directory)
+LDAP server they use at Neuropublic.
+
+
+In this USE-CASE (008) and STAGE (001) the immediate goal
+is to use INI file properties to configure my
+AuthorizingRealm implementation and maybe properly declare 
+interface and default implementation for the default
+LDAP connection factory.
+
+Tasks for next stages:
+[1] support authorization
+[2] SSO
+
+
