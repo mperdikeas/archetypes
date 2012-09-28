@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class DefaultLdapConnectionFactory implements ILdapConnectionFactory { 
 
-    private static final Logger log = LoggerFactory.getLogger(LdapConnectionFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultLdapConnectionFactory.class);
 
     private String host                                 = null;
     private int    port                                 = 389;

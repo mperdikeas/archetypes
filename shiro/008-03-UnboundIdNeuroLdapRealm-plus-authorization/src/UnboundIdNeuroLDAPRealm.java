@@ -28,13 +28,13 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     /*-------------------------------------------
     |    I N S T A N C E   V A R I A B L E S    |
     ============================================*/
-    protected String principalSuffix                    = null;
-    protected String principalRDTag                     = null;
-    protected String searchBase                         = null;
-    protected String host                               = null;
-    protected String systemUserDN                       = null;
-    protected String systemPasswd                       = null;
-    private LdapConnectionFactory ldapConnectionFactory = null;
+    private String principalSuffix                      = null;
+    private String principalRDTag                       = null;
+    private String searchBase                           = null;
+    private String host                                 = null;
+    private String systemUserDN                         = null;
+    private String systemPasswd                         = null;
+    private ILdapConnectionFactory ldapConnectionFactory= null;
 
     /*-------------------------------------------
     |         C O N S T R U C T O R S           |
@@ -49,7 +49,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     public void setHost                 (String host           ) { this.host = host ; }
     public void setSystemUserDN         (String systemUserDN   ) { this.systemUserDN = systemUserDN ; }
     public void setSystemPasswd         (String systemPasswd   ) { this.systemPasswd = systemPasswd ; }
-    public void setLDAPConnectionFactory(LdapConnectionFactory ldapConnectionFactory) { 
+    public void setLDAPConnectionFactory(ILdapConnectionFactory ldapConnectionFactory) { 
                                                                    this.ldapConnectionFactory = ldapConnectionFactory;
     }
 
@@ -62,10 +62,10 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         ensureLDAPConnectionFactory();
     }
 
-    private LdapConnectionFactory ensureLDAPConnectionFactory() {
+    private ILdapConnectionFactory ensureLDAPConnectionFactory() {
         if (this.ldapConnectionFactory == null) {
             log.debug("No LdapConnectionFactory specified - creating a default instance.");
-            LdapConnectionFactory defaultFactory = new LdapConnectionFactory();
+            ILdapConnectionFactory defaultFactory = new DefaultLdapConnectionFactory();
             defaultFactory.setHost           (this.host);
             defaultFactory.setSystemUserDN   (this.systemUserDN);
             defaultFactory.setSystemPasswd   (this.systemPasswd);
@@ -84,13 +84,13 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         }
     }
 
-    protected AuthenticationInfo queryForAuthenticationInfo(AuthenticationToken token, LdapConnectionFactory ldapConnectionFactory)
+    protected AuthenticationInfo queryForAuthenticationInfo(AuthenticationToken token, ILdapConnectionFactory ldapConnectionFactory)
             throws LDAPException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username   = upToken.getUsername();
         String usernameDN = String.format("%s=%s,%s", principalRDTag, username, principalSuffix);
         log.debug(String.format("checking for authentication of '%s'->'%s'", username, usernameDN));
-        ldapConnectionFactory.authenticate(usernameDN, String.valueOf(upToken.getPassword()));
+        ldapConnectionFactory.canGetThrowAwayLDAPConnection(usernameDN, String.valueOf(upToken.getPassword()));
         return new SimpleAuthenticationInfo(username, upToken.getPassword(), getName());
     }
 
