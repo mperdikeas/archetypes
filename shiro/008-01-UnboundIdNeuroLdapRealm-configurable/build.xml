@@ -81,6 +81,7 @@
         <java classname ="${project.MainClass.name}" fork="true">
              <classpath refid="run.classpath"/>
              <jvmarg value="-Dorg.slf4j.simpleLogger.log.LdapConnectionFactory=trace"/> <!-- for the JVM parameters to work forking must be used (see two lines above) -->
+             <jvmarg value="-Dorg.slf4j.simpleLogger.log.UnboundIdNeuroLDAPRealm=trace"/>
              <jvmarg value="-Dorg.slf4j.simpleLogger.defaultLogLevel=info"/>
         </java>
         </sequential>
