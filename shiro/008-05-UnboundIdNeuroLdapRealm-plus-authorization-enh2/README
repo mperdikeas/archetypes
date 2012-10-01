@@ -10,7 +10,7 @@ and Permissions and distinguishing amongst themselves.
 
 Tasks for next stages:
 [1] streamline the authorization implementation
-[2] upgrade it from a console-applicatoin to a Web application
+[2] upgrade it from a console-application to a Web application
 [3] SSO
 
 
