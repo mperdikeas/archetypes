@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
@@ -109,6 +110,8 @@ public class LoginController implements Serializable {
             setMessage("account does not exist - please try again.");
 	} catch (IncorrectCredentialsException ex) {
             setMessage("wrong password - please try again.");
+	} catch (AuthenticationException ex) {
+            setMessage("wrong username or password - please try again.");
 	}
 	catch (Exception ex) {
 		ex.printStackTrace();

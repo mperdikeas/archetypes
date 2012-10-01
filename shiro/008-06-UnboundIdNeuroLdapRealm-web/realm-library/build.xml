@@ -1,4 +1,4 @@
-<project name="foo" basedir="." default="run">
+<project name="shiro-unboundid-realm" basedir="." default="rejar">
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
 
     <property name="project.MainClass.name" value="ShiroTest"/>

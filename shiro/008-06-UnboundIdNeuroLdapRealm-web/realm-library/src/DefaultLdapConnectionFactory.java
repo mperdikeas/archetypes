@@ -37,7 +37,7 @@ public class DefaultLdapConnectionFactory implements ILdapConnectionFactory {
             throwAwayConnection = new LDAPConnection(host, port, userBindDN, userPasswd);
             log.trace("created throw-away connection to LDAP server");
         } finally {
-            throwAwayConnection.close();
+            if (throwAwayConnection != null) throwAwayConnection.close();
             log.trace("throw-away connection to LDAP server is now closed");
         }
     }
