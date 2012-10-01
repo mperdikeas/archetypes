@@ -147,7 +147,12 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
             ldapConn.close();
         }
         SimpleAuthorizationInfo retValue = new SimpleAuthorizationInfo(rolesAndPermissions.a);
-        retValue. addStringPermissions(rolesAndPermissions.b);
+        {
+            Set<String> permissions = rolesAndPermissions.b;
+            for (String permission : permissions)
+                log.info(String.format("giving persmission %s to user %s", permission, username));
+            retValue.addStringPermissions(rolesAndPermissions.b);
+        }
         return retValue;
         // TODO: will have to recursively add groups for permissions as well
         // TODO: will have to replace the DN names of groups with a mapped role and privillige name by dropping the suffix
@@ -198,7 +203,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         int numOfChildlessGroups  = childlessGroups.size(); 
         int numOfDirectGroups     = searchResult.getEntryCount();
         int numOfIndirectGroups   = numOfFatherGroups + numOfChildlessGroups - numOfDirectGroups;
-        log.trace(String.format("User '%s' is direct member of %d groups and indirect member of %d groups; of "+
+        log.info(String.format("User '%s' is direct member of %d groups and indirect member of %d groups; of "+
                                 "these, %d are role-groups and %d are permission-groups"
                                 , userDN, numOfDirectGroups, numOfIndirectGroups, numOfFatherGroups, numOfChildlessGroups));
         return Pair.create(fatherGroups, childlessGroups);
@@ -226,20 +231,27 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
             for (String member : uniqueMembersStrArray) {
                 log.info("examining: "+member);
                 if (isGroup(member)) {
+                    log.info(member+" is group");
                     foundOneChildGroup = true;
                     recursivelyAddGroups(conn, fatherGroups, childlessGroups, member);
                 }
             }
             if (roleOrPrivilligeName(groupDN)!=null) {
-                if (foundOneChildGroup)
+                if (foundOneChildGroup) {
+                    log.info("adding "+groupDN+" as one of the father groups");
                     fatherGroups.add(roleOrPrivilligeName(groupDN));
-                else
+                }
+                else {
+                    log.info("adding "+groupDN+" as one of the childless groups");
                     childlessGroups.add(roleOrPrivilligeName(groupDN));
+                }
             }
         } else {
-            log.trace("attribute 'uniquemember' for group '"+groupDN+"' is null");
-            if (roleOrPrivilligeName(groupDN)!=null)
+            log.info("attribute 'uniquemember' for group '"+groupDN+"' is null - adding the group as a privillige");
+            if (roleOrPrivilligeName(groupDN)!=null) {
+                log.info(String.format("adding privillige %s", roleOrPrivilligeName(groupDN)));
                 childlessGroups.add(roleOrPrivilligeName(groupDN));
+            }
         }
     }
 
@@ -252,7 +264,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
 
     private String roleOrPrivilligeName(String groupDN) {
         if (this.reportRolesAndPrivilligesWithRDOnly) {
-            if (groupDN.endsWith(rolesAndPrivilligesSuffix))
+            if (groupDN.toLowerCase().endsWith(rolesAndPrivilligesSuffix.toLowerCase()))
                 return extractRDfromDN(groupDN);
             else return null;
         }
