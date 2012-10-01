@@ -36,9 +36,20 @@ public class ShiroTest {
         } catch (AuthenticationException ae) {
             log.info("User fail to authenticate");
         }
-        String roleName = "cn=Foo,cn=Groups,dc=neuropublic,dc=gr";
+        String roleName = null;
+        boolean shiro_ini_is_configured_with_reportRolesAndPrivilligesWithRDOnly = true;
+        if (shiro_ini_is_configured_with_reportRolesAndPrivilligesWithRDOnly)
+            roleName = "Foo";
+        else
+            roleName = "cn=Foo,cn=Groups,dc=neuropublic,dc=gr";
         user.checkRole(roleName);
-        String permissionName="cn=odee_αίτησηαναθεώρησης2012προσωρινώνδικαιωμάτων_δημιουργία,cn=groups,dc=neuropublic,dc=gr";
+        
+
+        String permissionName=null;
+        if (shiro_ini_is_configured_with_reportRolesAndPrivilligesWithRDOnly)
+            permissionName = "odee_αίτησηαναθεώρησης2012προσωρινώνδικαιωμάτων_δημιουργία";
+        else
+            permissionName = "cn=odee_αίτησηαναθεώρησης2012προσωρινώνδικαιωμάτων_δημιουργία,cn=groups,dc=neuropublic,dc=gr";
         user.checkPermission(permissionName);
         log.info("if you didn't see any exceptions I apparently managed to authorize user for the following:\n\trole = "
                  +roleName+"\n\tpermission = "+permissionName);
