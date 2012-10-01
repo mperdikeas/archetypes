@@ -4,8 +4,8 @@ and authorization against the OID (Oracle Internet Directory)
 LDAP server they use at Neuropublic.
 
 
-In this USE-CASE (008) and STAGE (005) I am trying
-to return a richer AuthorizationInfo object comprising both Roles
+In this USE-CASE (008) and STAGE (005) I managed to
+return a richer AuthorizationInfo object comprising both Roles
 and Permissions and distinguishing amongst themselves.
 
 Tasks for next stages:
