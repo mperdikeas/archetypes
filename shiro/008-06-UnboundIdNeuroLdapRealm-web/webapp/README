@@ -1,14 +1,25 @@
-Tutorial series in Shiro (from: http://www.brucephillips.name/blog/index.cfm/2009/4/5/An-Introduction-to-Ki-formerly-JSecurity--A-Beginners--Tutorial-Part-1)
-(adapted cause they were initially available for Eclipse / Maven).
+This web application authenticates and authorizes
+the users against the Oracle Internet Directory LDAP server
+that lives where indicated in the shiro.ini file.
 
-This stage is frozen for Tutorial Part 5. No new functionality is added - it's just
-about migrating it to JSF/Prime Faces.
+The following users, groups and privilliges have been created in that LDAP:
 
-NB: the "nosecurity" that appears in the package name is a misnomer. I don't have time
-to fix this right now but should be trivial.
+user                  password
+================================
+mary                  bones1234
 
-Ideas for this, and possible, future stages or perhaps different use cases:
-[i]    add row-level permission, if possible
-[ii]   integrate with LDAP
-[iii]  understand how to register and lookup JNDI names in the "java:/comp/env" namespace.
+
+group                 child group                        comment
+=============================================================================================================================
+staff                 
+cacher
+admin
+user                  defaultChildlessPermission         group 'user' has a child so it's a role according to our conventions.
+
+
+
+The problem with this LDAP approach is that I don't have something like HSQLDB
+where I can have the entire database inside the testcase with the DML script
+to load it (I'll have to find something similar).
+
 

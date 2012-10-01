@@ -40,12 +40,15 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     /*-------------------------------------------
     |    I N S T A N C E   V A R I A B L E S    |
     ============================================*/
-    private String principalSuffix                      = null;
-    private String principalRDTag                       = null;
-    private String searchBase                           = null;
-    private String host                                 = null;
-    private String systemUserDN                         = null;
-    private String systemPasswd                         = null;
+    private String  principalSuffix                      = null;
+    private String  principalRDTag                       = null;
+    private String  searchBase                           = null;
+    private String  host                                 = null;
+    private String  systemUserDN                         = null;
+    private String  systemPasswd                         = null;
+    private boolean reportRolesAndPrivilligesWithRDOnly  = false;
+    private String rolesAndPrivilligesSuffix            = null;
+    private String rolesAndPrivilligesRDTag             = null;
     private ILdapConnectionFactory ldapConnectionFactory= null;
 
     /*-------------------------------------------
@@ -55,12 +58,15 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     /*-------------------------------------------
     |  A C C E S S O R S / M O D I F I E R S    |
     ============================================*/
-    public void setPrincipalSuffix      (String principalSuffix) { this.principalSuffix = principalSuffix; }
-    public void setPrincipalRDTag       (String principalRDTag ) { this.principalRDTag = principalRDTag; }
-    public void setSearchBase           (String searchBase     ) { this.searchBase = searchBase; }
-    public void setHost                 (String host           ) { this.host = host ; }
-    public void setSystemUserDN         (String systemUserDN   ) { this.systemUserDN = systemUserDN ; }
-    public void setSystemPasswd         (String systemPasswd   ) { this.systemPasswd = systemPasswd ; }
+    public void setPrincipalSuffix                     (String  principalSuffix) { this.principalSuffix = principalSuffix ; }
+    public void setPrincipalRDTag                      (String  principalRDTag ) { this.principalRDTag = principalRDTag   ; }
+    public void setSearchBase                          (String  searchBase     ) { this.searchBase = searchBase           ; }
+    public void setHost                                (String  host           ) { this.host = host                       ; }
+    public void setSystemUserDN                        (String  systemUserDN   ) { this.systemUserDN = systemUserDN       ; }
+    public void setSystemPasswd                        (String  systemPasswd   ) { this.systemPasswd = systemPasswd       ; }
+    public void setReportRolesAndPrivilligesWithRDOnly (boolean boolValue      ) { this.reportRolesAndPrivilligesWithRDOnly = boolValue ; }
+    public void setRolesAndPrivilligesSuffix           (String  strValue       ) { this.rolesAndPrivilligesSuffix           = strValue  ; }
+    public void setRolesAndPrivilligesRDTag            (String  strValue       ) { this.rolesAndPrivilligesRDTag             = strValue  ; }
     public void setLDAPConnectionFactory(ILdapConnectionFactory ldapConnectionFactory) { 
                                                                    this.ldapConnectionFactory = ldapConnectionFactory;
     }
@@ -100,14 +106,14 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username   = upToken.getUsername();
         String usernameDN = dnFromUsername(username);
-        log.debug(String.format("checking for authentication of '%s'->'%s'", username, usernameDN));
+        log.info(String.format("checking for authentication of '%s'->'%s'", username, usernameDN));
         ldapConnectionFactory.canGetThrowAwayLDAPConnection(usernameDN, String.valueOf(upToken.getPassword()));
         return new SimpleAuthenticationInfo(username, upToken.getPassword(), getName());
     }
 
     private String dnFromUsername(String username) {
         String usernameDN = String.format("%s=%s,%s", principalRDTag, username, principalSuffix);
-        log.debug(String.format("translated: '%s' to: '%s'", username, usernameDN));
+        log.info(String.format("translated: '%s' to: '%s'", username, usernameDN));
         return usernameDN;
     }
 
@@ -206,7 +212,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
     private void recursivelyAddGroups(LDAPConnection conn, Set<String> fatherGroups, Set<String> childlessGroups, String groupDN)
         throws LDAPSearchException
     {
-        log.trace("looking for a group under base: "+groupDN);
+        log.info("looking for a group under base: "+groupDN);
         Filter sillyFilterInLieuOfAnAlwaysTrueFilter = Filter.createPresenceFilter("cn");
         SearchRequest sr = new SearchRequest(groupDN, SearchScope.BASE, sillyFilterInLieuOfAnAlwaysTrueFilter, "uniquemember");
         SearchResult searchResult = conn.search(sr);
@@ -218,20 +224,39 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
             String[] uniqueMembersStrArray = uniqueMembers.getValues();
             boolean foundOneChildGroup = false;
             for (String member : uniqueMembersStrArray) {
-                log.trace("examining: "+member);
+                log.info("examining: "+member);
                 if (isGroup(member)) {
                     foundOneChildGroup = true;
                     recursivelyAddGroups(conn, fatherGroups, childlessGroups, member);
                 }
             }
-            if (foundOneChildGroup)
-                fatherGroups.add(groupDN);
-            else
-                childlessGroups.add(groupDN);
+            if (roleOrPrivilligeName(groupDN)!=null) {
+                if (foundOneChildGroup)
+                    fatherGroups.add(roleOrPrivilligeName(groupDN));
+                else
+                    childlessGroups.add(roleOrPrivilligeName(groupDN));
+            }
         } else {
             log.trace("attribute 'uniquemember' for group '"+groupDN+"' is null");
-            childlessGroups.add(groupDN);
+            if (roleOrPrivilligeName(groupDN)!=null)
+                childlessGroups.add(roleOrPrivilligeName(groupDN));
         }
+    }
+
+    private String extractRDfromDN(String dn) {
+        String firstComponent = dn.split(",")[0];
+        final String ASSUMED_PREFFIX = rolesAndPrivilligesRDTag+"=";
+        if (!firstComponent.startsWith(ASSUMED_PREFFIX)) throw new RuntimeException(dn);
+        return firstComponent.replaceFirst(ASSUMED_PREFFIX, "");
+    }
+
+    private String roleOrPrivilligeName(String groupDN) {
+        if (this.reportRolesAndPrivilligesWithRDOnly) {
+            if (groupDN.endsWith(rolesAndPrivilligesSuffix))
+                return extractRDfromDN(groupDN);
+            else return null;
+        }
+        else return groupDN;
     }
 
 
