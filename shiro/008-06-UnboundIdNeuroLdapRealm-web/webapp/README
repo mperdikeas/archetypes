@@ -7,14 +7,16 @@ The following users, groups and privilliges have been created in that LDAP:
 user                  password
 ================================
 mary                  bones1234
-
+jack                  paranoid1
+bill                  gatesfoo1
 
 group                 child group                        comment
 =============================================================================================================================
 staff                 
-cacher
+cacher                can_cache                          group 'cacher' has a child group and so is a role.
 admin
 user                  defaultChildlessPermission         group 'user' has a child so it's a role according to our conventions.
+can_cache             NONE                               group 'can_cache' is childless and so is a privillige.
 
 
 
