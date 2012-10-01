@@ -38,6 +38,9 @@ public class ShiroTest {
         }
         String roleName = "cn=Foo,cn=Groups,dc=neuropublic,dc=gr";
         user.checkRole(roleName);
-        log.info("if you didn't see any exceptions I apparently managed to authorize user for the role: "+roleName);
+        String permissionName="cn=odee_αίτησηαναθεώρησης2012προσωρινώνδικαιωμάτων_δημιουργία,cn=groups,dc=neuropublic,dc=gr";
+        user.checkPermission(permissionName);
+        log.info("if you didn't see any exceptions I apparently managed to authorize user for the following:\n\trole = "
+                 +roleName+"\n\tpermission = "+permissionName);
     }
 }

@@ -132,10 +132,17 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         Pair<Set<String>, Set<String>> rolesAndPermissions;
         try {
             rolesAndPermissions = getRolesAndPermissionsForUser(ldapConn, usernameDN);
+            for (String role : rolesAndPermissions.a)
+                log.info(String.format("user %s has role %s", username, role));
+            for (String role : rolesAndPermissions.b)
+                log.info(String.format("user %s has permission %s", username, role));
+            
         } finally {
             ldapConn.close();
         }
-        return new SimpleAuthorizationInfo(rolesAndPermissions.a);
+        SimpleAuthorizationInfo retValue = new SimpleAuthorizationInfo(rolesAndPermissions.a);
+        retValue. addStringPermissions(rolesAndPermissions.b);
+        return retValue;
         // TODO: will have to recursively add groups for permissions as well
         // TODO: will have to replace the DN names of groups with a mapped role and privillige name by dropping the suffix
     }
@@ -146,7 +153,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         // or do any sort of clever traversal routine to distinguish between roles (i.e. groups having another group 
         // as a child) and permissions (i.e. groups not having another group as a child)
         // return getGroupsWithUser(ldapConn, usernameDN);
-        return getRecursiveFatherAndFatherlessGroupsOfUser(ldapConn, usernameDN);
+        return getRecursiveFatherAndChildlessGroupsOfUser(ldapConn, usernameDN);
     }
 
 
@@ -166,7 +173,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         return retValue;
     }
 
-    private Pair<Set<String>, Set<String>> getRecursiveFatherAndFatherlessGroupsOfUser(LDAPConnection conn, String userDN)
+    private Pair<Set<String>, Set<String>> getRecursiveFatherAndChildlessGroupsOfUser(LDAPConnection conn, String userDN)
         throws LDAPSearchException
     {
         Filter both               = Filter.createANDFilter(
@@ -178,16 +185,17 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         SearchResult searchResult = conn.search(sr);
         log.debug(String.format("User '%s' is a direct member of %d groups", userDN, searchResult.getEntryCount()));
         Set<String> fatherGroups     = new LinkedHashSet<String>();
-        Set<String> fatherlessGroups = new LinkedHashSet<String>();
+        Set<String> childlessGroups  = new LinkedHashSet<String>();
         for (SearchResultEntry entry : searchResult.getSearchEntries())
-            recursivelyAddGroups(conn, fatherGroups, fatherlessGroups, entry.getDN());
+            recursivelyAddGroups(conn, fatherGroups, childlessGroups, entry.getDN());
         int numOfFatherGroups     = fatherGroups.size();
-        int numOfFatherlessGroups = fatherlessGroups.size(); MISNOMER THOSE AREN'T FATHERLESS - THEY ARE CHILDLESS GROUPS !!!
+        int numOfChildlessGroups  = childlessGroups.size(); 
         int numOfDirectGroups     = searchResult.getEntryCount();
-        int numOfIndirectGroups   = numOfFatherGroups + numOfFatherlessGroups - numOfDirectGroups;
-        log.debug(String.format("User '%s' is strictly indirect member of %d groups of which %d are role-groups and %d are permission-groups"
-                                , userDN, numOfIndirectGroups, numOfFatherGroups, numOfFatherlessGroups));
-        return Pair.create(fatherGroups, fatherlessGroups);
+        int numOfIndirectGroups   = numOfFatherGroups + numOfChildlessGroups - numOfDirectGroups;
+        log.trace(String.format("User '%s' is direct member of %d groups and indirect member of %d groups; of "+
+                                "these, %d are role-groups and %d are permission-groups"
+                                , userDN, numOfDirectGroups, numOfIndirectGroups, numOfFatherGroups, numOfChildlessGroups));
+        return Pair.create(fatherGroups, childlessGroups);
     }
 
     private boolean isGroup(String dn) {
@@ -195,7 +203,7 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
         return dn.toLowerCase().endsWith(groupsSubtree.toLowerCase());
     }
 
-    private void recursivelyAddGroups(LDAPConnection conn, Set<String> fatherGroups, Set<String> fatherlessGroups, String groupDN)
+    private void recursivelyAddGroups(LDAPConnection conn, Set<String> fatherGroups, Set<String> childlessGroups, String groupDN)
         throws LDAPSearchException
     {
         log.trace("looking for a group under base: "+groupDN);
@@ -213,16 +221,16 @@ public class UnboundIdNeuroLDAPRealm extends AuthorizingRealm {
                 log.trace("examining: "+member);
                 if (isGroup(member)) {
                     foundOneChildGroup = true;
-                    recursivelyAddGroups(conn, fatherGroups, fatherlessGroups, member);
+                    recursivelyAddGroups(conn, fatherGroups, childlessGroups, member);
                 }
             }
             if (foundOneChildGroup)
                 fatherGroups.add(groupDN);
             else
-                fatherlessGroups.add(groupDN);
+                childlessGroups.add(groupDN);
         } else {
             log.trace("attribute 'uniquemember' for group '"+groupDN+"' is null");
-            fatherlessGroups.add(groupDN);
+            childlessGroups.add(groupDN);
         }
     }
 
