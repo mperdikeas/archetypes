@@ -1,0 +1,2 @@
+ant -f realm-library/build.xml
+ant -Dapplication_xml=application-1.xml -Dehcache_conf=ehcache-1.xml -f webapp/build.xml 

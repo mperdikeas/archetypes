@@ -1,0 +1,31 @@
+<project name="HSQLDB" default="runServer" basedir=".">
+
+	<description>Helps starting up the HSQLDB demo database.</description>
+
+	<path id="hsql-classpath">
+		<fileset dir="../../../repo-wide-libs">
+			<include name="hsqldb-2.2.9.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="runServer" description="launches the HSQLDB database server.">
+		<java classname="org.hsqldb.Server" fork="true">
+			<classpath refid="hsql-classpath"/>
+		</java>
+	</target>
+
+        <target name="runServerOriginal" description="launches the HSQLDB database server with the original script"
+                                         depends="restore,runServer">
+        </target>
+
+        <target name="restore" description="restore original DML script">
+            <copy file="test.script.ORIGINAL" tofile="test.script"/>
+        </target>
+
+	<target name="runManager" description="launches the HSQLDB manager.">
+		<java classname="org.hsqldb.util.DatabaseManager" fork="true">
+			<classpath refid="hsql-classpath"/>
+		</java>
+	</target>
+  
+</project>

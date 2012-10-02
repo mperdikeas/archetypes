@@ -1,0 +1,2 @@
+ant -f realm-library/build.xml
+ant -Dapplication_xml=application-3.xml -Dehcache_conf=ehcache-3.xml -Dpublish.dir=/home/mperdikeas/jboss-standalone-deployments3 -f webapp/build.xml 
