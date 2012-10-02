@@ -8,6 +8,13 @@ In this USE-CASE (008) and STAGE (008) I managed
 to implement SSO using Shiro authentication / authorization
 against an LDAP server utilizing an out-of-the-box EhCache.
 
+The sample also demonstrates use of a memcached deamon
+(assumed to be running in the local machine, accessible
+at the hardcoded port 11211 - see implementation of class
+memcachedshirocachemanager.MemCachedCacheManager). This 2nd cache
+however is only used for vertical application logic and is 
+irrelevant to the authentication / authorization thing.
+
 
 Tasks for next stages:
 
