@@ -4,14 +4,15 @@ and authorization against the OID (Oracle Internet Directory)
 LDAP server they use at Neuropublic.
 
 
-In this USE-CASE (008) and STAGE (006) I am trying
+In this USE-CASE (008) and STAGE (006) I managed
 to implement a small web prototype using Shiro authenticating
 and authorizing against an LDAP server.
 
 Tasks for next stages:
 
-[1] streamline the implementation of the Shiro LDAP library and de-clutter
-    the interfaces.
-[2] implement SSO.
+[1] implement SSO.
+[2] streamline the implementation of the Shiro LDAP library, de-clutter
+    the interfaces and move it in its own project, or maybe in mutil
+
 
 
