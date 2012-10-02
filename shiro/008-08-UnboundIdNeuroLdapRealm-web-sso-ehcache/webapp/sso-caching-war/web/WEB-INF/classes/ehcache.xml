@@ -3,7 +3,7 @@
 <ehcache name="TranslationCache">
   <cacheManagerPeerProviderFactory
       class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-      properties="peerDiscovery=manual, rmiUrls=//localhost:40001/dictionary|//localhost:40001/active-sessions-foo|//localhost:40003/active-sessions-foo"/>
+      properties="peerDiscovery=manual, rmiUrls=//localhost:40001/active-sessions-foo"/>
   <cacheManagerPeerListenerFactory
       class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
       properties="hostName=localhost, port=40002, socketTimeoutMillis=2000"/>
@@ -18,17 +18,7 @@
       diskPersistent="false"
       diskExpiryThreadIntervalSeconds="120"
       memoryStoreEvictionPolicy="LRU"/>
-  <cache name="dictionary"
-         maxElementsInMemory="100"
-         maxElementsOnDisk="0"
-         eternal="false"
-         timeToIdleSeconds="120"
-         timeToLiveSeconds="0"
-         memoryStoreEvictionPolicy="LFU">
-         <cacheEventListenerFactory
-            class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
-         />
-  </cache>
+
 <!-- the below distributed cache configuration is not production-ready as we should allow
      disk overflow to ensure that no sessions are lost -->
   <cache name="active-sessions-foo"
@@ -45,4 +35,3 @@
         />
   </cache>
 </ehcache>
-
