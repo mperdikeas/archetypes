@@ -1,0 +1,27 @@
+GOAL: Trying to provide my own subclass of AbstractLdapRealm
+that will be using UnboundId to do LDAP authentication
+and authorization against the OID (Oracle Internet Directory)
+LDAP server they use at Neuropublic.
+
+
+In this USE-CASE (008) and STAGE (009) I should try
+to implement SSO using Shiro authentication / authorization
+against an LDAP server utilizing an out-of-the-box EhCache.
+The setting should comprise three (3) instances whose
+caches are synchronized using automatic peer discovery
+as opposed to manual peer discovery. I should also test that
+with deployment to the same JBoss Application Server as opposed
+to two or three different JBoss Application Servers.
+
+The sample also demonstrates use of a memcached deamon
+(assumed to be running in the local machine, accessible
+at the hardcoded port 11211 - see implementation of class
+memcachedshirocachemanager.MemCachedCacheManager). This 2nd cache
+however is only used for vertical application logic and is 
+irrelevant to the authentication / authorization thing.
+
+
+Tasks for next stages:
+
+[1] streamline the implementation of the Shiro LDAP library, de-clutter
+    the interfaces and move it in its own project, or maybe in mutil.
