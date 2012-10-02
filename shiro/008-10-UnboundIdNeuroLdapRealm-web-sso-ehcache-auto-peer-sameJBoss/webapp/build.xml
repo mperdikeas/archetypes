@@ -14,8 +14,8 @@
     <property file="build.properties"/>
     <property name="ejb-project.name"     value="${project.distname}-ejb"/>
     <property name="war-project.name"     value="${project.distname}-war"/>
-    <property name="ejb-project.dir"      value="./${ejb-project.name}"/>
-    <property name="war-project.dir"      value="./${war-project.name}"/>
+    <property name="ejb-project.dir"      value="./${ant.project.name}-ejb"/>
+    <property name="war-project.dir"      value="./${ant.project.name}-war"/>
     <property name="application_xml"      value="OVERRIDE IT"/>
     <property name="application_xml.file" value="${conf.dir}/${application_xml}"/>
 
@@ -51,14 +51,17 @@
 
     <target name="ear" description="Building the ear file" depends="build-war">
       <mkdir dir="${dist.dir}"/>
+      <echo message="*** EARing data: ${ejb-project.dir}, ${war-project.dir}, ${ejb-project.name}, ${war-project.name}"/>
       <ear destfile="${project.artefact.path}" appxml="${application_xml.file}">
         <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
               <include name="commons-lang3-3.1.jar"/>
               <include name="mutil.jar"/>
               <include name="joda-time-2.1.jar"/>
         </zipfileset>
+
+        <fileset dir="${ejb-project.dir}/dist"  includes="${ejb-project.name}.jar"/>
         <fileset dir="${war-project.dir}/build" includes="${war-project.name}.war"/>
-        <fileset dir="${ejb-project.dir}/dist" includes="${ejb-project.name}.jar"/>
+
 
         <include name ="${ejb-project.dir}/dist/${ejb-project.name}.jar"/>  <!-- this is likely not needed - I should remove it -->
         <include name ="${war-project.dir}/build/${war-project.name}.war"/>

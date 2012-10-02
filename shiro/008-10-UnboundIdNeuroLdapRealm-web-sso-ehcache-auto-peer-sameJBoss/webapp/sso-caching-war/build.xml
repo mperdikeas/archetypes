@@ -1,7 +1,7 @@
 <project name="sso-caching-war" basedir="." default="rewar">
-
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
     <property file="build.properties"/>
-    <property name="project.distname"          value="${ant.project.name}"/>
+    <property name="war-project.name"          value="${project.distname}-war"/>
     <property name="webroot.dir"               value="${basedir}/web"/>
     <property name="webinf.dir"                value="${webroot.dir}/WEB-INF"/>
     <property name="build.dir"                 value="${basedir}/build"/>
@@ -80,7 +80,7 @@
       <war
         needxmlfile="false"
         basedir="${webroot.dir}"
-        warfile="${build.dir}/${project.distname}.war">
+        warfile="${build.dir}/${war-project.name}.war">
         <exclude name="WEB-INF/src/**"/>
        </war>
     </target>

@@ -5,13 +5,13 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
  
 
 <module>
- <ejb>sso-caching-ejb.jar</ejb>
+ <ejb>sso-caching-2-ejb.jar</ejb>
 </module>
 
 
 <module>
  <web>
-   <web-uri>sso-caching-war.war</web-uri>
+   <web-uri>sso-caching-2-war.war</web-uri>
    <context-root>sso-caching-2</context-root>
  </web>
 </module>

@@ -1,7 +1,7 @@
 <project name="sso-caching-ejb" basedir="." default="rejar">
 
     <!-- Project settings -->
-    <property name="project.distname" value="${ant.project.name}"/>
+    <property name="ejb-project.name"     value="${project.distname}-ejb"/>
 
     <!-- Local system paths -->
     <property file="build.properties"/>
@@ -38,14 +38,21 @@
             <classpath refid="compile.classpath"/>
         </javac>
         <!--copy file="${conf.dir}/persistence.xml"       todir="${build.dir}/META-INF"/-->
-        <copy file="${conf.dir}/hsqldb_foo-ds.xml"     todir="${build.dir}/META-INF"/>
-        <copy file="${conf.dir}/postgresql_foo-ds.xml" todir="${build.dir}/META-INF"/>
+        <if>
+            <equals arg1="${deploy-datasource}" arg2="true" />
+            <then>
+                <echo message="**** datasource file to deployment location"/>
+                <copy file="${conf.dir}/hsqldb_foo-ds.xml"     todir="${build.dir}/META-INF"/>
+            </then> 
+        </if>
+
+        <!--copy file="${conf.dir}/postgresql_foo-ds.xml" todir="${build.dir}/META-INF"/-->
     </target>
 
     <target name="jar" depends="compile"
             description="jar class files">
       <mkdir  dir="${dist.dir}"/>
-      <jar destfile="${dist.dir}/${project.distname}.jar"
+      <jar destfile="${dist.dir}/${ejb-project.name}.jar"
            basedir="${build.dir}"
       />
     </target>
