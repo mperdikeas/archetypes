@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<!-- <h:head><title>Role Security Login Page</title></h:head> -->
+<h:head></h:head>
+
+
+<h:body>
+<h3>Welcome to EhCache Test page</h3>
+<p>You must have the 'can_cache' permission to visit this page.</p>
+<p style="color:red">${error}</p>
+       <h:outputText value="#{ehCacheTestController.msg}" id="commentary"/>
+       <h:form>
+         Enter new key:
+         <h:panelGrid columns="2" cellspacing="10px" >
+             <p:outputLabel for="key-inpT" value="key: " />
+             <h:inputText      value="#{ehCacheTestController.key}"   required="true" id="key-inpT"/>
+             <ui:remove>
+                 <p:outputLabel for="password-inpT" value="value: " />
+                 <p:password      value="#{ehCacheTestController.password}"   required="true" id="password-inpT"/>
+             </ui:remove>
+         </h:panelGrid>
+
+         <!-- the two forms (ajax set to false or explicit update) are equivalent -->
+         <p:commandButton action="#{ehCacheTestController.queryCache}" value="query cache" ajax="false"/>
+         <ui:remove>
+             <p:commandButton action="#{ehCacheTestController.queryCache}" value="query cache" update=":commentary"/>
+         </ui:remove>
+       </h:form>
+
+
+<br clear="left" />
+<p><a href='#{request.contextPath}/index.xhtml'>Home</a></p>
+</h:body>
+</html>

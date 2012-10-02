@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<!-- <h:head><title>Role Security Login Page</title></h:head> -->
+<h:head></h:head>
+
+
+<h:body>
+<h3>Welcome to EhCache Update page</h3>
+<p>You must have the 'can_cache' permission to visit this page.</p>
+<p style="color:red">${error}</p> <!-- what's that ${error} doing there ? -->
+
+    <ui:remove>
+        <h:outputText value="#{updateEhCacheController.newWord}"/>
+    </ui:remove>
+
+       <h:form>
+         <h:panelGrid columns="2" cellspacing="10px">
+             <p:outputLabel for="translation-inpT" value="translation for word: #{updateEhCacheController.newWord} " />
+             <h:inputText   id="translation-inpT"  value="#{updateEhCacheController.translation}"   required="true"  />
+         </h:panelGrid>
+
+       <p:commandButton action="#{updateEhCacheController.updateCache}" value="update cache"/>
+       </h:form>
+
+<br clear="left" />
+
+<p><a href='#{request.contextPath}/index.xhtml'>Home</a></p>
+</h:body>
+</html>

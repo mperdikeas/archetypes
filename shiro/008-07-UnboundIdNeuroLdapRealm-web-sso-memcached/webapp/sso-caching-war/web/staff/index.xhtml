@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<h:head><title>Staff Area Main Page</title></h:head>
+
+<body>
+<h3>Staff Area Main Page</h3>
+<h3>Welcome <shiro:principal /></h3>
+<p>Since our web site DOES have security, including access by role, only people logged in with a permission of secure (that includes but is NOT
+limited to members of the 'staff' role) can visit this web page because it's in our staff area.</p>
+<p>
+<h:link value="Home" outcome="/index.xhtml"/> <!-- a href="<c:url value='/index.jsp' />">Home</a> --> <!-- why can't I use that without the .xhtml extension ? -->
+ <shiro:hasRole name="admin">
+ | <h:link value="Admin Area" outcome="/admin/index.xhtml"/> <!-- <a href="<c:url value='/admin/index.jsp' />"> Admin Area </a> -->
+ </shiro:hasRole>
+ <shiro:hasRole name="user">
+ | <h:link value="User Area" outcome="/user/index.xhtml"/> <!-- <a href="<c:url value='/user/index.jsp' />" > User Area</a> -->
+ </shiro:hasRole>
+ | <!-- <a href="<c:url value='/LogoutUser' />">Log Out</a></p> -->
+         <h:form id="logOutIdDummyForm">
+             <p:commandLink ajax="false" action="#{loginController.logout}" value="Log Out"/>
+         </h:form>
+</p>
+</body>
+</html>
