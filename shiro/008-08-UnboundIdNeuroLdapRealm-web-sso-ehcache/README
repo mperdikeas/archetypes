@@ -4,7 +4,7 @@ and authorization against the OID (Oracle Internet Directory)
 LDAP server they use at Neuropublic.
 
 
-In this USE-CASE (008) and STAGE (008) I am trying
+In this USE-CASE (008) and STAGE (008) I managed
 to implement SSO using Shiro authentication / authorization
 against an LDAP server utilizing an out-of-the-box EhCache.
 
