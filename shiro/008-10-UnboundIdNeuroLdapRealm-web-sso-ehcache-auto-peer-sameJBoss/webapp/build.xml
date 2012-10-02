@@ -43,7 +43,8 @@
 
     <target name="build-war" depends="test_application_xml, test_ehcache_conf">
       <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false">
-        <property name="ehcache_conf" value="${ehcache_conf}"/>
+        <property name="ehcache_conf"      value="${ehcache_conf}"     />
+        <property name="deploy-datasource" value="${deploy-datasource}"/>
       </ant>
     </target>
 

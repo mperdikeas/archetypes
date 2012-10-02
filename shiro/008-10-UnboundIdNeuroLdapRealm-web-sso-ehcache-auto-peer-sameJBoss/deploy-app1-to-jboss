@@ -1,2 +1,2 @@
 ant -f realm-library/build.xml
-ant -Dapplication_xml=application-1.xml -Dehcache_conf=ehcache-1.xml -Dproject.distname=sso-caching-1 -f webapp/build.xml 
+ant -Dapplication_xml=application-1.xml -Dehcache_conf=ehcache-1.xml -Dproject.distname=sso-caching-1 -Ddeploy-datasource=true -f webapp/build.xml 

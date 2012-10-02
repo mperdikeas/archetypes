@@ -6,7 +6,7 @@
       properties="peerDiscovery=automatic, multicastGroupAddress=224.0.0.1, multicastGroupPort=4446, timeToLive=32"/>
   <cacheManagerPeerListenerFactory
       class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
-      properties="hostName=localhost, port=40003, socketTimeoutMillis=2000"/>
+      properties="hostName=localhost, port=40002, socketTimeoutMillis=2000"/>
   <defaultCache
       maxElementsInMemory="10000"
       eternal="false"
