@@ -1,0 +1,18 @@
+GOAL: Trying to provide my own subclass of AbstractLdapRealm
+that will be using UnboundId to do LDAP authentication
+and authorization against the OID (Oracle Internet Directory)
+LDAP server they use at Neuropublic.
+
+
+In this USE-CASE (008) and STAGE (008) I am trying
+to implement SSO using Shiro authentication / authorization
+against an LDAP server utilizing an out-of-the-box EhCache.
+
+
+Tasks for next stages:
+
+[1] do the same, using the EhCache cache manager, for way more than
+    2 application, using some method of EhCache peer discovery other
+    than 'manual'.
+[2] streamline the implementation of the Shiro LDAP library, de-clutter
+    the interfaces and move it in its own project, or maybe in mutil.
