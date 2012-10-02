@@ -34,10 +34,19 @@
              unless="${application_xml.file.exists}"/>
    </target>
 
-
-    <target name="build-war" depends="test_application_xml">
-      <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false"/>
+    <target name="test_ehcache_conf">
+       <condition property="ehcache_conf.set" value="true" else="false">
+          <isset property="ehcache_conf"/>
+       </condition>
+      <fail message="ehcache_conf not set" unless="${ehcache_conf.set}"/>
     </target>
+
+    <target name="build-war" depends="test_application_xml, test_ehcache_conf">
+      <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false">
+        <property name="ehcache_conf" value="${ehcache_conf}"/>
+      </ant>
+    </target>
+
 
 
     <target name="ear" description="Building the ear file" depends="build-war">

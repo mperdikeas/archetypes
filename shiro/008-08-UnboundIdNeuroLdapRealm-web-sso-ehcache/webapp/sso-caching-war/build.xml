@@ -11,6 +11,8 @@
     <property name="compilelibs.dir"           value="${basedir}/lib"/>
     <property name="name.of.ejb.submodule"     value="sso-caching-ejb"/>
     <property name="path.to.orders-ejb"        value="../${name.of.ejb.submodule}"/>
+    <property name="ehcache_conf"              value="OVERRIDE IT"/>
+    <property name="ehcache_conf.file"         value="${conf.dir}/${ehcache_conf}"/>
 
     <path id = "compile.classpath.without-ejb">
       <fileset dir="${compilelibs.dir}">
@@ -22,6 +24,12 @@
         <path refid = "compile.classpath.without-ejb"/>
     </path>
 
+   <target name="test">   
+       <condition property="ehcache_conf.file.exists" value="true" else="false">
+          <available file="${ehcache_conf.file}"/>
+       </condition>
+       <fail message="ehcache_conf configuration file (${ehcache_conf.file}) does not exist - aborting" unless="${ehcache_conf.file.exists}"/>
+   </target>
 
     <!-- Check timestamp on files -->
     <target name="prepare">
@@ -29,7 +37,7 @@
     </target>
 
     <!-- Copy any resource or configuration files -->
-    <target name="resources">
+    <target name="resources" depends="test">
         <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
             <fileset dir="${javasource.dir}">
             <patternset>
@@ -55,6 +63,7 @@
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
         </javac>
+        <copy file="${ehcache_conf.file}" tofile="${webinf.dir}/classes/ehcache.xml"/>
     </target>
 
 
