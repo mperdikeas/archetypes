@@ -1,0 +1,17 @@
+$.ajaxSetup ({ cache: false });
+function foo() {
+    mygrid = new dhtmlXGridObject('mygridbox');
+    mygrid.setImagePath("./imgs/");//path to images required by grid
+    mygrid.setHeader("Όνομα, Επώνυμο, Υπάλληλος, Ημ. Γέννησης");//set column names
+    mygrid.setInitWidthsP("36,36,12,16");//set column width in px
+    mygrid.setColAlign("left,left,center,center");//set column values align
+    mygrid.setColTypes("ed,ed,ch,dhxCalendar");//set column types
+    mygrid.setColSorting("str,str,int,date");//set sorting
+    mygrid.setSkin("dhx_skyblue");//set grid skin
+    mygrid.init();//initialize grid
+    $.ajax({ url: "test.php" }).done(function (data) {
+        mygrid.parse(data, "json");//load data
+        //mygrid.adjustColumnSize(0);
+    });
+}
+$(document).ready(foo);

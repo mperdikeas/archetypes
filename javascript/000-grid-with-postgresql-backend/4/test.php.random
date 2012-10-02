@@ -1,0 +1,22 @@
+<?php
+header('Content-type: application/json');
+echo('{'."\n".'  "rows": ['."\n");
+for ($i = 1; $i <= 20; $i++) {
+    $lookup = "Abcdefghijklmnopqestuvwxyz";
+    echo '  {'."\n".'    "id":';
+    echo 1001+$i;
+    echo ','."\n    ";
+    echo '"data":['."\n";
+    echo '      "'.$i.'  ",'."\n";
+    $s = ""; for($j=1; $j<rand(10,30); $j++) { $s .= $lookup[rand(0, 25)]; }
+    echo '      "'.$s.'",'."\n";
+    $s = ""; for($j=1; $j<rand(10,30); $j++) { $s .= $lookup[rand(0, 25)]; }
+    echo '      "'.$s.'"'."\n";
+    echo '    ]'."\n";
+    echo '  }'."\n";
+    if ( $i != 20) {
+        echo "  ,\n";
+    }
+}
+echo ']}';
+?>

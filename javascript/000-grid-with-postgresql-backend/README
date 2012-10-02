@@ -1,0 +1,3 @@
+To try this example, you need to setup a PostgreSQL database
+and then create softlinks in /var/www (the apache2 publish dir)
+to folders 3 and 4.

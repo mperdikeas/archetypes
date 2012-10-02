@@ -1,0 +1,49 @@
+<?php
+header('Content-type: application/json');
+echo('{
+  "rows": {
+    "row": [
+      {
+        "-id": "1",
+        "cell": [
+          "-1500",
+          "A Time to Kill",
+          "John Grisham",
+          "12.99",
+          "1",
+          "24",
+          "0",
+          "05/01/1998"
+        ]
+      },
+      {
+        "-id": "2",
+        "cell": [
+          "1000",
+          "Blood and Smoke",
+          "Stephen King",
+          "0",
+          "1",
+          "24",
+          "0",
+          "01/01/2000"
+        ]
+      },
+      {
+        "-id": "3",
+        "-selected": "1",
+        "cell": [
+          "-200",
+          "The Rainmaker",
+          "John Grisham",
+          "7.99",
+          "0",
+          "48",
+          "0",
+          "12/01/2001"
+        ]
+      }
+    ]
+  }
+}');
+?>

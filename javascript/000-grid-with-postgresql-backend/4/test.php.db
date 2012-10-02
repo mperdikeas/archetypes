@@ -1,0 +1,36 @@
+<?php
+header('Content-type: application/json');
+$dbh = pg_connect("host=localhost dbname=orders user=hr password=hr");
+if (!$dbh) {
+    die("Error in connection: " . pg_last_error());
+}
+$sql = "SELECT name, surname, employee, to_char(date_of_birth, 'DD/MM/YYYY') FROM customer LIMIT 100";
+$result = pg_query($dbh, $sql);
+if (!$result) {
+    die("Error in SQL query: " . pg_last_error());
+}
+echo('{'."\n".'  "rows": ['."\n");
+$i = 0;
+while ($row = pg_fetch_array($result)) {
+    if ($i != 0) {
+        echo ",\n";
+    }
+    echo '  {'."\n".'    "id":';
+    echo 1000+$i;
+    $i += 1;
+    echo ','."\n    ";
+    echo '"data":['."\n";
+    echo '      "'.$row[0].'","'.$row[1].'","';
+    if ($row[2] == "t") {
+        echo "1";
+    } else {
+        echo "0";
+    }
+    echo '","'.$row[3].'"'."\n";
+    echo '    ]'."\n";
+    echo '  }';
+}
+echo ']}';
+pg_free_result($result);
+pg_close($dbh);
+?>
