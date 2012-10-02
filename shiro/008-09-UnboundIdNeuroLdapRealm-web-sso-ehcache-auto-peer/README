@@ -4,14 +4,14 @@ and authorization against the OID (Oracle Internet Directory)
 LDAP server they use at Neuropublic.
 
 
-In this USE-CASE (008) and STAGE (009) I should try
+In this USE-CASE (008) and STAGE (009) I managed
 to implement SSO using Shiro authentication / authorization
-against an LDAP server utilizing an out-of-the-box EhCache.
-The setting should comprise three (3) instances whose
-caches are synchronized using automatic peer discovery
-as opposed to manual peer discovery. I should also test that
-with deployment to the same JBoss Application Server as opposed
-to two or three different JBoss Application Servers.
+against an LDAP server utilizing an out-of-the-box EhCache 
+with *automatic peer discovery*, based on multicast addresses.
+
+The test setting comprises three (3) JBoss AS instances 
+and three different EARs whose
+caches are synchronized using automatic peer discovery.
 
 The sample also demonstrates use of a memcached deamon
 (assumed to be running in the local machine, accessible
@@ -23,5 +23,7 @@ irrelevant to the authentication / authorization thing.
 
 Tasks for next stages:
 
-[1] streamline the implementation of the Shiro LDAP library, de-clutter
+[1] deployment in the same JBoss AS (as opposed to three different) to
+    establish that there are no port conflicts.
+[2] streamline the implementation of the Shiro LDAP library, de-clutter
     the interfaces and move it in its own project, or maybe in mutil.

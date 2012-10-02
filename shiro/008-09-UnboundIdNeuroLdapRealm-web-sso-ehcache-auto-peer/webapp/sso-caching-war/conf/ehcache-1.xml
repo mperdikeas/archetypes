@@ -3,7 +3,7 @@
 <ehcache name="TranslationCache">
   <cacheManagerPeerProviderFactory
       class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-      properties="peerDiscovery=manual, rmiUrls=//localhost:40002/active-sessions-foo"/>
+      properties="peerDiscovery=automatic, multicastGroupAddress=224.0.0.1, multicastGroupPort=4446, timeToLive=32"/>
   <cacheManagerPeerListenerFactory
       class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
       properties="hostName=localhost, port=40001, socketTimeoutMillis=2000"/>
