@@ -1,1 +1,1 @@
-psql -Ugaia-user gaia-auth
+psql -Ugaia-user cashflow

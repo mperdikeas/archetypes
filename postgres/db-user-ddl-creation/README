@@ -1,1 +1,6 @@
-The spelling and the file name was kept as provided by YK.
+This folder demonstrates the use of various scripts
+to create, database, users and create schemas, etc in Postgres 9.1.
+Of particular interest is the use of DEFERRABLE and DEFERRED keywords.
+Relevant is also the following post:
+
+http://serverfault.com/questions/435202/postgresql-psql-command-line-tool-and-set-constraints-deferred

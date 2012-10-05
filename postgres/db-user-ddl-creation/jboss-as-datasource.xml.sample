@@ -1,0 +1,16 @@
+<datasource jta="false" jndi-name="java:/cashflow" pool-name="cashflow" enabled="true" use-ccm="false">
+<connection-url>jdbc:postgresql://localhost:5432/cashflow</connection-url>
+<driver-class>org.postgresql.Driver</driver-class>
+<driver>postgresql9.1</driver>
+<security>
+<user-name>postgres</user-name>
+<password>welcome1</password>
+</security>
+<validation>
+<validate-on-match>false</validate-on-match>
+<background-validation>false</background-validation>
+</validation>
+<statement>
+<share-prepared-statements>false</share-prepared-statements>
+</statement>
+</datasource>
