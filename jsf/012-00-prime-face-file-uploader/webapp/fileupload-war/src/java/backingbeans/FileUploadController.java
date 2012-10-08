@@ -30,33 +30,19 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-import facades.ICarFacadeLocal;
-import entities.Car;
+
 
 @ManagedBean
 @ViewScoped
-public class CarsCELVController implements Serializable {
+public class FileUploadController implements Serializable {
 
-    private static final String CLASSNAME=CarsCELVController.class.getName();
+    private static final String CLASSNAME=FileUploadController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
-    @EJB(beanName = "CarFacade")
-    private ICarFacadeLocal carFacade;
+    // @EJB(beanName = "CarFacade")
+    // private ICarFacadeLocal carFacade;
 
-    private boolean loadDatabase = true;
 
-    List<Car> items;
-    public void synchItemsFromDB() {
-        items = carFacade.findAll();
-    }
-
-    public List<Car> getItems() { 
-        if (loadDatabase) {
-            synchItemsFromDB();
-            loadDatabase = false;
-        }
-        return items;
-    }
 
 }
 
