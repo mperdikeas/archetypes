@@ -30,7 +30,12 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
+import javax.faces.application.FacesMessage;  
+import javax.faces.context.FacesContext;  
+import org.primefaces.event.FileUploadEvent;  
+import org.primefaces.model.UploadedFile;  
 
+import services.IFileConsumingService;
 
 @ManagedBean
 @ViewScoped
@@ -39,10 +44,16 @@ public class FileUploadController implements Serializable {
     private static final String CLASSNAME=FileUploadController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
-    // @EJB(beanName = "CarFacade")
-    // private ICarFacadeLocal carFacade;
-
-
+    @EJB
+    IFileConsumingService.ILocal fileConsumingService;
+  
+  
+   public void handleFileUpload(FileUploadEvent event) {  
+        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+        l.info("file upload completed ...");
+        fileConsumingService.consume((event.getFile().getContents()));
+    }  
 
 }
 
