@@ -19,11 +19,11 @@ import java.util.logging.Logger;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.InputStream;
+
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.naming.InitialContext;
-import java.util.Map;
-import java.util.HashMap;
 import javax.faces.event.ComponentSystemEvent;
 import java.util.Collection;
 import java.util.Date;
@@ -39,7 +39,7 @@ import org.primefaces.model.StreamedContent;
 import services.IFileProvidingService;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class FileDownloadController implements Serializable {
 
     private static final String CLASSNAME=FileDownloadController.class.getName();
@@ -50,7 +50,10 @@ public class FileDownloadController implements Serializable {
   
       
     public StreamedContent getFile() {  
-        return new DefaultStreamedContent(fileProvidingService.getStream(), "text", "samplefile.csv");
+        l.info("backing-bean getFile");
+        InputStream is = fileProvidingService.getStream();
+        l.info("returned InputStream is: "+is);
+        return new DefaultStreamedContent(is, "text", "samplefile.csv");
     }    
 }  
       

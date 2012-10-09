@@ -10,7 +10,7 @@
     <ui:composition template="/template.xhtml">
         <ui:define name="title">CAR</ui:define>
         <ui:define name="header">
-            <h3>File uploader dialog page</h3>
+            <h3>File download dialog page</h3>
         </ui:define>
 
 
@@ -22,12 +22,20 @@
             </p:dialog>  
               
             <h:form id="form">  
-              
+
+            <ui:remove>
             <p:commandButton id="downloadLink" value="Download" ajax="false"
                                  onclick="PrimeFaces.monitorDownload(start, stop)"   
                     icon="ui-icon-arrowthichk-s">  
                 <p:fileDownload value="#{fileDownloadController.file}" />  
             </p:commandButton>  
+            </ui:remove>              
+                <p:commandButton id="downloadLink" value="Download" ajax="false"
+                        icon="ui-icon-arrowthichk-s">  
+                    <p:fileDownload value="#{fileDownloadController.file}" />  
+                </p:commandButton>  
+
+
               
             </h:form>  
               

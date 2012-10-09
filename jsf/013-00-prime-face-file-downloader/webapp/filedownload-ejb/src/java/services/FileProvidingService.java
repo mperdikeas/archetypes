@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import mutil.base.FileUtil;
 import mutil.base.ExceptionAdapter;
 
+import java.io.InputStream;  
+
+
 @Stateless
 @Local (IFileProvidingService.ILocal.class)
 @Remote(IFileProvidingService.IRemote.class)
@@ -22,7 +25,8 @@ public class FileProvidingService implements IFileProvidingService.ILocal, IFile
 
     
     public InputStream getStream() {
-        return null;
+        InputStream stream = getClass().getResourceAsStream("FileProvidingService.class");
+        return stream;
     }
 
 
