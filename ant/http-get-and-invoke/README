@@ -1,0 +1,11 @@
+This is a fine example of an Ant build.xml script
+that downloads, untars and attempts to execute an
+external executable. In this particular instance 
+it fails, however due to the executable in question
+being a .NET on that has to be launched under MONO.
+For this scenario I'll investigate the following
+Ant task:
+
+https://svn.apache.org/repos/asf/ant/antlibs/dotnet/trunk/src/main/org/apache/ant/dotnet/DotNetExecTask.java
+
+Other than that this build script is operational.
