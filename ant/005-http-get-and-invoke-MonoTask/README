@@ -1,0 +1,6 @@
+In this use case (005), I managed to further improve
+the situation of use case 004 by using the DoNetExecTask:
+
+https://svn.apache.org/repos/asf/ant/antlibs/dotnet/trunk/src/main/org/apache/ant/dotnet/DotNetExecTask.java
+
+to execute a MONO executable.

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebApplication Name="cashflow" Facades="true" NeuroLangForms="false">
+    <DBConnection server="172.31.129.29" port="5432" user-id="gaia-user" password="gaia-user-pwd" database="cashflow" />
+    <Package>gr.neuropublic.gaia</Package>
+    <CodeGenerationFolder>codeGen</CodeGenerationFolder>
+    <!--PublishFolder>C:\JBossAS\jboss-as-7.1.1.Final\standalone\deployments</PublishFolder-->
+    <!--Entities-->
+        <!--IgnoreTable name="customer_backup"/-->
+        <!--IgnoreTable name="type_zoo"/-->
+        <!--RenameCollection sourceMasterTable="postal" sourceDetailTable="municipality" sourceColumnInDetail="id" targetField="municipalityCollection"/-->
+
+
+
+    <!--/Entities-->
+    <!--Forms>
+        <Form source="SampleForm.xml"/>
+    </Forms-->
+
+    <!--RTL>
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-client\src\java\gr\neuropublic\base" target="$NAME$-client\src\java\gr\neuropublic\base" />
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-client\build.xml" target="$NAME$-client\"/>
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-client\lib" target="$NAME$-client\lib" />
+
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-ejb\build.xml" target="$NAME$-ejb\"/>
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-ejb\lib" target="$NAME$-ejb\lib" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-ejb\src\java\gr\neuropublic\base" target="$NAME$-ejb\src\java\gr\neuropublic\base" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-ejb\src\java\gr\neuropublic\persutil" target="$NAME$-ejb\src\java\gr\neuropublic\persutil" />
+
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\src\java\gr\neuropublic\jsf\base" target="$NAME$-war\src\java\gr\neuropublic\jsf\base" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\src\java\gr\neuropublic\jsf\beans" target="$NAME$-war\src\java\gr\neuropublic\jsf\beans" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\src\java\gr\neuropublic\jsf\util" target="$NAME$-war\src\java\gr\neuropublic\jsf\util" />
+
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\lib" target="$NAME$-war\lib" />
+
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\conf" target="$NAME$-war\conf" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\common" target="$NAME$-war\web\common" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\resources" target="$NAME$-war\web\resources" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\templates" target="$NAME$-war\web\templates" />
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\WEB-INF" target="$NAME$-war\web\WEB-INF" />
+
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\index.jsp" target="$NAME$-war\web\"/>
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\index.xhtml" target="$NAME$-war\web\"/>
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\web\template.xhtml" target="$NAME$-war\web\"/>
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\build.xml" target=""/>
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\build.xml" target="$NAME$-war\"/>
+        <RtlCopyFolder src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\lib" target="lib" />
+
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\src\java\Bundle.properties" target="$NAME$-war\src\java\"/>
+        <RtlFile src="C:\prj\GAIA\010-03-sample-Java-EE-application-for-dual-NB-build-cashflow\cashflow\cashflow-war\src\java\Bundle_el.properties" target="$NAME$-war\src\java\"/>
+
+    </RTL-->
+</WebApplication>    

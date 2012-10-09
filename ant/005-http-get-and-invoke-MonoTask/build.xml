@@ -1,0 +1,45 @@
+<!--project xmlns:dn="antlib:org.apache.ant.dotnet" name="example-using-get-task" basedir="." default="run"-->
+<project name="example-using-get-task" basedir="." default="run">
+    <taskdef resource="org/apache/ant/dotnet/antlib.xml" classpath="${basedir}/tools/ant-dotnet-1.1.jar" />
+    <property name="tarball.name.core" value="NeuroCode"/>
+    <property name="tarball.name"      value="${tarball.name.core}.tar.gz"/>
+    <property name="tarball.url"       value="http://172.31.128.119/NeuroCode/${tarball.name}"/>
+    <property name="tarball.file"      value="${basedir}/${tarball.name}"/>
+    <property name="exploded.dir"      value="${basedir}/${tarball.name.core}"/>
+    <property name="untar.dir"         value="${basedir}"/>
+    <property name="exe.dir"           value="${exploded.dir}/bin"/>
+    <property name="exe.name"          value="NeuroCode.exe"/>
+    <property name="exe.file"          value="${exe.dir}/${exe.name}"/>
+    <property name="project.file"      value="${basedir}/Project.xml"/>
+    <property name="generated.dir"     value="${basedir}/codeGen"/>
+
+    <target name="clean">
+        <delete file="${tarball.file}"/>
+        <delete dir ="${exploded.dir}"/>
+        <delete dir ="${generated.dir}"/>
+    </target>
+
+    <target name="get-tarball">
+         <get src="${tarball.url}"
+             dest="${tarball.name}" 
+             verbose="true"
+             usetimestamp="true" />
+    </target>
+
+    <target name="untar-tarball" depends="get-tarball">
+        <untar         src="${tarball.file}" 
+                      dest="${untar.dir}"
+               compression="gzip"/>
+    </target>
+
+    <target name="change-permissions" depends="untar-tarball">
+        <chmod file="${exe.file}" perm="ugo+x"/>
+    </target>
+
+    <target name="run" depends="change-permissions">
+        <dotnetexec dir="${basedir}" executable="${exe.dir}/${exe.name}">
+            <arg value="${project.file}"/>
+        </dotnetexec>
+    </target>
+
+</project>
