@@ -32,27 +32,25 @@ import javax.servlet.http.HttpSession;
 
 import javax.faces.application.FacesMessage;  
 import javax.faces.context.FacesContext;  
-import org.primefaces.event.FileUploadEvent;  
-import org.primefaces.model.UploadedFile;  
+import org.primefaces.model.DefaultStreamedContent;  
+import org.primefaces.model.StreamedContent;  
 
-import services.IFileConsumingService;
+
+import services.IFileProvidingService;
 
 @ManagedBean
 @ViewScoped
-public class FileUploadController implements Serializable {
+public class FileDownloadController implements Serializable {
 
-    private static final String CLASSNAME=FileUploadController.class.getName();
+    private static final String CLASSNAME=FileDownloadController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
     @EJB
-    IFileConsumingService.ILocal fileConsumingService;
+    IFileProvidingService.ILocal fileProvidingService;
   
-  
-   public void handleFileUpload(FileUploadEvent event) {  
-        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-        l.info("file upload completed ...");
-        fileConsumingService.consume((event.getFile().getContents()));
-    }  
-
-}
+      
+    public StreamedContent getFile() {  
+        return new DefaultStreamedContent(fileProvidingService.getStream(), "text", "samplefile.csv");
+    }    
+}  
+      

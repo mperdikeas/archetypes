@@ -15,19 +15,31 @@
 
 
         <ui:define name="body">
-            <h3>placeholder for the file upload dialog</h3>
 
-            <h:form enctype="multipart/form-data">  
+            <p:dialog modal="true" widgetVar="statusDialog" header="Status"
+                      draggable="false" closable="false" resizable="false">  
+                <p:graphicImage value="/design/ajaxloadingbar.gif" />  
+            </p:dialog>  
               
-                <p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}"  
-                        mode="advanced"   
-                        update="messages"  
-                        sizeLimit="130000000"   
-                        allowTypes="/(\.|\/)(csv)$/" />  
+            <h:form id="form">  
               
-                <p:growl id="messages" showDetail="true"/>  
+            <p:commandButton id="downloadLink" value="Download" ajax="false"
+                                 onclick="PrimeFaces.monitorDownload(start, stop)"   
+                    icon="ui-icon-arrowthichk-s">  
+                <p:fileDownload value="#{fileDownloadController.file}" />  
+            </p:commandButton>  
               
-            </h:form>
+            </h:form>  
+              
+                    <script type="text/javascript">  
+            function start() {  
+                statusDialog.show();  
+            }  
+              
+            function stop() {  
+                statusDialog.hide();  
+            }  
+                    </script>  
 
         </ui:define>
     </ui:composition>
