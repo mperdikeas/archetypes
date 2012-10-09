@@ -1,0 +1,72 @@
+<project name="filedownload" basedir="." default="republish">
+
+    <!-- Project settings -->
+    <property name="project.distname"      value="${ant.project.name}"/>
+    <property name="project.artefact"      value="${project.distname}.ear"/>
+    <property name="dist.dir"              value="dist"/>
+    <property name="conf.dir"              value="conf"/>
+    <property name="ear-lib.src.dir"       value="lib"/>
+    <property name="ear-lib.dest.preffix"  value="lib"/>
+    <property name="project.artefact.path" value="./${dist.dir}/${project.artefact}"/>
+
+    <!-- Local system paths -->
+    <property environment="env" />
+    <property file="build.properties"/>
+    <property name="ejb-project.dir"      value="./${ejb-project.name}"         />
+    <property name="war-project.dir"      value="./${war-project.name}"         />
+    <property name="client-project.dir"   value="./${client-project.name}"      />
+    <property name="application_xml"      value="application.xml"               />
+    <property name="application_xml.file" value="${conf.dir}/${application_xml}"/>
+
+    <target name="clean"
+      description="Prepare for clean build">
+      <delete dir="${dist.dir}"/>
+      <ant antfile = "${ejb-project.dir}/build.xml"    target="clean" inheritAll="false"/>
+      <ant antfile = "${war-project.dir}/build.xml"    target="clean" inheritAll="false"/>
+      <ant antfile = "${client-project.dir}/build.xml" target="clean" inheritAll="false"/>
+    </target>
+
+    <target name="jar-build-ejb" > 
+      <ant antfile = "${ejb-project.dir}/build.xml" target="jar" inheritAll="false"/>
+    </target>
+    <target name="build-war" > 
+      <ant antfile = "${war-project.dir}/build.xml" target="war" inheritAll="false"/>
+    </target>
+
+    <target name="ear" description="Building the ear file" depends="jar-build-ejb, build-war">
+      <mkdir dir="${dist.dir}"/>
+      <ear destfile="${project.artefact.path}" appxml="${application_xml.file}">
+        <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
+              <include name="commons-lang3-3.1.jar"/>
+              <include name="mutil.jar"/>
+              <include name="joda-time-2.1.jar"/>
+        </zipfileset>
+        <zipfileset dir="${client-project.dir}/dist" prefix="${ear-lib.dest.preffix}">
+            <include name="${client-project.name}.jar"/>
+        </zipfileset>
+        <fileset dir="${war-project.dir}/build"    includes="${war-project.name}.war"   />
+        <fileset dir="${ejb-project.dir}/build"    includes="${ejb-project.name}.jar"   />
+
+        <include name ="${ejb-project.dir}/dist/${ejb-project.name}.jar"/>  <!-- this is likely not needed - I should remove it -->
+        <include name ="${war-project.dir}/build/${war-project.name}.war"/>
+      </ear>
+    </target>
+
+    <target name="reear" depends="clean, ear"/>
+
+    <target name="publish" depends="ear" description="publish to local configured web server">
+      <echo message="copying ${project.artefact.path} to ${publish.dir}"/>
+      <copy file="${project.artefact.path}" todir="${publish.dir}"/>
+    </target>
+
+    <target name="republish" depends="clean, publish"/>
+
+    <target name="unpublish">
+        <delete quiet="true" verbose="true">
+            <fileset dir="${publish.dir}" includes="${project.artefact}"/>
+            <fileset dir="${publish.dir}" includes="${project.artefact}.*"/>
+        </delete>
+    </target>
+    
+
+</project>
