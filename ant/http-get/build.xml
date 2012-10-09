@@ -1,0 +1,10 @@
+<project name="example-using-get-task" basedir="." default="get">
+
+    <target name="get">
+         <get src="http://www.apache.org/dist/ant/KEYS" 
+             dest="KEYS" 
+             verbose="true"
+             usetimestamp="true" />
+    </target>
+
+</project>
