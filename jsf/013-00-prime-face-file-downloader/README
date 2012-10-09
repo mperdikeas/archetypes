@@ -1,0 +1,9 @@
+In this USE CASE (013) and STAGE (00) I 
+managed to implement a small file downloading
+example using PrimeFaces together with an
+EJB3 bean that provides the file-related
+service by opening a file bundled with the jar
+as a resource. Be careful to ensure that the
+resource is copied in the distribution (see copy
+lines in the build.xml for the EJB jar).
+

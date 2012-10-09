@@ -25,7 +25,7 @@ public class FileProvidingService implements IFileProvidingService.ILocal, IFile
 
     
     public InputStream getStream() {
-        InputStream stream = getClass().getResourceAsStream("FileProvidingService.class");
+        InputStream stream = getClass().getResourceAsStream("samplefile.csv");
         return stream;
     }
 

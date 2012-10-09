@@ -1,6 +1,0 @@
-In this USE CASE (013) and STAGE (00) I 
-am trying to implement a small file downloading
-example using PrimeFaces together with a dummy
-EJB3 bean that purportly provides the file-related
-service.
-

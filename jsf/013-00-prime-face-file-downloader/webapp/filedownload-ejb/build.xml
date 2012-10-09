@@ -53,6 +53,7 @@
         </javac>
         <copy file="${conf.dir}/persistence.xml"   todir="${bin.dir}/META-INF"/>
         <copy file="${conf.dir}/hsqldb_foo-ds.xml" todir="${bin.dir}/META-INF"/>
+        <copy file="${javasource.dir}/services/samplefile.csv" todir="${bin.dir}/services"/>
     </target>
 
     <target name="jar" depends="compile"
