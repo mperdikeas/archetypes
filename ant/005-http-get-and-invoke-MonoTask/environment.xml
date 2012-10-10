@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LocalSettings emmitForms="false" emmitWar="false">
+    <DBConnection server="172.31.129.29" port="5432" user-id="gaia-user" password="gaia-user-pwd" database="cashflow" />
+
+<!--DBConnection server="172.31.129.29" port="5432" user-id="gaia-user" password="gaia-user-pwd" database="cashflow" -->
+    <PublishFolder>./jboss-standalone-deployments</PublishFolder>
+</LocalSettings>    

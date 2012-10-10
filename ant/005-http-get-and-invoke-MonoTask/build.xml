@@ -11,7 +11,7 @@
     <property name="exe.name"          value="NeuroCode.exe"/>
     <property name="exe.file"          value="${exe.dir}/${exe.name}"/>
     <property name="project.file"      value="${basedir}/Project.xml"/>
-    <property name="generated.dir"     value="${basedir}/codeGen"/>
+    <property name="generated.dir"     value="${basedir}/cashflow"/>
 
     <target name="clean">
         <delete file="${tarball.file}"/>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<WebApplication Name="cashflow" Facades="true" NeuroLangForms="false">
-    <DBConnection server="172.31.129.29" port="5432" user-id="gaia-user" password="gaia-user-pwd" database="cashflow" />
+<WebApplication Name="cashflow" environment="environment.xml">
     <Package>gr.neuropublic.gaia</Package>
-    <CodeGenerationFolder>codeGen</CodeGenerationFolder>
+    <CodeGenerationFolder>cashflow</CodeGenerationFolder>
+
+    <Entities tablePrefixToRemove="KM_" removeFieldsPrefix="true"/>
     <!--PublishFolder>C:\JBossAS\jboss-as-7.1.1.Final\standalone\deployments</PublishFolder-->
     <!--Entities-->
         <!--IgnoreTable name="customer_backup"/-->
