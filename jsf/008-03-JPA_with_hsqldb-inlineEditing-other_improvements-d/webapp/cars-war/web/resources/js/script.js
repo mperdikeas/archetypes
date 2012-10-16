@@ -22,6 +22,9 @@ var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
 
 function initActions() {
     console.log('entered initActions');
+
+    console.log('value of F2_KEY_CODE is: '+window.F2_KEY_CODE+' or '+window['F2_KEY_CODE'])
+
     focusCursor();
 //  $('.tableInput').focus(function() { alert ("input text of class tableInput received focus"); });
     $('.tableInput').focus(function() { 
