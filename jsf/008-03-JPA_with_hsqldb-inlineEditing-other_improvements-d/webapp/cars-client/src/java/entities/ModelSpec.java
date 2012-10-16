@@ -14,13 +14,12 @@ public class ModelSpec implements Serializable {
     
     // @Column(name="MODEL", nullable=false)
     String model;
-    // public String getModel() { return model; }
-    // public void setModel(String model) { this.model = model; }
 
     // @Column(name="SPEC", nullable=false)
     String spec;
 
-    public String getSpec() { return spec ; }
+    public String getSpec()            { return spec ;      }
+    public void   setSpec(String spec) { this.spec = spec ; }
 
     @Override
     public boolean equals(Object otherO) {
@@ -36,12 +35,5 @@ public class ModelSpec implements Serializable {
         }
         return true;
     }
-    // public String getSpec() { return spec; }
-    // public void setSpec(String spec) { this.spec = spec; }
-    
-    /*public ModelSpec(String model, String spec) {
-        this.model = model;
-        this.spec  = spec;
-        }*/
 
 }

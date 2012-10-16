@@ -18,46 +18,47 @@ var F9_KEY_CODE        = 120;
 var zoo = new Array(ARROWLEFT_KEY_CODE);
 var boo = [3];
 
-var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
+var LOG_TAG = 'log-event';
+
+fullIdOfEnclosingDataTable = function (elem) {
+    var closestDataTable = elem.closest('.ui-datatable');
+    return closestDataTable.attr('id');
+}
+
+divineWidgetVar = function (dataTableId) {
+    var lastIdComponent =  dataTableId.split(/[:]+/).pop();
+    return window[lastIdComponent+'WdgtVar'];
+}
 
 function initActions() {
-    console.log('entered initActions');
-
-    console.log('value of F2_KEY_CODE is: '+window.F2_KEY_CODE+' or '+window['F2_KEY_CODE'])
 
     focusCursor();
-//  $('.tableInput').focus(function() { alert ("input text of class tableInput received focus"); });
     $('.tableInput').focus(function() { 
-        console.log('table input received focus');
         var focusTarget = $(this).closest('tr');
-        console.log('jQuery focus target is :');
-        console.log(focusTarget);
-        console.log('underlying object follows:');
-        console.log(focusTarget.get(0));
-        console.log('\----------------/');
+        //console.log('jQuery focus target is :');
+        //console.log(focusTarget);
+        //console.log('underlying object follows:');
+        //console.log(focusTarget.get(0));
+        //console.log('\----------------/');
         var focusTargetU = focusTarget.get(0);
         focusTargetU.focus();
-        console.log('1');
         focusTarget.focus();
-        console.log('2');
         // focusTargetU.attr('aria-selected', 'true');
         // focusTargetU.click();
         // $(focusTargetU).click();
         // focusTarget.click();
         // $(focusTarget).click();
-        console.log('3');
         focusTarget.attr('aria-selected', 'true');
-        console.log('4');
         // selectRow(focusTarget);
-        selectRow(focusTarget);
+        selectRowJQuery(focusTarget);
         //$(focusTarget).focus();
         //focusTarget.focus();
         // $(focusTarget).attr('aria-selected', 'true');
         // focusTarget.attr('aria-selected', 'true');
     }
     );
-    $('#CAR-form\\:RowNext').hide();
-    $('#CAR-form\\:RowPrev').hide();
+    $('#FormId\\:RowNext').hide();
+    $('#FormId\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
     $('#clear-registry').click(clearEvents);
 
@@ -76,9 +77,9 @@ function initActions() {
 }
 
 function focusCursor() {
-    dataTableWidget.unselectAllRows();
-    dataTableWidget.selectRow(0);
-    $('#CAR-form\\:CAR-data-table\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
+    dataTableMasterWdgtVar.unselectAllRows();
+    dataTableMasterWdgtVar.selectRow(0);
+    $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
                                                             // better not have any PrimeFaces focus at all - use javascript focus
 }
 
@@ -100,7 +101,7 @@ function focusToNextInput(event, element) {
 //TODO: FOCUS TO NEW ROW
 function createNewRow(event) {
     if(event.keyCode==ENTER_KEY_CODE){
-        $("#CAR-form\\:BtnAdd").click();
+        $("#FormId\\:BtnAdd").click();
         return false;
     } else
         return true;
@@ -118,11 +119,20 @@ logMessage = function(msg) {
     $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
 }
 
+selectRowJQuery = function (el) {
+    var dataTableFullId = fullIdOfEnclosingDataTable(el);
+    console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
+    var widgetVar = divineWidgetVar(dataTableFullId);
+    console.log(widgetVar);
+    widgetVar.unselectAllRows();
+    widgetVar.selectRow(el);
+}
+
+
 selectRow = function(i) {
-    dataTableWidget.unselectAllRows(); 
-    console.log('about to select the followig row:');
-    console.log(i);
-    dataTableWidget.selectRow(i);
+    dataTableMasterWdgtVar.unselectAllRows(); 
+    // console.log(i);
+    dataTableMasterWdgtVar.selectRow(i);
 }
 
 isLastChild = function(father, child) {
@@ -152,7 +162,7 @@ lastButOneChild = function(father) {
 
 nthChild = function(father, i) {
     var children = $(father).children();
-    console.log(children.length+" children returned");
+    // console.log(children.length+" children returned");
     return children[i];
 }
 
@@ -268,7 +278,7 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
                 return false;
             }
             else if (caretAtTheEnd(element)) {
-                console.log('caretAtTheEndFlag is now set');
+                // console.log('caretAtTheEndFlag is now set');
                 caretAtTheEndFlag = true;
                 return true;
             }
@@ -277,7 +287,7 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         if (event.keyCode==ARROWLEFT_KEY_CODE) {
             caretAtTheEndFlag = false;
             if (caretAtTheBeginningFlag) {
-                console.log('at beginning and caretAtTheBeginningFlag set to true');
+                // console.log('at beginning and caretAtTheBeginningFlag set to true');
                 if (isFirstChild(rowInQuestion, $(element).closest('td'))) {
                     var focusTarget = $(lastButOneChild(rowInQuestion)).find('input');
                     focusEnd(focusTarget);
@@ -289,7 +299,7 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
                 return false;
             }
             else if (caretAtTheBeginning(element)) {
-                console.log('caretAtBeginning now set to true');
+                // console.log('caretAtBeginning now set to true');
                 caretAtTheBeginningFlag = true;
                 return true;
             }
@@ -318,10 +328,10 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
 
 
 processKeyUp = function(event) {
-           if (event.keyCode==F9_KEY_CODE)     { $("#CAR-form\\:BtnAdd")    .click();
-    } else if (event.keyCode==F2_KEY_CODE)     { $("#CAR-form\\:BtnRestore").click();
-    } else if (event.keyCode==F4_KEY_CODE)     { $("#CAR-form\\:BtnCommit") .click();
-    } else if (event.keyCode==F8_KEY_CODE)     { $("#CAR-form\\:BtnDel")    .click();
+           if (event.keyCode==F9_KEY_CODE)     { $("#FormId\\:BtnAdd")    .click();
+    } else if (event.keyCode==F2_KEY_CODE)     { $("#FormId\\:BtnRestore").click();
+    } else if (event.keyCode==F4_KEY_CODE)     { $("#FormId\\:BtnCommit") .click();
+    } else if (event.keyCode==F8_KEY_CODE)     { $("#FormId\\:BtnDel")    .click();
     } else if (event.keyCode==ESCAPE_KEY_CODE) { $('#newItem\\:cancelBtn')  .click();
     } else return true;
     event.stopPropagation();
