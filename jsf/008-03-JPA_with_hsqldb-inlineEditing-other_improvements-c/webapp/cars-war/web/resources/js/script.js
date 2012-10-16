@@ -21,7 +21,38 @@ var boo = [3];
 var LOG_TAG = 'log-event';  // single vs. double quotes seems to be immaterial
 
 function initActions() {
+    console.log('entered initActions');
     focusCursor();
+//  $('.tableInput').focus(function() { alert ("input text of class tableInput received focus"); });
+    $('.tableInput').focus(function() { 
+        console.log('table input received focus');
+        var focusTarget = $(this).closest('tr');
+        console.log('jQuery focus target is :');
+        console.log(focusTarget);
+        console.log('underlying object follows:');
+        console.log(focusTarget.get(0));
+        console.log('\----------------/');
+        var focusTargetU = focusTarget.get(0);
+        focusTargetU.focus();
+        console.log('1');
+        focusTarget.focus();
+        console.log('2');
+        // focusTargetU.attr('aria-selected', 'true');
+        // focusTargetU.click();
+        // $(focusTargetU).click();
+        // focusTarget.click();
+        // $(focusTarget).click();
+        console.log('3');
+        focusTarget.attr('aria-selected', 'true');
+        console.log('4');
+        // selectRow(focusTarget);
+        selectRow(focusTarget);
+        //$(focusTarget).focus();
+        //focusTarget.focus();
+        // $(focusTarget).attr('aria-selected', 'true');
+        // focusTarget.attr('aria-selected', 'true');
+    }
+    );
     $('#CAR-form\\:RowNext').hide();
     $('#CAR-form\\:RowPrev').hide();
     $('html').keyup(processKeyUp);
@@ -86,6 +117,8 @@ logMessage = function(msg) {
 
 selectRow = function(i) {
     dataTableWidget.unselectAllRows(); 
+    console.log('about to select the followig row:');
+    console.log(i);
     dataTableWidget.selectRow(i);
 }
 

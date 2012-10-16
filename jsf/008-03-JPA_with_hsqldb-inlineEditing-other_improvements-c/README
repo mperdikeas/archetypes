@@ -1,8 +1,7 @@
 In this USE CASE (008), STAGE (03) and SUB-STAGE (c) I 
-implement some additional features on the previous
-sub-stage (b). The main one being able to select
-with both the arrow keys and the keyboard and handling
-focus and update on child table in the case of a master-child
-display.
+managed to implement the following additional feature
+on top of sub-stage (b): that when an input-text is clicked,
+the data-table row is properly selected.
+
 
 
