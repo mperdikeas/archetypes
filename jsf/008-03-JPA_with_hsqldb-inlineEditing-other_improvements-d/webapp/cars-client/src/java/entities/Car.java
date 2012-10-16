@@ -31,6 +31,12 @@ public class Car implements Serializable {
     private Integer price;
 
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "car", fetch=FetchType.EAGER)
+    private Collection<CarInfo> carInfoCollection;
+
+    public Collection<CarInfo> getCarInfoCollection() { return carInfoCollection; }
+    public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) { this.carInfoCollection = carInfoCollection; }
+
     public Car() {}
 
     public Car(String model, Integer price) {

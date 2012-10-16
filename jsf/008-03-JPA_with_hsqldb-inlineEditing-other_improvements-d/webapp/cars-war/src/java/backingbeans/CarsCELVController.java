@@ -34,6 +34,7 @@ import javax.servlet.http.HttpSession;
 
 import facades.ICarFacade;
 import entities.Car;
+import entities.CarInfo;
 
 import mutil.base.ListUtil;
 
@@ -143,6 +144,16 @@ public class CarsCELVController implements Serializable {
         }
         return items;
     }
+
+    public Collection<CarInfo> getItemDetails() {
+        if (current != null) return current.getCarInfoCollection();
+        else return null;
+    }
+
+    public CarInfo currentDetail;
+
+    public CarInfo getCurrentDetail() { return currentDetail; }
+    public void    setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail; }
 
     public void remove() {
         l.info("**************************************************************** inside remove");
