@@ -13,13 +13,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "CAR_INFO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CarInfo.findAll"    , query = "SELECT x FROM CarInfo x"),
-    @NamedQuery(name = "CarInfo.findByModel", query = "SELECT x FROM CarInfo x WHERE x.model = :MODEL")
+    @NamedQuery(name = "CarInfo.findAll"        , query = "SELECT x FROM CarInfo x"),
+    @NamedQuery(name = "CarInfo.findByModelSpec", query = "SELECT x FROM CarInfo x WHERE x.modelSpec = :MODELSPEC")
         }) 
 public class CarInfo implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @NotNull
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="model", column=@Column(name="MODEL")),
+                @AttributeOverride(name="spec" , column=@Column(name="SPEC"))
+                })
+    private ModelSpec modelSpec;
+
+    /*
     @Id
     @Basic(optional = false)
     @NotNull
@@ -29,6 +39,7 @@ public class CarInfo implements Serializable {
     @NotNull
     @Column(name = "SPEC")
     private String spec;
+    */
     @Basic(optional = false)
     @NotNull
     @Column(name = "SPEC_VALUE")
@@ -42,26 +53,17 @@ public class CarInfo implements Serializable {
 
     public CarInfo() {}
 
-    public CarInfo(String model, String spec, String specValue) {
-        this.model     = model;
-        this.spec      = spec;
+    public CarInfo(ModelSpec modelSpec, String specValue) {
+        this.modelSpec = modelSpec;
         this.specValue = specValue;
     }
 
-    public String getModel() {
-        return model;
+    public ModelSpec getModelSpec() {
+        return modelSpec;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getSpec() {
-        return spec;
-    }
-
-    public void setSpec(String spec) {
-        this.spec = spec;
+    public void setModelSpec(ModelSpec modelSpec) {
+        this.modelSpec = modelSpec;
     }
 
     public String getSpecValue() {
@@ -79,9 +81,8 @@ public class CarInfo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash +=     (model     != null ? model    .hashCode() : 0);
-        hash += 31 *(spec      != null ? spec     .hashCode() : 0);
-        hash += 173*(specValue != null ? specValue.hashCode() : 0);
+        hash +=     (modelSpec     != null ? modelSpec .hashCode() : 0);
+        hash += 173*(specValue     != null ? specValue .hashCode() : 0);
         return hash;
     }
 
@@ -91,14 +92,10 @@ public class CarInfo implements Serializable {
             return false;
         }
         CarInfo other = (CarInfo) object;
-        if ((this.model == null && other.model != null) || 
-            (this.model != null && !this.model.equals(other.model))) {
+        if ((this.modelSpec == null && other.modelSpec != null) || 
+            (this.modelSpec != null && !this.modelSpec.equals(other.modelSpec))) {
             return false;
         }
-        if ((this.spec == null && other.spec != null) || 
-            (this.spec != null && !this.spec.equals(other.spec))) {
-            return false;
-        } 
         if ((this.specValue == null && other.specValue != null) || 
             (this.specValue != null && !this.specValue.equals(other.specValue))) {
             return false;
@@ -108,7 +105,7 @@ public class CarInfo implements Serializable {
 
     @Override
     public String toString() {
-        return CarInfo.class.getName()+"[ model =" + model + ", spec ="+spec+", specValue = "+specValue+" ]";
+        return CarInfo.class.getName()+"[ modelSpec =" + modelSpec+", specValue = "+specValue+" ]";
     }
     
 }

@@ -67,7 +67,7 @@
 
                         <p:dataTable id="CAR-data-table-detail"        widgetVar  ="dataTableWidgetDetail" var="item"
                                                                        rowIndexVar="rowIndex"
-                                     value="#{carsCELVController.itemDetails}" rowKey="#{item.spec}" 
+                                     value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
                                      paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                      selection="#{carsCELVController.currentDetail}" selectionMode="single"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
@@ -75,12 +75,8 @@
                             <f:facet name="header">  
                                 Rows in the table
                             </f:facet>  
-                            <p:column id="model" headerText="Model">       <ui:remove> <!-- that used to be (event, #{rowIndex}) but       --> </ui:remove>
-                                                                           <ui:remove> <!-- we don't need to supply the row index any more --> </ui:remove>
-                                <p:inputText styleClass='tableInput' id="modelrow" value="#{item.model}" onkeypress="navigateWithArrows(event); return focusToNextInput(event, this);"/>
-                            </p:column>  
                             <p:column id="spec" headerText="Spec">
-                                <p:inputText styleClass='tableInput' value="#{item.spec}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                <p:inputText styleClass='tableInput' value="#{item.modelSpec.spec}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                             </p:column>
 
                             <p:column id="specValue" headerText="SpecValue">
