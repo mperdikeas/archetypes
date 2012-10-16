@@ -27,12 +27,16 @@ fullIdOfEnclosingDataTable = function (elem) {
 
 divineWidgetVar = function (dataTableId) {
     var lastIdComponent =  dataTableId.split(/[:]+/).pop();
-    return window[lastIdComponent+'WdgtVar'];
+    return window[lastIdComponent+'WdgtVar']; // this convention has to be observed in the xhtml code !
+                                              // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
 }
+
+
+
 
 function initActions() {
 
-    focusCursor();
+    // focusCursor();
     $('.tableInput').focus(function() { 
         var focusTarget = $(this).closest('tr');
         //console.log('jQuery focus target is :');
@@ -40,15 +44,15 @@ function initActions() {
         //console.log('underlying object follows:');
         //console.log(focusTarget.get(0));
         //console.log('\----------------/');
-        var focusTargetU = focusTarget.get(0);
-        focusTargetU.focus();
-        focusTarget.focus();
+           // var focusTargetU = focusTarget.get(0);
+           // focusTargetU.focus();
+           // focusTarget.focus();
         // focusTargetU.attr('aria-selected', 'true');
         // focusTargetU.click();
         // $(focusTargetU).click();
         // focusTarget.click();
         // $(focusTarget).click();
-        focusTarget.attr('aria-selected', 'true');
+           // focusTarget.attr('aria-selected', 'true');
         // selectRow(focusTarget);
         selectRowJQuery(focusTarget);
         //$(focusTarget).focus();

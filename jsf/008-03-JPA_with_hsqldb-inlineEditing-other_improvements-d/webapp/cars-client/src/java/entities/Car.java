@@ -30,12 +30,19 @@ public class Car implements Serializable {
     @Column(name = "PRICE")
     private Integer price;
 
+    public String stringifyCollection() {
+        StringBuffer sb = new StringBuffer();
+        for (CarInfo carInfo : carInfoCollection)
+            sb.append(carInfo.toString());
+        return sb.toString();
+    }
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "car", fetch=FetchType.EAGER)
     private Collection<CarInfo> carInfoCollection;
 
     public Collection<CarInfo> getCarInfoCollection() { return carInfoCollection; }
-    public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) { this.carInfoCollection = carInfoCollection; }
+    //    public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) { this.carInfoCollection = carInfoCollection; }
 
     public Car() {}
 
@@ -91,7 +98,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return Car.class.getName()+"[ model =" + model + ", price ="+price+" ]";
+        return Car.class.getName()+"[ model =" + model + ", price ="+price+", features: "+stringifyCollection()+" ]";
     }
     
 }

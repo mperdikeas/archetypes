@@ -82,12 +82,17 @@ public class CarsCELVController implements Serializable {
         if (current==null) {
             current = getSafe(items, 0);
         }
+        l.info("current is now: "+current);
         return current;
     }
     public void setCurrent(Car current) {
-        l.info("setCurrent("+current+")");
+        l.info("*************** setCurrent("+current+")");
         this.current = current;
     }    
+
+    public String updateDetailForCurrentRow() {
+        return null;
+    }
 
     public void backstepCurrent() {
         l.info("inside backstep current");
@@ -133,6 +138,10 @@ public class CarsCELVController implements Serializable {
 
     public void synchItemsFromDB() {
         items = carFacade.findAll();
+        l.info("**************** car facade returned the following items: ****************");
+        int i = 0 ;
+        for (Car item : items)
+            l.info("car "+(i++)+" : "+item.toString());
         removedItems  = new ArrayList();
         createdItems  = new ArrayList();
     }
@@ -146,7 +155,11 @@ public class CarsCELVController implements Serializable {
     }
 
     public Collection<CarInfo> getItemDetails() {
-        if (current != null) return current.getCarInfoCollection();
+        l.info("**************** GET ITEM DETAILS CALLED **************** ");
+        l.info("current's collection is: "+current.stringifyCollection());
+        if (current != null) {
+            return current.getCarInfoCollection();
+        }
         else return null;
     }
 

@@ -24,7 +24,7 @@ public class CarInfo implements Serializable {
     @NotNull
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name="model", column=@Column(name="MODEL")),
+                @AttributeOverride(name="model", column=@Column(name="MODEL")),
                 @AttributeOverride(name="spec" , column=@Column(name="SPEC"))
                 })
     private ModelSpec modelSpec;
@@ -107,5 +107,4 @@ public class CarInfo implements Serializable {
     public String toString() {
         return CarInfo.class.getName()+"[ modelSpec =" + modelSpec+", specValue = "+specValue+" ]";
     }
-    
 }
