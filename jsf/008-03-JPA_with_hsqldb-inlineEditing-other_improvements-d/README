@@ -5,4 +5,9 @@ of sub-stage (c):
     Handle a master-detail hierarchy with keyboard navigation.
 
 
+Note that are very complex interelationships between the ajax=true or false
+set to buttons on cars.xhtml with the hooking functions at the <SCRIPT> element
+of cars.xhtml. For certain ajax requests we have to rerun the hooking functions.
+
+
 

@@ -18,53 +18,35 @@ var F9_KEY_CODE        = 120;
 var zoo = new Array(ARROWLEFT_KEY_CODE);
 var boo = [3];
 
-var LOG_TAG = 'log-event';
+// var LOG_TAG = 'log-event';
 
 fullIdOfEnclosingDataTable = function (elem) {
     var closestDataTable = elem.closest('.ui-datatable');
     return closestDataTable.attr('id');
 }
 
-divineWidgetVar = function (dataTableId) {
+getWidgetVar = function (dataTableId) {
     var lastIdComponent =  dataTableId.split(/[:]+/).pop();
     return window[lastIdComponent+'WdgtVar']; // this convention has to be observed in the xhtml code !
                                               // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
 }
 
 
-
-
 function initActions() {
 
-    // focusCursor();
-    $('.tableInput').focus(function() { 
+    $('.tableInput').focus(function() { // convention
         var focusTarget = $(this).closest('tr');
-        //console.log('jQuery focus target is :');
-        //console.log(focusTarget);
-        //console.log('underlying object follows:');
-        //console.log(focusTarget.get(0));
-        //console.log('\----------------/');
-           // var focusTargetU = focusTarget.get(0);
-           // focusTargetU.focus();
-           // focusTarget.focus();
-        // focusTargetU.attr('aria-selected', 'true');
-        // focusTargetU.click();
-        // $(focusTargetU).click();
-        // focusTarget.click();
-        // $(focusTarget).click();
-           // focusTarget.attr('aria-selected', 'true');
-        // selectRow(focusTarget);
         selectRowJQuery(focusTarget);
-        //$(focusTarget).focus();
-        //focusTarget.focus();
-        // $(focusTarget).attr('aria-selected', 'true');
-        // focusTarget.attr('aria-selected', 'true');
+        $('#FormId\\:UpdateDetail').click();
     }
     );
+
+
     $('#FormId\\:RowNext').hide();
     $('#FormId\\:RowPrev').hide();
-    $('html').keyup(processKeyUp);
-    $('#clear-registry').click(clearEvents);
+    $('#FormId\\:UpdateDetail').hide();
+    $('html').keyup(functionKeysUp);
+//  $('#clear-registry').click(clearEvents);
 
     $.fn.equals = function(compareTo) {
         if (!compareTo || !compareTo.length || this.length!=compareTo.length) {
@@ -77,7 +59,15 @@ function initActions() {
         }
         return true;
     } 
-    // alert('init actions called');
+}
+
+hookOnDetailTable = function() {
+    $('.tableInputDetail').focus(function() {  // convention
+        console.log('detail handler');
+        var focusTarget = $(this).closest('tr');
+        selectRowJQuery(focusTarget);
+    }
+    );
 }
 
 function focusCursor() {
@@ -87,11 +77,11 @@ function focusCursor() {
                                                             // better not have any PrimeFaces focus at all - use javascript focus
 }
 
-
+/*
 clearEvents = function() {
         $('.'+LOG_TAG).remove();
         return false; // cancel default behaviour
-    }
+    }*/
 
 
 function focusToNextInput(event, element) {
@@ -119,25 +109,25 @@ function hitEnter(event) {
         return true; 
 }
 
-logMessage = function(msg) {
+/*logMessage = function(msg) {
     $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
-}
+}*/
 
 selectRowJQuery = function (el) {
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
     console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
-    var widgetVar = divineWidgetVar(dataTableFullId);
+    var widgetVar = getWidgetVar(dataTableFullId);
     console.log(widgetVar);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
 }
 
-
+/*
 selectRow = function(i) {
     dataTableMasterWdgtVar.unselectAllRows(); 
     // console.log(i);
     dataTableMasterWdgtVar.selectRow(i);
-}
+}*/
 
 isLastChild = function(father, child) {
     var lastChild = $(father).children(':last');
@@ -282,7 +272,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
                 return false;
             }
             else if (caretAtTheEnd(element)) {
-                // console.log('caretAtTheEndFlag is now set');
                 caretAtTheEndFlag = true;
                 return true;
             }
@@ -291,7 +280,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         if (event.keyCode==ARROWLEFT_KEY_CODE) {
             caretAtTheEndFlag = false;
             if (caretAtTheBeginningFlag) {
-                // console.log('at beginning and caretAtTheBeginningFlag set to true');
                 if (isFirstChild(rowInQuestion, $(element).closest('td'))) {
                     var focusTarget = $(lastButOneChild(rowInQuestion)).find('input');
                     focusEnd(focusTarget);
@@ -303,7 +291,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
                 return false;
             }
             else if (caretAtTheBeginning(element)) {
-                // console.log('caretAtBeginning now set to true');
                 caretAtTheBeginningFlag = true;
                 return true;
             }
@@ -325,13 +312,13 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         }
         var focusTarget = $(gotoRow).find('input')[i];
         focus(focusTarget);
-        selectRow(gotoRow);
+//      selectRow(gotoRow);
         return false;
     }
 }
 
 
-processKeyUp = function(event) {
+functionKeysUp = function(event) {
            if (event.keyCode==F9_KEY_CODE)     { $("#FormId\\:BtnAdd")    .click();
     } else if (event.keyCode==F2_KEY_CODE)     { $("#FormId\\:BtnRestore").click();
     } else if (event.keyCode==F4_KEY_CODE)     { $("#FormId\\:BtnCommit") .click();
