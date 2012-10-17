@@ -1,0 +1,9 @@
+In this USE CASE (008), STAGE (03) and SUB-STAGE (f) I 
+am aiming to implement the following improvements over the
+previous SUB-STAGE (e):
+
+[a] verify that the javascript code can be extended to more than 2 levels of depth.
+    I.e. not just father-child, but father-child-grandchild
+[b] implement (for intellectual curiosity mostly) the tentative delete functionality
+[c] merge G. Dimitriadis changes in script.js
+[d] store script.js as part of the repo.
