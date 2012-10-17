@@ -46,7 +46,7 @@ public class Car implements Serializable {
 
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSpec.model") //, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSpec.model") // , fetch=FetchType.EAGER)
     private Collection<CarInfo> carInfoCollection;
 
     public Collection<CarInfo> getCarInfoCollection() { 
