@@ -65,6 +65,7 @@
                             </p:column>    
                         </p:dataTable> 
 
+                <ui:remove>
                         <p:dataTable id="dataTableDetail"        widgetVar  ="dataTableDetailWdgtVar" var="item"
                                                                        rowIndexVar="rowIndex"
                                      value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
@@ -72,6 +73,16 @@
                                      selection="#{carsCELVController.currentDetail}" selectionMode="single"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                        </p:dataTable>
+                </ui:remove>
+
+                        <p:dataTable id="dataTableDetail"        widgetVar  ="dataTableDetailWdgtVar" var="item"
+                                                                       rowIndexVar="rowIndex"
+                                     value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
+                                     paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
                             <f:facet name="header">  
                                 Rows in the table
                             </f:facet>  
@@ -82,12 +93,15 @@
                             <p:column id="specValue" headerText="SpecValue">
                                 <p:inputText styleClass='tableInput' value="#{item.specValue}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                             </p:column>
+                                <ui:remove>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
                                 <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.removeDetail}" value="remove">
                                     <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
                                 </p:commandButton>
                             </p:column>    
+                                </ui:remove>
+
                         </p:dataTable> 
 
                     </h:panelGroup>

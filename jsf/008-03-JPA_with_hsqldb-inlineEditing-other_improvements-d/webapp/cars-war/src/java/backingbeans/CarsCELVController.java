@@ -166,9 +166,9 @@ public class CarsCELVController implements Serializable {
         else return null;
     }
 
-    private CarInfo currentDetail;
-    public CarInfo getCurrentDetail() { return currentDetail; }
-    public void setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail;}
+    //    private CarInfo currentDetail;
+    // public CarInfo getCurrentDetail() { return currentDetail; }
+    // public void setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail;}
 
 
     public void remove() {
