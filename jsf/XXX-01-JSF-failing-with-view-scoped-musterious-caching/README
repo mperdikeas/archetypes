@@ -1,0 +1,28 @@
+This is a very interesting bug case that wasted more than 8 hours
+of my time on 16 and 17-X-2012. It seemed as though it was related
+to a JPA bug, but apparently it was nothing of that kind. It was
+related to backing-bean scope: having the scope set to View highlights
+the bug whereas setting the scope to Request solves the issue.
+This is noteworthy as it is the first instance that I've encountered
+where broadening the scope causes trouble. It has up until now been
+the case that narrowing, not broadening the scope caused trouble.
+
+Anyway it appears that JSF somehow caches the detail information 
+retrieved when scope is set to View and never updates it when 
+the new "current" of type Car is fetched (with its Collection<CarInfo>).
+When scope is set to Request there is no such problem.
+
+Note also, that interestingly, in either case, the setter for the
+second detail table is never called.
+
+To see the bug toggle the scope in line 42 of CarsCELVController.java
+between 'Request' and 'View' and see what happens on the detail table
+when another master table row is selected and the 'updateDetail' button
+is clicked.
+
+The provenance of this bug case comes from case:
+'008-03-JPA_with_hsqldb-inlineEditing-other_improvements-d'
+
+as seen on commit:
+'commit 3d45f3e'
+.
