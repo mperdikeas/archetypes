@@ -98,7 +98,7 @@
                             <p:tab title="model factories">
                                 <p:dataTable id="dataTableDetail_1_2"        widgetVar  ="dataTableDetail_1_2WdgtVar" var="item"
                                                                                rowIndexVar="rowIndex"
-                                             value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
+                                             value="#{carsCELVController.itemFactories}" rowKey="#{item.modelFactory}" 
                                              paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                              selection="#{carsCELVController.currentDetail}" selectionMode="single"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
@@ -107,12 +107,12 @@
                                     <f:facet name="header">  
                                         Rows in the table
                                     </f:facet>  
-                                    <p:column id="spec" headerText="Spec">
-                                        <p:inputText styleClass='tableInputDetail' value="#{item.modelSpec.spec}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                    <p:column id="factory" headerText="Factory">
+                                        <p:inputText styleClass='tableInputDetail' value="#{item.modelFactory.factory}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                                     </p:column>
         
-                                    <p:column id="specValue" headerText="SpecValue">
-                                        <p:inputText styleClass='tableInputDetail' value="#{item.specValue}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                    <p:column id="factoryDesc" headerText="Factory Description">
+                                        <p:inputText styleClass='tableInputDetail' value="#{item.factoryDesc}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                                     </p:column>
                                     <p:column headerText="&nbsp;">                                                                           
                                         <p:spacer width="20" height="0" />                                                                   

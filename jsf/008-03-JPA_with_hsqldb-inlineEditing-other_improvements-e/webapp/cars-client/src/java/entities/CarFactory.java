@@ -10,11 +10,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name = "CAR_INFO")
+@Table(name = "CAR_FACTORY")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CarFactory.findAll"        , query = "SELECT x FROM CarFactory x"),
-    @NamedQuery(name = "CarFactory.findByModelSpec", query = "SELECT x FROM CarFactory x WHERE x.modelSpec = :MODELSPEC")
+    @NamedQuery(name = "CarFactory.findAll"           , query = "SELECT x FROM CarFactory x"),
+    @NamedQuery(name = "CarFactory.findByModelFactory", query = "SELECT x FROM CarFactory x WHERE x.modelFactory = :MODELFACTORY")
         }) 
 public class CarFactory implements Serializable {
     
@@ -25,7 +25,7 @@ public class CarFactory implements Serializable {
     @Embedded
     @AttributeOverrides({
                 @AttributeOverride(name="model", column=@Column(name="MODEL")),
-                @AttributeOverride(name="spec" , column=@Column(name="SPEC"))
+                @AttributeOverride(name="factory" , column=@Column(name="FACTORY_NAME"))
                 })
     private ModelFactory modelFactory;
 

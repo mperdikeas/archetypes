@@ -33,8 +33,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import facades.ICarFacade;
-import entities.Car;
-import entities.CarInfo;
+import entities.*;
+
 
 import mutil.base.ListUtil;
 
@@ -164,8 +164,18 @@ public class CarsCELVController implements Serializable {
     }
 
     public void setItemDetails(Collection<CarInfo> carInfoCollection) {
-        int i =  0 ;
-        if (i == 0) throw new RuntimeException();
+        int i =  0 ;  if (i == 0) throw new RuntimeException("I wasn't expecting this to be called - no reason to panic -just wanted to hear about this");
+    }
+
+    public Collection<CarFactory> getItemFactories() {
+        if (current != null) {
+            return current.getCarFactoryCollection();
+        }
+        else return null;
+    }
+
+    public void setItemFactories(Collection<CarFactory> carFactoryCollection) {
+        int i =  0 ;  if (i == 0) throw new RuntimeException("I wasn't expecting this to be called - no reason to panic -just wanted to hear about this");
     }
 
     private CarInfo currentDetail;

@@ -18,7 +18,7 @@ public class ModelFactory implements Serializable {
     // @Column(name="MODEL", nullable=false)
     String model;
 
-    // @Column(name="SPEC", nullable=false)
+    @Column(name="FACTORY_NAME", nullable=false)
     String factory;
 
     public String getFactory()               { return factory         ; }

@@ -10,6 +10,10 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+// hibernate-specific option
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "CAR")
 @XmlRootElement
@@ -41,17 +45,26 @@ public class Car implements Serializable {
     }
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSpec.model", fetch=FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSpec.model") //, fetch=FetchType.EAGER)
     private Collection<CarInfo> carInfoCollection;
 
     public Collection<CarInfo> getCarInfoCollection() { 
-        // l.info("^^^^^^^^^^^^^^^^ getCarInfoCollection called on: "+System.identityHashCode(this));
-        // l.info("^^^^^^^^^^^^^^^^ returning: "+stringifyCollection());
         return carInfoCollection;
     }
     public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) {
-        // l.info("! ! ! ! ! ! ! ! ! setCarInfoCollection called on: "+System.identityHashCode(this));
         this.carInfoCollection = carInfoCollection;
+    }
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelFactory.model") //, fetch=FetchType.EAGER)
+    private Collection<CarFactory> carFactoryCollection;
+
+    public Collection<CarFactory> getCarFactoryCollection() { 
+        return carFactoryCollection;
+    }
+    public void setCarFactoryCollection(Collection<CarFactory> carFactoryCollection) {
+        this.carFactoryCollection = carFactoryCollection;
     }
 
     public Car() {}
