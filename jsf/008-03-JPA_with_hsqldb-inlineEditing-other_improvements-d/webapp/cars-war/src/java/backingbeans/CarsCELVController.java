@@ -39,7 +39,7 @@ import entities.CarInfo;
 import mutil.base.ListUtil;
 
 @ManagedBean
-@RequestScoped // change that to @ViewScoped and watch it fail
+@RequestScoped // change that to @ViewScoped and watch it fail - this is an interesting case because broadening the scope cause the program to fail.
 public class CarsCELVController implements Serializable {
 
     private static final String CLASSNAME=CarsCELVController.class.getName();
@@ -170,9 +170,9 @@ public class CarsCELVController implements Serializable {
         if (i == 0) throw new RuntimeException();
     }
 
-    //    private CarInfo currentDetail;
-    // public CarInfo getCurrentDetail() { return currentDetail; }
-    // public void setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail;}
+    private CarInfo currentDetail;
+    public CarInfo getCurrentDetail() { return currentDetail; }
+    public void setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail;}
 
 
     public void remove() {

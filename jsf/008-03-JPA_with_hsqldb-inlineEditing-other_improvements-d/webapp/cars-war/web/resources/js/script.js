@@ -77,7 +77,7 @@ function initActions() {
         }
         return true;
     } 
-    alert('init actions called');
+    // alert('init actions called');
 }
 
 function focusCursor() {
