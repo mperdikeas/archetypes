@@ -31,13 +31,18 @@ getWidgetVar = function (dataTableId) {
                                               // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
 }
 
+var previousMasterFocus = null;
 
 function initActions() {
 
     $('.tableInput').focus(function() { // convention
         var focusTarget = $(this).closest('tr');
-        selectRowJQuery(focusTarget);
-        $('#FormId\\:UpdateDetail').click();
+        if (!focusTarget.is(previousMasterFocus)) {
+            console.log('previous master focus changed');
+            previousMasterFocus = focusTarget;
+            selectRowJQuery(focusTarget);
+            $('#FormId\\:UpdateDetail').click();
+        }
     }
     );
 
