@@ -1,13 +1,36 @@
 In this USE CASE (008), STAGE (03) and SUB-STAGE (d) I 
-am trying to implement the following feature, on top
+managed to implement the following feature, on top
 of sub-stage (c):
 
     Handle a master-detail hierarchy with keyboard navigation.
 
 
-Note that are very complex interelationships between the ajax=true or false
-set to buttons on cars.xhtml with the hooking functions at the <SCRIPT> element
-of cars.xhtml. For certain ajax requests we have to rerun the hooking functions.
+Important things to note:
 
+[1] there exist very complex interelationships between the ajax=true or false
+    set to buttons on cars.xhtml with the hooking functions at the <SCRIPT> element
+    of cars.xhtml. For certain ajax requests we have to rerun the hooking functions.
 
+[2] this sub-stage gave rise to the following bug-case:
 
+    "XXX-01-JSF-failing-with-view-scoped-musterious-caching"
+
+    .. and so I had to change the scope of the bean from 'View' to 'Request'.
+    However ... (see next item)
+
+[3] ... by changing the scope from view to request, the bean-kept Lists of
+    tentatively erased beans are recreated as empty on each request, and thus,
+    the functionality that allows one to store the changes and commit them
+    in one go at the end of his work is broken.
+
+However, the remaning issue [3] is not what I set out to do, and thus, I consider
+this sub-stage now complete.
+
+Things to do for next stages and sub-stages:
+
+[a] verify that the javascript code works in the presence of more than 1 child types
+[b] verify that the javascript code can be extended to more than 2 levels of depth.
+    I.e. not just father-child, but father-child-grandchild
+[c] implement (for intellectual curiosity mostly) the tentative delete functionality
+[d] merge G. Dimitriadis changes in script.js
+[e] store script.js as part of the repo.
