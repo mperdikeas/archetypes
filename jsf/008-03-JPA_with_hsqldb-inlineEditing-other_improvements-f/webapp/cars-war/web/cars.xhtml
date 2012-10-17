@@ -124,6 +124,32 @@
                                 </p:dataTable> 
                             </p:tab>
                         </p:tabView>
+                        <p:dataTable id="dataTableDetail_2_1"        widgetVar  ="dataTableDetail_2_1WdgtVar" var="item"
+                                                                       rowIndexVar="rowIndex"
+                                     value="#{carsCELVController.itemFactories}" rowKey="#{item.modelFactory}" 
+                                     paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                     selection="#{carsCELVController.currentDetail}" selectionMode="single"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                            <f:facet name="header">  
+                                Rows in the table
+                            </f:facet>  
+                            <p:column id="factory" headerText="Factory">
+                                <p:inputText styleClass='tableInputDetail' value="#{item.modelFactory.factory}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                            </p:column>
+
+                            <p:column id="factoryDesc" headerText="Factory Description">
+                                <p:inputText styleClass='tableInputDetail' value="#{item.factoryDesc}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                            </p:column>
+                            <p:column headerText="&nbsp;">                                                                           
+                                <p:spacer width="20" height="0" />                                                                   
+                                <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.removeDetail}" value="remove">
+                                    <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
+                                </p:commandButton>
+                            </p:column>    
+
+                        </p:dataTable> 
                     </h:panelGroup>
                 </p:outputPanel>
                 <p:commandButton id="BtnRestore" update=":FormId:CAR-outputpanel"   ajax="false"  action="#{carsCELVController.restoreFromDB}"  value="restore from DB (F2)" oncomplete="focusCursor();"/>
@@ -135,7 +161,7 @@
 <!-- demonstrates an alternative way using widgetVar instead of id: -->
                 <p:commandButton id="RowPrev" widgetVar="RowPrev"    update=":FormId"                   ajax="false" action="#{carsCELVController.backstepCurrent}" value="foo"/>
 
-                <p:commandButton id="UpdateDetail"  ajax="true" update=":FormId:tabView" action="#{carsCELVController.updateDetailForCurrentRow}" value="updateDetail"/>
+                <p:commandButton id="UpdateDetail"  ajax="true" update=":FormId:tabView :FormId:dataTableDetail_2_1" action="#{carsCELVController.updateDetailForCurrentRow}" value="updateDetail"/>
                 <ui:remove>
                     <p:defaultCommand target="BtnCommit" />
                 </ui:remove>
