@@ -86,8 +86,10 @@ public class CarsCELVController implements Serializable {
         return current;
     }
     public void setCurrent(Car current) {
-        l.info("*************** setCurrent("+current+")");
+        l.info("*************** setCurrent("+current+") called ***************");
+        Car oldCurrent = this.current;
         this.current = current;
+        l.info(String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
     }    
 
     public String updateDetailForCurrentRow() {
@@ -156,6 +158,7 @@ public class CarsCELVController implements Serializable {
 
     public Collection<CarInfo> getItemDetails() {
         l.info("**************** GET ITEM DETAILS CALLED **************** ");
+        l.info("current is: "+System.identityHashCode(current));
         l.info("current's collection is: "+current.stringifyCollection());
         if (current != null) {
             return current.getCarInfoCollection();
@@ -163,10 +166,10 @@ public class CarsCELVController implements Serializable {
         else return null;
     }
 
-    public CarInfo currentDetail;
-
+    private CarInfo currentDetail;
     public CarInfo getCurrentDetail() { return currentDetail; }
-    public void    setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail; }
+    public void setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail;}
+
 
     public void remove() {
         l.info("**************************************************************** inside remove");

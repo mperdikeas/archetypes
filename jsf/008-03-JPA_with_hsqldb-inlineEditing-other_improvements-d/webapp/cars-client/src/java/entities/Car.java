@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.logging.Logger;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -20,6 +21,8 @@ public class Car implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
+    private static final Logger l = Logger.getLogger(Car.class.getName());
+
     @Id
     @Basic(optional = false)
     @NotNull
@@ -38,11 +41,18 @@ public class Car implements Serializable {
     }
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "car", fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSpec.model", fetch=FetchType.EAGER)
     private Collection<CarInfo> carInfoCollection;
 
-    public Collection<CarInfo> getCarInfoCollection() { return carInfoCollection; }
-    //    public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) { this.carInfoCollection = carInfoCollection; }
+    public Collection<CarInfo> getCarInfoCollection() { 
+        l.info("^^^^^^^^^^^^^^^^ getCarInfoCollection called on: "+System.identityHashCode(this));
+        l.info("^^^^^^^^^^^^^^^^ returning: "+stringifyCollection());
+        return carInfoCollection;
+    }
+    public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) {
+        l.info("! ! ! ! ! ! ! ! ! setCarInfoCollection called on: "+System.identityHashCode(this));
+        this.carInfoCollection = carInfoCollection;
+    }
 
     public Car() {}
 

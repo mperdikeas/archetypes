@@ -45,9 +45,9 @@ public class CarInfo implements Serializable {
     @Column(name = "SPEC_VALUE")
     private String specValue;
 
-    @JoinColumn(name = "model", referencedColumnName = "model")
-    @ManyToOne(optional = false)
-    private Car car;
+    //    @JoinColumn(name = "model", referencedColumnName = "model")
+    //    @ManyToOne(optional = false)
+    //    private Car car;
 
 
 
