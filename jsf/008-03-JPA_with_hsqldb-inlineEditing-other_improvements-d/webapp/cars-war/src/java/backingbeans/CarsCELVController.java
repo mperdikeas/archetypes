@@ -39,7 +39,7 @@ import entities.CarInfo;
 import mutil.base.ListUtil;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class CarsCELVController implements Serializable {
 
     private static final String CLASSNAME=CarsCELVController.class.getName();
@@ -50,7 +50,6 @@ public class CarsCELVController implements Serializable {
 
     private CELVControllerEnum state = CELVControllerEnum.LIST;
     public CELVControllerEnum getState() { 
-        l.info("state queried; returning: "+state);
         return state;
     }
 
@@ -159,8 +158,8 @@ public class CarsCELVController implements Serializable {
     public Collection<CarInfo> getItemDetails() {
         l.info("**************** GET ITEM DETAILS CALLED **************** ");
         l.info("current is: "+System.identityHashCode(current));
-        l.info("current's collection is: "+current.stringifyCollection());
         if (current != null) {
+            l.info("current's collection is: "+current.stringifyCollection());
             return current.getCarInfoCollection();
         }
         else return null;
