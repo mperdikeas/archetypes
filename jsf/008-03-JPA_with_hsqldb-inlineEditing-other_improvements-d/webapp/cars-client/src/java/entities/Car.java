@@ -45,12 +45,12 @@ public class Car implements Serializable {
     private Collection<CarInfo> carInfoCollection;
 
     public Collection<CarInfo> getCarInfoCollection() { 
-        l.info("^^^^^^^^^^^^^^^^ getCarInfoCollection called on: "+System.identityHashCode(this));
-        l.info("^^^^^^^^^^^^^^^^ returning: "+stringifyCollection());
+        // l.info("^^^^^^^^^^^^^^^^ getCarInfoCollection called on: "+System.identityHashCode(this));
+        // l.info("^^^^^^^^^^^^^^^^ returning: "+stringifyCollection());
         return carInfoCollection;
     }
     public void setCarInfoCollection(Collection<CarInfo> carInfoCollection) {
-        l.info("! ! ! ! ! ! ! ! ! setCarInfoCollection called on: "+System.identityHashCode(this));
+        // l.info("! ! ! ! ! ! ! ! ! setCarInfoCollection called on: "+System.identityHashCode(this));
         this.carInfoCollection = carInfoCollection;
     }
 

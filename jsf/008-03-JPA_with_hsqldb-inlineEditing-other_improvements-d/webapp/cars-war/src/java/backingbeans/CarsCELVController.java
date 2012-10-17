@@ -81,14 +81,12 @@ public class CarsCELVController implements Serializable {
         if (current==null) {
             current = getSafe(items, 0);
         }
-        l.info("current is now: "+current);
         return current;
     }
     public void setCurrent(Car current) {
-        l.info("*************** setCurrent("+current+") called ***************");
         Car oldCurrent = this.current;
         this.current = current;
-        l.info(String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
+        // l.info(String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
     }    
 
     public String updateDetailForCurrentRow() {
@@ -96,7 +94,7 @@ public class CarsCELVController implements Serializable {
     }
 
     public void backstepCurrent() {
-        l.info("inside backstep current");
+        int i = 0 ; if (i==0) throw new RuntimeException("function deprecated");
         if (current==null)
             current = getCurrent();
         int _i = 0;
@@ -112,7 +110,7 @@ public class CarsCELVController implements Serializable {
 
 
     public void advanceCurrent() {
-        l.info("inside advance current");
+        int i = 0 ; if (i==0) throw new RuntimeException("function deprecated");
         if (current==null)
             current = getCurrent();
         int _i = 0;
@@ -156,10 +154,9 @@ public class CarsCELVController implements Serializable {
     }
 
     public Collection<CarInfo> getItemDetails() {
-        l.info("**************** GET ITEM DETAILS CALLED **************** ");
-        l.info("current is: "+System.identityHashCode(current));
+        // l.info("current is: "+System.identityHashCode(current));
         if (current != null) {
-            l.info("current's collection is: "+current.stringifyCollection());
+            // l.info("current's collection is: "+current.stringifyCollection());
             return current.getCarInfoCollection();
         }
         else return null;
@@ -176,7 +173,6 @@ public class CarsCELVController implements Serializable {
 
 
     public void remove() {
-        l.info("**************************************************************** inside remove");
         ListUtil.remove(items, current);
         removedItems.add(current);
     }
