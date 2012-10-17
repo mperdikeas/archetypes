@@ -1,0 +1,10 @@
+In this USE CASE (008), STAGE (03) and SUB-STAGE (e) I 
+am trying to implement additional functinality on top of
+sub-stage (d):
+
+[a] verify that the javascript code works in the presence of more than 1 child types
+[b] verify that the javascript code can be extended to more than 2 levels of depth.
+    I.e. not just father-child, but father-child-grandchild
+[c] implement (for intellectual curiosity mostly) the tentative delete functionality
+[d] merge G. Dimitriadis changes in script.js
+[e] store script.js as part of the repo.
