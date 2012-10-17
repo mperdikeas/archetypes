@@ -86,7 +86,8 @@ public class CarsCELVController implements Serializable {
     public void setCurrent(Car current) {
         Car oldCurrent = this.current;
         this.current = current;
-        // l.info(String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
+        l.info("**************** "+String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
+        l.info("**************** new current now is: "+current.toStringShort());
     }    
 
     public String updateDetailForCurrentRow() {
@@ -140,7 +141,7 @@ public class CarsCELVController implements Serializable {
         l.info("**************** car facade returned the following items: ****************");
         int i = 0 ;
         for (Car item : items)
-            l.info("car "+(i++)+" : "+item.toString());
+            l.info("car "+(i++)+" : "+item.toStringShort());
         removedItems  = new ArrayList();
         createdItems  = new ArrayList();
     }
@@ -175,6 +176,7 @@ public class CarsCELVController implements Serializable {
     public void remove() {
         ListUtil.remove(items, current);
         removedItems.add(current);
+        l.info("just added: "+current+" to (tentatively) removed items");
     }
 
     public void restoreFromDB() {

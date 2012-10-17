@@ -110,5 +110,9 @@ public class Car implements Serializable {
     public String toString() {
         return Car.class.getName()+"[ model =" + model + ", price ="+price+", features: "+stringifyCollection()+" ]";
     }
+
+    public String toStringShort() {
+        return "[ model = "+model+" ]";
+    }
     
 }

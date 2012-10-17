@@ -35,7 +35,7 @@ var previousMasterFocus = null;
 
 function initActions() {
 
-    $('.tableInput').focus(function() { // convention
+    $('.tableInput').focus(function() { // convention: input text fields in the master table have the class 'tableInput'
         var focusTarget = $(this).closest('tr');
         if (!focusTarget.is(previousMasterFocus)) {
             console.log('previous master focus changed');
@@ -67,7 +67,7 @@ function initActions() {
 }
 
 hookOnDetailTable = function() {
-    $('.tableInputDetail').focus(function() {  // convention
+    $('.tableInputDetail').focus(function() {  // convention: input text fields in the detail tables have the class 'tableInputDetail'
         console.log('detail handler');
         var focusTarget = $(this).closest('tr');
         selectRowJQuery(focusTarget);
@@ -76,7 +76,8 @@ hookOnDetailTable = function() {
 }
 
 function focusCursor() {
-    dataTableMasterWdgtVar.unselectAllRows();
+    dataTableMasterWdgtVar.unselectAllRows(); // convention: the Prime Faces id of the master table should be dataTableMaster,
+                                              // and accordingly (see other conventions) the widget var's name should be dataTableMasterWdgtVar
     dataTableMasterWdgtVar.selectRow(0);
     $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
                                                             // better not have any PrimeFaces focus at all - use javascript focus
