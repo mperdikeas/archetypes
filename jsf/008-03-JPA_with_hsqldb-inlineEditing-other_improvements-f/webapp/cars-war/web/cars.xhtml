@@ -125,18 +125,18 @@
                             </p:tab>
                         </p:tabView>
                         <p:dataTable id="dataTableDetail_2_1"        widgetVar  ="dataTableDetail_2_1WdgtVar" var="item"
-                                                                       rowIndexVar="rowIndex"
-                                     value="#{carsCELVController.itemFactories}" rowKey="#{item.modelFactory}" 
+                                                                     rowIndexVar="rowIndex"
+                                     value="#{carsCELVController.carInfoReviews}" rowKey="#{item.modelSpecReviewer}" 
                                      paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
-                                     selection="#{carsCELVController.currentDetail}" selectionMode="single"
+                                     selection="#{carsCELVController.currentCarInfoReview}" selectionMode="single"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                             <f:facet name="header">  
                                 Rows in the table
                             </f:facet>  
-                            <p:column id="factory" headerText="Factory">
-                                <p:inputText styleClass='tableInputDetail' value="#{item.modelFactory.factory}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                            <p:column id="reviewer" headerText="Reviewer">
+                                <p:inputText styleClass='tableInputDetail' value="#{item.modelSpecReviewer.reviewer}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                             </p:column>
 
                             <p:column id="factoryDesc" headerText="Factory Description">
