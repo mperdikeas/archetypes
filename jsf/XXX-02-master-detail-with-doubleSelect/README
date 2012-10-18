@@ -11,3 +11,7 @@ log messages on the Server side show that the detail selected
 is null (log message in line 97 of the above file).
 When it is @ViewScoped both the master and the detail are
 properly set.
+
+UPDATE: This is defintely NOT JPA-related. I managed to 
+        reproduce it in a non-JPA context.
+        See use case JSF # 014 # 01.
