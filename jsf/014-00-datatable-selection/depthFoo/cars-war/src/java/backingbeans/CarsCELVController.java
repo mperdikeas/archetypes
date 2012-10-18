@@ -61,11 +61,18 @@ public class CarsCELVController implements Serializable {
 
     private Integer selectedEven;
     public Integer getSelectedEven() { return selectedEven; }
-    public void setSelectedEven(Integer selectedEven) { this.selectedEven = selectedEven; }
+    public void setSelectedEven(Integer selectedEven) {
+        l.info("setSelectedEven("+selectedEven+")");   
+        this.selectedEven = selectedEven;
+    }
 
     private Integer selectedOdd;
     public Integer getSelectedOdd() { return selectedEven; }
-    public void setSelectedOdd(Integer selectedEven) { this.selectedEven = selectedEven; }
+    public void setSelectedOdd(Integer selectedEven) {
+        l.info("setSelectedOdd("+selectedOdd+")");   
+        this.selectedEven = selectedEven;
+    }
 
+    public String foo() { return null; }
 }
 
