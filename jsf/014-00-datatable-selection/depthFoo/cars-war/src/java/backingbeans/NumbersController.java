@@ -35,13 +35,10 @@ import entities.Car;
 
 @ManagedBean
 @RequestScoped
-public class CarsCELVController implements Serializable {
+public class NumbersController implements Serializable {
 
 
-    private static final Logger l = Logger.getLogger(CarsCELVController.class.getName());
-
-
-    private boolean loadDatabase = true;
+    private static final Logger l = Logger.getLogger(NumbersController.class.getName());
 
     public List<Integer> getEvenNumbers() { 
         List<Integer> retValue = new ArrayList<Integer>();
@@ -59,18 +56,18 @@ public class CarsCELVController implements Serializable {
         return retValue;
     }
 
-    private Integer selectedEven;
+    private Integer   selectedEven;
     public Integer getSelectedEven() { return selectedEven; }
-    public void setSelectedEven(Integer selectedEven) {
-        l.info("setSelectedEven("+selectedEven+")");   
-        this.selectedEven = selectedEven;
+    public void    setSelectedEven   (Integer selectedEven) {
+        l.info(   "setSelectedEven("     +    selectedEven+")");   
+        this.      selectedEven          =    selectedEven;
     }
 
-    private Integer selectedOdd;
-    public Integer getSelectedOdd() { return selectedEven; }
-    public void setSelectedOdd(Integer selectedEven) {
-        l.info("setSelectedOdd("+selectedOdd+")");   
-        this.selectedEven = selectedEven;
+    private Integer   selectedOdd;
+    public Integer getSelectedOdd() { return selectedOdd; }
+    public void    setSelectedOdd   (Integer selectedOdd) {
+        l.info(   "setSelectedOdd("    +     selectedOdd+")");   
+        this.      selectedOdd         =     selectedOdd;
     }
 
     public String foo() { return null; }

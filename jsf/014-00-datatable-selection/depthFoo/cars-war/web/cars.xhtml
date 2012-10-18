@@ -15,14 +15,10 @@
 
 
         <ui:define name="body">
-            <h:form id="CAR-form" styleClass="jsfcrud_list_form">
-                <p:outputPanel id="CAR-table">            
-                    <h:panelGroup id="CAR-panelGroup">
-                        <p:dataTable id="dt1" var="item" value="#{carsCELVController.evenNumbers}" rowKey="#{item}" paginator="true" rows="10"
+            <h:form id="NUMBERS-form" styleClass="jsfcrud_list_form">
+                        <p:dataTable id="dt1" var="item" value="#{numbersController.evenNumbers}" rowKey="#{item}" rows="10"
                             style="width: 45%;margin-left: 1%;margin-right: 1%;"
-                            selection="#{carsCELVController.selectedEven}" selectionMode="single"
-                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            selection="#{numbersController.selectedEven}" selectionMode="single">
                             <f:facet name="header">  
                                 data
                             </f:facet>  
@@ -30,11 +26,9 @@
                                 #{item}
                             </p:column>  
                         </p:dataTable>  
-                        <p:dataTable id="dt2" var="item" value="#{carsCELVController.oddNumbers}" rowKey="#{item}" paginator="true" rows="10"
+                        <p:dataTable id="dt2" var="item" value="#{numbersController.oddNumbers}" rowKey="#{item}" rows="10"
                             style="width: 45%;margin-left: 1%;margin-right: 1%;"
-                            selection="#{carsCELVController.selectedOdd}" selectionMode="single"
-                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            selection="#{numbersController.selectedOdd}" selectionMode="single">
                             <f:facet name="header">  
                                 data
                             </f:facet>  
@@ -42,10 +36,7 @@
                                 #{item}
                             </p:column>  
                         </p:dataTable>  
-                    </h:panelGroup>
-                </p:outputPanel>
-                <p:commandButton id="Update"     ajax="true" update=":CAR-form" action="#{carsCELVController.foo}" value="update"/>
-
+                <p:commandButton id="Update"     ajax="true" update=":NUMBERS-form" action="#{numbersController.foo}" value="update"/>
             </h:form>
         </ui:define>
     </ui:composition>
