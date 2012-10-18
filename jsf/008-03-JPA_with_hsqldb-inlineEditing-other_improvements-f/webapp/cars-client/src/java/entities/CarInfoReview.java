@@ -24,9 +24,9 @@ public class CarInfoReview implements Serializable {
     @NotNull
     @Embedded
     @AttributeOverrides({
-                    @AttributeOverride(name="model"    , column=@Column(name="MODEL")),
-                    @AttributeOverride(name="spec"     , column=@Column(name="SPEC")),
-                    @AttributeOverride(name="reviewer" , column=@Column(name="SPEC_REVIEWER"))
+                    @AttributeOverride(name="modelSpec.model"    , column=@Column(name="MODEL")),
+                    @AttributeOverride(name="modelSpec.spec"     , column=@Column(name="SPEC")),
+                    @AttributeOverride(name="reviewer"           , column=@Column(name="SPEC_REVIEWER"))
                         })
     private ModelSpecReviewer modelSpecReviewer;
 

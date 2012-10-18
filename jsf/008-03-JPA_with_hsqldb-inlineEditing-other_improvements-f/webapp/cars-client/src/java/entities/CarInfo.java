@@ -9,6 +9,10 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+// hibernate-specific option
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "CAR_INFO")
 @XmlRootElement
@@ -29,26 +33,27 @@ public class CarInfo implements Serializable {
                 })
     private ModelSpec modelSpec;
 
-    /*
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MODEL")
-    private String model;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "SPEC")
-    private String spec;
-    */
-    @Basic(optional = false)
+
     @NotNull
     @Column(name = "SPEC_VALUE")
     private String specValue;
 
-    //    @JoinColumn(name = "model", referencedColumnName = "model")
-    //    @ManyToOne(optional = false)
-    //    private Car car;
 
+    private int numOfReviews() {
+        if (carInfoReviewCollection==null) return 0;
+        else return carInfoReviewCollection.size();
+    }
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modelSpecReviewer.modelSpec")
+    private Collection<CarInfoReview> carInfoReviewCollection;
+
+    public Collection<CarInfoReview> getCarInfoReviewCollection() { 
+        return carInfoReviewCollection;
+    }
+    public void setCarInfoCollection(Collection<CarInfoReview> carInfoReviewCollection) {
+        this.carInfoReviewCollection = carInfoReviewCollection;
+    }
 
 
     public CarInfo() {}
@@ -105,6 +110,10 @@ public class CarInfo implements Serializable {
 
     @Override
     public String toString() {
-        return CarInfo.class.getName()+"[ modelSpec =" + modelSpec+", specValue = "+specValue+" ]";
+        return CarInfo.class.getName()+"[ modelSpec =" + modelSpec+", specValue = "+specValue+", #"+numOfReviews()+" ]";
+    }
+
+    public String toStringWithinContext() {
+        return "("+modelSpec.spec+","+specValue+",#"+numOfReviews()+")";
     }
 }

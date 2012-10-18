@@ -3,6 +3,7 @@
   <persistence-unit name="carsPU" transaction-type="JTA">
     <class>entities.Car</class>
     <class>entities.CarInfo</class>
+    <class>entities.CarInfoReview</class>
     <class>entities.CarFactory</class>
     <!--provider>org.hibernate.ejb.HibernatePersistence</provider-->
     <jta-data-source>java:/carsDS</jta-data-source>

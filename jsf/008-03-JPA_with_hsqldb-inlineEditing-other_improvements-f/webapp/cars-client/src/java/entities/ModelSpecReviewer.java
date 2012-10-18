@@ -15,17 +15,9 @@ import java.util.logging.Logger;
 public class ModelSpecReviewer implements Serializable {
     
 
-    @Column(nullable=false)
-    String model;
-    @Column(nullable=false)
-    String spec;
 
-    @Column(name="SPEC_REVIEWER", nullable=false)
+    ModelSpec modelSpec;
     String reviewer;
-
-    /*
-    public String getRevi()            { return spec ;      }
-    public void   setSpec(String spec) { this.spec = spec ; }*/
 
 
     private static final Logger l = Logger.getLogger(ModelSpecReviewer.class.getName());
@@ -35,13 +27,9 @@ public class ModelSpecReviewer implements Serializable {
         if (!(otherO instanceof ModelSpecReviewer)) return false;
         ModelSpecReviewer other = (ModelSpecReviewer) otherO;
         l.info("comparing "+this+" against "+other);
-        if (this.model!=null) {
-            if (other.model==null)                      return false;
-            if (!this.model.equals(other.model))        return false;
-        }
-        if (this.spec!=null) {
-            if (other.spec==null)                       return false;
-            if (!this.spec.equals(other.spec))          return false;
+        if (this.modelSpec!=null) {
+            if (other.modelSpec==null)                      return false;
+            if (!this.modelSpec.equals(other.modelSpec))        return false;
         }
         if (this.reviewer!=null) {
             if (other.reviewer==null)                   return false;
@@ -51,7 +39,7 @@ public class ModelSpecReviewer implements Serializable {
     }
 
     public String toString() {
-        return "["+model+","+spec+","+reviewer+"]";
+        return "["+modelSpec+","+reviewer+"]";
     }
 
 }

@@ -141,7 +141,7 @@ public class CarsCELVController implements Serializable {
         l.info("**************** car facade returned the following items: ****************");
         int i = 0 ;
         for (Car item : items)
-            l.info("car "+(i++)+" : "+item.toStringShort());
+            l.info("car "+(i++)+" : "+item);
         removedItems  = new ArrayList();
         createdItems  = new ArrayList();
     }
@@ -161,6 +161,26 @@ public class CarsCELVController implements Serializable {
             return current.getCarInfoCollection();
         }
         else return null;
+    }
+
+    public Collection<CarInfoReview> getCarInfoReviews() {
+        l.info("%%%% getCarInfoReviews() called");
+        if (currentDetail != null) {
+            l.info("%%%%% A ");
+            return currentDetail.getCarInfoReviewCollection();
+        }
+        else {
+            l.info("%%%%%%%% B");
+            return null;
+        }
+    }
+
+    private CarInfoReview currentCarInfoReview;
+    public void setCurrentCarInfoReview(CarInfoReview currentCarInfoReview) {
+        this.currentCarInfoReview = currentCarInfoReview;
+    }
+    public CarInfoReview getCurrentCarInfoReview() {
+        return currentCarInfoReview;
     }
 
     public void setItemDetails(Collection<CarInfo> carInfoCollection) {
@@ -255,6 +275,5 @@ public class CarsCELVController implements Serializable {
                                                                                    "row could not be edited","row could not be edited"));
         }
     }
-
 }
 

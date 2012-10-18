@@ -40,7 +40,7 @@ public class Car implements Serializable {
     public String stringifyCollection() {
         StringBuffer sb = new StringBuffer();
         for (CarInfo carInfo : carInfoCollection)
-            sb.append(carInfo.toString());
+            sb.append(carInfo.toStringWithinContext());
         return sb.toString();
     }
 
@@ -121,7 +121,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return Car.class.getName()+"[ model =" + model + ", price ="+price+", features: "+stringifyCollection()+" ]";
+        return Car.class.getName()+"[ model =" + model + ", price ="+price+", "+stringifyCollection()+" ]";
     }
 
     public String toStringShort() {
