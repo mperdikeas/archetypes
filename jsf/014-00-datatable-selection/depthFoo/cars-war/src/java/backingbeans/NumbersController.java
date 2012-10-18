@@ -66,8 +66,8 @@ public class NumbersController implements Serializable {
     private Integer   selectedOdd;
     public Integer getSelectedOdd() { return selectedOdd; }
     public void    setSelectedOdd   (Integer selectedOdd) {
-        l.info(   "setSelectedOdd("    +     selectedOdd+")");   
-        this.      selectedOdd         =     selectedOdd;
+        l.info(   "setSelectedOdd("    +     selectedOdd+")");   // no, it turns out I FAILED to replicate it at commit b12557b - it was
+        this.      selectedOdd         =     selectedOdd;        // just a silly typo-bug
     }
 
     public String foo() { return null; }
