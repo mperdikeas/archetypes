@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+
+            <h:form id="FormId" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                 
+                        <p:dataTable id="dataTableMaster"  var="item" rows="10" 
+                                     value="#{carsCELVController.items}" rowKey="#{item.model}" 
+                                     selection="#{carsCELVController.current}" selectionMode="single">
+                            <p:column id="model" headerText="Model">   
+                                <p:inputText styleClass='tableInput' id="modelrow" value="#{item.model}"/>
+                            </p:column>  
+                        </p:dataTable>                                                                        
+                        <p:dataTable id="dataTableDetail_1_1"  var="item" rows="10"
+                                     value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec.fooKey}" 
+                                     selection="#{carsCELVController.currentDetail}" selectionMode="single">
+                            <p:column id="spec" headerText="Spec">
+                                <p:inputText styleClass='tableInputDetail' value="#{item.modelSpec.spec}"/>
+                            </p:column>
+                        </p:dataTable> 
+                <p:commandButton id="UpdateDetail"     ajax="false" update=":FormId"  action="#{carsCELVController.triggerLifeCycle}" value="updateDetail-l1"/>
+              </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
