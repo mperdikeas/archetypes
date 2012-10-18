@@ -78,6 +78,7 @@ public class CarsCELVController implements Serializable {
 
     private Car current;                                                                                                                                    
     public Car getCurrent() {
+        l.info("***************>> get CURRENT called");
         if (current==null) {
             current = getSafe(items, 0);
         }
@@ -86,11 +87,23 @@ public class CarsCELVController implements Serializable {
     public void setCurrent(Car current) {
         Car oldCurrent = this.current;
         this.current = current;
-        l.info("**************** "+String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
-        l.info("**************** new current now is: "+current.toStringShort());
-    }    
+        l.info("*******************>> set CURRENT called "+String.format("current changed : %d -> %d", System.identityHashCode(oldCurrent), System.identityHashCode(current)));
+        l.info("****>>    new current now is: "+current.toStringShort());
+    }
 
-    public String updateDetailForCurrentRow() {
+    private CarInfo currentDetail;
+    public CarInfo getCurrentDetail() {
+        l.info("------------->>>> get CURRENT DETAIL called");
+        return currentDetail;
+    }
+    public void setCurrentDetail(CarInfo currentDetail) {
+        l.info(" -------------------------->>>> set CURRENT DETAIL called");
+        l.info(" ---->>>> current detail is: "+currentDetail);
+        this.currentDetail = currentDetail;
+    }
+
+
+    public String triggerLifeCycle() {
         return null;
     }
 
@@ -198,13 +211,6 @@ public class CarsCELVController implements Serializable {
         int i =  0 ;  if (i == 0) throw new RuntimeException("I wasn't expecting this to be called - no reason to panic -just wanted to hear about this");
     }
 
-    private CarInfo currentDetail;
-    public CarInfo getCurrentDetail() { return currentDetail; }
-    public void setCurrentDetail(CarInfo currentDetail) {
-        l.info(" -------------------------->>>> set current detail called");
-        l.info(" ---> current detail is: "+currentDetail);
-        this.currentDetail = currentDetail;
-    }
 
 
     public void remove() {

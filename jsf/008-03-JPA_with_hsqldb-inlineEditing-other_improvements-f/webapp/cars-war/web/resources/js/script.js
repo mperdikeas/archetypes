@@ -35,6 +35,8 @@ var previousMasterFocus = null;
 
 function initActions() {
     console.log('init actions');
+
+/*
     $('.tableInput').focus(function() { // convention: input text fields in the master table have the class 'tableInput'
         var focusTarget = $(this).closest('tr');
         if (!focusTarget.is(previousMasterFocus)) {
@@ -44,12 +46,12 @@ function initActions() {
             $('#FormId\\:UpdateDetail').click();
         }
     }
-    );
+    );*/
 
 
     $('#FormId\\:RowNext').hide();
     $('#FormId\\:RowPrev').hide();
-    $('#FormId\\:UpdateDetail').hide();
+//    $('#FormId\\:UpdateDetail').hide();
     $('html').keyup(functionKeysUp);
 //  $('#clear-registry').click(clearEvents);
 
@@ -66,6 +68,7 @@ function initActions() {
     } 
 }
 
+/*
 hookOnDetailTable = function() {
     $('.tableInputDetail').focus(function() {  // convention: input text fields in the detail tables have the class 'tableInputDetail'
         console.log('detail handler');
@@ -73,16 +76,18 @@ hookOnDetailTable = function() {
         selectRowJQuery(focusTarget);
     }
     );
-}
+}*/
 
-function focusCursor() {
+/*
+function initialFocusCursorForConvenience() {
     dataTableMasterWdgtVar.unselectAllRows(); // convention: the Prime Faces id of the master table should be dataTableMaster,
                                               // and accordingly (see other conventions) the widget var's name should be dataTableMasterWdgtVar
     dataTableMasterWdgtVar.selectRow(0);
     $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
                                                             // better not have any PrimeFaces focus at all - use javascript focus
 }
-
+*/
+/*
 focusAllDetailTablesExceptLast = function () {
     for (var key in window) {
         var DATA_TABLE_PATTERN = new RegExp(".*Detail_.*WdgtVar");
@@ -93,7 +98,7 @@ focusAllDetailTablesExceptLast = function () {
         }
     }
     console.log("went through all variables");
-}
+}*/
 
 /*
 clearEvents = function() {
@@ -131,6 +136,7 @@ function hitEnter(event) {
     $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
 }*/
 
+/*
 selectRowJQuery = function (el) {
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
     console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
@@ -138,7 +144,7 @@ selectRowJQuery = function (el) {
     console.log(widgetVar);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
-}
+}*/
 
 /*
 selectRow = function(i) {
