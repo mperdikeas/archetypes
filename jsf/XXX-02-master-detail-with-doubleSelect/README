@@ -1,9 +1,11 @@
 In this bug-case I stumbled upon (and resolved)
-a bug related to the inability to properly select
+a feature/bug related to the inability to properly select
 from two datatables which display JPA entities collections
 organized in a master-detail relationship.
 
-To see the bug toggle the scope annotation on line 42
+To see the bug (actually, this is likely a bug in my design or
+code - I am not sure it is JPA or PrimeFaces bug)
+toggle the scope annotation on line 42
 of class CarsCELVController. When it is @RequestScope the
 log messages on the Server side show that the detail selected
 is null (log message in line 97 of the above file).
