@@ -34,7 +34,7 @@ getWidgetVar = function (dataTableId) {
 var previousMasterFocus = null;
 
 function initActions() {
-
+    console.log('init actions');
     $('.tableInput').focus(function() { // convention: input text fields in the master table have the class 'tableInput'
         var focusTarget = $(this).closest('tr');
         if (!focusTarget.is(previousMasterFocus)) {
@@ -81,6 +81,18 @@ function focusCursor() {
     dataTableMasterWdgtVar.selectRow(0);
     $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
                                                             // better not have any PrimeFaces focus at all - use javascript focus
+}
+
+focusAllDetailTablesExceptLast = function () {
+    for (var key in window) {
+        var DATA_TABLE_PATTERN = new RegExp(".*Detail_.*WdgtVar");
+        if (DATA_TABLE_PATTERN.test(key)) {
+            console.log(key + "=" + window[key]);
+            window[key].unselectAllRows();
+            window[key].selectRow(0);
+        }
+    }
+    console.log("went through all variables");
 }
 
 /*

@@ -24,7 +24,7 @@
                 <SCRIPT>
                     $(document).ready(function() {initActions();focusCursor();}); 
 
-                    $(document).bind('ajaxComplete', hookOnDetailTable);
+                    $(document).bind('ajaxComplete', function() {hookOnDetailTable(); focusAllDetailTablesExceptLast();});
                 </SCRIPT>
         </ui:define>
 
