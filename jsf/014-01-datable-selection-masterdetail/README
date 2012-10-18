@@ -1,0 +1,18 @@
+In this use case I managed to demonstrate that the
+problem captured in JSF use case XXX-02 is not JPA-related
+but rather JSF or even Prime Faces-related. It may not 
+even necessarily be a problem. It is quite likely that this
+behaviour is a feature or something I don't yet understand.
+
+This project links with EJB and JPA jars but this is so only
+because I didn't have the time to clean-up extra,
+un-needed dependencies.
+
+In reality, the code is pure-SE Java (except for the JSF part).
+
+To see the failure toggle the scope annotation in line 37 of
+class NumbersController between ViewScoped and RequestScoped
+and watch the logging messages in the JBoss AS console.
+
+When set to Request Scope, the selected divisor logging message
+(at line 66) prints '0', i.e. fails to obtain it properly.

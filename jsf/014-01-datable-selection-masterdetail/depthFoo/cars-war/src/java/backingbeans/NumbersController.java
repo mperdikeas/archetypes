@@ -34,40 +34,37 @@ import facades.ICarFacadeLocal;
 import entities.Car;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped // if this is toggled to @RequestScoped it stops working
 public class NumbersController implements Serializable {
 
 
     private static final Logger l = Logger.getLogger(NumbersController.class.getName());
 
-    public List<Integer> getEvenNumbers() { 
-        List<Integer> retValue = new ArrayList<Integer>();
-        for (int i = 0 ; i < 10 ; i++)
-            if (i % 2 == 0)
-                retValue.add(i);
+    public List<DivisorSet> getDivisorSets() { 
+        List<DivisorSet> retValue = new ArrayList<DivisorSet>();
+        for (int i = 10 ; i < 20 ; i++)
+            retValue.add( new DivisorSet(i) );
         return retValue;
     }
 
-    public List<Integer> getOddNumbers() { 
-        List<Integer> retValue = new ArrayList<Integer>();
-        for (int i = 0 ; i < 10 ; i++)
-            if (i % 2 != 0)
-                retValue.add(i);
-        return retValue;
+    public List<Integer> getDivisors() { 
+        if (selectedDivisorSet != null)
+            return selectedDivisorSet.getDivisors();
+        else return null;
     }
 
-    private Integer   selectedEven;
-    public Integer getSelectedEven() { return selectedEven; }
-    public void    setSelectedEven   (Integer selectedEven) {
-        l.info(   "setSelectedEven("     +    selectedEven+")");   
-        this.      selectedEven          =    selectedEven;
+    private DivisorSet    selectedDivisorSet;
+    public  DivisorSet getSelectedDivisorSet() { return    selectedDivisorSet; }
+    public void        setSelectedDivisorSet   (DivisorSet selectedDivisorSet) {
+        l.info(       "setSelectedDivisorSet("        +    selectedDivisorSet+")");   
+        this.             selectedDivisorSet          =    selectedDivisorSet;
     }
 
-    private Integer   selectedOdd;
-    public Integer getSelectedOdd() { return selectedOdd; }
-    public void    setSelectedOdd   (Integer selectedOdd) {
-        l.info(   "setSelectedOdd("    +     selectedOdd+")");   // no, it turns out I FAILED to replicate it at commit b12557b - it was
-        this.      selectedOdd         =     selectedOdd;        // just a silly typo-bug
+    private Integer   selectedDivisor;
+    public Integer getSelectedDivisor() { return selectedDivisor; }
+    public void    setSelectedDivisor   (Integer selectedDivisor) {
+        l.info(   "setSelectedDivisor("    +     selectedDivisor+")");
+        this.      selectedDivisor         =     selectedDivisor;       
     }
 
     public String foo() { return null; }
