@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">CAR</ui:define>
+        <ui:define name="header">
+            <h3>maintaining the CAR table</h3>
+        </ui:define>
+
+
+        <ui:define name="body">
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form">
+                <p:outputPanel id="CAR-table">            
+                    <h:panelGroup id="CAR-panelGroup">
+                        <p:dataTable var="item" value="#{carsCELVController.evenNumbers}" rowKey="#{item}" paginator="true" rows="10"
+                            style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <f:facet name="header">  
+                                data
+                            </f:facet>  
+                            <p:column id="number-id" headerText="Number" sortBy="#{item}" filterBy="#{item}">  
+                                #{item}
+                            </p:column>  
+                        </p:dataTable>  
+                        <p:dataTable var="item" value="#{carsCELVController.oddNumbers}" rowKey="#{item}" paginator="true" rows="10"
+                            style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <f:facet name="header">  
+                                data
+                            </f:facet>  
+                            <p:column id="number-id" headerText="Number" sortBy="#{item}" filterBy="#{item}">  
+                                #{item}
+                            </p:column>  
+                        </p:dataTable>  
+                    </h:panelGroup>
+                </p:outputPanel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
