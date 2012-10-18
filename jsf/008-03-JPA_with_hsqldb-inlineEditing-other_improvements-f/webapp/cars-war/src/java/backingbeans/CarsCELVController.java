@@ -200,7 +200,11 @@ public class CarsCELVController implements Serializable {
 
     private CarInfo currentDetail;
     public CarInfo getCurrentDetail() { return currentDetail; }
-    public void setCurrentDetail(CarInfo currentDetail) {this.currentDetail = currentDetail;}
+    public void setCurrentDetail(CarInfo currentDetail) {
+        l.info(" -------------------------->>>> set current detail called");
+        l.info(" ---> current detail is: "+currentDetail);
+        this.currentDetail = currentDetail;
+    }
 
 
     public void remove() {
@@ -276,4 +280,3 @@ public class CarsCELVController implements Serializable {
         }
     }
 }
-

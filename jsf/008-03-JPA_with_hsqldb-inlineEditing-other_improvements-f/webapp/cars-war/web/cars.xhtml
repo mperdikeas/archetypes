@@ -75,7 +75,7 @@
                                              selection="#{carsCELVController.currentDetail}" selectionMode="single"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                                        {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-        
+                                    <p:ajax event="rowSelect" update=":FormId:dataTableDetail_2_1"/> 
                                     <f:facet name="header">  
                                         Rows in the table
                                     </f:facet>  
