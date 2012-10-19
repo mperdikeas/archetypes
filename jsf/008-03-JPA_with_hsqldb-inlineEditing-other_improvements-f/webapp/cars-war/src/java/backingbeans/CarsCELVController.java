@@ -96,7 +96,8 @@ public class CarsCELVController implements Serializable {
         return currentDetail;
     }
     public void setCurrentDetail(CarInfo currentDetail) {
-        this.currentDetail = currentDetail;
+        this.currentDetail  = currentDetail;
+        this.currentFactory = null;
     }
 
 
@@ -106,6 +107,7 @@ public class CarsCELVController implements Serializable {
     }
     public void setCurrentFactory(CarFactory currentFactory) {
         this.currentFactory = currentFactory;
+        this.currentDetail  = null;
     }
 
 

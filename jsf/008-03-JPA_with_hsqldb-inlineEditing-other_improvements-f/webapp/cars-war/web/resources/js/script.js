@@ -15,7 +15,7 @@ getWidgetVar = function (dataTableId) {
                                               // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
 }
 
-var previousFoci = {}; // table id -> table row id
+var previousFocusTarget;
 
 function initActions() {
 
@@ -37,13 +37,10 @@ function initActionsAjaxPartial() {
         var idOfEnclosingTable = fullIdOfEnclosingDataTable($(this));
         // console.log('id of enclosing data table is: '+idOfEnclosingTable);
         var focusTarget = $(this).closest('tr');
-        var previousFocusTarget = previousFoci[idOfEnclosingTable];
-        // console.log('previous focus target was: '+previousFocusTarget);
-        if (previousFocusTarget !== undefined  && !previousFocusTarget.is(focusTarget)) {
-            // console.log('previous master focus changed');
+        if (previousFocusTarget==null || !previousFocusTarget.is(focusTarget)) {
             selectRowJQuery(focusTarget); 
         }
-        previousFoci[idOfEnclosingTable] = focusTarget;
+        previousFocusTarget = focusTarget;
     });
 }
 
