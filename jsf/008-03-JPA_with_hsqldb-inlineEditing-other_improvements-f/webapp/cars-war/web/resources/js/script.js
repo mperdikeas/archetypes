@@ -1,22 +1,8 @@
-var ENTER_KEY_CODE   = 13;
-var ESCAPE_KEY_CODE  = 27;
-
-
 var ARROWLEFT_KEY_CODE =  37;
 var ARROWUP_KEY_CODE   =  38;
 var ARROWRIGHT_KEY_CODE = 39;
 var ARROWDOWN_KEY_CODE =  40;
 var ARROWKEY_CODES = [ARROWLEFT_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE] ;
-
-var F2_KEY_CODE        = 113;
-var F4_KEY_CODE        = 115;
-var F8_KEY_CODE        = 119;
-var F9_KEY_CODE        = 120;
-
-
-
-var zoo = new Array(ARROWLEFT_KEY_CODE);
-var boo = [3];
 
 fullIdOfEnclosingDataTable = function (elem) {
     var closestDataTable = elem.closest('.ui-datatable');
@@ -32,12 +18,6 @@ getWidgetVar = function (dataTableId) {
 var previousFoci = {}; // table id -> table row id
 
 function initActions() {
-
-
-    $('#FormId\\:RowNext').hide();
-    $('#FormId\\:RowPrev').hide();
-    $('#FormId\\:UpdateDetail').hide();
-    $('html').keyup(functionKeysUp);
 
     $.fn.equals = function(compareTo) {
         if (!compareTo || !compareTo.length || this.length!=compareTo.length) {
@@ -55,12 +35,12 @@ function initActions() {
 function initActionsAjaxPartial() {
     $('.KeyboardNavigableTable').find('input').focus(function() {
         var idOfEnclosingTable = fullIdOfEnclosingDataTable($(this));
-        console.log('id of enclosing data table is: '+idOfEnclosingTable);
+        // console.log('id of enclosing data table is: '+idOfEnclosingTable);
         var focusTarget = $(this).closest('tr');
         var previousFocusTarget = previousFoci[idOfEnclosingTable];
-        console.log('previous focus target was: '+previousFocusTarget);
+        // console.log('previous focus target was: '+previousFocusTarget);
         if (previousFocusTarget !== undefined  && !previousFocusTarget.is(focusTarget)) {
-            console.log('previous master focus changed');
+            // console.log('previous master focus changed');
             selectRowJQuery(focusTarget); 
         }
         previousFoci[idOfEnclosingTable] = focusTarget;
@@ -70,52 +50,24 @@ function initActionsAjaxPartial() {
 
 function focusCursor() {
     var dataTableMaster = $($('.KeyboardNavigableTable').get(0)); // convention: the 1st keyboard-navigable table gets the focus
-    console.log(dataTableMaster);
+    // console.log(dataTableMaster);
     var id = dataTableMaster.attr('id');
-    console.log("id of dataTableMaster is :"+id);
+    // console.log("id of dataTableMaster is :"+id);
     var dataTableMasterWdgtVar = getWidgetVar(id);
     dataTableMasterWdgtVar.unselectAllRows();
     dataTableMasterWdgtVar.selectRow(0);
-    console.log("about to set focus");
+    // console.log("about to set focus");
     dataTableMaster.find('input').get(0).focus();
-    console.log("set focus");
-}
-
-/*
-focusAllDetailTablesExceptLast = function () {
-    for (var key in window) {
-        var DATA_TABLE_PATTERN = new RegExp(".*Detail_.*WdgtVar");
-        if (DATA_TABLE_PATTERN.test(key)) {
-            console.log(key + "=" + window[key]);
-            window[key].unselectAllRows();
-            window[key].selectRow(0);
-        }
-    }
-    console.log("went through all variables");
-}*/
-
-/*
-clearEvents = function() {
-        $('.'+LOG_TAG).remove();
-        return false; // cancel default behaviour
-    }*/
-
-
-function focusToNextInput(event, element) {
-    if (event.keyCode==ENTER_KEY_CODE){
-        $(":input:eq("+($(":input").index(element)+1)+")").focus();
-        return false;
-    } else
-        return true;
+    // console.log("set focus");
 }
 
 
 
 selectRowJQuery = function (el) {
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
-    console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
+    // console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
     var widgetVar = getWidgetVar(dataTableFullId);
-    console.log(widgetVar);
+    // console.log(widgetVar);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
 }
@@ -305,15 +257,3 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used - 
         return false;
     }
 }
-
-
-functionKeysUp = function(event) {
-           if (event.keyCode==F9_KEY_CODE)     { $("#FormId\\:BtnAdd")    .click();
-    } else if (event.keyCode==F2_KEY_CODE)     { $("#FormId\\:BtnRestore").click();
-    } else if (event.keyCode==F4_KEY_CODE)     { $("#FormId\\:BtnCommit") .click();
-    } else if (event.keyCode==F8_KEY_CODE)     { $("#FormId\\:BtnDel")    .click();
-    } else if (event.keyCode==ESCAPE_KEY_CODE) { $('#newItem\\:cancelBtn')  .click();
-    } else return true;
-    event.stopPropagation();
-    return false;
-};
