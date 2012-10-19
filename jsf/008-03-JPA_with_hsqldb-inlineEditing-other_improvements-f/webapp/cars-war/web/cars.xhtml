@@ -65,7 +65,8 @@
                                 <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.remove}" value="remove">
                                     <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
                                 </p:commandButton>
-                            </p:column>    
+                            </p:column>
+                            <p:ajax event="rowSelect" update=":FormId:tabView"/>
                         </p:dataTable> 
                         <p:tabView id="tabView">
                             <p:tab title="model specs">

@@ -39,7 +39,7 @@ function initActions() {
             console.log('previous master focus changed');
             previousMasterFocus = focusTarget;
             selectRowJQuery(focusTarget);
-            $('#FormId\\:UpdateDetail').click();
+//            $('#FormId\\:UpdateDetail').click();
         }
     }
     );
