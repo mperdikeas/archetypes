@@ -44,6 +44,7 @@
                     <h:panelGroup id="CAR-panelGroup">
                         <p:dataTable id="dataTableMaster"               widgetVar  ="dataTableMasterWdgtVar" var="item"
                                                                        rowIndexVar="rowIndex"
+                                     styleClass="MasterTable"
                                      value="#{carsCELVController.items}" rowKey="#{item.model}" 
                                      paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                      selection="#{carsCELVController.current}" selectionMode="single"
@@ -54,10 +55,10 @@
                             </f:facet>  
                             <p:column id="model" headerText="Model">       <ui:remove> <!-- that used to be (event, #{rowIndex}) but       --> </ui:remove>
                                                                            <ui:remove> <!-- we don't need to supply the row index any more --> </ui:remove>
-                                <p:inputText styleClass='tableInput' value="#{item.model}" onkeypress="navigateWithArrows(event); return focusToNextInput(event, this);"/>
+                                <p:inputText value="#{item.model}" onkeypress="navigateWithArrows(event); return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price">
-                                <p:inputText styleClass='tableInput' value="#{item.price}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                <p:inputText value="#{item.price}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
@@ -70,6 +71,7 @@
                             <p:tab title="model specs">
                                 <p:dataTable id="dataTableDetail_1_1"        widgetVar  ="dataTableDetail_1_1WdgtVar" var="item"
                                                                                rowIndexVar="rowIndex"
+                                             styleClass="DetailTable"
                                              value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
                                              paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                              selection="#{carsCELVController.currentDetail}" selectionMode="single"
@@ -80,11 +82,11 @@
                                         Rows in the table
                                     </f:facet>  
                                     <p:column id="spec" headerText="Spec">
-                                        <p:inputText styleClass='tableInputDetail' value="#{item.modelSpec.spec}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                        <p:inputText value="#{item.modelSpec.spec}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                                     </p:column>
         
                                     <p:column id="specValue" headerText="SpecValue">
-                                        <p:inputText styleClass='tableInputDetail' value="#{item.specValue}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                        <p:inputText value="#{item.specValue}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                                     </p:column>
                                     <p:column headerText="&nbsp;">                                                                           
                                         <p:spacer width="20" height="0" />                                                                   
@@ -98,6 +100,7 @@
                             <p:tab title="model factories">
                                 <p:dataTable id="dataTableDetail_1_2"        widgetVar  ="dataTableDetail_1_2WdgtVar" var="item"
                                                                                rowIndexVar="rowIndex"
+                                             styleClass="DetailTable"
                                              value="#{carsCELVController.itemFactories}" rowKey="#{item.modelFactory}" 
                                              paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                              selection="#{carsCELVController.currentDetail}" selectionMode="single"
@@ -108,11 +111,11 @@
                                         Rows in the table
                                     </f:facet>  
                                     <p:column id="factory" headerText="Factory">
-                                        <p:inputText styleClass='tableInputDetail' value="#{item.modelFactory.factory}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                        <p:inputText value="#{item.modelFactory.factory}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                                     </p:column>
         
                                     <p:column id="factoryDesc" headerText="Factory Description">
-                                        <p:inputText styleClass='tableInputDetail' value="#{item.factoryDesc}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
+                                        <p:inputText value="#{item.factoryDesc}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
                                     </p:column>
                                     <p:column headerText="&nbsp;">                                                                           
                                         <p:spacer width="20" height="0" />                                                                   
