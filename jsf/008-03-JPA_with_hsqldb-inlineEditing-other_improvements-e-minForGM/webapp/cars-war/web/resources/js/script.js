@@ -74,12 +74,15 @@ hookOnDetailTable = function() {
 
 
 function focusCursor() {
+    var dataTableMaster = $($('.MasterTable').get(0)); // convention: only one p:dataTable with styeClass 'MasterTable'
+    var id = dataTableMaster.attr('id');
+    var dataTableMasterWdgtVar = getWidgetVar(id);
     dataTableMasterWdgtVar.unselectAllRows(); // convention: the Prime Faces id of the master table should be dataTableMaster,
                                               // and accordingly (see other conventions) the widget var's name should be dataTableMasterWdgtVar
     dataTableMasterWdgtVar.selectRow(0);
     var dataTable = $('#FormId\\:dataTableMaster');
     // var dataTable = $('.MasterTable');
-    dataTable.find('input').get(0).focus();
+    dataTableMaster.find('input').get(0).focus();
     // $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
                                                             // better not have any PrimeFaces focus at all - use javascript focus
 }
