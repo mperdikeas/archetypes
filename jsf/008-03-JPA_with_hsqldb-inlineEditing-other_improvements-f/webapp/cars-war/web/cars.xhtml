@@ -23,7 +23,7 @@
 
                 <SCRIPT>
                     $(document).ready(function() {initActions(); focusCursor();});
-                    $(document).bind('ajaxComplete', function() {hookOnDetailTable();});
+                    $(document).bind('ajaxComplete', initActionsAjaxPartial);
                     <!-- $(document).bind('ajaxComplete', function() {hookOnDetailTable();});  focusAllDetailTablesExceptLast();});   -->
                 </SCRIPT>
         </ui:define>
@@ -44,7 +44,7 @@
                     <h:panelGroup id="CAR-panelGroup">
                         <p:dataTable id="dataTableMaster"               widgetVar  ="dataTableMasterWdgtVar" var="item"
                                                                        rowIndexVar="rowIndex"
-                                     styleClass="MasterTable"
+                                     styleClass="KeyboardNavigableTable"
                                      value="#{carsCELVController.items}" rowKey="#{item.model}" 
                                      paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                      selection="#{carsCELVController.current}" selectionMode="single"
@@ -66,13 +66,13 @@
                                     <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
                                 </p:commandButton>
                             </p:column>
-                            <p:ajax event="rowSelect" update=":FormId:tabView"/>
+                            <p:ajax event="rowSelect" update=":FormId:tabView :FormId:dataTableDetail_2_1"/>
                         </p:dataTable> 
                         <p:tabView id="tabView">
                             <p:tab title="model specs">
                                 <p:dataTable id="dataTableDetail_1_1"        widgetVar  ="dataTableDetail_1_1WdgtVar" var="item"
                                                                                rowIndexVar="rowIndex"
-                                             styleClass="DetailTable"
+                                             styleClass="KeyboardNavigableTable"
                                              value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
                                              paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                              selection="#{carsCELVController.currentDetail}" selectionMode="single"
@@ -101,7 +101,7 @@
                             <p:tab title="model factories">
                                 <p:dataTable id="dataTableDetail_1_2"        widgetVar  ="dataTableDetail_1_2WdgtVar" var="item"
                                                                                rowIndexVar="rowIndex"
-                                             styleClass="DetailTable"
+                                             styleClass="KeyboardNavigableTable"
                                              value="#{carsCELVController.itemFactories}" rowKey="#{item.modelFactory}" 
                                              paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                              selection="#{carsCELVController.currentDetail}" selectionMode="single"
@@ -130,7 +130,7 @@
                         </p:tabView>
                         <p:dataTable id="dataTableDetail_2_1"        widgetVar  ="dataTableDetail_2_1WdgtVar" var="item"
                                                                      rowIndexVar="rowIndex"
-                                     styleClass="DetailTable"
+                                     styleClass="KeyboardNavigableTable"
                                      value="#{carsCELVController.carInfoReviews}" rowKey="#{item.modelSpecReviewer}" 
                                      paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
                                      selection="#{carsCELVController.currentCarInfoReview}" selectionMode="single"

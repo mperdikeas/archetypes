@@ -33,19 +33,6 @@ var previousFoci = {}; // table id -> table row id
 
 function initActions() {
 
-    $('.MasterTable').find('input').focus(function() { // convention: master p:dataTable has styleClass 'MasterTable'
-        var idOfEnclosingTable = fullIdOfEnclosingDataTable($(this));
-        console.log('id of enclosing data table is: '+idOfEnclosingTable);
-        var focusTarget = $(this).closest('tr');
-        var previousFocusTarget = previousFoci[idOfEnclosingTable];
-        console.log('previous focus target was: '+previousFocusTarget);
-        if (previousFocusTarget !== undefined  && !previousFocusTarget.is(focusTarget)) {
-            console.log('previous master focus changed');
-            selectRowJQuery(focusTarget); 
-        }
-        previousFoci[idOfEnclosingTable] = focusTarget;
-    });
-
 
     $('#FormId\\:RowNext').hide();
     $('#FormId\\:RowPrev').hide();
@@ -65,17 +52,24 @@ function initActions() {
     } 
 }
 
-hookOnDetailTable = function() {
-    $('.DetailTable').find('input').focus(function() {  // convention: detail p:dataTables have styleClass 'DetailTable'
+function initActionsAjaxPartial() {
+    $('.KeyboardNavigableTable').find('input').focus(function() {
+        var idOfEnclosingTable = fullIdOfEnclosingDataTable($(this));
+        console.log('id of enclosing data table is: '+idOfEnclosingTable);
         var focusTarget = $(this).closest('tr');
-        selectRowJQuery(focusTarget);
-    }
-    );
+        var previousFocusTarget = previousFoci[idOfEnclosingTable];
+        console.log('previous focus target was: '+previousFocusTarget);
+        if (previousFocusTarget !== undefined  && !previousFocusTarget.is(focusTarget)) {
+            console.log('previous master focus changed');
+            selectRowJQuery(focusTarget); 
+        }
+        previousFoci[idOfEnclosingTable] = focusTarget;
+    });
 }
 
 
 function focusCursor() {
-    var dataTableMaster = $($('.MasterTable').get(0)); // convention: only one p:dataTable with styeClass 'MasterTable'
+    var dataTableMaster = $($('.KeyboardNavigableTable').get(0)); // convention: the 1st keyboard-navigable table gets the focus
     console.log(dataTableMaster);
     var id = dataTableMaster.attr('id');
     console.log("id of dataTableMaster is :"+id);
