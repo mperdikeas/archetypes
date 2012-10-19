@@ -19,6 +19,9 @@ public class ModelSpecReviewer implements Serializable {
     ModelSpec modelSpec;
     String reviewer;
 
+    public String getReviewer() {
+        return reviewer;
+    }
 
     private static final Logger l = Logger.getLogger(ModelSpecReviewer.class.getName());
 

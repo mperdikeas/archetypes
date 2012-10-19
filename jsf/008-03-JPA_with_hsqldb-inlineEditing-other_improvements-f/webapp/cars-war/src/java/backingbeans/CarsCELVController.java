@@ -39,7 +39,7 @@ import entities.*;
 import mutil.base.ListUtil;
 
 @ManagedBean
-@RequestScoped // change that to @ViewScoped and watch it fail - this is an interesting case because broadening the scope cause the program to fail.
+@ViewScoped // change that to @ViewScoped and watch it fail - this is an interesting case because broadening the scope cause the program to fail.
 public class CarsCELVController implements Serializable {
 
     private static final String CLASSNAME=CarsCELVController.class.getName();

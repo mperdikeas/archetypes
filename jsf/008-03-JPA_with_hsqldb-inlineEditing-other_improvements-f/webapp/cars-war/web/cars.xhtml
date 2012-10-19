@@ -95,7 +95,7 @@
                                             <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
                                         </p:commandButton>
                                     </p:column>    
-        
+                                    <p:ajax event="rowSelect" update=":FormId:dataTableDetail_2_1"/>
                                 </p:dataTable> 
                             </p:tab>
                             <p:tab title="model factories">
@@ -124,7 +124,7 @@
                                             <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
                                         </p:commandButton>
                                     </p:column>    
-        
+                                    <p:ajax event="rowSelect" update=":FormId:dataTableDetail_2_1"/>        
                                 </p:dataTable> 
                             </p:tab>
                         </p:tabView>
