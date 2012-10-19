@@ -9,6 +9,7 @@ public class Divisor {
     }
     public Integer number;
 
-    public String toString() { return String.valueOf(number)+" ( "+System.identityHashCode(this)+" ) " ; }
+        public String toString() { return String.valueOf(number)+" ( "+System.identityHashCode(this)+" ) " ; }
+    // public String toString() { return String.valueOf(number); } 
 
 }

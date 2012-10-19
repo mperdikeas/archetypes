@@ -17,6 +17,8 @@ public class DivisorSet {
         return retValue;
     }
 
-    public String toString() { return String.valueOf(number); }
+    //     public String toString() { return String.valueOf(number); }
+
+    public String toString() { return String.valueOf(number)+ "( "+ System.identityHashCode(this)+") "; }
 
 }

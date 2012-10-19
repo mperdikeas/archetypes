@@ -35,6 +35,8 @@ import entities.Car;
 
 @ManagedBean
 @ViewScoped // if this is toggled to @RequestScoped it stops working
+// interestingly, it also stops working when the Divisor#toString() method is changed to the following:
+//     public String toString() { return String.valueOf(number)+" ( "+System.identityHashCode(this)+" ) " ; }
 //@RequestScoped
 public class NumbersController implements Serializable {
 
