@@ -93,13 +93,19 @@ public class CarsCELVController implements Serializable {
 
     private CarInfo currentDetail;
     public CarInfo getCurrentDetail() {
-        l.info("------------->>>> get CURRENT DETAIL called");
         return currentDetail;
     }
     public void setCurrentDetail(CarInfo currentDetail) {
-        l.info(" -------------------------->>>> set CURRENT DETAIL called");
-        l.info(" ---->>>> current detail is: "+currentDetail);
         this.currentDetail = currentDetail;
+    }
+
+
+    private CarFactory currentFactory;
+    public CarFactory getCurrentFactory() {
+        return currentFactory;
+    }
+    public void setCurrentFactory(CarFactory currentFactory) {
+        this.currentFactory = currentFactory;
     }
 
 
