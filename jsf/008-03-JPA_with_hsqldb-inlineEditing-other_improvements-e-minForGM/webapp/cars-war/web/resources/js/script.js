@@ -39,7 +39,7 @@ function initActions() {
             console.log('previous master focus changed');
             previousMasterFocus = focusTarget;
             selectRowJQuery(focusTarget);
-            // $('#FormId\\:UpdateDetail').click(); 
+            $('#FormId\\:UpdateDetail').click(); 
         }
     }
     );
@@ -76,7 +76,9 @@ function focusCursor() {
     dataTableMasterWdgtVar.unselectAllRows(); // convention: the Prime Faces id of the master table should be dataTableMaster,
                                               // and accordingly (see other conventions) the widget var's name should be dataTableMasterWdgtVar
     dataTableMasterWdgtVar.selectRow(0);
-    $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
+    var dataTable = $('#FormId\\:dataTableMaster');
+    dataTable.find('.tableInput').get(0).focus();
+    // $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
                                                             // better not have any PrimeFaces focus at all - use javascript focus
 }
 

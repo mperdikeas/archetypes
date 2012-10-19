@@ -54,7 +54,7 @@
                             </f:facet>  
                             <p:column id="model" headerText="Model">       <ui:remove> <!-- that used to be (event, #{rowIndex}) but       --> </ui:remove>
                                                                            <ui:remove> <!-- we don't need to supply the row index any more --> </ui:remove>
-                                <p:inputText styleClass='tableInput' id="modelrow" value="#{item.model}" onkeypress="navigateWithArrows(event); return focusToNextInput(event, this);"/>
+                                <p:inputText styleClass='tableInput' value="#{item.model}" onkeypress="navigateWithArrows(event); return focusToNextInput(event, this);"/>
                             </p:column>  
                             <p:column id="price" headerText="Price">
                                 <p:inputText styleClass='tableInput' value="#{item.price}" onkeypress="navigateWithArrows(event); return createNewRow(event);"/>
