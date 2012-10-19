@@ -20,11 +20,13 @@ public class DivisorSet {
         return retValue;
     }
 
+    public Integer getEssence() { return number; }
 
-    public String toString() { return String.valueOf(number); }
-    /*
+
+    //    public String toString() { return String.valueOf(number); }
+
     public String toString() { return String.valueOf(number)+ "( "+ System.identityHashCode(this)+") "; }
-
+    /*
     public boolean equals(Object otherO) {
         l.info(String.format("################ comparing %d against %d", System.identityHashCode(this), System.identityHashCode(otherO)));
         if (otherO==null)                                                 return false;

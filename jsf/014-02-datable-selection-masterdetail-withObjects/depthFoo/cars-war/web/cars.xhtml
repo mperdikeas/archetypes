@@ -16,7 +16,7 @@
 
         <ui:define name="body">
             <h:form id="NUMBERS-form" styleClass="jsfcrud_list_form">
-                        <p:dataTable id="dt1" var="item" value="#{numbersController.divisorSets}" rowKey="#{item}" rows="10"
+                        <p:dataTable id="dt1" var="item" value="#{numbersController.divisorSets}" rowKey="#{item.essence}" rows="10"
                             style="width: 45%;margin-left: 1%;margin-right: 1%;"
                             selection="#{numbersController.selectedDivisorSet}" selectionMode="single">
                             <f:facet name="header">  
