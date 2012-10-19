@@ -18,8 +18,6 @@ var F9_KEY_CODE        = 120;
 var zoo = new Array(ARROWLEFT_KEY_CODE);
 var boo = [3];
 
-// var LOG_TAG = 'log-event';
-
 fullIdOfEnclosingDataTable = function (elem) {
     var closestDataTable = elem.closest('.ui-datatable');
     return closestDataTable.attr('id');
@@ -34,10 +32,8 @@ getWidgetVar = function (dataTableId) {
 var previousMasterFocus = null;
 
 function initActions() {
-    console.log('init actions');
 
-/*
-    $('.tableInput').focus(function() { // convention: input text fields in the master table have the class 'tableInput'
+    $('.MasterTable').find('input').focus(function() { // convention: master p:dataTable has styleClass 'MasterTable'
         var focusTarget = $(this).closest('tr');
         if (!focusTarget.is(previousMasterFocus)) {
             console.log('previous master focus changed');
@@ -46,14 +42,13 @@ function initActions() {
             $('#FormId\\:UpdateDetail').click();
         }
     }
-    );*/
+    );
 
 
     $('#FormId\\:RowNext').hide();
     $('#FormId\\:RowPrev').hide();
-//    $('#FormId\\:UpdateDetail').hide();
+    $('#FormId\\:UpdateDetail').hide();
     $('html').keyup(functionKeysUp);
-//  $('#clear-registry').click(clearEvents);
 
     $.fn.equals = function(compareTo) {
         if (!compareTo || !compareTo.length || this.length!=compareTo.length) {
@@ -68,25 +63,28 @@ function initActions() {
     } 
 }
 
-/*
 hookOnDetailTable = function() {
-    $('.tableInputDetail').focus(function() {  // convention: input text fields in the detail tables have the class 'tableInputDetail'
-        console.log('detail handler');
+    $('.DetailTable').find('input').focus(function() {  // convention: detail p:dataTables have styleClass 'DetailTable'
         var focusTarget = $(this).closest('tr');
         selectRowJQuery(focusTarget);
     }
     );
-}*/
-
-/*
-function initialFocusCursorForConvenience() {
-    dataTableMasterWdgtVar.unselectAllRows(); // convention: the Prime Faces id of the master table should be dataTableMaster,
-                                              // and accordingly (see other conventions) the widget var's name should be dataTableMasterWdgtVar
-    dataTableMasterWdgtVar.selectRow(0);
-    $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
-                                                            // better not have any PrimeFaces focus at all - use javascript focus
 }
-*/
+
+
+function focusCursor() {
+    var dataTableMaster = $($('.MasterTable').get(0)); // convention: only one p:dataTable with styeClass 'MasterTable'
+    console.log(dataTableMaster);
+    var id = dataTableMaster.attr('id');
+    console.log("id of dataTableMaster is :"+id);
+    var dataTableMasterWdgtVar = getWidgetVar(id);
+    dataTableMasterWdgtVar.unselectAllRows();
+    dataTableMasterWdgtVar.selectRow(0);
+    console.log("about to set focus");
+    dataTableMaster.find('input').get(0).focus();
+    console.log("set focus");
+}
+
 /*
 focusAllDetailTablesExceptLast = function () {
     for (var key in window) {
@@ -115,28 +113,8 @@ function focusToNextInput(event, element) {
         return true;
 }
 
-//TODO: FOCUS TO NEW ROW
-function createNewRow(event) {
-    if(event.keyCode==ENTER_KEY_CODE){
-        $("#FormId\\:BtnAdd").click();
-        return false;
-    } else
-        return true;
-}
 
-function hitEnter(event) {
-    if(event.keyCode==ENTER_KEY_CODE){
-        $("#newItem\\:enter").click();
-        return false;
-    } else
-        return true; 
-}
 
-/*logMessage = function(msg) {
-    $(".log").append("<p class='"+LOG_TAG+"'>"+msg+"</p>");
-}*/
-
-/*
 selectRowJQuery = function (el) {
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
     console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
@@ -144,14 +122,7 @@ selectRowJQuery = function (el) {
     console.log(widgetVar);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
-}*/
-
-/*
-selectRow = function(i) {
-    dataTableMasterWdgtVar.unselectAllRows(); 
-    // console.log(i);
-    dataTableMasterWdgtVar.selectRow(i);
-}*/
+}
 
 isLastChild = function(father, child) {
     var lastChild = $(father).children(':last');
@@ -180,7 +151,6 @@ lastButOneChild = function(father) {
 
 nthChild = function(father, i) {
     var children = $(father).children();
-    // console.log(children.length+" children returned");
     return children[i];
 }
 
@@ -273,7 +243,7 @@ isInArray = function (val,arr) {
 var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
 
-function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
+function navigateWithArrows(event, rowIndex) { // rowIndex is not really used - maybe it's ok to remove it
     if ( !isInArray(event.keyCode, ARROWKEY_CODES) )
         return true;
     else {
@@ -336,7 +306,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         }
         var focusTarget = $(gotoRow).find('input')[i];
         focus(focusTarget);
-//      selectRow(gotoRow);
         return false;
     }
 }
@@ -352,4 +321,3 @@ functionKeysUp = function(event) {
     event.stopPropagation();
     return false;
 };
-
