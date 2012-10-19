@@ -33,13 +33,13 @@ var previousMasterFocus = null;
 
 function initActions() {
 
-    $('.MasterTable').find('input').focus(function() {
+    $('.MasterTable').find('input').focus(function() { // convention: master p:dataTable has styleClass 'MasterTable'
         var focusTarget = $(this).closest('tr');
         if (!focusTarget.is(previousMasterFocus)) {
             console.log('previous master focus changed');
             previousMasterFocus = focusTarget;
             selectRowJQuery(focusTarget);
-            $('#FormId\\:UpdateDetail').click(); 
+            $('#FormId\\:UpdateDetail').click();
         }
     }
     );
@@ -64,8 +64,7 @@ function initActions() {
 }
 
 hookOnDetailTable = function() {
-    $('.DetailTable').find('input').focus(function() {  
-        console.log('detail handler');
+    $('.DetailTable').find('input').focus(function() {  // convention: detail p:dataTables have styleClass 'DetailTable'
         var focusTarget = $(this).closest('tr');
         selectRowJQuery(focusTarget);
     }
@@ -77,14 +76,10 @@ function focusCursor() {
     var dataTableMaster = $($('.MasterTable').get(0)); // convention: only one p:dataTable with styeClass 'MasterTable'
     var id = dataTableMaster.attr('id');
     var dataTableMasterWdgtVar = getWidgetVar(id);
-    dataTableMasterWdgtVar.unselectAllRows(); // convention: the Prime Faces id of the master table should be dataTableMaster,
-                                              // and accordingly (see other conventions) the widget var's name should be dataTableMasterWdgtVar
+    dataTableMasterWdgtVar.unselectAllRows();
     dataTableMasterWdgtVar.selectRow(0);
     var dataTable = $('#FormId\\:dataTableMaster');
-    // var dataTable = $('.MasterTable');
     dataTableMaster.find('input').get(0).focus();
-    // $('#FormId\\:dataTableMaster\\:0\\:modelrow').focus(); // we can't track the selection with the focus so let's
-                                                            // better not have any PrimeFaces focus at all - use javascript focus
 }
 
 
@@ -226,7 +221,7 @@ isInArray = function (val,arr) {
 var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
 
-function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
+function navigateWithArrows(event, rowIndex) { // rowIndex is not really used - maybe it's ok to remove it
     if ( !isInArray(event.keyCode, ARROWKEY_CODES) )
         return true;
     else {
@@ -289,7 +284,6 @@ function navigateWithArrows(event, rowIndex) { // rowIndex is not really used
         }
         var focusTarget = $(gotoRow).find('input')[i];
         focus(focusTarget);
-//      selectRow(gotoRow);
         return false;
     }
 }
