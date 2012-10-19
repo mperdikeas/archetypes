@@ -1,0 +1,16 @@
+In this USE CASE (008), STAGE (03) and SUB-STAGE (e) I 
+managed to implement additional functinality on top of
+sub-stage (d) to verify that the javascript code works in the
+presence of more than 1 child types
+
+Interestingly, I didn't have to change the script.js file
+from the previous SUB-STAGE which proves that the script is 
+resilient.
+
+Things for future SUB-STAGES:
+
+[a] verify that the javascript code can be extended to more than 2 levels of depth.
+    I.e. not just father-child, but father-child-grandchild
+[b] implement (for intellectual curiosity mostly) the tentative delete functionality
+[c] merge G. Dimitriadis changes in script.js
+[d] store script.js as part of the repo.
