@@ -29,20 +29,22 @@ getWidgetVar = function (dataTableId) {
                                               // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
 }
 
-var previousMasterFocus = null;
+var previousFoci = {}; // table id -> table row id
 
 function initActions() {
 
     $('.MasterTable').find('input').focus(function() { // convention: master p:dataTable has styleClass 'MasterTable'
+        var idOfEnclosingTable = fullIdOfEnclosingDataTable($(this));
+        console.log('id of enclosing data table is: '+idOfEnclosingTable);
         var focusTarget = $(this).closest('tr');
-        if (!focusTarget.is(previousMasterFocus)) {
+        var previousFocusTarget = previousFoci[idOfEnclosingTable];
+        console.log('previous focus target was: '+previousFocusTarget);
+        if (previousFocusTarget !== undefined  && !previousFocusTarget.is(focusTarget)) {
             console.log('previous master focus changed');
-            previousMasterFocus = focusTarget;
-            selectRowJQuery(focusTarget);
-//            $('#FormId\\:UpdateDetail').click(); // old, invisible key implementation
+            selectRowJQuery(focusTarget); 
         }
-    }
-    );
+        previousFoci[idOfEnclosingTable] = focusTarget;
+    });
 
 
     $('#FormId\\:RowNext').hide();
