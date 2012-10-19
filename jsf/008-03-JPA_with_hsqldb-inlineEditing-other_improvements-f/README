@@ -1,9 +1,18 @@
 In this USE CASE (008), STAGE (03) and SUB-STAGE (f) I 
-am aiming to implement the following improvements over the
+managed to implement the following improvement over the
 previous SUB-STAGE (e):
 
-[a] verify that the javascript code can be extended to more than 2 levels of depth.
-    I.e. not just father-child, but father-child-grandchild
-[b] implement (for intellectual curiosity mostly) the tentative delete functionality
-[c] merge G. Dimitriadis changes in script.js
-[d] store script.js as part of the repo.
+[i] Simplify, and enhance at the same time, the javascript code so that 
+it can be extended to more than 2 levels of depth. I.e. not just
+father-child, but father-child-grandchild.
+
+In future sub-stages I should aim to:
+
+[a] merge G. Dimitriadis changes in script.js
+[b] store script.js as part of the repo
+[c] implement (for intellectual curiosity mostly) the tentative delete functionality.
+
+Interestingly, I changed to bean's scope to ViewScope
+and it didn't fail despite the comment to the contrary
+on line 42 of class CarsCELVController. Perhaps I should
+investigate that as well.
