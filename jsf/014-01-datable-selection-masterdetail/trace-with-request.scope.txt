@@ -1,0 +1,49 @@
+) START PHASE: RESTORE_VIEW 1
+) END PHASE: RESTORE_VIEW 1
+) START PHASE: APPLY_REQUEST_VALUES 2
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisors()
+8-1) getDivisors() returning null
+8-1) getDivisors()
+8-1) getDivisors() returning null
+8-1) getDivisors()
+8-1) getDivisors() returning null
+8-1) getDivisors()
+8-1) getDivisors() returning null
+8-1) getDivisors()
+8-1) getDivisors() returning null
+) END PHASE: APPLY_REQUEST_VALUES 2
+) START PHASE: PROCESS_VALIDATIONS 3
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisors()
+8-1) getDivisors() returning null
+8-1) getDivisors()
+8-1) getDivisors() returning null
+) END PHASE: PROCESS_VALIDATIONS 3
+) START PHASE: UPDATE_MODEL_VALUES 4
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) setSelectedDivisorSet(18)
+8-1) getDivisors()
+8-1) getDivisors() returning 5 divisors
+8-1) getDivisors()
+8-1) getDivisors() returning 5 divisors
+8-1) getDivisors()
+8-1) getDivisors() returning 5 divisors
+8-1) setSelectedDivisor(0)
+) END PHASE: UPDATE_MODEL_VALUES 4
+) START PHASE: INVOKE_APPLICATION 5
+) END PHASE: INVOKE_APPLICATION 5
+) START PHASE: RENDER_RESPONSE 6
+8-1) getSelectedDivisorSet() returning: 18
+8-1) getDivisorSets() returning 10 divisor sets
+8-1) getSelectedDivisor() returning: 0
+8-1) getDivisors()
+8-1) getDivisors() returning 5 divisors
+) END PHASE: RENDER_RESPONSE 6

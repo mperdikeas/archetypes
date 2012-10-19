@@ -35,6 +35,7 @@ import entities.Car;
 
 @ManagedBean
 @ViewScoped // if this is toggled to @RequestScoped it stops working
+//@RequestScoped
 public class NumbersController implements Serializable {
 
 
@@ -44,24 +45,38 @@ public class NumbersController implements Serializable {
         List<DivisorSet> retValue = new ArrayList<DivisorSet>();
         for (int i = 10 ; i < 20 ; i++)
             retValue.add( new DivisorSet(i) );
+        l.info(String.format("getDivisorSets() returning %d divisor sets", retValue.size()));
         return retValue;
     }
 
     public List<Integer> getDivisors() { 
-        if (selectedDivisorSet != null)
-            return selectedDivisorSet.getDivisors();
-        else return null;
+        l.info("getDivisors()");
+        if (selectedDivisorSet != null) {
+                List<Integer> retValue  = selectedDivisorSet.getDivisors();
+                l.info(String.format("getDivisors() returning %d divisors", retValue.size()));
+                return retValue;
+            }
+        else {
+            l.info("getDivisors() returning null");
+            return null;
+        }
     }
 
     private DivisorSet    selectedDivisorSet;
-    public  DivisorSet getSelectedDivisorSet() { return    selectedDivisorSet; }
+    public  DivisorSet getSelectedDivisorSet() {
+        l.info("getSelectedDivisorSet() returning: "+selectedDivisorSet);
+        return    selectedDivisorSet;
+    }
     public void        setSelectedDivisorSet   (DivisorSet selectedDivisorSet) {
-        l.info(       "setSelectedDivisorSet("        +    selectedDivisorSet+")");   
+        l.info(       "setSelectedDivisorSet("        +    selectedDivisorSet+")");
         this.             selectedDivisorSet          =    selectedDivisorSet;
     }
 
     private Integer   selectedDivisor;
-    public Integer getSelectedDivisor() { return selectedDivisor; }
+    public Integer getSelectedDivisor() {
+        l.info("getSelectedDivisor() returning: "+selectedDivisor);
+        return selectedDivisor;
+    }
     public void    setSelectedDivisor   (Integer selectedDivisor) {
         l.info(   "setSelectedDivisor("    +     selectedDivisor+")");
         this.      selectedDivisor         =     selectedDivisor;       
