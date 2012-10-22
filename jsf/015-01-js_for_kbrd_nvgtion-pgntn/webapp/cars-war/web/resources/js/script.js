@@ -5,12 +5,12 @@ var ARROWDOWN_KEY_CODE =  40;
 var ARROWKEY_CODES = [ARROWLEFT_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE];
 var DOCUMENTWIDE_ARROWKEY_CODES = [ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE];
 
-fullIdOfEnclosingDataTable = function (elem) {
+var fullIdOfEnclosingDataTable = function (elem) {
     var closestDataTable = elem.closest('.ui-datatable');
     return closestDataTable.attr('id');
 }
 
-getWidgetVar = function (dataTableId) {
+var getWidgetVar = function (dataTableId) {
     var lastIdComponent =  dataTableId.split(/[:]+/).pop();
     return window[lastIdComponent+'WdgtVar']; // this convention has to be observed in the xhtml code !
                                               // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
@@ -75,20 +75,24 @@ function topNavigableDataTable() {
     return $($('.KeyboardNavigableTable').get(0)); // convention: the 1st keyboard-navigable table gets the focus
 }
 
-function focusCursor() {
+var getWidgetOfTopDataTable = function () {
     var dataTableMaster = topNavigableDataTable();
     var id = dataTableMaster.attr('id');
-    var dataTableMasterWdgtVar = getWidgetVar(id);
-    dataTableMasterWdgtVar.unselectAllRows();
-    dataTableMasterWdgtVar.selectRow(0);
-
-    var dataTableMasterTBody = $(dataTableMaster.find('tbody').get(0));
-    var rowToSelect = dataTableMasterTBody.children(':first');
-    updateRowSelection(rowToSelect);
-    dataTableMaster.find('input').get(0).focus(); // this only works in focusable master tables, fails quierly otherwise.
+    return getWidgetVar(id);
 }
 
+function focusCursor() {
+    var dataTableMasterWdgtVar = getWidgetOfTopDataTable();
+    dataTableMasterWdgtVar.unselectAllRows();
+    dataTableMasterWdgtVar.selectRow(0);
+    updateRowSelection(getFirstRowOfTopTable());
+    topNavigableDataTable().find('input').get(0).focus(); // this only works in focusable master tables, fails quierly otherwise.
+}
 
+var getFirstRowOfTopTable = function () {
+    var dataTableMasterTBody = $(topNavigableDataTable().find('tbody').get(0));
+    return dataTableMasterTBody.children(':first');
+}
 
 selectRowJQuery = function (el) {
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
@@ -217,14 +221,32 @@ var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
 
 
+var elementInDocument = function(element) {
+    while (element = element.parentNode) {
+        if (element == document) {
+            return true;
+        }
+    }
+    return false;
+}
 
-function documentNavigateWithArrows(event) {
+
+var reIniitializeCurrentMasterSelectedRowIfNoLongerInDom = function() {
+    if (!elementInDocument(currentMasterSelectedRow.get(0))) {
+        var firstRowOfTopTable = getFirstRowOfTopTable();
+        currentMasterSelectedRow = firstRowOfTopTable;
+        getWidgetOfTopDataTable().selectRow(0);
+    }
+}
+
+var documentNavigateWithArrows = function(event) {
     if (event.ctrlKey==false)
         return false;
     if ( !isInArray(event.keyCode, DOCUMENTWIDE_ARROWKEY_CODES) )
         return true;
     else {
         var father = $($($('.KeyboardNavigableTable').get(0)).find('tbody').get(0));
+        reIniitializeCurrentMasterSelectedRowIfNoLongerInDom();
         if(event.keyCode==ARROWDOWN_KEY_CODE) {
             if (isLastChild(father, currentMasterSelectedRow)) {
                 gotoRow = $(father).children(':first');

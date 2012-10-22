@@ -1,15 +1,17 @@
 Note: this USE CASE (015) draws (in STAGE 00) its provenance from
 USE CASE (008) STAGE (03) SUB-STAGE f.
 
-In this USE CASE (015) and STAGE (01) I aim to build
-upon the state of the implementation at USE CASE (015)
+In this USE CASE (015) and STAGE (01) I managed to
+enhance the state of the implementation at USE CASE (015)
 and STAGE (00) by ensuring that focusable and non-focusable
 navigation works for paginated tables as well.
 
 In the future I should aim to:
 
-[a] merge G. Dimitriadis changes (table.js) in script.js
-[b] store script.js as part of the repo
-[c] implement (for intellectual curiosity mostly) the tentative delete functionality.
-[d] investigate the scope failure curiosity noted in 008-03-f.
+[a] perhaps add the non-focusable hook at another, narrower element
+    (instead of the document object itself).
+[b] merge G. Dimitriadis changes (table.js) in script.js
+[c] store script.js as part of the repo
+[d] implement (for intellectual curiosity mostly) the tentative delete functionality.
+[e] investigate the scope failure curiosity noted in 008-03-f.
 
