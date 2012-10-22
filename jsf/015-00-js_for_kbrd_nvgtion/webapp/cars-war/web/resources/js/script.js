@@ -65,10 +65,7 @@ function updateMasterRowSelection(newSelectedRow) {
 function isRowOfTopTable(rowElem) {
     var fatherDataTableId = fullIdOfEnclosingDataTable(rowElem);
     var topDataTableId = topNavigableDataTable().attr('id');
-    console.log('isRowOfTopTable asked to pronounce on equality between:');
-    console.log(fatherDataTableId+' and '+topDataTableId);
     var retValue = (fatherDataTableId==topDataTableId);
-    console.log('returning: '+retValue);
     return retValue;
 }
 
@@ -85,10 +82,10 @@ function focusCursor() {
     dataTableMasterWdgtVar.unselectAllRows();
     dataTableMasterWdgtVar.selectRow(0);
 
-    var father = $($($('.KeyboardNavigableTable').get(0)).find('tbody').get(0));
-    var rowToSelect = $(father).children(':first');
+    var dataTableMasterTBody = $(dataTableMaster.find('tbody').get(0));
+    var rowToSelect = dataTableMasterTBody.children(':first');
     updateRowSelection(rowToSelect);
-    dataTableMaster.find('input').get(0).focus();
+    dataTableMaster.find('input').get(0).focus(); // this only works in focusable master tables, fails quierly otherwise.
 }
 
 
