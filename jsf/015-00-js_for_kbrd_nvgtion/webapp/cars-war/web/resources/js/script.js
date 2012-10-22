@@ -30,6 +30,7 @@ function initActions() {
         }
         return true;
     } 
+    $('.KeyboardNavigableTable').find('input').keyup(navigateWithArrows); //line: 908lsdkjl2k3jlkf
 }
 
 function initActionsAjaxPartial() {
@@ -42,6 +43,8 @@ function initActionsAjaxPartial() {
         }
         previousFocusTarget = focusTarget;
     });
+
+    $('.KeyboardNavigableTable').find('input').keyup(navigateWithArrows); // I've verified that this redundancy with line: 908lsdkjl2k3jlkf is, sadly, unavoidable. 
 }
 
 

@@ -54,10 +54,10 @@
                             </f:facet>  
                             <p:column id="model" headerText="Model">       <ui:remove> <!-- that used to be (event, #{rowIndex}) but       --> </ui:remove>
                                                                            <ui:remove> <!-- we don't need to supply the row index any more --> </ui:remove>
-                                <p:inputText value="#{item.model}" onkeypress="navigateWithArrows(event);" />
+                                <p:inputText value="#{item.model}" />
                             </p:column>  
                             <p:column id="price" headerText="Price">
-                                <p:inputText value="#{item.price}" onkeypress="navigateWithArrows(event);"/>
+                                <p:inputText value="#{item.price}" />
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
@@ -82,11 +82,11 @@
                                         Rows in the table
                                     </f:facet>  
                                     <p:column id="spec" headerText="Spec">
-                                        <p:inputText value="#{item.modelSpec.spec}" onkeypress="navigateWithArrows(event);"/>
+                                        <p:inputText value="#{item.modelSpec.spec}" />
                                     </p:column>
         
                                     <p:column id="specValue" headerText="SpecValue">
-                                        <p:inputText value="#{item.specValue}" onkeypress="navigateWithArrows(event);"/>
+                                        <p:inputText value="#{item.specValue}" />
                                     </p:column>
                                     <p:column headerText="&nbsp;">                                                                           
                                         <p:spacer width="20" height="0" />                                                                   
@@ -111,11 +111,11 @@
                                         Rows in the table
                                     </f:facet>  
                                     <p:column id="factory" headerText="Factory">
-                                        <p:inputText value="#{item.modelFactory.factory}" onkeypress="navigateWithArrows(event);"/>
+                                        <p:inputText value="#{item.modelFactory.factory}" />
                                     </p:column>
         
                                     <p:column id="factoryDesc" headerText="Factory Description">
-                                        <p:inputText value="#{item.factoryDesc}" onkeypress="navigateWithArrows(event);"/>
+                                        <p:inputText value="#{item.factoryDesc}" />
                                     </p:column>
                                     <p:column headerText="&nbsp;">                                                                           
                                         <p:spacer width="20" height="0" />                                                                   
@@ -140,11 +140,11 @@
                                 Rows in the table
                             </f:facet>  
                             <p:column id="reviewer" headerText="Reviewer">
-                                <p:inputText value="#{item.modelSpecReviewer.reviewer}" onkeypress="navigateWithArrows(event);"/>
+                                <p:inputText value="#{item.modelSpecReviewer.reviewer}" />
                             </p:column>
 
                             <p:column id="reviewerComments" headerText="Reviewer Comments">
-                                <p:inputText value="#{item.specReviewerComments}" onkeypress="navigateWithArrows(event);"/>
+                                <p:inputText value="#{item.specReviewerComments}" />
                             </p:column>
                             <p:column headerText="&nbsp;">                                                                           
                                 <p:spacer width="20" height="0" />                                                                   
