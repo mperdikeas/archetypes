@@ -84,6 +84,11 @@ function focusCursor() {
     var dataTableMasterWdgtVar = getWidgetVar(id);
     dataTableMasterWdgtVar.unselectAllRows();
     dataTableMasterWdgtVar.selectRow(0);
+
+    var father = $($($('.KeyboardNavigableTable').get(0)).find('tbody').get(0));
+    var gotoRow = $(father).children(':first');
+    currentMasterSelectedRow = gotoRow;
+    currentSelectedRow       = gotoRow;
     dataTableMaster.find('input').get(0).focus();
 }
 
