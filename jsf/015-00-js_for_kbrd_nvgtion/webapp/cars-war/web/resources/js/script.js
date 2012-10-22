@@ -17,6 +17,7 @@ getWidgetVar = function (dataTableId) {
 }
 
 var currentSelectedRow;
+var currentMasterSelectedRow;
 
 function initActions() {
 
@@ -32,7 +33,7 @@ function initActions() {
         return true;
     } 
     $('.KeyboardNavigableTable').find('input').keyup(navigateWithArrows); //line: 908lsdkjl2k3jlkf
-    $(document).keyup(documentNavigateWithArrows);
+    $(document).keyup   (documentNavigateWithArrows);
 }
 
 function initActionsAjaxPartial() {
@@ -50,11 +51,35 @@ function updateRowSelection(newSelectedRow) {
         selectRowJQuery(newSelectedRow); 
     }
     currentSelectedRow = newSelectedRow;
+    if (isRowOfTopTable(currentSelectedRow))
+        currentMasterSelectedRow = currentSelectedRow;
+}
+
+function updateMasterRowSelection(newSelectedRow) {
+    if (currentMasterSelectedRow==null || !currentMasterSelectedRow.is(newSelectedRow)) {
+        selectRowJQuery(newSelectedRow); 
+    }
+    currentMasterSelectedRow = newSelectedRow;
+}
+
+function isRowOfTopTable(rowElem) {
+    var fatherDataTableId = fullIdOfEnclosingDataTable(rowElem);
+    var topDataTableId = topNavigableDataTable().attr('id');
+    console.log('isRowOfTopTable asked to pronounce on equality between:');
+    console.log(fatherDataTableId+' and '+topDataTableId);
+    var retValue = (fatherDataTableId==topDataTableId);
+    console.log('returning: '+retValue);
+    return retValue;
 }
 
 
+
+function topNavigableDataTable() {
+    return $($('.KeyboardNavigableTable').get(0)); // convention: the 1st keyboard-navigable table gets the focus
+}
+
 function focusCursor() {
-    var dataTableMaster = $($('.KeyboardNavigableTable').get(0)); // convention: the 1st keyboard-navigable table gets the focus
+    var dataTableMaster = topNavigableDataTable();
     var id = dataTableMaster.attr('id');
     var dataTableMasterWdgtVar = getWidgetVar(id);
     dataTableMasterWdgtVar.unselectAllRows();
@@ -193,27 +218,29 @@ var caretAtTheBeginningFlag = false;
 
 
 function documentNavigateWithArrows(event) {
+    if (event.ctrlKey==false)
+        return false;
     if ( !isInArray(event.keyCode, DOCUMENTWIDE_ARROWKEY_CODES) )
         return true;
     else {
         var father = $($($('.KeyboardNavigableTable').get(0)).find('tbody').get(0));
         if(event.keyCode==ARROWDOWN_KEY_CODE) {
-            if (isLastChild(father, currentSelectedRow)) {
+            if (isLastChild(father, currentMasterSelectedRow)) {
                 gotoRow = $(father).children(':first');
             }
             else {
-                gotoRow = $(currentSelectedRow).next('tr');
+                gotoRow = $(currentMasterSelectedRow).next('tr');
             }
         }
         else if (event.keyCode==ARROWUP_KEY_CODE) { 
-            if (isFirstChild(father, currentSelectedRow)) {
+            if (isFirstChild(father, currentMasterSelectedRow)) {
                 gotoRow = $(father).children(':last');
             }
             else {
-                gotoRow = $(currentSelectedRow).prev('tr');
+                gotoRow = $(currentMasterSelectedRow).prev('tr');
             }
         }
-        updateRowSelection(gotoRow);
+        updateMasterRowSelection(gotoRow);
         event.preventDefault();
         return false;
     }
