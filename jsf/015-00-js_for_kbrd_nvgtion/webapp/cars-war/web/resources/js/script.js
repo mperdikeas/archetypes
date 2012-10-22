@@ -32,6 +32,7 @@ function initActions() {
         return true;
     } 
     $('.KeyboardNavigableTable').find('input').keyup(navigateWithArrows); //line: 908lsdkjl2k3jlkf
+    $(document).keyup(documentNavigateWithArrows);
 }
 
 function initActionsAjaxPartial() {
@@ -65,13 +66,19 @@ function focusCursor() {
 
 
 selectRowJQuery = function (el) {
+    console.log('insided selectRowJQuery('+el+')');
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
+    console.log('full id of enclosing data table is: '+dataTableFullId);
     var widgetVar = getWidgetVar(dataTableFullId);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
 }
 
 isLastChild = function(father, child) {
+    console.log('father is: ');
+    console.log(father);
+    console.log('child is: ');
+    console.log(child);
     var lastChild = $(father).children(':last');
     return lastChild.equals(child);
 }
@@ -191,29 +198,40 @@ var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
 
 
-/*
+
 function documentNavigateWithArrows(event) {
+    console.log('inside documentNavigateWithArrows');
     if ( !isInArray(event.keyCode, DOCUMENTWIDE_ARROWKEY_CODES) )
         return true;
     else {
-        var father = $('.NavigableDataTable').get(0);
-        
+        var father = $('.KeyboardNavigableTable').get(0);
+        console.log('documentNavigateWithArrows, father is: ');
+        console.log(father);
         if(event.keyCode==ARROWDOWN_KEY_CODE) {
-            if (isLastChild(father, rowInQuestion))
+            if (isLastChild(father, currentSelectedRow)) {
+                console.log('is last child detected');
                 gotoRow = $(father).children(':first');
-            else
-                gotoRow = $(rowInQuestion).next('tr');
+            }
+            else {
+                console.log('not last child');
+                gotoRow = $(currentSelectedRow).next('tr');
+            }
         }
         else if (event.keyCode==ARROWUP_KEY_CODE) { 
-            if (isFirstChild(father, rowInQuestion))
+            if (isFirstChild(father, currentSelectedRow)) {
+                console.log('is first child detected');
                 gotoRow = $(father).children(':last');
-            else
-                gotoRow = $(rowInQuestion).prev('tr');
+            }
+            else {
+                console.log('not first child');
+                gotoRow = $(currentSelectedRow).prev('tr');
+            }
         }
-        selectXXX
+        updateRowSelection(gotoRow);
+        event.preventDefault();
         return false;
     }
-}*/
+}
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used - maybe it's ok to remove it
     if ( !isInArray(event.keyCode, ARROWKEY_CODES) )
