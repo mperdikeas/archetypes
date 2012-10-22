@@ -14,7 +14,12 @@ datatable / row. So I am giving up on this generalization,
 at least for now.
 
 UPDATE: I later re-opened the use case and started making
-some improvements in the script.js file.
+some improvements in the script.js file which allowed me 
+to ascribe meaning to a default selection in case of
+non-focusable datatables and to enable navigation, at
+the top-level only, using CTRL + up / down arrows only.
+
+And there the matter rests.
 
 In the future I should aim to:
 
