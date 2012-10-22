@@ -1,11 +1,17 @@
 Note: this USE CASE (015) draws its provenance from
 USE CASE (008) STAGE (03) SUB-STAGE f.
 
-In this USE CASE (015) and STAGE (00) I am aiming to:
+In this USE CASE (015) and STAGE (00) I initial aimed to:
 [i] streamline the script.js JavaScript to separate
     selection from focus logic with the goal of making
     it reusable where the p:dataTable is selectable
     but not focusable.
+
+But, I've reached the conclusion (see carsro.xhtml) that
+this feature doesn't make any sense. Having focus somewhere
+is necessary in order to have the concept of the 'current'
+datatable / row. So I am giving up on this generalization,
+at least for now.
 
 In the future I should aim to:
 
