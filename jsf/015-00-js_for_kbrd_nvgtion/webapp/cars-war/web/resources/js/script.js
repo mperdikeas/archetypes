@@ -2,7 +2,8 @@ var ARROWLEFT_KEY_CODE =  37;
 var ARROWUP_KEY_CODE   =  38;
 var ARROWRIGHT_KEY_CODE = 39;
 var ARROWDOWN_KEY_CODE =  40;
-var ARROWKEY_CODES = [ARROWLEFT_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE] ;
+var ARROWKEY_CODES = [ARROWLEFT_KEY_CODE, ARROWRIGHT_KEY_CODE, ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE];
+var DOCUMENTWIDE_ARROWKEY_CODES = [ARROWUP_KEY_CODE, ARROWDOWN_KEY_CODE];
 
 fullIdOfEnclosingDataTable = function (elem) {
     var closestDataTable = elem.closest('.ui-datatable');
@@ -15,7 +16,7 @@ getWidgetVar = function (dataTableId) {
                                               // I.e. the name of the widgetVar is the p:datatable id suffixed with suffix shown above
 }
 
-var previousFocusTarget;
+var currentSelectedRow;
 
 function initActions() {
 
@@ -36,38 +37,36 @@ function initActions() {
 function initActionsAjaxPartial() {
     $('.KeyboardNavigableTable').find('input').focus(function() {
         var idOfEnclosingTable = fullIdOfEnclosingDataTable($(this));
-        // console.log('id of enclosing data table is: '+idOfEnclosingTable);
         var focusTarget = $(this).closest('tr');
-        if (previousFocusTarget==null || !previousFocusTarget.is(focusTarget)) {
-            selectRowJQuery(focusTarget); 
-        }
-        previousFocusTarget = focusTarget;
+        updateRowSelection(focusTarget);
     });
 
     $('.KeyboardNavigableTable').find('input').keyup(navigateWithArrows); // I've verified that this redundancy with line: 908lsdkjl2k3jlkf is, sadly, unavoidable. 
 }
 
+function updateRowSelection(newSelectedRow) {
+    // console.log(newSelectedRow);
+    if (currentSelectedRow==null || !currentSelectedRow.is(newSelectedRow)) {
+        selectRowJQuery(newSelectedRow); 
+    }
+    currentSelectedRow = newSelectedRow;
+}
+
 
 function focusCursor() {
     var dataTableMaster = $($('.KeyboardNavigableTable').get(0)); // convention: the 1st keyboard-navigable table gets the focus
-    // console.log(dataTableMaster);
     var id = dataTableMaster.attr('id');
-    // console.log("id of dataTableMaster is :"+id);
     var dataTableMasterWdgtVar = getWidgetVar(id);
     dataTableMasterWdgtVar.unselectAllRows();
     dataTableMasterWdgtVar.selectRow(0);
-    // console.log("about to set focus");
     dataTableMaster.find('input').get(0).focus();
-    // console.log("set focus");
 }
 
 
 
 selectRowJQuery = function (el) {
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
-    // console.log('data table full id is: '+dataTableFullId+'. Widget var follows:');
     var widgetVar = getWidgetVar(dataTableFullId);
-    // console.log(widgetVar);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
 }
@@ -190,6 +189,31 @@ isInArray = function (val,arr) {
 
 var caretAtTheEndFlag       = false;
 var caretAtTheBeginningFlag = false;
+
+
+/*
+function documentNavigateWithArrows(event) {
+    if ( !isInArray(event.keyCode, DOCUMENTWIDE_ARROWKEY_CODES) )
+        return true;
+    else {
+        var father = $('.NavigableDataTable').get(0);
+        
+        if(event.keyCode==ARROWDOWN_KEY_CODE) {
+            if (isLastChild(father, rowInQuestion))
+                gotoRow = $(father).children(':first');
+            else
+                gotoRow = $(rowInQuestion).next('tr');
+        }
+        else if (event.keyCode==ARROWUP_KEY_CODE) { 
+            if (isFirstChild(father, rowInQuestion))
+                gotoRow = $(father).children(':last');
+            else
+                gotoRow = $(rowInQuestion).prev('tr');
+        }
+        selectXXX
+        return false;
+    }
+}*/
 
 function navigateWithArrows(event, rowIndex) { // rowIndex is not really used - maybe it's ok to remove it
     if ( !isInArray(event.keyCode, ARROWKEY_CODES) )

@@ -1,7 +1,7 @@
 Note: this USE CASE (015) draws its provenance from
 USE CASE (008) STAGE (03) SUB-STAGE f.
 
-In this USE CASE (015) and STAGE (00) I initial aimed to:
+In this USE CASE (015) and STAGE (00) I initially aimed to:
 [i] streamline the script.js JavaScript to separate
     selection from focus logic with the goal of making
     it reusable where the p:dataTable is selectable
@@ -12,6 +12,9 @@ this feature doesn't make any sense. Having focus somewhere
 is necessary in order to have the concept of the 'current'
 datatable / row. So I am giving up on this generalization,
 at least for now.
+
+UPDATE: I later re-opened the use case and started making
+some improvements in the script.js file.
 
 In the future I should aim to:
 
