@@ -46,7 +46,6 @@ function initActionsAjaxPartial() {
 }
 
 function updateRowSelection(newSelectedRow) {
-    // console.log(newSelectedRow);
     if (currentSelectedRow==null || !currentSelectedRow.is(newSelectedRow)) {
         selectRowJQuery(newSelectedRow); 
     }
@@ -66,19 +65,13 @@ function focusCursor() {
 
 
 selectRowJQuery = function (el) {
-    console.log('insided selectRowJQuery('+el+')');
     var dataTableFullId = fullIdOfEnclosingDataTable(el);
-    console.log('full id of enclosing data table is: '+dataTableFullId);
     var widgetVar = getWidgetVar(dataTableFullId);
     widgetVar.unselectAllRows();
     widgetVar.selectRow(el);
 }
 
 isLastChild = function(father, child) {
-    console.log('father is: ');
-    console.log(father);
-    console.log('child is: ');
-    console.log(child);
     var lastChild = $(father).children(':last');
     return lastChild.equals(child);
 }
@@ -200,30 +193,23 @@ var caretAtTheBeginningFlag = false;
 
 
 function documentNavigateWithArrows(event) {
-    console.log('inside documentNavigateWithArrows');
     if ( !isInArray(event.keyCode, DOCUMENTWIDE_ARROWKEY_CODES) )
         return true;
     else {
-        var father = $('.KeyboardNavigableTable').get(0);
-        console.log('documentNavigateWithArrows, father is: ');
-        console.log(father);
+        var father = $($($('.KeyboardNavigableTable').get(0)).find('tbody').get(0));
         if(event.keyCode==ARROWDOWN_KEY_CODE) {
             if (isLastChild(father, currentSelectedRow)) {
-                console.log('is last child detected');
                 gotoRow = $(father).children(':first');
             }
             else {
-                console.log('not last child');
                 gotoRow = $(currentSelectedRow).next('tr');
             }
         }
         else if (event.keyCode==ARROWUP_KEY_CODE) { 
             if (isFirstChild(father, currentSelectedRow)) {
-                console.log('is first child detected');
                 gotoRow = $(father).children(':last');
             }
             else {
-                console.log('not first child');
                 gotoRow = $(currentSelectedRow).prev('tr');
             }
         }
