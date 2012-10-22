@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="javascript">
+            <h:outputScript name="js/jquery.caret.1.02.js"/>
+            <h:outputScript name="js/script.js"/>
+        </ui:define>
+        <ui:define name="title">CAR</ui:define>
+        <ui:define name="header">
+            <h3>maintaining the CAR table</h3>
+                <ui:remove><!--
+                    <h:panelGroup id="messagePanel" layout="block">                                                                                          
+                        <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
+                    </h:panelGroup>  -->
+                </ui:remove>
+
+                <SCRIPT>
+                    $(document).ready(function() {initActions(); focusCursor();});
+                    $(document).bind('ajaxComplete', initActionsAjaxPartial);
+                </SCRIPT>
+        </ui:define>
+
+        <ui:define name="body">
+
+
+            <h:form id="FormId" styleClass="jsfcrud_list_form" rendered="${carsCELVController.state.renderItemList}">
+                <ui:remove> <!-- <p:focus for=":FormId:CAR-data-table"/> -->  </ui:remove>
+                <ui:remove>
+                    <!-- sometimes it seems to be firing more than one event
+                    <p:hotkey bind="down" update=":CAR-form:CAR-data-table" action="#{carsCELVController.advanceCurrent()}" />
+                    <p:hotkey bind="up"   update=":CAR-form:CAR-data-table" action="#{carsCELVController.backstepCurrent()}"/>
+                    -->
+                </ui:remove>
+                <p:outputPanel id="CAR-outputpanel">            
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>                                                        
+                    <h:panelGroup id="CAR-panelGroup">
+                        <p:dataTable id="dataTableMaster"               widgetVar  ="dataTableMasterWdgtVar" var="item"
+                                                                       rowIndexVar="rowIndex"
+                                     styleClass="KeyboardNavigableTable"
+                                     value="#{carsCELVController.items}" rowKey="#{item.model}" 
+                                     paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                     selection="#{carsCELVController.current}" selectionMode="single"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <f:facet name="header">  
+                                Rows in the table
+                            </f:facet>  
+                            <p:column id="model" headerText="Model">       <ui:remove> <!-- that used to be (event, #{rowIndex}) but       --> </ui:remove>
+                                                                           <ui:remove> <!-- we don't need to supply the row index any more --> </ui:remove>
+                                <p:inputText value="#{item.model}" />
+                            </p:column>  
+                            <p:column id="price" headerText="Price">
+                                <p:inputText value="#{item.price}" />
+                            </p:column>
+                            <p:column headerText="&nbsp;">                                                                           
+                                <p:spacer width="20" height="0" />                                                                   
+                                <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.remove}" value="remove">
+                                    <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.current}"/>
+                                </p:commandButton>
+                            </p:column>
+                            <p:ajax event="rowSelect" update=":FormId:tabView:dataTableDetail_1_1 :FormId:tabView:dataTableDetail_1_2 :FormId:dataTableDetail_2_1"/>
+                        </p:dataTable> 
+                        <p:tabView id="tabView">
+                            <p:tab title="model specs">
+                                <p:dataTable id="dataTableDetail_1_1"        widgetVar  ="dataTableDetail_1_1WdgtVar" var="item"
+                                                                               rowIndexVar="rowIndex"
+                                             styleClass="KeyboardNavigableTable"
+                                             value="#{carsCELVController.itemDetails}" rowKey="#{item.modelSpec}" 
+                                             paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                             selection="#{carsCELVController.currentDetail}" selectionMode="single"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                                       {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                    <ui:remove><p:ajax event="rowSelect" update=":FormId:dataTableDetail_2_1"/> </ui:remove>
+                                    <f:facet name="header">  
+                                        Rows in the table
+                                    </f:facet>  
+                                    <p:column id="spec" headerText="Spec">
+                                        <p:inputText value="#{item.modelSpec.spec}" />
+                                    </p:column>
+        
+                                    <p:column id="specValue" headerText="SpecValue">
+                                        <p:inputText value="#{item.specValue}" />
+                                    </p:column>
+                                    <p:column headerText="&nbsp;">                                                                           
+                                        <p:spacer width="20" height="0" />                                                                   
+                                        <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.removeDetail}" value="remove">
+                                            <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
+                                        </p:commandButton>
+                                    </p:column>    
+                                    <p:ajax event="rowSelect" update=":FormId:dataTableDetail_2_1"/>
+                                </p:dataTable> 
+                            </p:tab>
+                            <p:tab title="model factories">
+                                <p:dataTable id="dataTableDetail_1_2"        widgetVar  ="dataTableDetail_1_2WdgtVar" var="item"
+                                                                               rowIndexVar="rowIndex"
+                                             styleClass="KeyboardNavigableTable"
+                                             value="#{carsCELVController.itemFactories}" rowKey="#{item.modelFactory}" 
+                                             paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                             selection="#{carsCELVController.currentFactory}" selectionMode="single"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                                       {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+        
+                                    <f:facet name="header">  
+                                        Rows in the table
+                                    </f:facet>  
+                                    <p:column id="factory" headerText="Factory">
+                                        <p:inputText value="#{item.modelFactory.factory}" />
+                                    </p:column>
+        
+                                    <p:column id="factoryDesc" headerText="Factory Description">
+                                        <p:inputText value="#{item.factoryDesc}" />
+                                    </p:column>
+                                    <p:column headerText="&nbsp;">                                                                           
+                                        <p:spacer width="20" height="0" />                                                                   
+                                        <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.removeDetail}" value="remove">
+                                            <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
+                                        </p:commandButton>
+                                    </p:column>    
+                                    <p:ajax event="rowSelect" update=":FormId:dataTableDetail_2_1"/>        
+                                </p:dataTable> 
+                            </p:tab>
+                        </p:tabView>
+                        <p:dataTable id="dataTableDetail_2_1"        widgetVar  ="dataTableDetail_2_1WdgtVar" var="item"
+                                                                     rowIndexVar="rowIndex"
+                                     styleClass="KeyboardNavigableTable"
+                                     value="#{carsCELVController.carInfoReviews}" rowKey="#{item.modelSpecReviewer}" 
+                                     paginator="true" rows="10" style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                                     selection="#{carsCELVController.currentCarInfoReview}" selectionMode="single"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                            <f:facet name="header">  
+                                Rows in the table
+                            </f:facet>  
+                            <p:column id="reviewer" headerText="Reviewer">
+                                <p:inputText value="#{item.modelSpecReviewer.reviewer}" />
+                            </p:column>
+
+                            <p:column id="reviewerComments" headerText="Reviewer Comments">
+                                <p:inputText value="#{item.specReviewerComments}" />
+                            </p:column>
+                            <p:column headerText="&nbsp;">                                                                           
+                                <p:spacer width="20" height="0" />                                                                   
+                                <p:commandButton update=":FormId:CAR-outputpanel" ajax="true" action="#{carsCELVController.removeDetail}" value="remove">
+                                    <f:setPropertyActionListener value="#{item}" target="#{carsCELVController.currentDetail}"/>
+                                </p:commandButton>
+                            </p:column>    
+
+                        </p:dataTable> 
+                    </h:panelGroup>
+                </p:outputPanel>
+            </h:form>
+
+            <h:panelGrid id="CAR-newItemGrid" columns="2" cellpadding="2" rendered="#{carsCELVController.state.renderNewItem}">
+                <p:growl id="growl-new" showDetail="true" sticky="true" />
+                <h:form id="newItem">
+                  <p:focus for=":newItem:model"/>
+                  <h:outputText    value = "model:"/>
+                  <h:inputText     id="model" value ="#{carsCELVController.newItemModel}" required="false" />
+                  <h:outputText    value = "price:"/>
+                  <h:inputText     value ="#{carsCELVController.newItemPrice}" required="false" onkeypress="return hitEnter(event);"/>
+                </h:form>
+            </h:panelGrid>
+
+<ui:remove>
+    <div class="log">
+    <a id="clear-registry" href="foo">clear registry</a>
+    <u>log register</u>
+    </div>
+</ui:remove>
+
+
+        </ui:define>
+    </ui:composition>
+</html>
