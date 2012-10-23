@@ -36,7 +36,8 @@ import javax.servlet.http.HttpSession;
 import mutil.base.ListUtil;
 
 @ManagedBean
-@RequestScoped
+@RequestScoped // you can't change that to ViewScoped or you get the exception:
+               //  The scope of the object referenced by expression #{beanB}, request, is shorter than the referring managed beans (backingBean) scope of view
 public class BackingBean implements Serializable {
 
     private static final Logger l = Logger.getLogger(BeanA.class.getName());

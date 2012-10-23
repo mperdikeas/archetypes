@@ -2,28 +2,10 @@ Experimenting with the scope
 of various beans and methods to call one bean 
 from another.
 
-In this version I used the FacesContext-based
+In this version I used the injection
 method for getting associated beans:
 http://stackoverflow.com/questions/2633112/jsf-get-managed-bean-by-name
 
 I also demonstrated that the scope of the backing 
-bean is immaterial. It is the scope of the associated
-beans that counts. In my case the BackingBean is Request-Scoped
-and the two beans BeanA and BeanB are View and Request-Scoped
-respectively and behave differently on that basis.
-
-Also notice that the constructor for BeanB
-is called on every request, whereas the constructor
-for BeanA only once. (Why should BeanB then be
-serializable ?). I further investigated the matter
-and saw that both BeanA and BeanB's classes definitions
-can be changed to not implement Serializable and the
-code seems to work (but maybe it fails under circumstances
-I wasn't able to trigger).
-
-Finally, there seems to be no material
-difference between using an 'action' tag at the
-p:commandButton vs. using an 'actionListener' tag.
-
-These last two points I should investigate further
-at home.
+bean (for this method at least) cannot be longer that that
+of the beans it refers to through its injected fields.
