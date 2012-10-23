@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">Backing Beans</ui:define>
+
+
+        <ui:define name="body">
+            <h:form>
+                <h:panelGrid id="panelGrid-0" columns="2">
+                    <h:outputText    value = "a (stored in View-Scoped Bean)   :"/>
+                    <h:outputText    value = "#{backingBean.a}"/>
+                    <h:outputText    value = "b (stored in Request-Scoped Bean):"/>
+                    <h:outputText    value = "#{backingBean.b}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="1">
+                    <p:commandButton actionListener="#{backingBean.samePage}"       value="BL action listener"          update="panelGrid-0"/>
+                    <p:commandButton action        ="#{backingBean.samePageAction}" value="BL action"                   update="panelGrid-0"/>
+                    <p:commandButton actionListener="#{backingBean.samePage}"       value="BL action listener non-ajax" ajax="false"/>
+                    <p:commandButton action        ="#{backingBean.samePageAction}" value="BL action non-ajax"          ajax="false"/>
+                    <p:commandButton actionListener="#{backingBean.samePage}"       value="business logic (this updates the value but not the display)" />
+                    <p:commandButton action        ="#{backingBean.samePageAction}" value="business logic (this updates the value but not the display)" />
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
