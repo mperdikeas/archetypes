@@ -19,7 +19,14 @@
                     <h:outputText    value = "BeanB#b :"/>
                     <h:outputText    value = "#{beanB.b}"/>
                 </h:panelGrid>
-                <p:commandButton actionListener="#{beanA.samePage}" value="business logic" update="panelGrid-0"/>
+                <h:panelGrid columns="1">
+                    <p:commandButton actionListener="#{beanA.samePage}"       value="BL action listener"          update="panelGrid-0"/>
+                    <p:commandButton action        ="#{beanA.samePageAction}" value="BL action"                   update="panelGrid-0"/>
+                    <p:commandButton actionListener="#{beanA.samePage}"       value="BL action listener non-ajax" ajax="false"/>
+                    <p:commandButton action        ="#{beanA.samePageAction}" value="BL action non-ajax"          ajax="false"/>
+                    <p:commandButton actionListener="#{beanA.samePage}"       value="business logic (this updates the value but not the display)" />
+                    <p:commandButton action        ="#{beanA.samePageAction}" value="business logic (this updates the value but not the display)" />
+                </h:panelGrid>
             </h:form>
         </ui:define>
     </ui:composition>

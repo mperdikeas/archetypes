@@ -1,0 +1,22 @@
+Experimenting with the scope
+of various beans and methods to call one bean 
+from another.
+
+In this version, notice that the getters
+don't get called in the RENDER-RESPONSE phase
+unless the <p:commandButton>
+tag contains an update for the panelGrid element
+or Ajax is explicitly set to false (therefore,
+Ajax is by default true).
+
+Also notice that the constructor for BeanB
+is called on every request, whereas the constructor
+for BeanA only once. (Why should BeanB then be
+serializable ?).
+
+Finally, there seems to be no material
+difference between using an 'action' tag at the
+p:commandButton vs. using an 'actionListener' tag.
+
+These last two points I should investigate further
+at home.

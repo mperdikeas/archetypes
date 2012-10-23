@@ -58,4 +58,6 @@ public class BeanA implements Serializable {
 
     public void samePage() {l.info("samePage() called"); a++; }
 
+    public String samePageAction() {a++; return null;}
+
 }
