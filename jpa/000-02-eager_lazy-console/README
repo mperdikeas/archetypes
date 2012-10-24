@@ -1,0 +1,7 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (02) I 
+managed to showcase the difference between
+EAGER and LAZY loading. By setting the fetch type
+to EAGER in line 43 of A.java the time to load
+a single A entity shoots up from 106 ms to 21 seconds.
