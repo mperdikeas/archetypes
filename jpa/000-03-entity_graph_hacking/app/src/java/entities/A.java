@@ -2,7 +2,7 @@ package entities;
 
 import java.util.logging.Logger;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -40,13 +40,14 @@ public class A implements Serializable {
 
 
     // @LazyCollection(LazyCollectionOption.FALSE) // I don't use that
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aId", fetch=FetchType.LAZY) // EAGER -> takes 21 seconds to load.
-    private Collection<B> bCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aId", fetch=FetchType.EAGER)
+    //@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    private Set<B> bCollection;
 
-    public Collection<B> getBCollection() { 
+    public Set<B> getBCollection() { 
         return bCollection;
     }
-    public void setBCollection(Collection<B> bCollection) {
+    public void setBCollection(Set<B> bCollection) {
         this.bCollection = bCollection;
     }
 

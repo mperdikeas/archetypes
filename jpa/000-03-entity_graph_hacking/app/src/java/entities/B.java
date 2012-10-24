@@ -1,7 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,9 +8,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-// hibernate-specific option
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+
 
 @Entity
 @Table(name = "B")
@@ -46,6 +43,8 @@ public class B implements Serializable {
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
+
+    public void setAId(A aId) { this.aId = aId; }
 
 
     @Override
