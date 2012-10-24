@@ -29,6 +29,11 @@ public class Test {
         String newValue = "G"+a.getA1();
         a.setA1( newValue.substring(0, newValue.length()>50?50:newValue.length()) ); // line 31
         B b2a = em.find(B.class, 2);
+        l.info("found b2a:" + b2a+" with system hash code: "+System.identityHashCode(b2a));
+        B b2a2 = em.find(B.class, 2);
+        l.info("found b2a:" + b2a2+" with system hash code: "+System.identityHashCode(b2a2));
+        B b2a3 = em.find(B.class, 2);
+        l.info("found b2a:" + b2a3+" with system hash code: "+System.identityHashCode(b2a3));
         em.remove(b2a);
         // b2b is assigned the value of 'null' so the below 5 lines fail
         // B b2b = em.find(B.class, 2);

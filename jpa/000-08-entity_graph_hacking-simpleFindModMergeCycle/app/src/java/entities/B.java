@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-
+import java.util.logging.Logger;
 
 @Entity
 @Table(name = "B")
@@ -19,7 +19,9 @@ import javax.xml.bind.annotation.XmlTransient;
         }) 
 public class B implements Serializable {
     
+    private static final Logger l = Logger.getLogger(B.class.getName());
     private static final long serialVersionUID = 1L;
+    
 
     @Id
     @Basic(optional = false)
@@ -39,7 +41,9 @@ public class B implements Serializable {
     private A aId;
 
 
-    public B() {}
+    public B() {
+        l.info("B() called");
+    }
 
     public B(Integer id, String b1) {
         this.id = id;
