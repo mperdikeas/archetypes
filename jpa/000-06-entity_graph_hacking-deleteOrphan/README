@@ -1,0 +1,20 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (06)
+I managed to implement two hooks for child
+removal in master-detail Entity relationships.
+
+One, that uses the @PreRemove hook in the
+detail entity (B) and another that uses
+the DELETE_ORPHAN cascade hibernate annotation
+in the master entity (A).
+
+In this way the children removal works both
+when a child 'b' is removed with the em.remove(b)
+method as well as when it is simply removed from the
+Bs collection at A.
+
+Things to do for future stages:
+(a) check the extent to which the above carry onto
+    proper web applications.
+
