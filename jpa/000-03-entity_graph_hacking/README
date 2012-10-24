@@ -1,0 +1,7 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (03) I 
+am experimenting with loading an entity
+graph and doing certain actions on it
+(e.g. changing details of the master entity
+adding and removing detail entities, etc.).
