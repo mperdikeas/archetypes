@@ -1,0 +1,12 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (08)
+I aim to experiment more with a 'find,change,merge' cycle.
+
+Things for future stages:
+
+(a) implement a framework for tentative changes
+(b) implement facades
+(c) check the extent to which the above carry onto
+    proper web applications.
+
