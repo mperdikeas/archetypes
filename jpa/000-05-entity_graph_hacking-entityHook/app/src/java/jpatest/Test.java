@@ -46,7 +46,7 @@ public class Test {
         for (Iterator<B> bsToRemoveI = bsToRemove.iterator(); bsToRemoveI.hasNext();) {
             B bToRemove = bsToRemoveI.next();
             em.remove(bToRemove);
-            bToRemove.setAId(null);
+            // bToRemove.setAId(null); we no longer need this line because of the hook in line 54 of B.java
         }
         entityTransaction.begin();  // see http://stackoverflow.com/questions/13047919/jpa-standalone-mode-changing-managed-entity-fields-outside-entitytransaction-w
         entityTransaction.commit(); // now the change in line 31 finds its way to the database.

@@ -49,6 +49,9 @@ public class B implements Serializable {
         this.aId = aId;
         if (aId !=null) { aId.internalAddB(this); }
     }
+    
+    @PreRemove
+    public void preRemove() {setAId(null);} // line 54
 
 
     @Override

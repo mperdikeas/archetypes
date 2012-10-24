@@ -1,7 +1,7 @@
 Experimenting with JPA eager / lazy loading.
 
 In this use case (JPA # 000) and stage (05)
-I am trying to implementing the Entity hook for 
+I managed to implement the Entity hook for 
 master-table nullification.
 
 Things to do for future stages:
