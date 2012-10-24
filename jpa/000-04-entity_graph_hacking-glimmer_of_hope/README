@@ -1,0 +1,18 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (04) I 
+managed to implement a pattern for master-detail
+JPA collections and their removal, requiring, 
+on the client side only two calls:
+
+ (i) one to the EntityManager::remove
+(ii) one to nullify the father reference in the
+     detail bean (which in turn triggers a removal
+     from the father's collection).
+
+Things to do for future stages:
+(a) implement the pattern to pre-hook the nullification
+    in the entity code.
+(b) check the extent to which the above carry onto
+    proper web applications.
+
