@@ -1,5 +1,0 @@
-#!/bin/bash
-cp test.script.ORIGINAL.HEADER test.script.ORIGINAL
-chmod ugo+x generate-data.py
-./generate-data.py >> test.script.ORIGINAL
-chmod ugo-x generate-data.py
