@@ -1,0 +1,22 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (07)
+I was trying to see what happens when 
+an entity is removed from a collection in 
+the master table and then brought back
+to life through a separate 'find' in the
+same transaction.
+
+The findings seem to indicate that finding an
+entity 'b' through the EntityManager (em), and even
+doing an 'em.persist(b)' and 'em.merge(b)' has
+no effect when the entity has previously been
+removed. Things are rather hairy though.
+
+Things to do for future stages:
+(a) experiment more with a 'find,change,merge' cycle.
+(b) implement a framework for tentative changes
+(c) implement facades
+(d) check the extent to which the above carry onto
+    proper web applications.
+
