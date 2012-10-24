@@ -4,3 +4,6 @@ test.properties
 test.lck
 test.script
 test.script.ORIGINAL
+memd:..log
+memd:..properties
+memd:..script
