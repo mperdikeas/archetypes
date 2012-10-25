@@ -1,11 +1,17 @@
 Experimenting with JPA eager / lazy loading.
 
 In this use case (JPA # 000) and stage (09)
-I am experimenting with many EntityManagers.
-(Apress.JPA.2 book pg. 22)
+I experimented with EntityManagers.
+(Apress.JPA.2 book pg. 22).
+
+Conclusion: only a single instance per persistent entity
+is created, at least when one EntityManager
+is used. As a result the 1st fetch takes about 200 times
+longer than the subsequent fetches.
 
 Things for future stages:
 
+(a) experiment with many EntityManagers
 (a) experiment more with merges and such...
 (b) implement a framework for tentative changes
 (c) implement facades
