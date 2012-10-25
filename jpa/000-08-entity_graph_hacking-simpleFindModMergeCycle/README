@@ -1,17 +1,20 @@
 Experimenting with JPA eager / lazy loading.
 
 In this use case (JPA # 000) and stage (08)
-I aim to experiment more with a 'find,change,merge' cycle.
+I experimented more with a 'find,change,merge' cycle.
 
-(tentative results): looking at the unique hashcodes
+Looking at the unique hashcodes
 printed and the calls to B's constructor, it becomes evident
 that the EntityManager maintains internal references to 
-objects.
+objects. Also, and perhaps more surprisingly,
+EntityManager::remov-ing an object changes subsequent
+finds.
 
 Things for future stages:
 
-(a) implement a framework for tentative changes
-(b) implement facades
-(c) check the extent to which the above carry onto
+(a) experiment more with merges and such...
+(b) implement a framework for tentative changes
+(c) implement facades
+(d) check the extent to which the above carry onto
     proper web applications.
 

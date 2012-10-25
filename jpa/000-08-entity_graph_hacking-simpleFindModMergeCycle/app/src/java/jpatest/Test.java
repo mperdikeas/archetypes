@@ -28,13 +28,19 @@ public class Test {
         A a = em.find(A.class, 1);
         String newValue = "G"+a.getA1();
         a.setA1( newValue.substring(0, newValue.length()>50?50:newValue.length()) ); // line 31
+        for (int i = 0 ; i < 100 ; i++) {
+            B aB = em.find(B.class, 2);
+            l.info("found a B with hash code: "+System.identityHashCode(aB));
+        }
         B b2a = em.find(B.class, 2);
         l.info("found b2a:" + b2a+" with system hash code: "+System.identityHashCode(b2a));
-        B b2a2 = em.find(B.class, 2);
-        l.info("found b2a:" + b2a2+" with system hash code: "+System.identityHashCode(b2a2));
-        B b2a3 = em.find(B.class, 2);
-        l.info("found b2a:" + b2a3+" with system hash code: "+System.identityHashCode(b2a3));
+        B aB = findInA(a, 2);
+        l.info("a's b has system hash code of: "+System.identityHashCode(aB));
         em.remove(b2a);
+        B aNewB = em.find(B.class, 2);
+        l.info("after the removal the newly found B is: "+aNewB+" with hashcode: "+System.identityHashCode(aNewB));
+        aB = findInA(a,2);
+        l.info("after the removal the A's b is: "+aB+" with system hashcode: "+System.identityHashCode(aB));
         // b2b is assigned the value of 'null' so the below 5 lines fail
         // B b2b = em.find(B.class, 2);
         // l.info("b2b is: "+b2b);
