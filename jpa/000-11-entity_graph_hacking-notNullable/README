@@ -1,0 +1,23 @@
+Experimenting with Not Nulls
+
+In this use case (JPA # 000) and stage (01)
+(which draws its provenance from JPA # 000 # 08)
+I am experimenting with the existence of NotNull
+characteristics either in the JPA annotation
+or in the database itself. I discovered
+(despite what GDimitriades had told me)
+that both methods of removal work even when the
+column in the database is set to 'NOT NULL', and
+moreover, even when the entity is annotated
+with a JPA 'not null' annotation.
+
+What's even more bizzare is that a field 
+may be described as 'not null' in the JPA
+entity annotations, and yet it can be set to 
+null (apparently, the entity manager only
+checks for nullness upon commit ?) (see A.java
+ - line 41).
+
+
+Things for future stages:
+    [the list of JPA # 000 # 10]
