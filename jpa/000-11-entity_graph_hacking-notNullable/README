@@ -13,10 +13,11 @@ with a JPA 'not null' annotation.
 
 What's even more bizzare is that a field 
 may be described as 'not null' in the JPA
-entity annotations, and yet it can be set to 
+entity annotations (both using NotNull and 
+Column#nullable=false), and yet it can be set to 
 null (apparently, the entity manager only
 checks for nullness upon commit ?) (see A.java
- - line 41).
+ - line 39 and line 41)
 
 
 Things for future stages:

@@ -36,7 +36,7 @@ public class B implements Serializable {
     private String b1;
 
 
-    @JoinColumn(name = "A_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "A_ID", referencedColumnName = "ID", nullable=false) // line 39
     @ManyToOne(optional = false)
     @NotNull // line 41
     private A aId;
