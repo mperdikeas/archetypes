@@ -1,0 +1,21 @@
+Experimenting with JPA eager / lazy loading.
+
+In this use case (JPA # 000) and stage (10)
+I experimented with many EntityManagers.
+(Apress.JPA.2 book pg. 22).
+
+Conclusion: A single instance **per persistent entity
+manager** is created. If more than one entity
+managers are used (say N) you can observe from the distribution
+of the hashcodes that N instances per persistent entity,
+in total, are created.
+
+
+Things for future stages:
+
+(a) experiment more with merges and such...
+(b) implement a framework for tentative changes
+(c) implement facades
+(d) check the extent to which the above carry onto
+    proper web applications.
+
