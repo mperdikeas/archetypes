@@ -16,6 +16,10 @@ Things for future stages:
 (a) experiment more with merges and such...
 (b) implement a framework for tentative changes
 (c) implement facades
-(d) check the extent to which the above carry onto
+(d) separate the persistence archive from the rest of the
+    project. I.e. build two jars: one with the persistence
+    archive and the other with just the Main class.
+    See Apress.Pro.JPA.2 pg. 31 for more.
+(e) check the extent to which the above carry onto
     proper web applications.
 
