@@ -1,0 +1,17 @@
+Experimenting with Not Nulls
+
+In this use case (JPA # 000) and stage (14)
+I am experimenting with removing detached
+entities.
+
+Findings are:
+
+[1] detached entities cannot be removed.
+[2] entities found (therfore initially managed) and then detached
+    cannot be removed (same as 1).
+[3] getEntityManagerFactory().getCache().evictAll() does not
+    cause the EntityManager to go back to the database for
+    removed rows.
+[4] but clear() does.
+
+
