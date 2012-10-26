@@ -1,0 +1,40 @@
+Experimenting with Not Nulls
+
+In this use case (JPA # 000) and stage (13)
+I am experimenting with NotNull and Column(nullable=false).
+
+Findings are:
+
+[1] The JPA NotNull annotation is what counts and triggers the failure
+[2] The @Column(nullable=false) annotation simply describes the column
+    in the database, but without the NotNull cannot be used to enforce
+    the constraint.
+[3] The JPA NotNull enforces the constraint even when the database
+    column is NOT set to 'NOT NULL'
+[4] The @Column(nullable=false) DOES NOT enforce the constraint when
+    the database column is not set to 'NOT NULL'
+[5] The JPA NotNull annotation only comes into play at the moment
+    when the transaction is to be commited. In the meantime the
+    value may have been changed.
+[6] Strangly, the @Basic(optinal=false) annotation is NOT enforced
+    in the runtime and an exception is only thrown when the statement
+    is sent to the database (if the table's column is NOT NULL).
+    Otherwise, (i.e. if the table's column is *not* NOT NULL), the
+    following attributes won't save you:
+
+    @Basic(optional = false)
+    // @NotNull // line 37
+    @Column(name = "A1", nullable=false)
+    private String a1;
+
+    That is, the above set of attributes, won't complain if you 
+    do the following:
+
+        A a = em.find(A.class, 1);
+        a.setA1(null);
+        entityTransaction.begin();
+        entityTransaction.commit();
+
+
+
+
