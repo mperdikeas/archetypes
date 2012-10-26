@@ -1,0 +1,24 @@
+Experimenting with Not Nulls
+
+In this use case (JPA # 000) and stage (12)
+I am building on the work of stage (11) 
+to try to trigger a failure due to the
+NotNull characteristics (in database
+and JPA annotations in the entity bean).
+
+There were two important findings:
+[1] nullifying the parent reference (as in Test.java:line62)
+    is enough to also remove the child entity from the
+    database (I suspect this is happening because the B entity
+    is still managed at that point).
+
+[2] the vanilla nullifying of the A reference in the B entity
+    fails (predictably), but strangly, despite all the
+    different permutations I 've tried (as in B.java:line39
+    and line41), the exact same stack exception is triggered.
+
+things for future stages:
+[1] create a narrowed down version of the inability to trigger
+    different stack traces.
+
+

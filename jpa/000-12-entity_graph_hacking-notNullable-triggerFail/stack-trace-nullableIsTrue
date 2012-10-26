@@ -1,0 +1,103 @@
+     [java] log4j:WARN No appenders could be found for logger (org.jboss.logging).
+     [java] log4j:WARN Please initialize the log4j system properly.
+     [java] log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+     [java] Oct 26, 2012 10:09:09 AM jpatest.Test main
+     [java] INFO: entity manager factory obtained
+     [java] Oct 26, 2012 10:09:09 AM jpatest.Test main
+     [java] INFO: entity manager obtained
+     [java] Hibernate: select b0_.ID as ID1_1_, b0_.A_ID as A3_1_1_, b0_.B1 as B2_1_1_, a1_.ID as ID0_0_, a1_.A1 as A2_0_0_ from B b0_ inner join A a1_ on b0_.A_ID=a1_.ID where b0_.ID=?
+     [java] Oct 26, 2012 10:09:09 AM entities.B <init>
+     [java] INFO: B() called
+     [java] Hibernate: select bcollectio0_.A_ID as A3_0_1_, bcollectio0_.ID as ID1_, bcollectio0_.ID as ID1_0_, bcollectio0_.A_ID as A3_1_0_, bcollectio0_.B1 as B2_1_0_ from B bcollectio0_ where bcollectio0_.A_ID=?
+     [java] Oct 26, 2012 10:09:09 AM entities.B <init>
+     [java] INFO: B() called
+     [java] Oct 26, 2012 10:09:09 AM entities.B <init>
+     [java] INFO: B() called
+     [java] Hibernate: update B set A_ID=?, B1=? where ID=?
+     [java] javax.persistence.RollbackException: Error while committing the transaction
+     [java]                                      at org.apache.tools.ant.taskdefs.ExecuteJava.execute(ExecuteJava.java:194)
+     [java]                                      at org.apache.tools.ant.taskdefs.Java.run(Java.java:771)
+     [java]                                      at org.apache.tools.ant.taskdefs.Java.executeJava(Java.java:221)
+     [java]                                      at org.apache.tools.ant.taskdefs.Java.executeJava(Java.java:135)
+     [java]                                      at org.apache.tools.ant.taskdefs.Java.execute(Java.java:108)
+     [java]                                      at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+     [java]                                      at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+     [java]                                      at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     [java]                                      at java.lang.reflect.Method.invoke(Method.java:601)
+     [java]                                      at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+     [java]                                      at org.apache.tools.ant.Task.perform(Task.java:348)
+     [java]                                      at org.apache.tools.ant.taskdefs.Sequential.execute(Sequential.java:68)
+     [java]                                      at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+     [java]                                      at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+     [java]                                      at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     [java]                                      at java.lang.reflect.Method.invoke(Method.java:601)
+     [java]                                      at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+     [java]                                      at org.apache.tools.ant.Task.perform(Task.java:348)
+     [java]                                      at org.apache.tools.ant.taskdefs.MacroInstance.execute(MacroInstance.java:398)
+     [java]                                      at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+     [java]                                      at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+     [java]                                      at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     [java]                                      at java.lang.reflect.Method.invoke(Method.java:601)
+     [java]                                      at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+     [java]                                      at org.apache.tools.ant.Task.perform(Task.java:348)
+     [java]                                      at org.apache.tools.ant.Target.execute(Target.java:390)
+     [java]                                      at org.apache.tools.ant.Target.performTasks(Target.java:411)
+     [java]                                      at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1399)
+     [java]                                      at org.apache.tools.ant.Project.executeTarget(Project.java:1368)
+     [java]                                      at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+     [java]                                      at org.apache.tools.ant.Project.executeTargets(Project.java:1251)
+     [java]                                      at org.apache.tools.ant.Main.runBuild(Main.java:809)
+     [java]                                      at org.apache.tools.ant.Main.startAnt(Main.java:217)
+     [java]                                      at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+     [java]                                      at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+     [java] Caused by: javax.persistence.RollbackException: Error while committing the transaction
+     [java]        at org.hibernate.ejb.TransactionImpl.commit(TransactionImpl.java:90)
+     [java]        at jpatest.Test.main(Test.java:62)
+     [java]        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+     [java]        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+     [java]        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     [java]        at java.lang.reflect.Method.invoke(Method.java:601)
+     [java]        at org.apache.tools.ant.taskdefs.ExecuteJava.run(ExecuteJava.java:217)
+     [java]        at org.apache.tools.ant.taskdefs.ExecuteJava.execute(ExecuteJava.java:152)
+     [java]        ... 34 more
+     [java] Caused by: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: integrity constraint violation: NOT NULL check constraint; SYS_CT_10066 table: B column: A_ID
+     [java]        at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1361)
+     [java]        at org.hibernate.ejb.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1289)
+     [java]        at org.hibernate.ejb.TransactionImpl.commit(TransactionImpl.java:78)
+     [java]        ... 41 more
+     [java] Caused by: org.hibernate.exception.ConstraintViolationException: integrity constraint violation: NOT NULL check constraint; SYS_CT_10066 table: B column: A_ID
+     [java]        at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:74)
+     [java]        at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:47)
+     [java]        at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:125)
+     [java]        at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:110)
+     [java]        at org.hibernate.engine.jdbc.internal.proxy.AbstractStatementProxyHandler.continueInvocation(AbstractStatementProxyHandler.java:129)
+     [java]        at org.hibernate.engine.jdbc.internal.proxy.AbstractProxyHandler.invoke(AbstractProxyHandler.java:81)
+     [java]        at $Proxy20.executeUpdate(Unknown Source)
+     [java]        at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:56)
+     [java]        at org.hibernate.persister.entity.AbstractEntityPersister.update(AbstractEntityPersister.java:3006)
+     [java]        at org.hibernate.persister.entity.AbstractEntityPersister.updateOrInsert(AbstractEntityPersister.java:2908)
+     [java]        at org.hibernate.persister.entity.AbstractEntityPersister.update(AbstractEntityPersister.java:3237)
+     [java]        at org.hibernate.action.internal.EntityUpdateAction.execute(EntityUpdateAction.java:113)
+     [java]        at org.hibernate.engine.spi.ActionQueue.execute(ActionQueue.java:272)
+     [java]        at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:264)
+     [java]        at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:187)
+     [java]        at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:326)
+     [java]        at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:52)
+     [java]        at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1081)
+     [java]        at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:315)
+     [java]        at org.hibernate.engine.transaction.internal.jdbc.JdbcTransaction.beforeTransactionCommit(JdbcTransaction.java:101)
+     [java]        at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.commit(AbstractTransactionImpl.java:175)
+     [java]        at org.hibernate.ejb.TransactionImpl.commit(TransactionImpl.java:73)
+     [java]        ... 41 more
+     [java] Caused by: java.sql.SQLIntegrityConstraintViolationException: integrity constraint violation: NOT NULL check constraint; SYS_CT_10066 table: B column: A_ID
+     [java]        at org.hsqldb.jdbc.Util.sqlException(Unknown Source)
+     [java]        at org.hsqldb.jdbc.Util.sqlException(Unknown Source)
+     [java]        at org.hsqldb.jdbc.JDBCPreparedStatement.fetchResult(Unknown Source)
+     [java]        at org.hsqldb.jdbc.JDBCPreparedStatement.executeUpdate(Unknown Source)
+     [java]        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+     [java]        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+     [java]        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     [java]        at java.lang.reflect.Method.invoke(Method.java:601)
+     [java]        at org.hibernate.engine.jdbc.internal.proxy.AbstractStatementProxyHandler.continueInvocation(AbstractStatementProxyHandler.java:122)
+     [java]        ... 58 more
+     [java] Java Result: -1
