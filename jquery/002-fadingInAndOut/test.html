@@ -1,0 +1,33 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="utf-8">
+   <title>jQuery demo</title>
+   <style>
+       a.test { font-weight: bold; }
+   </style>
+ </head>
+ <body>
+   Demonstate some jQuery weird flashing effects.
+   <ol>
+    <li><a href="www.google.com">google</a></li>
+    <li><a href="www.cnn.com">cnn</a></li>
+    <li><a href="www.youtube.com">youtube</a></li>
+   </ol>
+   <div id="foo">
+   <a href="http://jquery.com/"    >jQuery     </a><p>
+   <a class="zoo" href="http://neuropublic.gr/">Neuropublic</a>
+   </div>
+   <!-- the direct link to Google's CDN was blocked by Kerio                              -->
+   <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script-->
+   <script src="jquery.js"></script>
+   <script>
+     $(document).ready(function(){
+      $("li a").fadeOut().fadeIn().fadeOut().fadeIn();
+      $("ol li:first-child a").fadeOut();
+      $("#foo a").fadeOut().fadeIn();
+      $(".zoo").fadeOut().fadeIn();
+     });
+   </script>
+ </body>
+ </html>
