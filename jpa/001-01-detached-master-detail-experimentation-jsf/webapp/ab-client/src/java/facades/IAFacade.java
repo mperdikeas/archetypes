@@ -7,6 +7,7 @@ public interface IAFacade {
 
     List<A> findAll();
     public A find(Object id);
-    public void edit(A object);
+    public void persist(A object);
+    public A merge(A object);
     public void remove(A object);
 }

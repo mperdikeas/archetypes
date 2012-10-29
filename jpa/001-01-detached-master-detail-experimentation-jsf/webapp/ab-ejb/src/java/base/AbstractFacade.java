@@ -1,35 +1,34 @@
 package base;
 
+import mutil.jpapersutil.JPUtil;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.EntityManager;
 import java.util.logging.Logger;
-import java.lang.reflect.ParameterizedType;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import static mutil.base.Util.castToShortWithChecks;
 
-public abstract class AbstractFacade<T> {
 
-    private static Logger l = Logger.getLogger(AbstractFacade.class.getName());
-    private Class<T> entityClass;
+public abstract class AbstractFacade<T> implements IFacade<T> {
+
+    private static final Logger l = Logger.getLogger(AbstractFacade.class.getName());
+    private Class<T> entityClass = returnedClass();
+
     protected abstract EntityManager getEntityManager();
-    
-    public AbstractFacade(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
 
-
-    public void create(T entity) {
+    public void persist(T entity) {
         getEntityManager().persist(entity);
     }
 
-    public void edit(T entity) {
-        getEntityManager().merge(entity);
+    public T merge(T entity) {
+        return getEntityManager().merge(entity);
     }
 
-    private Class returnedClass() {
+    protected Class<T> returnedClass() {
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
-        return (Class) parameterizedType.getActualTypeArguments()[0];
+        return (Class<T>) parameterizedType.getActualTypeArguments()[0];
     }
 
     public void remove(T entity) {
@@ -62,13 +61,6 @@ public abstract class AbstractFacade<T> {
     // TODO this method should be simplified
     public List<T> findAllByCriteriaRange(Map params, int[] range, int[] recordCount, String sortField, boolean sortOrder) {
 
-        if (range == null || range.length != 2) {
-            throw new IllegalArgumentException("Pagination range should have two values: min and max");
-        }
-        if (recordCount == null || recordCount.length != 1) {
-            throw new IllegalArgumentException("Pagination recordCount should have only one value");
-        }
-
         //Initialize query String
         StringBuilder queryStr = new StringBuilder("SELECT e FROM " + entityClass.getSimpleName() + " e ");
         StringBuilder countQueryStr = new StringBuilder("SELECT count(e) FROM " + entityClass.getSimpleName() + " e ");
@@ -93,21 +85,16 @@ public abstract class AbstractFacade<T> {
         Query query = getEntityManager().createQuery(queryStr.toString());
         Query countQuery = getEntityManager().createQuery(countQueryStr.toString());
 
-        //Set up query parameter values dynamically
-        int paramIndex = 1;
-        for (Object key : params.keySet()) {
-            Object value = params.get(key);
-            query.setParameter(paramIndex, value);
-            countQuery.setParameter(paramIndex, value);
-            paramIndex++;
+        //Find the total record count and add to the row count
+        if (recordCount != null) {
+            recordCount[0] += ((Long) countQuery.getSingleResult()).intValue();
         }
 
-        //Find the total record count
-        recordCount[0] = ((Long) countQuery.getSingleResult()).intValue();
-
         //Set up the pagination range
-        query.setMaxResults(range[1] - range[0]);
-        query.setFirstResult(range[0]);
+        if (range != null) {
+            query.setMaxResults(range[1] - range[0]);
+            query.setFirstResult(range[0]);
+        }
 
         return query.getResultList();
     }
@@ -119,15 +106,19 @@ public abstract class AbstractFacade<T> {
         whereClause.append(" WHERE ");
 
         for (Object paramName : params.keySet()) {
-
             if (paramIndex > 1) {
                 whereClause.append(" AND ");
             }
-
-            whereClause.append(" e.");
-            whereClause.append(paramName);
-            whereClause.append(" = ?");
-            whereClause.append(paramIndex);
+            if (paramName.equals("specialAndClause")) {
+                whereClause.append(params.get(paramName));
+            }
+            else {
+                whereClause.append(" e.");
+                whereClause.append(paramName);
+                whereClause.append(" = '");
+                whereClause.append(params.get(paramName));
+                whereClause.append("'");
+            }
 
             paramIndex++;
         }
@@ -142,4 +133,15 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
+
+
+    public short getSeqNextValAsShort() {return castToShortWithChecks(getSeqNextVal()); }
+    public int   getSeqNextValAsInt()   {return getSeqNextVal(); }
+    public long  getSeqNextValAsLong()  {return getSeqNextVal(); }
+
+    private Integer getSeqNextVal() {
+        return JPUtil.getNextSequenceValueForEntity(entityClass, getEntityManager());
+    }
+
+    // public abstract T initRow();
 }

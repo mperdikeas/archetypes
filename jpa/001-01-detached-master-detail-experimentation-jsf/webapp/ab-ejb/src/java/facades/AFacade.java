@@ -35,9 +35,5 @@ public class AFacade extends AbstractFacade<A> implements IAFacadeLocal {
         return em;
     }
 
-    public AFacade() {
-        super(A.class);
-    }
-
     
 }

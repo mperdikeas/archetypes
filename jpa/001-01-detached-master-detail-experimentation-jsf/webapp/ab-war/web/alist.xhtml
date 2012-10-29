@@ -16,6 +16,16 @@
 
         <ui:define name="body">
             <h:form id="CAR-form" styleClass="jsfcrud_list_form">
+                <p:layout fullPage="false" style="min-width:800px;min-height:700px;">
+                    <p:layoutUnit id="inner_north" position="north" size="60">
+                        <h:panelGrid columns="2" style="width:100%;" columnClasses="titleBar,buttonsBar">
+                            <h:panelGrid id="buttonsBar" columns="3">
+                                <p:commandButton value="new A" id="newBtn" action="#{aLController.gotoCreate}"
+                                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:layoutUnit>
+                    <p:layoutUnit id="inner_center" position="center">
                 <p:outputPanel id="CAR-table">            
                     <h:panelGroup id="CAR-panelGroup">
                         <p:dataTable var="item" value="#{aLController.items}" rowKey="#{item.model}" paginator="true" rows="10"
@@ -31,6 +41,8 @@
                         </p:dataTable>  
                     </h:panelGroup>
                 </p:outputPanel>
+                    </p:layoutUnit>
+                </p:layout>
             </h:form>
         </ui:define>
     </ui:composition>
