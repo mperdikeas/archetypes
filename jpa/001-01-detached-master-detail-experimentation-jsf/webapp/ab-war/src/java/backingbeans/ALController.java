@@ -31,7 +31,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import facades.IAFacadeLocal;
+import facades.IAFacade;
 import entities.A;
+import base.IFacade;
 
 @ManagedBean
 @ViewScoped
@@ -42,6 +44,15 @@ public class ALController implements Serializable {
 
     @EJB(beanName = "AFacade")
     private IAFacadeLocal aFacade;
+
+    public String gotoCreate() {
+        //CashFlow cf = new CashFlow();
+        //cf.setDateCreated(new Date());
+        //FacesContext.getCurrentInstance().getExternalContext().getFlash().put(SELECTED_PAGE_PARAM_ΚΕΥ, cf);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("create-mode", true);
+
+        return "aedit";
+    }
 
     private boolean loadDatabase = true;
 
