@@ -45,7 +45,8 @@ public class A implements Serializable {
     @org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private Set<B> bCollection = new LinkedHashSet<B>();
 
-    public Set<B> getBCollection() { 
+    public Set<B> getBCollection() {
+        l.info("returning B collection");
         return bCollection;
     }
     public void setBCollection(Set<B> bCollection) {

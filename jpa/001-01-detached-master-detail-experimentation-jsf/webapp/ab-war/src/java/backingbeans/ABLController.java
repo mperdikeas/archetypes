@@ -40,8 +40,7 @@ import base.IFacade;
 @ViewScoped
 public class ABLController implements Serializable {
 
-    private static final String CLASSNAME=ALController.class.getName();
-    private static final Logger l = Logger.getLogger(CLASSNAME);
+    private static final Logger l = Logger.getLogger(ABLController.class.getName());
 
     @EJB(beanName = "AFacade")
     private IAFacadeLocal aFacade;
@@ -54,6 +53,7 @@ public class ABLController implements Serializable {
     private A masterRecord;
     
     public A getMasterRecord() {
+        l.info("getMasterRecord() called");
         return masterRecord;
     }
 
@@ -64,6 +64,11 @@ public class ABLController implements Serializable {
 
     public B getCurrentDetailRecord() {
         return currentDetailRecord;
+    }
+
+    public void addB() {
+        B b = new B();
+        b.setAId(masterRecord);
     }
 
 }
