@@ -1,0 +1,10 @@
+Experimenting with Not Nulls
+
+In this use case (JPA # 000) and stage (15)
+I experimented with detached master-detail
+entities and collection operations on them
+and SUCCEEDED in reproducing the lazy
+initialization exception error.
+
+
+
