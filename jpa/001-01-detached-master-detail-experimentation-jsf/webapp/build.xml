@@ -1,4 +1,4 @@
-<project name="cars" basedir="." default="republish">
+<project name="ab" basedir="." default="republish">
 
     <!-- Project settings -->
     <property name="project.distname"      value="${ant.project.name}"/>

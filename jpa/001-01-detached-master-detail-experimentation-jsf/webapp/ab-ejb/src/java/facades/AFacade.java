@@ -24,7 +24,7 @@ import entities.A;
 @Local(IAFacadeLocal.class)
 @Remote(IAFacadeRemote.class)
 public class AFacade extends AbstractFacade<A> implements IAFacadeLocal {
-    @PersistenceContext(unitName = "carsPU")
+    @PersistenceContext(unitName = "abPU")
     private EntityManager em;
 
     private static final String CLASSNAME = AFacade.class.getName();
