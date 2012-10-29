@@ -33,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import facades.IAFacadeLocal;
 import facades.IAFacade;
 import entities.A;
+import entities.B;
 import base.IFacade;
 
 @ManagedBean
@@ -50,19 +51,19 @@ public class ABLController implements Serializable {
         return "aedit";
     }
 
-    private boolean loadDatabase = true;
-
-    List<A> items;
-    public void synchItemsFromDB() {
-        items = aFacade.findAll();
+    private A masterRecord;
+    
+    public A getMasterRecord() {
+        return masterRecord;
     }
 
-    public List<A> getItems() { 
-        if (loadDatabase) {
-            synchItemsFromDB();
-            loadDatabase = false;
-        }
-        return items;
+    private B currentDetailRecord;
+    public void setCurrentDetailRecord(B detailRecord) {
+        this.currentDetailRecord = currentDetailRecord;
+    }
+
+    public B getCurrentDetailRecord() {
+        return currentDetailRecord;
     }
 
 }
