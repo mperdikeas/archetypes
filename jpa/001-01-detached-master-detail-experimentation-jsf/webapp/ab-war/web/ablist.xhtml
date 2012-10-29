@@ -27,7 +27,7 @@
 
                         <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
 
-                        <p:dataTable id="tbl1" var="item" value="#{aBLController.masterRecord.BCollection}" rowKey="#{item.id}" paginator="true" rows="10" lazy="true" paginatorPosition="bottom"
+                        <p:dataTable id="tbl1" var="item" value="#{aBLController.detailRecords}" rowKey="#{item.id}" paginator="true" rows="10" lazy="true" paginatorPosition="bottom"
                                      rowsPerPageTemplate="5,10,15" widgetVar="dataTableWidget" style="width:100%"
                                      selection="#{aBLController.currentDetailRecord}" selectionMode="single" resizableColumns="true"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}

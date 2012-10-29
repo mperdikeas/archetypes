@@ -17,6 +17,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.bean.ManagedProperty;
 import java.util.logging.Logger;
 import java.util.List;
+import java.util.Set;
 import java.util.Arrays;
 import java.util.ArrayList;
 import javax.faces.event.ActionEvent;
@@ -63,6 +64,10 @@ public class ABLController implements Serializable {
     public A getMasterRecord() {
         l.info("getMasterRecord() called");
         return masterRecord;
+    }
+
+    public List<B> getDetailRecords() {
+        return new ArrayList<B>(masterRecord.getBCollection());
     }
 
     private B currentDetailRecord;
