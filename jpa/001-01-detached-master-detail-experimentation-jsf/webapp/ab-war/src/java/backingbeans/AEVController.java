@@ -37,33 +37,30 @@ import base.IFacade;
 
 @ManagedBean
 @ViewScoped
-public class ALController implements Serializable {
+public class AEVController implements Serializable {
 
-    private static final String CLASSNAME=ALController.class.getName();
-    private static final Logger l = Logger.getLogger(CLASSNAME);
+    private static final Logger l = Logger.getLogger(AEVController.class.getName());
 
     @EJB(beanName = "AFacade")
     private IAFacadeLocal aFacade;
 
-    public String gotoCreate() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("create-mode", true);
-        return "aedit";
+    public String gotoBs() {
+        return "ablist";
     }
 
-    private boolean loadDatabase = true;
 
-    List<A> items;
-    public void synchItemsFromDB() {
-        items = aFacade.findAll();
+    @PostConstruct
+    public void initBasedOnMode() {
+        boolean createMode = (Boolean) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("create-mode");
+        if (createMode) {
+            current = new A();
+        } else throw new UnsupportedOperationException();
     }
 
-    public List<A> getItems() { 
-        if (loadDatabase) {
-            synchItemsFromDB();
-            loadDatabase = false;
-        }
-        return items;
-    }
+
+    private A current;
+
+    public A getCurrent() { return current; }
 
 }
 

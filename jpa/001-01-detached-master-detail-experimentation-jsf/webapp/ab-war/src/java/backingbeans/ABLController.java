@@ -37,7 +37,7 @@ import base.IFacade;
 
 @ManagedBean
 @ViewScoped
-public class ALController implements Serializable {
+public class ABLController implements Serializable {
 
     private static final String CLASSNAME=ALController.class.getName();
     private static final Logger l = Logger.getLogger(CLASSNAME);
