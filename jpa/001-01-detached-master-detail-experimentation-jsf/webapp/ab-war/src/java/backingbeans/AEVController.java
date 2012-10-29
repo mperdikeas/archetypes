@@ -45,6 +45,7 @@ public class AEVController implements Serializable {
     private IAFacadeLocal aFacade;
 
     public String gotoBs() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("the-master-record", current);
         return "ablist";
     }
 

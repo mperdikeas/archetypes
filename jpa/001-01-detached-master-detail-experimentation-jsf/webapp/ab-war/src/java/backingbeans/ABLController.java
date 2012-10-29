@@ -45,6 +45,14 @@ public class ABLController implements Serializable {
     @EJB(beanName = "AFacade")
     private IAFacadeLocal aFacade;
 
+    @PostConstruct
+    protected void initializeMasterRecord() {
+        if (masterRecord == null) {
+            masterRecord = (A) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("the-master-record");
+        }
+    }
+
+
     public String gotoCreate() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("create-mode", true);
         return "aedit";
