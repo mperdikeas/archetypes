@@ -6,9 +6,11 @@ in a wizzard-like flow of steps to try
 and reproduced detached entity exception
 and see how I can solve them.
 
-In this stage (02) I am implementing the 'edit'
-functionality.
+In this stage (02) I managed to implement the 'edit'
+functionality and reproduce the 'detached-entity-exception'.
 
 Issues for future stages:
-[1] implement lazy loading
-[2] implement tentative modifications (with undo)
+[1] solve the 'detached-entity-exception' using extended
+    persistent context and SFSB.
+[2] implement lazy loading
+[3] implement tentative modifications (with undo)
