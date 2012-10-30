@@ -35,6 +35,7 @@ import facades.IAFacade;
 
 import facades.IBFacade;
 
+import mutil.base.BooleanToggler;
 import entities.A;
 import entities.B;
 import base.IFacade;
@@ -91,7 +92,11 @@ public class ABLController implements Serializable {
 
     private B currentDetailRecord;
     public void setCurrentDetailRecord(B detailRecord) {
-        this.currentDetailRecord = currentDetailRecord;
+        l.info("*************************************************");
+        l.info("*************************************************");
+        l.info("*************************************************");
+        l.info("setting current detail record to: "+detailRecord);
+        this.currentDetailRecord = detailRecord;
     }
 
     public B getCurrentDetailRecord() {
@@ -119,6 +124,15 @@ public class ABLController implements Serializable {
         l.info("masterRecord is detached? "+ (!aFacade.emContains(masterRecord)));
         masterRecord = aFacade.find(masterRecord.getId());
         l.info("done deleting the entity with the JPA method");
+    }
+    private BooleanToggler bT = new BooleanToggler();
+    public void deleteRandom() {
+        B b = currentDetailRecord;
+        if (b==null) throw new RuntimeException("you have to select a row first");
+        if (bT.getValueAndToggle())
+            deleteCollection(b);
+        else
+            deleteJPA(b);
     }
 
 }
