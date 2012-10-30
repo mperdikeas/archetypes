@@ -6,10 +6,10 @@ in a wizzard-like flow of steps to try
 and reproduced detached entity exception
 and see how I can solve them.
 
-In this stage (03) I am trying to solve the 
+In this stage (03) I am managed to solve the
 'detached-entity-exception' showcased in stage 02
-using extended persistent context and SFSB or
-maybe some other mechanism.
+not by using extended persistence context and
+SBSB but by merging the entity.
 
 Issues for future stages:
 [1] implement lazy loading

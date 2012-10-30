@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-import facades.IAFacadeLocal;
+import facades.IAFacade.ILocal;
 import facades.IAFacade;
 import entities.A;
 import base.IFacade;
@@ -42,7 +42,7 @@ public class AEVController implements Serializable {
     private static final Logger l = Logger.getLogger(AEVController.class.getName());
 
     @EJB(beanName = "AFacade")
-    private IAFacadeLocal aFacade;
+    private IAFacade.ILocal aFacade;
 
     public String gotoBs() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("the-master-record", current);

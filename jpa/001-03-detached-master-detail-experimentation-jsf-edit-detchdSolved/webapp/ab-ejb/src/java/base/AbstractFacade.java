@@ -18,6 +18,8 @@ public abstract class AbstractFacade<T> implements IFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
+    public boolean emContains(T t) { return getEntityManager().contains(t); }
+
     public void persist(T entity) {
         getEntityManager().persist(entity);
     }

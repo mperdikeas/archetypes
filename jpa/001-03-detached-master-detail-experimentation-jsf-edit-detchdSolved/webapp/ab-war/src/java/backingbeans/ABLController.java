@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-import facades.IAFacadeLocal;
+import facades.IAFacade.ILocal;
 import facades.IAFacade;
 import entities.A;
 import entities.B;
@@ -44,7 +44,7 @@ public class ABLController implements Serializable {
     private static final Logger l = Logger.getLogger(ABLController.class.getName());
 
     @EJB(beanName = "AFacade")
-    private IAFacadeLocal aFacade;
+    private IAFacade.ILocal aFacade;
 
     @PostConstruct
     protected void initializeMasterRecord() {
@@ -53,9 +53,22 @@ public class ABLController implements Serializable {
         }
     }
 
-    public String save() {
-        aFacade.persist(masterRecord);
+    public String saveAndBackAtStart() {
+        l.info("ABLController: about to persist");
+        if (!aFacade.emContains(masterRecord)) {
+            l.info("Entity is detached.");
+            aFacade.merge(masterRecord);
+        }
         return "alist";
+    }
+
+    public String saveAndStayHere() {
+        l.info("ABLController: about to persist");
+        if (!aFacade.emContains(masterRecord)) {
+            l.info("Entity is detached.");
+            masterRecord=aFacade.merge(masterRecord);
+        }
+        return null;
     }
 
     public String gotoCreate() {

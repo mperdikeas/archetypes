@@ -22,12 +22,11 @@ import mutil.base.Pair;
 
 import entities.A;
 
-//@Stateless
-@Stateful
-@Local(IAFacadeLocal.class)
-@Remote(IAFacadeRemote.class)
-public class AFacade extends AbstractFacade<A> implements IAFacadeLocal {
-    @PersistenceContext(unitName = "abPU", type=PersistenceContextType.EXTENDED)
+@Stateless
+@Local(IAFacade.ILocal.class)
+@Remote(IAFacade.IRemote.class)
+public class AFacade extends AbstractFacade<A> implements IAFacade.ILocal {
+    @PersistenceContext(unitName = "abPU")
     private EntityManager em;
 
     private static final String CLASSNAME = AFacade.class.getName();

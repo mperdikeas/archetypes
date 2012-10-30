@@ -1,13 +1,19 @@
 package facades;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
+
 import java.util.List;
 import entities.A;
+import base.IFacade;
 
-public interface IAFacade {
 
-    List<A> findAll();
-    public A find(Object id);
-    public void persist(A object);
-    public A merge(A object);
-    public void remove(A object);
+public interface IAFacade extends IFacade<A> {
+
+    @Local
+    public interface ILocal extends IAFacade {}
+
+    @Remote
+    public interface IRemote extends IAFacade {}
+
 }

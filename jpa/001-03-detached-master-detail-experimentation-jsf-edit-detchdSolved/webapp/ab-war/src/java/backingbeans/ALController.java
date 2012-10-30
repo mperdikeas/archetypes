@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-import facades.IAFacadeLocal;
+import facades.IAFacade.ILocal;
 import facades.IAFacade;
 import entities.A;
 import base.IFacade;
@@ -43,7 +43,7 @@ public class ALController implements Serializable {
     private static final Logger l = Logger.getLogger(CLASSNAME);
 
     @EJB(beanName = "AFacade")
-    private IAFacadeLocal aFacade;
+    private IAFacade.ILocal aFacade;
 
     public String gotoCreate() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("create-mode", true);

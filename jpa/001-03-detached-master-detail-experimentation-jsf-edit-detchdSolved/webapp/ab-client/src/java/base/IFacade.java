@@ -11,6 +11,7 @@ public interface IFacade<T> {
     public T merge(T object);
     public T find  (Object id);
     public void remove(T object);
+    public boolean emContains(T t);
     
     public List<T> findRange(int[] range);
     public List<T> findAllByCriteriaRange(Map params);
