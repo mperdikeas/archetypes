@@ -51,12 +51,16 @@ public class A implements Serializable {
         return bCollection;
     }
     public void setBCollection(Set<B> bCollection) {
+        l.info("A#setBCollection( size: "+bCollection.size()+" )");
         this.bCollection = bCollection;
     }
 
-    public A() {}
+    public A() {
+        l.info("A()");
+    }
 
     public A(Integer id, String a1) {
+        l.info("A("+id+","+a1+")");
         this.id = id;
         this.a1 = a1;
     }
