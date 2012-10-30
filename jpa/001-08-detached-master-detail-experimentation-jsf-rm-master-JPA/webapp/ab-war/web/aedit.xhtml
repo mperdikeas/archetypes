@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">AB</ui:define>
+        <ui:define name="header">
+            <h3>maintaining the A table</h3>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form">
+                <p:layout fullPage="false" style="min-width:800px;min-height:700px;">
+                    <p:layoutUnit id="inner_north" position="north" size="60">
+                        <h:panelGrid columns="2" style="width:100%;" columnClasses="titleBar,buttonsBar">
+                            <h:panelGrid id="buttonsBar" columns="3">
+                                <p:commandButton value="goto Bs" id="newBtn" action="#{aEVController.gotoBs}"
+                                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:layoutUnit>
+                    <p:layoutUnit id="inner_center" position="center">
+                <p:outputPanel id="CAR-table">            
+                        <h:panelGrid columns="2" cellspacing="10px" >
+                            <p:outputLabel for="a1" value="A1" />
+                            <p:inputText id="a1" value="#{aEVController.current.a1}" required="true" requiredMessage="field 'A1' is mandatory"/>
+
+                        </h:panelGrid>
+                </p:outputPanel>
+                    </p:layoutUnit>
+                </p:layout>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

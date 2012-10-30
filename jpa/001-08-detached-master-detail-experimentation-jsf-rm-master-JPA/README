@@ -1,0 +1,29 @@
+Experimenting with Master-Detail
+
+In this use case (JPA # 001) I am experimenting
+with master-detail forms in a wizzard-like
+flow of steps to try and reproduced detached
+entity exception and see how I can solve them.
+
+In this stage (08) I reproduce the state at the
+end of stage (07) but by specifying
+the JPA orphan removal method so as to remove
+Hibernate dependency. This is the baseline
+from now on so we are JPA-compliant.
+
+The problem however with the inability to remove child rows
+using plain EntityManager::remove remains.
+
+See the comments in ABLController.java:line-117.
+
+The first delete button that deletes by
+modifying the collection works, but not the second.
+
+Issues for future stages:
+
+[1] try to reproduce the inability to use EntityManager::remove
+    on the child entity, in a console context (so I can SO-post it).
+
+[2] implement lazy loading
+
+[3] implement tentative modifications (with undo).
