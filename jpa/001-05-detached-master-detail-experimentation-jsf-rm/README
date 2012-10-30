@@ -6,12 +6,13 @@ in a wizzard-like flow of steps to try
 and reproduced detached entity exception
 and see how I can solve them.
 
-In this stage (05) I am trying to:
+In this stage (05) I managed to implement selection
+based on the new identity hash to 
+see whether it works.
 
-
-[1] implement selection based on the new identity hash to 
-    see whether it works. Experiment with what happens
-    if the hash fails.
+Strangely, when the hash code utility fails, the
+delete logic still works and one is still able to select
+the row in question.
 
 Issues for future stages:
 
