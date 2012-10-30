@@ -55,7 +55,9 @@ public class AEVController implements Serializable {
         boolean createMode = (Boolean) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("create-mode");
         if (createMode) {
             current = new A();
-        } else throw new UnsupportedOperationException();
+        } else {
+            current = (A) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("master-record");
+        }
     }
 
 

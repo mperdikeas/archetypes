@@ -50,6 +50,12 @@ public class ALController implements Serializable {
         return "aedit";
     }
 
+    public String gotoEdit(A item) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("create-mode", false);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("master-record", item);
+        return "aedit";
+    }
+
     private boolean loadDatabase = true;
 
     List<A> items;
