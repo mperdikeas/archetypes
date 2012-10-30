@@ -1,0 +1,22 @@
+Experimenting with Master-Detail
+
+In this use case (JPA # 001)
+I am experimenting with master-detail forms
+in a wizzard-like flow of steps to try
+and reproduced detached entity exception
+and see how I can solve them.
+
+In this stage (07) I managed to solve the
+ConcurrentModification bug that I discovered in stage (06)
+and I can now remove top (A) entities, with their corresponding
+graphs. However, I also found out that now
+I can't get the EntityManager::remove
+method to work for the child (B) entities. See the comments
+in ABLController.java. The first delete button that deletes by
+modifying the collection works, but not the second.
+
+Issues for future stages:
+
+[1] implement lazy loading
+
+[2] implement tentative modifications (with undo).
