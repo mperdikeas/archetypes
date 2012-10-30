@@ -53,6 +53,10 @@ public class ABLController implements Serializable {
         }
     }
 
+    public String save() {
+        aFacade.persist(masterRecord);
+        return "alist";
+    }
 
     public String gotoCreate() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("create-mode", true);
@@ -67,7 +71,9 @@ public class ABLController implements Serializable {
     }
 
     public List<B> getDetailRecords() {
-        return new ArrayList<B>(masterRecord.getBCollection());
+        List<B> retValue = new ArrayList<B>(masterRecord.getBCollection());
+        l.info("ABLController#getDetailRecords() returning a list of: "+retValue.size()+" elements.");
+        return retValue;
     }
 
     private B currentDetailRecord;

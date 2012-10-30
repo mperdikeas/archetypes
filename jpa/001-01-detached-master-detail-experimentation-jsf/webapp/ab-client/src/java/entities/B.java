@@ -25,7 +25,7 @@ public class B implements Serializable {
 
     @Id
     @Basic(optional = false)
-    @NotNull    
+    @GeneratedValue(strategy=GenerationType.IDENTITY)   
     @Column(name = "ID")
     private Integer id;
 
@@ -52,6 +52,9 @@ public class B implements Serializable {
     }
 
     
+    public Integer getIdentityHashCode() {
+        return System.identityHashCode(this);
+    }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -65,6 +68,9 @@ public class B implements Serializable {
     public void nullifyAId() {
         this.aId = null;
     }
+
+    public String getB1() { return b1; }
+    public void setB1(String b1) { this.b1 = b1; }
     
     @PreRemove
     public void preRemove() {setAId(null);} // line 54
