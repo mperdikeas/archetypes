@@ -1,10 +1,12 @@
-Experimenting with Not Nulls
+Experimenting with Master-Detail
 
-In this use case (JPA # 000) and stage (15)
-I experimented with detached master-detail
-entities and collection operations on them
-and SUCCEEDED in reproducing the lazy
-initialization exception error.
+In this use case (JPA # 001) and stage (01)
+I am experimenting with master-detail forms
+in a wizzard-like flow of steps to try
+and reproduced detached entity exception
+and see how I can solve them.
 
-
-
+Issues for future stages:
+[1] implement edit
+[2] implement lazy loading
+[3] implement tentative modifications (with undo)
