@@ -1,0 +1,23 @@
+Experimenting with Master-Detail
+
+In this use case (JPA # 001)
+I am experimenting with master-detail forms
+in a wizzard-like flow of steps to try
+and reproduced detached entity exception
+and see how I can solve them.
+
+In this stage (04) I managed to implement
+removal in two separate ways: JPA-way and 
+EntityManager-way.
+
+Issues for future stages:
+
+[1] implement selection based on the new identity hash to 
+    see whether it works.
+
+[2] implement removal of top (A) entities
+    with their corresponding graph
+
+[3] implement lazy loading
+
+[4] implement tentative modifications (with undo)
