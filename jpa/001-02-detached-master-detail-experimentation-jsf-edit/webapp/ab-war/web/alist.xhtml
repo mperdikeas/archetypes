@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">AB</ui:define>
+        <ui:define name="header">
+            <h3>maintaining the A table</h3>
+        </ui:define>
+
+
+        <ui:define name="body">
+            <h:form id="CAR-form" styleClass="jsfcrud_list_form">
+                <p:layout fullPage="false" style="min-width:800px;min-height:700px;">
+                    <p:layoutUnit id="inner_north" position="north" size="60">
+                        <h:panelGrid columns="2" style="width:100%;" columnClasses="titleBar,buttonsBar">
+                            <h:panelGrid id="buttonsBar" columns="3">
+                                <p:commandButton value="new A" id="newBtn" action="#{aLController.gotoCreate}"
+                                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:layoutUnit>
+                    <p:layoutUnit id="inner_center" position="center">
+                <p:outputPanel id="outputPanel-id">
+                    <h:panelGroup id="panelGroup-id">
+                        <p:dataTable var="item" value="#{aLController.items}" rowKey="#{item.model}" paginator="true" rows="10"
+                            style="width: 45%;margin-left: 1%;margin-right: 1%;"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <f:facet name="header">  
+                                Rows in the table
+                            </f:facet>  
+                            <p:column id="a1" headerText="A1" sortBy="#{item.a1}" filterBy="#{item.a1}">  
+                                #{item.a1}
+                            </p:column>  
+                            <p:column headerText="edit" style="text-align: center;">
+                                <p:commandButton icon="ui-icon ui-icon-pencil" action="#{aLController.goToEdit(item)}"
+                                                 style="width:25px; height:20px;" ajax="false"/>
+                            </p:column>
+                        </p:dataTable>  
+                    </h:panelGroup>
+                </p:outputPanel>
+                    </p:layoutUnit>
+                </p:layout>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

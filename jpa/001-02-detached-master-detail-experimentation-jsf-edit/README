@@ -1,0 +1,14 @@
+Experimenting with Master-Detail
+
+In this use case (JPA # 001)
+I am experimenting with master-detail forms
+in a wizzard-like flow of steps to try
+and reproduced detached entity exception
+and see how I can solve them.
+
+In this stage (02) I am implementing the 'edit'
+functionality.
+
+Issues for future stages:
+[1] implement lazy loading
+[2] implement tentative modifications (with undo)
