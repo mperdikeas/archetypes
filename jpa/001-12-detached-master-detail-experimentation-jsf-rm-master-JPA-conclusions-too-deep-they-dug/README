@@ -1,0 +1,18 @@
+Experimenting with Master-Detail
+
+In this use case (JPA # 001) I am experimenting
+with master-detail forms in a wizzard-like
+flow of steps to try and reproduced detached
+entity exception and see how I can solve them.
+
+In this stage (12), which draws its provenance
+from stage (11), I am trying to dig a little
+deeper.
+
+Issues for future stages:
+
+[1] keep investigating, or maybe revert to iBatis.
+
+[2] implement lazy loading
+
+[3] implement tentative modifications (with undo).
