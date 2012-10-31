@@ -43,7 +43,7 @@ public class A implements Serializable {
 
 
     // @LazyCollection(LazyCollectionOption.FALSE) // I don't use that
-    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "aId", fetch=FetchType.EAGER, orphanRemoval=true) // line-46 if you change
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "aId", fetch=FetchType.EAGER, orphanRemoval=true) // line-46 if you change
     // the cascade type to ALL or PERSIST it no longer works. It only works with REMOVE (however, now the other deletion method
     //    fails instead). The culprit is the CascadeType.PERSIST in that
     // it resurrects the B entity during EntityManager::commit, unless you also merge A. Note that the EntityManager is calling
