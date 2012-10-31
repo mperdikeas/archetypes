@@ -40,15 +40,15 @@ public class Test {
         // false, true  --> not working    (quiet failure)
         // false, false --> working        (this only works if the orphanRemoval property in entity
         //                                  ... A is set to true, blows up with SQL constraint
-                                                violation if said property is set to false)
+        //                                       violation if said property is set to false)
 
 
-        boolean cutFromA             = false;
+        boolean cutFromA             = true;
         boolean entityManagerRemoval = false;
 
-             if ( cutFromA &&  entityManagerRemoval ) {b.preRemoveCutFromA();  em.remove(b);}
-        else if (!cutFromA &&  entityManagerRemoval ) {                        em.remove(b);}
+    if ( cutFromA &&  entityManagerRemoval ) {b.preRemoveCutFromA();  l.info("a is now: "+a); em.remove(b);}
         else if ( cutFromA && !entityManagerRemoval ) {b.preRemoveCutFromA();               }
+        else if (!cutFromA &&  entityManagerRemoval ) {                        em.remove(b);}
         else if (!cutFromA && !entityManagerRemoval ) {b.setAId(null);                      }
         else throw new RuntimeException("bug");
 
