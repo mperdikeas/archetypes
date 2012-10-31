@@ -37,24 +37,12 @@ public class BFacade extends AbstractFacade<B> implements IBFacade.ILocal {
     }
 
     @Override
-    public void foo() {
-        l.info("inside method foo()");
-        B foo = em.find(B.class, 2); // em.find doesn't trigger a commit
-        List<B> bs = findAll();
-        l.info("list of bs contains: "+bs.size()+" elements.");
-        em.refresh(bs.get(0));
-    }
-
-    @Override
     public void remove(B b) {
-        entities.A father = b.getAId();
-        b.setAId(null);
-        em.merge(father);
-        //l.info("b is attached? "+emContains(b));
-        //B attachedB = em.merge(b);
-        //l.info("attachedB is attached? "+emContains(attachedB));
-        //em.remove(attachedB);
-        //l.info("just removed attachedB, is it now attached? "+emContains(attachedB));
+        l.info("b is attached? "+emContains(b));
+        B attachedB = em.merge(b);
+        l.info("attachedB is attached? "+emContains(attachedB));
+        em.remove(attachedB);
+        l.info("just removed attachedB, is it now attached? "+emContains(attachedB));
     }
 
     

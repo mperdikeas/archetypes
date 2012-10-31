@@ -10,7 +10,6 @@ import base.IFacade;
 
 public interface IBFacade extends IFacade<B> {
 
-    public void foo();
     @Local
     public interface ILocal extends IBFacade {}
 

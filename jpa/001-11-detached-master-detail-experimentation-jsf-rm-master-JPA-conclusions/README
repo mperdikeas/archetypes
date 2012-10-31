@@ -1,0 +1,51 @@
+Experimenting with Master-Detail
+
+In this use case (JPA # 001) I am experimenting
+with master-detail forms in a wizzard-like
+flow of steps to try and reproduced detached
+entity exception and see how I can solve them.
+
+In this stage (11), which draws its provenance
+from stage (08), I am trying to reach a conclusion
+regarding the inability to do a plain EntityManager::remove
+for child rows based on the findings of stages (09) and
+(10).
+
+See the comments in ABLController.java:line-117
+and also in A.java:line-46.
+
+I better understood the cause of the resurrection
+and the role the various CascadeTypes play in it.
+However, my understanding is not complete.
+
+The only tentative conclusion is that it appears that
+the only 'safe' way to remove a child entity is to 
+null-out its references and merge its father entity
+(with its whole graph).
+
+Doing an EntityManager::remove() on a child entity
+appears to be almost impossible. However, since
+the cause of the failure is the resurrection due
+to the father's managed entity collection (which
+still holds the object even though it may have been
+removed in the detached entity) setting the CascadeType
+to REMOVE (or anything other than ALL or PERSIST
+- since PERSIST is the culprit) allows the EM:remove()
+to go ahead (although it breaks the other removal method).
+Note that as explained in the "Apres.PRO.JPA2.Mastering
+the Java Persistence API" book, the entity manager, upon
+synchronization with the database effectively does a 
+persist on all managed objects and follows their relationships
+(if set to CascadeType.PERSIST) and that's what led to 
+the resurrection. NOTE also that the pattern shown in
+A.java with CascadeType.REMOVE is not a best practice (I think
+'All' should be used in father entities) I've just used
+it to showcase the 'root' of the problem.
+
+Issues for future stages:
+
+[1] keep investigating, or maybe revert to iBatis.
+
+[2] implement lazy loading
+
+[3] implement tentative modifications (with undo).

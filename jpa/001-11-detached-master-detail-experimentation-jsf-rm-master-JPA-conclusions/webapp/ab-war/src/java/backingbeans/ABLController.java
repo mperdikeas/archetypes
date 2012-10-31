@@ -111,23 +111,23 @@ public class ABLController implements Serializable {
     public void deleteCollection(B b) {
         l.info("deleting using collection change");
         b.setAId(null);
-        bFacade.foo();        // just going to the Facade with an empty transactions doesn't do anything.
         // bFacade.remove(b); // adding this line causes the exact exception as that
                               // in the 'deleteJPA' case to be thrown.
     }
 
 
     public void deleteJPA(B b) { // line-117
-        l.info("deleting using JPA remove");
-        //b.preRemoveCutFromA();
+        l.info("JPA REMOVE STEP  1 # master record is: "+masterRecord);
+        b.preRemoveCutFromA();
+        l.info("JPA REMOVE STEP  2 # master record is: "+masterRecord);
         //b.nullifyAId();         // explicitly nullifying it doesn't make any difference
-        l.info("master record now is: "+masterRecord);
         bFacade.remove(b);      // even though I am using both these methods, the deleteJPA method doesn't seem to work
                                 // my suspicion is that this happens because I can't set the B#aId to null as there
                                 // is a constraint in the DB. Apprently, preRemoveCutFromA() is not enough.
                                 // I should test it with a different DB schema that doesn't have a 'NOT NULL' constraint.
                                 // See comment by Johannes Leimer in:
                                 // http://blog.xebia.com/2009/04/09/jpa-implementation-patterns-removing-entities/#comment-128145
+        l.info("JPA REMOVE STEP  3 # master record is: "+masterRecord);
         boolean shouldIRefresh = false;  // I shouldn't refresh cause if I do, the contents of the A graph will overwrite the removal change
         if (shouldIRefresh) {
             l.info("masterRecord is detached? "+ (!aFacade.emContains(masterRecord)));
@@ -135,7 +135,7 @@ public class ABLController implements Serializable {
         }
         l.info("masterRecord is detached? "+ (!aFacade.emContains(masterRecord)));
         masterRecord = aFacade.find(masterRecord.getId());
-        l.info("done deleting the entity with the JPA method");
+        l.info("done deleting the entity with the JPA method, masterRecord now is: "+masterRecord);
     }
     private BooleanToggler bT = new BooleanToggler();
     public void deleteRandom() {
