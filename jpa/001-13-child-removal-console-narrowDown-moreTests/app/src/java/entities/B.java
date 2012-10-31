@@ -21,7 +21,9 @@ public class B implements Serializable {
     
     private static final Logger l = Logger.getLogger(B.class.getName());
     private static final long serialVersionUID = 1L;
-    
+    private static int ic ; // instance counter    
+
+    public static int numOfInstances() { return ic; }
 
     @Id
     @Basic(optional = false)
@@ -43,7 +45,7 @@ public class B implements Serializable {
 
 
     public B() {
-        l.info("B()");
+        l.info("B(): "+(++ic)+ " instances now present");
     }
 
     public B(Integer id, String b1) {

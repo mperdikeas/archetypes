@@ -11,5 +11,20 @@ in that, indeed, during the merge of B, the many-to-one relationship
 aId that points to the A entity is also navigated and the object A
 is re-read from the database. This may result in additional or
 fewer Bs being fetched in the new, managed A entity depending on what
-was done to the database. I should also experiment on what happens
-when the entities A and B and not detached.
+was done to the database. I 've also additionally experimented and have
+found out that:
+[1] if neither A nor B are detached, no additional creations occur
+    (nor database reads) and the second merge is uneventful.
+[2] if B is detached but A's not, then only one additional B is
+    created.
+[3] if both A and B are detached we have the read to the database
+    plus additional A and B objects.
+[4] if A is detached but B's not, then this is just like case [1]
+    as A has the DETACH CascadeType set (as ALL encompasses DETACH)
+
+
+Experiment using:
+
+ant -Ddetach.A=false -Ddetach.B=false
+
+... etc.

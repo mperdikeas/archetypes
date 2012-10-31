@@ -78,6 +78,8 @@
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
         <java classname ="${project.MainClass.name}">
              <classpath refid="run.classpath"/>
+            <arg value="${detach.A}"/>
+            <arg value="${detach.B}"/>
         </java>
         </sequential>
     </macrodef>
