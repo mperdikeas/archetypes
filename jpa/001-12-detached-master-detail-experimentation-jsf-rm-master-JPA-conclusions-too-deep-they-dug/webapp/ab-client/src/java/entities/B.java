@@ -43,7 +43,7 @@ public class B implements Serializable {
 
 
     public B() {
-        l.info("B() called");
+        l.info("B()");
     }
 
     public B(Integer id, String b1) {
