@@ -1,18 +1,48 @@
 Experimenting with Master-Detail
 
+
 In this use case (JPA # 001) I am experimenting
 with master-detail forms in a wizzard-like
 flow of steps to try and reproduced detached
 entity exception and see how I can solve them.
 
 In this stage (12), which draws its provenance
-from stage (11), I am trying to dig a little
-deeper.
+from stage (11), I am managed to get almost
+to the bottom of it. Read the comments in A.java
+and BFacade.java and examine the two different
+traces (the switch that differentiates between the
+two is located in BFacade.java:line-48).
+
+In this version I've implemented a pattern that
+allows me to remove entities by calling EntityManager::remove
+directly on branches of the object graph and not necessarily
+at the root. So I am now able to delete both ways either:
+
+(a) by changing the collections in the master entity
+    and nullifying the master reference in the child and merging
+    the master entity.
+    - or -
+(b) by calling EntityManager::remove directly on the child,
+    without even clipping the parent collection.
+
+Note that in order to support both patterns (a) and (b) I
+implemented a complex JPA removal logic in the facade (BFacade.java:line-48)
+that *detaches* the parent entity during the child's removal. Also
+the A entity needs to have all CascadeTypes except DETACH. I don't think
+these are best practices. The best practice way is, in my opinion at this
+time, to modify the collections in POJO-space (both ends, i.e. not only
+remove B from A's collection but also nullify A's reference in B) and
+proceed by merging the parent entity so the entire object graph is updated.
+This is consistent with usage and code examples I've seen.
+
 
 Issues for future stages:
 
-[1] keep investigating, or maybe revert to iBatis.
+[1] make some console prototypes so I can probe object constructions, etc.
+    during merge operations.
 
 [2] implement lazy loading
 
-[3] implement tentative modifications (with undo).
+[3] implement tentative modifications (with undo) - if necessary
+    cause maybe the POJO space of the EntityManager offers the cache
+    we need.

@@ -111,24 +111,18 @@ public class ABLController implements Serializable {
     public void deleteCollection(B b) {
         l.info("deleting using collection change");
         b.setAId(null);
-        // bFacade.remove(b); // adding this line causes the exact exception as that
-                              // in the 'deleteJPA' case to be thrown.
     }
 
 
     public void deleteJPA(B b) { // line-117
         l.info("JPA REMOVE STEP  1 # master record is: "+masterRecord);
-        b.preRemoveCutFromA();
+        boolean necessaryToClipTheTree = true;
+        if ( !necessaryToClipTheTree )
+            b.preRemoveCutFromA();
         l.info("JPA REMOVE STEP  2 # master record is: "+masterRecord);
-        //b.nullifyAId();         // explicitly nullifying it doesn't make any difference
-        bFacade.remove(masterRecord, b);      // even though I am using both these methods, the deleteJPA method doesn't seem to work
-                                // my suspicion is that this happens because I can't set the B#aId to null as there
-                                // is a constraint in the DB. Apprently, preRemoveCutFromA() is not enough.
-                                // I should test it with a different DB schema that doesn't have a 'NOT NULL' constraint.
-                                // See comment by Johannes Leimer in:
-                                // http://blog.xebia.com/2009/04/09/jpa-implementation-patterns-removing-entities/#comment-128145
+        bFacade.remove(masterRecord, b);
         l.info("JPA REMOVE STEP  3 # master record is: "+masterRecord);
-        boolean shouldIRefresh = false;  // I shouldn't refresh cause if I do, the contents of the A graph will overwrite the removal change
+        boolean shouldIRefresh = false;  // I shouldn't refresh cause if I do, the contents of the A graph will overwrite the removal change - but maybe this is fixed in this STAGE (12) - I don't have the time to check.
         if (shouldIRefresh) {
             l.info("masterRecord is detached? "+ (!aFacade.emContains(masterRecord)));
             masterRecord = aFacade.merge(masterRecord);

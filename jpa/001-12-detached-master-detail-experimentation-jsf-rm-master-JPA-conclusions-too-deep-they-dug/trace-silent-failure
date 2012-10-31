@@ -1,0 +1,109 @@
+18:40:21,561 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) START PHASE: RESTORE_VIEW 1
+18:40:21,582 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) END PHASE: RESTORE_VIEW 1
+18:40:21,583 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) START PHASE: APPLY_REQUEST_VALUES 2
+18:40:21,587 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,588 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,588 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,589 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,589 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,590 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,593 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,595 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,597 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) END PHASE: APPLY_REQUEST_VALUES 2
+18:40:21,599 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) START PHASE: PROCESS_VALIDATIONS 3
+18:40:21,603 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,603 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,604 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,604 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,605 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,605 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,608 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) END PHASE: PROCESS_VALIDATIONS 3
+18:40:21,609 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) START PHASE: UPDATE_MODEL_VALUES 4
+18:40:21,609 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,609 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,610 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,610 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,611 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,611 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,612 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) *************************************************
+18:40:21,612 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) *************************************************
+18:40:21,613 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) *************************************************
+18:40:21,613 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) setting current detail record to: null
+18:40:21,613 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) END PHASE: UPDATE_MODEL_VALUES 4
+18:40:21,614 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) START PHASE: INVOKE_APPLICATION 5
+18:40:21,614 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,614 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,615 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,615 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) JPA REMOVE STEP  1 # master record is: entities.A[ id = 1, a1 = A VALUE OF 1 * 3 ]
+18:40:21,616 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,616 INFO  [entities.B] (http--172.31.129.29-8888-1) inside preRemoveCutFromA for b=entities.B[ id =0, aId = entities.A[ id = 1, a1 = A VALUE OF 1 * 3 ], b1=a value on the memory table B of 0, under A#1]
+18:40:21,617 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,617 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) JPA REMOVE STEP  2 # master record is: entities.A[ id = 1, a1 = A VALUE OF 1 * 2 ]
+18:40:21,618 INFO  [facades.BFacade] (http--172.31.129.29-8888-1) ^^^^^^^^^^^^^^^^ master record is attached? false
+18:40:21,619 INFO  [facades.BFacade] (http--172.31.129.29-8888-1) b is attached? false
+18:40:21,622 INFO  [stdout] (http--172.31.129.29-8888-1) Hibernate: 
+18:40:21,622 INFO  [stdout] (http--172.31.129.29-8888-1)     /* load entities.B */ select
+18:40:21,623 INFO  [stdout] (http--172.31.129.29-8888-1)         b0_.ID as ID1_0_,
+18:40:21,623 INFO  [stdout] (http--172.31.129.29-8888-1)         b0_.A_ID as A3_1_0_,
+18:40:21,623 INFO  [stdout] (http--172.31.129.29-8888-1)         b0_.B1 as B2_1_0_ 
+18:40:21,624 INFO  [stdout] (http--172.31.129.29-8888-1)     from
+18:40:21,624 INFO  [stdout] (http--172.31.129.29-8888-1)         B b0_ 
+18:40:21,624 INFO  [stdout] (http--172.31.129.29-8888-1)     where
+18:40:21,624 INFO  [stdout] (http--172.31.129.29-8888-1)         b0_.ID=?
+18:40:21,625 INFO  [entities.B] (http--172.31.129.29-8888-1) B()
+18:40:21,632 INFO  [stdout] (http--172.31.129.29-8888-1) Hibernate: 
+18:40:21,632 INFO  [stdout] (http--172.31.129.29-8888-1)     /* load entities.A */ select
+18:40:21,632 INFO  [stdout] (http--172.31.129.29-8888-1)         a0_.ID as ID0_1_,
+18:40:21,634 INFO  [stdout] (http--172.31.129.29-8888-1)         a0_.A1 as A2_0_1_,
+18:40:21,634 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.A_ID as A3_0_3_,
+18:40:21,634 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.ID as ID3_,
+18:40:21,634 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.ID as ID1_0_,
+18:40:21,635 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.A_ID as A3_1_0_,
+18:40:21,635 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.B1 as B2_1_0_ 
+18:40:21,635 INFO  [stdout] (http--172.31.129.29-8888-1)     from
+18:40:21,637 INFO  [stdout] (http--172.31.129.29-8888-1)         A a0_ 
+18:40:21,637 INFO  [stdout] (http--172.31.129.29-8888-1)     left outer join
+18:40:21,637 INFO  [stdout] (http--172.31.129.29-8888-1)         B bcollectio1_ 
+18:40:21,637 INFO  [stdout] (http--172.31.129.29-8888-1)             on a0_.ID=bcollectio1_.A_ID 
+18:40:21,638 INFO  [stdout] (http--172.31.129.29-8888-1)     where
+18:40:21,638 INFO  [stdout] (http--172.31.129.29-8888-1)         a0_.ID=?
+18:40:21,639 INFO  [entities.A] (http--172.31.129.29-8888-1) A()
+18:40:21,640 INFO  [entities.B] (http--172.31.129.29-8888-1) B()
+18:40:21,641 INFO  [entities.B] (http--172.31.129.29-8888-1) B()
+18:40:21,643 INFO  [facades.BFacade] (http--172.31.129.29-8888-1) VVVVVVVVVVVVVVVV master record is attached? true
+18:40:21,644 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,644 INFO  [facades.BFacade] (http--172.31.129.29-8888-1) XXXXXXXXXXXXXXXX attached master record is: entities.A[ id = 1, a1 = A VALUE OF 1 * 3 ]
+18:40:21,644 INFO  [facades.BFacade] (http--172.31.129.29-8888-1) attachedB is attached? true
+18:40:21,648 INFO  [facades.BFacade] (http--172.31.129.29-8888-1) just removed attachedB, is it now attached? false
+18:40:21,650 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,650 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) JPA REMOVE STEP  3 # master record is: entities.A[ id = 1, a1 = A VALUE OF 1 * 2 ]
+18:40:21,652 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) masterRecord is detached? true
+18:40:21,655 INFO  [stdout] (http--172.31.129.29-8888-1) Hibernate: 
+18:40:21,655 INFO  [stdout] (http--172.31.129.29-8888-1)     /* load entities.A */ select
+18:40:21,655 INFO  [stdout] (http--172.31.129.29-8888-1)         a0_.ID as ID0_1_,
+18:40:21,655 INFO  [stdout] (http--172.31.129.29-8888-1)         a0_.A1 as A2_0_1_,
+18:40:21,656 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.A_ID as A3_0_3_,
+18:40:21,656 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.ID as ID3_,
+18:40:21,656 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.ID as ID1_0_,
+18:40:21,657 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.A_ID as A3_1_0_,
+18:40:21,657 INFO  [stdout] (http--172.31.129.29-8888-1)         bcollectio1_.B1 as B2_1_0_ 
+18:40:21,657 INFO  [stdout] (http--172.31.129.29-8888-1)     from
+18:40:21,657 INFO  [stdout] (http--172.31.129.29-8888-1)         A a0_ 
+18:40:21,657 INFO  [stdout] (http--172.31.129.29-8888-1)     left outer join
+18:40:21,658 INFO  [stdout] (http--172.31.129.29-8888-1)         B bcollectio1_ 
+18:40:21,658 INFO  [stdout] (http--172.31.129.29-8888-1)             on a0_.ID=bcollectio1_.A_ID 
+18:40:21,658 INFO  [stdout] (http--172.31.129.29-8888-1)     where
+18:40:21,658 INFO  [stdout] (http--172.31.129.29-8888-1)         a0_.ID=?
+18:40:21,659 INFO  [entities.B] (http--172.31.129.29-8888-1) B()
+18:40:21,660 INFO  [entities.A] (http--172.31.129.29-8888-1) A()
+18:40:21,661 INFO  [entities.B] (http--172.31.129.29-8888-1) B()
+18:40:21,661 INFO  [entities.B] (http--172.31.129.29-8888-1) B()
+18:40:21,664 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,664 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) done deleting the entity with the JPA method, masterRecord now is: entities.A[ id = 1, a1 = A VALUE OF 1 * 3 ]
+18:40:21,665 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) END PHASE: INVOKE_APPLICATION 5
+18:40:21,665 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) START PHASE: RENDER_RESPONSE 6
+18:40:21,673 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,673 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,676 INFO  [entities.A] (http--172.31.129.29-8888-1) returning B collection
+18:40:21,677 INFO  [backingbeans.ABLController] (http--172.31.129.29-8888-1) ABLController#getDetailRecords() returning a list of: 3 elements.
+18:40:21,678 INFO  [mutil.jsf.LifeCycleListener] (http--172.31.129.29-8888-1) END PHASE: RENDER_RESPONSE 6

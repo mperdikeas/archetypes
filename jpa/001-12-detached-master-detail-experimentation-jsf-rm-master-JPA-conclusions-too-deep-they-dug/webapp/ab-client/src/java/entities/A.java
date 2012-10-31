@@ -43,13 +43,20 @@ public class A implements Serializable {
 
 
     // @LazyCollection(LazyCollectionOption.FALSE) // I don't use that
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "aId", fetch=FetchType.EAGER, orphanRemoval=true) // line-46 if you change
-    // the cascade type to ALL or PERSIST it no longer works. It only works with REMOVE (however, now the other deletion method
-    //    fails instead). The culprit is the CascadeType.PERSIST in that
-    // it resurrects the B entity during EntityManager::commit, unless you also merge A. Note that the EntityManager is calling
-    // persist on the Managed Entities, not the detached entities, so although you may have removed B from A's collection
-    // it's not removed from the entity the EntityManager manages, unless you also merge A, in which case everything's solved.
-    // See:
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "aId", fetch=FetchType.EAGER, orphanRemoval=true) // line-46
+    // For both methods of removal to work, the master entity (A) must have all CascadeTypes except DETACH
+    // (in order to allow the detachment of the master entity in the logic of BFacade:line-46).
+    // Otherwise, if the detachement logic in BFacade:line-46 is not present then the removal using EntityManager:remove()
+    // will fail because the merge of the B entity will result in the attachment of the A entity (this can't be controlled
+    // by use of CascadeType as this is a reference, not a collection) whereupon the A entity will be fetched from the database
+    // (including, in its collection the B entity that was pruned) in the context of the EntityManager (as a managed entity).
+    // Then during commit() when the EntityManager in effect calls "persist" on all managed entities [1], the pruned B entity
+    // will be resurrected (but also be marked for removal but apparently persist wins). The resurrection is due to the 
+    // CascadeType.PERSIST in the A entity's collection (which can't be simply removed cause it creates side-effects elsewhere).
+    // So the only thing to do is to explicitly DETACH the A entity from the EntityManager whereupon it is important that A
+    // doesn't have CascadeType.DETACH (see code and comments in BFacade line-46).
+    //
+    // References:
     // [1]  "Apress.Pro.JPA-2 Master the Java Persistence API" book, pg. 157 (synchronization with the Database)
     //      - and -
     // [2]  http://stackoverflow.com/questions/13145045/jpa-hibernate-removing-child-entities

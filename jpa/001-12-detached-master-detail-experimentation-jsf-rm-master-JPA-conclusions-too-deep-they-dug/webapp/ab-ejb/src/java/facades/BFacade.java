@@ -43,10 +43,12 @@ public class BFacade extends AbstractFacade<B> implements IBFacade.ILocal {
         l.info("b is attached? "+emContains(b));
         B attachedB = em.merge(b);
         l.info("VVVVVVVVVVVVVVVV master record is attached? "+em.contains(attachedB.getAId()));
-        if (em.contains(attachedB.getAId())) {
+        if (em.contains(attachedB.getAId())) { //line-46
             l.info("XXXXXXXXXXXXXXXX attached master record is: "+attachedB.getAId());
-            l.info("we have to detach it");
-            em.detach(attachedB.getAId()); // if A has the CascadeType.DETACH then line-51 fails with "Removing a detached instance"
+            if (true) { // change that to false and the EM::remove method's not working line-48
+                l.info("we have to detach it");
+                em.detach(attachedB.getAId()); // if A has the CascadeType.DETACH then line-51 fails with "Removing a detached instance"
+            }
         }
         l.info("attachedB is attached? "+emContains(attachedB)); // line-51
         em.remove(attachedB);
