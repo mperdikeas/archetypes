@@ -1,0 +1,15 @@
+This use case stage (JPA # 001 # 13) which draws its provenance
+from (JPA # 001 # 10) was inspired by the
+efforts of (JPA # 001 # 11) and (JPA # 001 # 12) with the object
+of reproducing some merge scenarios in a console-based application
+to examine what happens during merge.
+The way to test the application is to run it and modify the
+database (in parallel) during the pauses.
+
+The findings are consistent with the theory developed in (JPA # 001 # 12)
+in that, indeed, during the merge of B, the many-to-one relationship
+aId that points to the A entity is also navigated and the object A
+is re-read from the database. This may result in additional or
+fewer Bs being fetched in the new, managed A entity depending on what
+was done to the database. I should also experiment on what happens
+when the entities A and B and not detached.
