@@ -1,0 +1,21 @@
+In this use case stage (JPA # 001 # 14) which draws its provenance
+from (JPA # 001 # 13) I experimented on the implicit attachment
+of father entities that occurs whenever a child entity is found
+(and that child entity has a Many-to-One relationship with a 
+father entity).
+
+The findings are consistent with my assumptions. The A
+entity becomes implicitly managed by virtue of the Many-To-One
+association from the B entity (field 'aId'). Also, at commit
+time the entity manager calls persist on all entities
+and if the A is a managed entity at that time, on A as well.
+This then cascades to all of A's children (including the
+detached B and so triggers a failure as the EntityManager
+cannot persist a detached entity)
+
+A way to solve this artificial problem (as you normally wouldn't 
+call detach on a B object)
+is to give CascadeType.DETACH on the Many-to-One association
+from B to A, so that the A object is detached as well.
+
+See comments in Test.java for more.
