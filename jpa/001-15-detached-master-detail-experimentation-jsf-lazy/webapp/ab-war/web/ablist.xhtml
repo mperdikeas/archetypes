@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="javascript">
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="maintaining the B values"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="parentForm">
+                <p:layout fullPage="false" style="min-width:800px;min-height:700px;">
+                    <p:layoutUnit id="inner_north" position="north" size="60">
+                        <h:panelGrid columns="2" style="width:100%;" columnClasses="titleBar,buttonsBar">
+                            <h:panelGrid id="buttonsBar" columns="2">
+                                <p:commandButton value="save and back to beginning" id="saveBtn1" action="#{aBLController.saveAndBackAtStart}"
+                                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+                                <p:commandButton value="save" id="saveBtn2" action="#{aBLController.saveAndStayHere}"
+                                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:layoutUnit>
+                    <p:layoutUnit id="inner_center" position="center">
+
+                        <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+
+                        <p:dataTable id="tbl1" var="item" value="#{aBLController.detailRecords}" rowKey="#{item.identityHashCode}"
+                                     paginator="true" rows="10" lazy="false" paginatorPosition="bottom"
+                                     rowsPerPageTemplate="5,10,15" widgetVar="dataTableWidget" style="width:100%"
+                                     selection="#{aBLController.currentDetailRecord}" selectionMode="single" resizableColumns="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                     {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" filterEvent="enter"
+                                     currentPageReportTemplate="(#{msg['DatatableEntries']}: {startRecord} - {endRecord} of {totalRecords})">
+                            <f:facet name="header">
+                                <p:toolbar>
+                                    <p:toolbarGroup align="left">
+                                        <p:commandButton value="#{msg['NewButtonLabel']}" icon="ui-icon ui-icon-plus" styleClass="btnAdd"
+                                                         actionListener="#{aBLController.addB}" update="tbl1" id="BtnAdd"
+                                                         />
+                                    </p:toolbarGroup>
+                                </p:toolbar>
+                            </f:facet>
+                            <p:column id="c1" headerText="B1" sortBy="#{item.b1}" filterBy="#{item.b1}">
+                                <p:inputText value="#{item.b1}">
+                                </p:inputText>
+                            </p:column>
+                            <p:column headerText="del-A" style="text-align: center;">
+                                <p:commandButton icon="ui-icon ui-icon-pencil" action="#{aBLController.deleteCollection(item)}"
+                                                 style="width:25px; height:20px;" ajax="false"/>
+                            </p:column>
+                            <p:column headerText="del-B" style="text-align: center;">
+                                <p:commandButton icon="ui-icon ui-icon-pencil" action="#{aBLController.deleteJPA(item)}"
+                                                 style="width:25px; height:20px;" ajax="false"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:layoutUnit>
+                </p:layout>
+                <p:commandButton value="remove selected row (del-A or del-B 50% random)"
+                                 id="rmBtn1" action="#{aBLController.deleteRandom}"
+                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html> 

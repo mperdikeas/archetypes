@@ -1,0 +1,9 @@
+test.log
+test.tmp/
+test.properties
+test.lck
+test.script
+memd:..log
+memd:..properties
+memd:..script
+memd:..tmp/
