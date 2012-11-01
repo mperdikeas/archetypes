@@ -61,10 +61,10 @@ public class A implements Serializable {
     //      - and -
     // [2]  http://stackoverflow.com/questions/13145045/jpa-hibernate-removing-child-entities
     //
-    private Set<B> bCollection = new LinkedHashSet<B>();
+    private Set<B> bCollection;
 
     public Set<B> getBCollection() {
-        l.info("returning B collection");
+        l.info("returning B collection of type: "+ bCollection.getClass().getName()); // in case of FetchType.LAZY it is a: org.hibernate.collection.internal.PersistentSet. In the case of FetchType.EAGER it is the same class.
         return bCollection;
     }
     public void setBCollection(Set<B> bCollection) {

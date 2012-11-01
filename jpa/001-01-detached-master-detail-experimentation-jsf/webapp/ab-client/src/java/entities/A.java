@@ -3,7 +3,6 @@ package entities;
 import java.util.logging.Logger;
 import java.io.Serializable;
 import java.util.Set;
-import java.util.LinkedHashSet;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -43,7 +42,7 @@ public class A implements Serializable {
     // @LazyCollection(LazyCollectionOption.FALSE) // I don't use that
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aId", fetch=FetchType.EAGER) // change that to LAZY and it stops playing
     @org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    private Set<B> bCollection = new LinkedHashSet<B>();
+    private Set<B> bCollection;
 
     public Set<B> getBCollection() {
         l.info("returning B collection");

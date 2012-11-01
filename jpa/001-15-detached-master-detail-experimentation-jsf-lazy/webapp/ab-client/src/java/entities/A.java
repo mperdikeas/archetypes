@@ -3,7 +3,6 @@ package entities;
 import java.util.logging.Logger;
 import java.io.Serializable;
 import java.util.Set;
-import java.util.LinkedHashSet;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -61,7 +60,7 @@ public class A implements Serializable {
     //      - and -
     // [2]  http://stackoverflow.com/questions/13145045/jpa-hibernate-removing-child-entities
     //
-    private Set<B> bCollection = new LinkedHashSet<B>();
+    private Set<B> bCollection;
 
     public Set<B> getBCollection() {
         l.info("returning B collection");
