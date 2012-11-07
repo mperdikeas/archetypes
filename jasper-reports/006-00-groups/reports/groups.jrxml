@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport 
+  xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+  name         ="report name" 
+  pageWidth    =        "300" 
+  pageHeight   =        "100"
+  columnWidth  =        "300" 
+  leftMargin   =          "0" 
+  rightMargin  =          "0" 
+  topMargin    =          "0" 
+  bottomMargin =          "0"
+>
+
+	<queryString language="SQL">
+		<![CDATA[select
+  count(*) as counti,
+  sum(val) as sumval,
+  itm,
+  city,
+  clnt
+from (
+      select     1  val, 'Boston'  city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select     3  val, 'Boston'  city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select     2  val, 'Boston'  city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select     4  val, 'Boston'  city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select     8  val, 'Chigaco' city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select    12  val, 'Chigaco' city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select    22  val, 'Houston' city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select    19  val, 'Houston' city, 'apple' itm, 'Small Joe'   clnt  from public.dual union all
+      select     4  val, 'Boston'  city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select     6  val, 'Boston'  city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select     2  val, 'Boston'  city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select    18  val, 'Chigaco' city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select    22  val, 'Chigaco' city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select    50  val, 'Houston' city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select    26  val, 'Houston' city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select    24  val, 'Houston' city, 'lemon' itm, 'Small Joe'   clnt  from public.dual union all
+      select  2301  val, 'Boston'  city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select   895  val, 'Boston'  city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select  3333  val, 'Boston'  city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select  5001  val, 'Chigaco' city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select  4999  val, 'Chigaco' city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select  5005  val, 'Chigaco' city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select  4995  val, 'Chigaco' city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select 10000  val, 'Houston' city, 'apple' itm, 'Big Inc'     clnt  from public.dual union all
+      select  2002  val, 'Boston'  city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  1001  val, 'Boston'  city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  1441  val, 'Boston'  city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  3001  val, 'Chigaco' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  2999  val, 'Chigaco' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  2005  val, 'Chigaco' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  1995  val, 'Chigaco' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  1111  val, 'Chigaco' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  1010  val, 'Houston' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select 10101  val, 'Houston' city, 'lemon' itm, 'Big Inc'     clnt  from public.dual union all
+      select  8000  val, 'Houston' city, 'pear'  itm, 'Big Inc'     clnt  from public.dual union all
+      select  1111  val, 'Houston' city, 'pear'  itm, 'Big Inc'     clnt  from public.dual union all
+      select   888  val, 'Houston' city, 'pear'  itm, 'Big Inc'     clnt  from public.dual union all
+      select     0  val, 'Houston' city, 'lemon' itm, 'XXXXXXXXX'   clnt  from public.dual union all
+      select     0  val, 'X-Ray'   city, 'lemon' itm, 'XXXXXXXXX'   clnt  from public.dual
+      ) 
+    foo_bar
+group by 
+  clnt,
+  city,
+  itm
+order by 
+  clnt,
+  city,
+  itm]]>
+	</queryString>
+
+	<field name="COUNTI" class="java.math.BigDecimal"> <fieldDescription><![CDATA[]]></fieldDescription> </field>
+	<field name="SUMVAL" class="java.math.BigDecimal"> <fieldDescription><![CDATA[]]></fieldDescription> </field>
+	<field name="ITM"      class="java.lang.String">     <fieldDescription><![CDATA[]]></fieldDescription> </field>
+	<field name="CITY"     class="java.lang.String">     <fieldDescription><![CDATA[]]></fieldDescription> </field>
+	<field name="CLNT"     class="java.lang.String">     <fieldDescription><![CDATA[]]></fieldDescription> </field>
+
+	<group name="CLNT"> <groupExpression><![CDATA[$F{CLNT}]]></groupExpression></group>
+	<group name="CITY"> <groupExpression><![CDATA[$F{CITY}]]></groupExpression>
+
+		<groupHeader>
+			<band height="20" splitType="Stretch">
+				<staticText>
+					<reportElement x="0" y="0" width="200" height="20" />
+					<text><![CDATA[Group header for clnt and City]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="200" y="0" width="416" height="20" />
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{CLNT} + " in " + $F{CITY}]]></textFieldExpression>
+				</textField>
+        <!--
+	  		<textField>
+		  			<reportElement mode="Opaque" x="220" y="20" width="300" height="27" />
+		  			<textFieldExpression class="java.lang.String"><![CDATA[$F{CITY}]]></textFieldExpression>
+	  		</textField>
+        -->
+			</band>
+		</groupHeader>
+
+		<groupFooter>
+
+			<band height="30" splitType="Stretch">
+				<staticText>
+					<reportElement x="0" y="0" width="200" height="20" />
+					<text><![CDATA[Group footer for clnt and city]]></text>
+				</staticText>
+			</band> 
+
+		</groupFooter>
+
+	</group>
+
+
+
+	<group name="ITM"> <groupExpression><![CDATA[$F{ITM}]]></groupExpression>
+		<groupHeader>
+
+			<band height="28" splitType="Stretch">
+				<staticText>
+					<reportElement x="40" y="0" width="139" height="27"/>
+					<text><![CDATA[group header for itm]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="139" y="0" width="416" height="27"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{ITM}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+
+		<groupFooter>
+			<band height="40" splitType="Stretch">
+		  		<staticText>
+		  			<reportElement x="40" y="0" width="200" height="20" />
+		  			<text><![CDATA[Group Footer for itm]]></text>
+		  		</staticText>
+			</band>
+		</groupFooter>
+	</group>
+
+	<detail>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="0" width="179" height="20"/>
+				<text><![CDATA[COUNTI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="139" y="0" width="416" height="20"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{COUNTI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="60" y="20" width="179" height="20"/>
+				<text><![CDATA[SUMVAL]]></text>
+			</staticText>
+
+			<textField>
+				<reportElement x="139" y="20" width="416" height="20"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{SUMVAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+
+	<columnFooter> </columnFooter>
+	<pageFooter>   </pageFooter>
+	<summary>      </summary>
+
+</jasperReport>
