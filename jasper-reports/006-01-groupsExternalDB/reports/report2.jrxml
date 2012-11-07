@@ -14,28 +14,17 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select trgr.trgr_id, trgr.trgr_name,
-	(select sum(tran.tran_value) from km_transactions tran where tran.trgr_credited_id = trgr.trgr_id) sum_eispraxi,
-	(select sum(tran.tran_value) from km_transactions tran where tran.trgr_debited_id = trgr.trgr_id) sum_plirommi
-from km_transaction_groups trgr
-where (trgr.trgt_id = $P{p_tg_type}
-	or
-      (trgr.trgt_id in (-1, 1) and $P{p_tg_type} = 1)
-	)
-	and trgr.cafl_id = $P{p_cafl_id}
-	and exists (select 1 from km_transactions tran where tran.trgr_credited_id = trgr.trgr_id
-						  or tran.trgr_debited_id = trgr.trgr_id)
-order by trgr.trgr_print_order]]>
+		<![CDATA[SELECT reserve_name, revenue_expense_name, revenue, expense from reserves_per_revexpense where cafl_id=1 order by reserve_name]]>
 	</queryString>
-	<field name="trgr_id" class="java.lang.Integer"/>
-	<field name="trgr_name" class="java.lang.String"/>
-	<field name="sum_eispraxi" class="java.math.BigDecimal"/>
-	<field name="sum_plirommi" class="java.math.BigDecimal"/>
-	<variable name="sum_eispraxi" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{sum_eispraxi}]]></variableExpression>
+	<field name="reserve_name"         class="java.lang.String"    />
+	<field name="revenue_expense_name" class="java.lang.String"    />
+	<field name="revenue"              class="java.math.BigDecimal"/>
+	<field name="expense"              class="java.math.BigDecimal"/>
+	<variable name="revenue_grandTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{revenue}]]></variableExpression>
 	</variable>
-	<variable name="sum_pliromi" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{sum_plirommi}]]></variableExpression>
+	<variable name="expense_grandTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{expense}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -57,6 +46,13 @@ order by trgr.trgr_print_order]]>
 		<band height="21" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="8" y="0" width="198" height="21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Διαθέσιμο]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="98" y="0" width="198" height="21"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -83,9 +79,16 @@ order by trgr.trgr_print_order]]>
 			<textField>
 				<reportElement uuid="20801ada-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="20"/>
 				<textElement>
-					<font isBold="true"/>
+					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{trgr_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{reserve_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="83032333234-bb10-42b6-b81d-c7b2560d0e5b" x="98" y="3" width="139" height="20"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{revenue_expense_name}]]></textFieldExpression>
 			</textField>
 			<!--subreport>
 				<reportElement uuid="c654fe34-0813-4b25-aae6-9009ce37b4a6" x="8" y="23" width="433" height="67"/>
@@ -102,12 +105,12 @@ order by trgr.trgr_print_order]]>
 			<textField pattern="###0.00">
 				<reportElement uuid="0e7b32f0-e631-4e61-a339-d251fdce0ff2" x="428" y="0" width="61" height="20"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{sum_eispraxi}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{revenue_grandTotal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00">
 				<reportElement uuid="8973ce51-e7bf-498c-b164-9dad2995803e" x="489" y="0" width="66" height="20"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{sum_pliromi}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{expense_grandTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="4b39a444-893e-450f-a396-4b68b325279f" x="8" y="0" width="100" height="20"/>
