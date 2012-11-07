@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5639a997-01c3-4f49-bfa8-b1df9c4c048f">
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Base" isDefault="true" fontName="Arial Unicode MS" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<parameter name="p_cafl_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+<!--	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter> -->
+	<parameter name="p_tg_type" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select trgr.trgr_id, trgr.trgr_name,
+	(select sum(tran.tran_value) from km_transactions tran where tran.trgr_credited_id = trgr.trgr_id) sum_eispraxi,
+	(select sum(tran.tran_value) from km_transactions tran where tran.trgr_debited_id = trgr.trgr_id) sum_plirommi
+from km_transaction_groups trgr
+where (trgr.trgt_id = $P{p_tg_type}
+	or
+      (trgr.trgt_id in (-1, 1) and $P{p_tg_type} = 1)
+	)
+	and trgr.cafl_id = $P{p_cafl_id}
+	and exists (select 1 from km_transactions tran where tran.trgr_credited_id = trgr.trgr_id
+						  or tran.trgr_debited_id = trgr.trgr_id)
+order by trgr.trgr_print_order]]>
+	</queryString>
+	<field name="trgr_id" class="java.lang.Integer"/>
+	<field name="trgr_name" class="java.lang.String"/>
+	<field name="sum_eispraxi" class="java.math.BigDecimal"/>
+	<field name="sum_plirommi" class="java.math.BigDecimal"/>
+	<variable name="sum_eispraxi" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{sum_eispraxi}]]></variableExpression>
+	</variable>
+	<variable name="sum_pliromi" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{sum_plirommi}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="8" y="0" width="198" height="21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Τύπος Είσπραξης/Πληρ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="206" y="0" width="111" height="21"/>
+				<textElement>
+					<font isBold="true" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Ημερομηνία]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3e71f064-ac13-467b-8b92-89a4ce2e76b5" x="317" y="0" width="111" height="21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Αιτιολογία]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bf95851-68e9-4657-97bc-ced506c0ed11" x="428" y="0" width="61" height="21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Είσπραξη]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07a99c56-33dc-419c-a84e-09af690ed976" x="489" y="0" width="66" height="21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Πληρωμή]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="90">
+			<textField>
+				<reportElement uuid="20801ada-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{trgr_name}]]></textFieldExpression>
+			</textField>
+			<!--subreport>
+				<reportElement uuid="c654fe34-0813-4b25-aae6-9009ce37b4a6" x="8" y="23" width="433" height="67"/>
+				<subreportParameter name="p_trgr_id">
+					<subreportParameterExpression><![CDATA[$F{trgr_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report2_subreport1.jasper"]]></subreportExpression>
+			</subreport-->
+		</band>
+	</detail>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField pattern="###0.00">
+				<reportElement uuid="0e7b32f0-e631-4e61-a339-d251fdce0ff2" x="428" y="0" width="61" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{sum_eispraxi}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement uuid="8973ce51-e7bf-498c-b164-9dad2995803e" x="489" y="0" width="66" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{sum_pliromi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4b39a444-893e-450f-a396-4b68b325279f" x="8" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Γενικό Σύνολο:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
