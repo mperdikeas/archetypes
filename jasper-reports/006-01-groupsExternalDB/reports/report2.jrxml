@@ -41,10 +41,17 @@ order by trgr.trgr_print_order]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+            <band height="200" splitType="Stretch">
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fed" x="8" y="0" width="330" height="200"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[NEUROPUBLIC A.E.<br/>ΒΑΣ. ΓΕΩΡΓΙΟΥ 1Α ΤΚ.:54640<br/>ΑΦΜ:097343852]]></text>
+                </staticText>
+            </band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="21" splitType="Stretch">
@@ -54,20 +61,6 @@ order by trgr.trgr_print_order]]>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Τύπος Είσπραξης/Πληρ.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="206" y="0" width="111" height="21"/>
-				<textElement>
-					<font isBold="true" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-				</textElement>
-				<text><![CDATA[Ημερομηνία]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3e71f064-ac13-467b-8b92-89a4ce2e76b5" x="317" y="0" width="111" height="21"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Αιτιολογία]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="6bf95851-68e9-4657-97bc-ced506c0ed11" x="428" y="0" width="61" height="21"/>
