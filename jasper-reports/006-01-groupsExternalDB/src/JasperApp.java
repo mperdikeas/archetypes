@@ -112,7 +112,7 @@ public class JasperApp
 		parameters.put("MaxOrderID", new Integer(10500));
 		parameters.put("SummaryImage", image); */
                 parameters.put("p_cafl_id", 1);
-                parameters.put("p_tg_type", 0);
+                //parameters.put("p_tg_type", 0);
                 }
 
 		

@@ -14,7 +14,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT reserve_name, revenue_expense_name, revenue, expense from reserves_per_revexpense where cafl_id=1 order by reserve_name]]>
+		<![CDATA[SELECT reserve_name, revenue_expense_name, revenue, expense 
+                         FROM reserves_per_revexpense 
+                         WHERE cafl_id=$P{p_cafl_id}
+                         ORDER BY reserve_print_order, reserve_name, revenue_expense_print_order, revenue_expense_name]]>
 	</queryString>
 	<field name="reserve_name"         class="java.lang.String"    />
 	<field name="revenue_expense_name" class="java.lang.String"    />
@@ -75,7 +78,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="90">
+		<band height="30">
 			<textField>
 				<reportElement uuid="20801ada-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="20"/>
 				<textElement>
@@ -89,6 +92,20 @@
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{revenue_expense_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="83032333231-bb10-42b6-b92d-c7b2560d0e5b" x="428" y="3" width="61" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{revenue}==null?"":$F{revenue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="830323338291-bb10-42b6-b38d-c7b2560d0e5b" x="489" y="3" width="66" height="20"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expense}==null?"":$F{expense}]]></textFieldExpression>
 			</textField>
 			<!--subreport>
 				<reportElement uuid="c654fe34-0813-4b25-aae6-9009ce37b4a6" x="8" y="23" width="433" height="67"/>
