@@ -17,16 +17,22 @@
         <parameter name="report_date" class="java.lang.String">
             <defaultValueExpression><![CDATA[]]></defaultValueExpression>            
         </parameter>
+        <parameter name="DATE" class="java.util.Date">
+            <defaultValueExpression> new java.util.Date()</defaultValueExpression>
+        </parameter>
+ 
+
 	<queryString>
-		<![CDATA[SELECT reserve_name, revenue_expense_name, revenue, expense 
-                         FROM reserves_per_revexpense 
+		<![CDATA[SELECT reserve_name, revexp_name, revenue, expense, numoftrans
+                         FROM reserves_per_revexp 
                          WHERE cafl_id=$P{p_cafl_id}
-                         ORDER BY reserve_print_order, reserve_name, revenue_expense_print_order, revenue_expense_name]]>
+                         ORDER BY reserve_print_order, reserve_name, revexp_print_order, revexp_name]]>
 	</queryString>
 	<field name="reserve_name"         class="java.lang.String"    />
-	<field name="revenue_expense_name" class="java.lang.String"    />
+	<field name="revexp_name"          class="java.lang.String"    />
 	<field name="revenue"              class="java.math.BigDecimal"/>
 	<field name="expense"              class="java.math.BigDecimal"/>
+	<field name="numoftrans"           class="java.lang.Integer"/>
 	<variable name="reserve_revenue_total" class="java.math.BigDecimal" resetType="Group" resetGroup="reserve" calculation="Sum">
 		<variableExpression><![CDATA[$F{revenue}]]></variableExpression>
 	</variable>
@@ -39,7 +45,9 @@
 	<variable name="expense_grandTotal" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{expense}]]></variableExpression>
 	</variable>
-
+	<variable name="totalCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{numoftrans}]]></variableExpression>
+	</variable>
 	<group name="reserve" isStartNewColumn="false" isReprintHeaderOnEachPage="true" minHeightToStartNewPage="200">
 		<groupExpression><![CDATA[$F{reserve_name}]]></groupExpression>
 		<groupHeader>
@@ -148,7 +156,7 @@
 	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
 		            <font isBold="true" isUnderline="true"/>
                 	</textElement>
-	                <text><![CDATA[ΚΑΤΑΣΤΑΣΗ ΕΙΣΠΡΑΞΕΩΝ / ΠΛΗΡΩΜΩΝ ΑΝΑ ΚΑΤΗΓΟΡΙΑ ΔΙΑΘΕΣΙΜΩΝ]]></text>
+	                <text><![CDATA[ΚΑΤΑΣΤΑΣΗ ΔΙΑΘΕΣΙΜΩΝ ΑΝΑ ΚΑΤΗΓΟΡΙΑ ΕΙΣΠΡΑΞΕΩΝ / ΠΛΗΡΩΜΩΝ]]></text>
                 </staticText>
             </band>
 	</title>
@@ -186,7 +194,7 @@
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{revenue_expense_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{revexp_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="83032333231-bb10-42b6-b92d-c7b2560d0e5b" x="428" y="3" width="61" height="17"/>
@@ -194,8 +202,6 @@
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[Util.amountToStringELnoCurrEmptyForNull($F{revenue})]]></textFieldExpression>
-
-
 			</textField>
 			<textField>
 				<reportElement uuid="830323338291-bb10-42b6-b38d-c7b2560d0e5b" x="489" y="3" width="66" height="17"/>
@@ -207,7 +213,7 @@
 		</band>
 	</detail>
 	<summary>
-		<band height="40" splitType="Stretch">
+		<band height="76" splitType="Stretch">
 				<line>
 					<reportElement x="440" y="10" width="120" height="2" forecolor="#000000"/>
 				</line>
@@ -215,14 +221,14 @@
 					<reportElement x="440" y="12" width="120" height="2" forecolor="#000000"/>
 				</line>
 
-			<textField pattern="###0.00">
+			<textField>
 				<reportElement uuid="0e7b32f0-e631-4e61-a339-d251fdce0ff2" x="428" y="10" width="61" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
                                     <font isBold="true"/>
                                 </textElement>
 				<textFieldExpression><![CDATA[Util.amountToStringELnoCurr($V{revenue_grandTotal})]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField>
 				<reportElement uuid="8973ce51-e7bf-498c-b164-9dad2995803e" x="489" y="10" width="66" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
                                     <font isBold="true"/>
@@ -236,6 +242,24 @@
 				</textElement>
 				<text><![CDATA[Γενικό Σύνολο:]]></text>
 			</staticText>
+
+			<line>
+				<reportElement x="5" y="62" width="550" height="2" forecolor="#000000"/>
+			</line>
+			<textField>
+				<reportElement uuid="0e783972-e631-4e61-a339-d251fdce0ff2" x="5" y="56" width="200" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="8"/>
+                                </textElement>
+				<textFieldExpression><![CDATA["Ώρα παραγωγής: "+Util.dateToElType2($P{DATE})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0e937109-e631-4e61-a829-d251fdce0ff2" x="356" y="56" width="200" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="8"/>
+                                </textElement>
+				<textFieldExpression><![CDATA["(# "+$V{totalCount}+")"]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

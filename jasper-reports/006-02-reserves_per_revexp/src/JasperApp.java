@@ -50,7 +50,7 @@ public class JasperApp
 	
 	public static void main(String[] args) throws JRException {
             switch (args[0]) {
-                case "pdf": pdf(args[1]); 
+                case "pdf": pdf(args[1], Integer.valueOf(args[2]));
                     break;
                 default:
                     throw new RuntimeException("unrecognized case");
@@ -83,7 +83,7 @@ public class JasperApp
 		return conn;
 	}
 
-        private static File fill() throws JRException {
+        private static File fill(int caflId) throws JRException {
 		long start = System.currentTimeMillis();
                 String sourceFileLocation = "reports/"+compiledReportName();
 		System.err.println(" sourceFileLocation : " + sourceFileLocation);
@@ -111,7 +111,7 @@ public class JasperApp
                 /*		parameters.put("ReportTitle", "The First Jasper Report Ever");
 		parameters.put("MaxOrderID", new Integer(10500));
 		parameters.put("SummaryImage", image); */
-                parameters.put("p_cafl_id", 5);
+                parameters.put("p_cafl_id", caflId);
                 parameters.put("report_date", "09/11/2012");
                 //parameters.put("p_tg_type", 0);
                 }
@@ -139,8 +139,8 @@ public class JasperApp
 	}
 
 	
-	public static void pdf(String whereToProducePDF) throws JRException {
-                File jrprintFile = fill();
+    public static void pdf(String whereToProducePDF, int caflId) throws JRException {
+                File jrprintFile = fill(caflId);
 		long start = System.currentTimeMillis();
 		JasperExportManager.exportReportToPdfFile(jrprintFile.getAbsolutePath(), whereToProducePDF+"/"+pdfReportName());
 		System.err.println("PDF creation time : " + (System.currentTimeMillis() - start));
