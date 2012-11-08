@@ -9,14 +9,14 @@
 	<style name="Sans_Bold_Italic" fontName="Arial Unicode MS" fontSize="8" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 	<style name="Sans_Italic" fontName="Arial Unicode MS" fontSize="8" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
 	<parameter name="p_cafl_id" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+            <defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-<!--	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
-	</parameter> -->
 	<parameter name="p_tg_type" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+            <defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+        <parameter name="report_date" class="java.lang.String">
+            <defaultValueExpression><![CDATA[]]></defaultValueExpression>            
+        </parameter>
 	<queryString>
 		<![CDATA[SELECT reserve_name, revenue_expense_name, revenue, expense 
                          FROM reserves_per_revexpense 
@@ -95,11 +95,60 @@
 	<title>
             <band height="200" splitType="Stretch">
                 <staticText>
-                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fed" x="8" y="0" width="330" height="200"/>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fed" x="8" y="0" width="200" height="10"/>
 	                <textElement markup="html" lineSpacing="Double">
 		            <font isBold="false"/>
                 	</textElement>
-	                <text><![CDATA[NEUROPUBLIC A.E.<br/>ΒΑΣ. ΓΕΩΡΓΙΟΥ 1Α ΤΚ.:54640<br/>ΑΦΜ:097343852]]></text>
+	                <text><![CDATA[NEUROPUBLIC A.E.]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fee" x="8" y="10" width="200" height="10"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[ΒΑΣ. ΓΕΩΡΓΙΟΥ 1Α ΤΚ.:62342]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fef" x="8" y="20" width="200" height="10"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[ΑΦΜ:099746429]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb7f-0840-422f-a624-7f46012d3fef" x="450" y="20" width="90" height="10"/>
+	                <textElement markup="html" lineSpacing="Single">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[Ημερομηνία:]]></text>
+                </staticText>
+		<textField>
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="20" width="90" height="17"/>
+			<textElement>
+				<font isBold="false"/>
+			</textElement>
+			<textFieldExpression><![CDATA[$P{report_date}]]></textFieldExpression>
+		</textField>
+                <staticText>
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="450" y="30" width="90" height="10"/>
+	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[Σελίδα:]]></text>
+                </staticText>
+		<textField>
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="30" width="50" height="17"/>
+			<textElement textAlignment="Right">
+				<font isBold="false"/>
+			</textElement>
+			<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+		</textField>
+                <staticText>
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="130" y="130" width="500" height="10"/>
+	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
+		            <font isBold="true" isUnderline="true"/>
+                	</textElement>
+	                <text><![CDATA[ΚΑΤΑΣΤΑΣΗ ΕΙΣΠΡΑΞΕΩΝ / ΠΛΗΡΩΜΩΝ ΑΝΑ ΚΑΤΗΓΟΡΙΑ ΔΙΑΘΕΣΙΜΩΝ]]></text>
                 </staticText>
             </band>
 	</title>
