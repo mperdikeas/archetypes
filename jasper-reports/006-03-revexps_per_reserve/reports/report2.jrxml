@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5639a997-01c3-4f49-bfa8-b1df9c4c048f">
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+        <import value="mutil.base.Util"/>
+	<style name="Base" isDefault="true" fontName="Arial Unicode MS" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<style name="Sans_Bold" fontName="Arial Unicode MS" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Sans_Bold_Italic" fontName="Arial Unicode MS" fontSize="8" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Sans_Italic" fontName="Arial Unicode MS" fontSize="8" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="p_cafl_id" class="java.lang.Integer">
+            <defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_tg_type" class="java.lang.Integer">
+            <defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+        <parameter name="report_date" class="java.lang.String">
+            <defaultValueExpression><![CDATA[]]></defaultValueExpression>            
+        </parameter>
+        <parameter name="DATE" class="java.util.Date">
+            <defaultValueExpression> new java.util.Date()</defaultValueExpression>
+        </parameter>
+ 
+
+	<queryString>
+		<![CDATA[SELECT revexp_name, reserve_name, revenue, expense, numoftrans
+                         FROM revexps_per_reserve 
+                         WHERE cafl_id=$P{p_cafl_id}
+                         ORDER BY revexp_print_order, revexp_name, reserve_name, reserve_print_order]]>
+	</queryString>
+	<field name="revexp_name"          class="java.lang.String"    />
+	<field name="reserve_name"         class="java.lang.String"    />
+	<field name="revenue"              class="java.math.BigDecimal"/>
+	<field name="expense"              class="java.math.BigDecimal"/>
+	<field name="numoftrans"           class="java.lang.Integer"/>
+	<variable name="revexp_revenue_total" class="java.math.BigDecimal" resetType="Group" resetGroup="revexp" calculation="Sum">
+		<variableExpression><![CDATA[$F{revenue}]]></variableExpression>
+	</variable>
+	<variable name="revexp_expense_total" class="java.math.BigDecimal" resetType="Group" resetGroup="revexp" calculation="Sum">
+		<variableExpression><![CDATA[$F{expense}]]></variableExpression>
+	</variable>
+	<variable name="revenue_grandTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{revenue}]]></variableExpression>
+	</variable>
+	<variable name="expense_grandTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{expense}]]></variableExpression>
+	</variable>
+	<variable name="totalCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{numoftrans}]]></variableExpression>
+	</variable>
+	<group name="revexp" isStartNewColumn="false" isReprintHeaderOnEachPage="true" minHeightToStartNewPage="200">
+		<groupExpression><![CDATA[$F{revexp_name}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<staticText>
+					<reportElement style="Sans_Italic" mode="Opaque" x="8" y="0"
+                                                       width="130" height="15" forecolor="#000000" backcolor="#E3E3E3"/>
+					<textElement verticalAlignment="Bottom">
+						<font isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Τύπος Είσπραξης/Πληρωμής:]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="Sans_Bold_Italic" mode="Opaque" x="130" y="0"
+                                                       width="430" height="15" forecolor="#000000" backcolor="#E3E3E3"/>
+					<textElement verticalAlignment="Bottom"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{revexp_name}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="10"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<line>
+					<reportElement x="440" y="0" width="120" height="1" forecolor="#000000"/>
+				</line>
+				<line>
+					<reportElement x="440" y="2" width="120" height="1" forecolor="#000000"/>
+				</line>
+				<staticText>
+					<reportElement style="Sans_Bold" x="8" y="1" width="45" height="11" forecolor="#8A8A8A"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<text><![CDATA[Σύνολο :]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="Sans_Bold" x="428" y="1" width="61" height="11" forecolor="#8A8A8A"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[Util.amountToStringELnoCurrMDashForNull($V{revexp_revenue_total})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Sans_Bold" x="489" y="1" width="66" height="11" forecolor="#8A8A8A"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[Util.amountToStringELnoCurrMDashForNull($V{revexp_expense_total})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+
+	<title>
+            <band height="200" splitType="Stretch">
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fed" x="8" y="0" width="200" height="10"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[NEUROPUBLIC A.E.]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fee" x="8" y="10" width="200" height="10"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[ΒΑΣ. ΓΕΩΡΓΙΟΥ 1Α ΤΚ.:62342]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fef" x="8" y="20" width="200" height="10"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[ΑΦΜ:099746429]]></text>
+                </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb7f-0840-422f-a624-7f46012d3fef" x="450" y="20" width="90" height="10"/>
+	                <textElement markup="html" lineSpacing="Single">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[Ημερομηνία:]]></text>
+                </staticText>
+		<textField>
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="20" width="90" height="17"/>
+			<textElement>
+				<font isBold="false"/>
+			</textElement>
+			<textFieldExpression><![CDATA[$P{report_date}]]></textFieldExpression>
+		</textField>
+                <staticText>
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="450" y="30" width="90" height="10"/>
+	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[Σελίδα:]]></text>
+                </staticText>
+		<textField>
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="30" width="50" height="17"/>
+			<textElement textAlignment="Right">
+				<font isBold="false"/>
+			</textElement>
+			<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+		</textField>
+                <staticText>
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="130" y="130" width="500" height="10"/>
+	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
+		            <font isBold="true" isUnderline="true"/>
+                	</textElement>
+	                <text><![CDATA[ΚΑΤΑΣΤΑΣΗ ΕΙΣΠΡΑΞΕΩΝ / ΠΛΗΡΩΜΩΝ ΑΝΑ ΚΑΤΗΓΟΡΙΑ ΔΙΑΘΕΣΙΜΩΝ]]></text>
+                </staticText>
+            </band>
+	</title>
+	<pageHeader>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="8" y="0" width="198" height="21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Τύπος Διαθεσίμου]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bf95851-68e9-4657-97bc-ced506c0ed11" x="428" y="0" width="61" height="21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Είσπραξη]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07a99c56-33dc-419c-a84e-09af690ed976" x="489" y="0" width="66" height="21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Πληρωμή]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement uuid="83032333234-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="17"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reserve_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="83032333231-bb10-42b6-b92d-c7b2560d0e5b" x="428" y="3" width="61" height="17"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurrEmptyForNull($F{revenue})]]></textFieldExpression>
+
+
+			</textField>
+			<textField>
+				<reportElement uuid="830323338291-bb10-42b6-b38d-c7b2560d0e5b" x="489" y="3" width="66" height="17"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurrEmptyForNull($F{expense})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="76" splitType="Stretch">
+				<line>
+					<reportElement x="440" y="10" width="120" height="2" forecolor="#000000"/>
+				</line>
+				<line>
+					<reportElement x="440" y="12" width="120" height="2" forecolor="#000000"/>
+				</line>
+
+			<textField>
+				<reportElement uuid="0e7b32f0-e631-4e61-a339-d251fdce0ff2" x="428" y="10" width="61" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+                                    <font isBold="true"/>
+                                </textElement>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurr($V{revenue_grandTotal})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8973ce51-e7bf-498c-b164-9dad2995803e" x="489" y="10" width="66" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+                                    <font isBold="true"/>
+                                </textElement>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurr($V{expense_grandTotal})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4b39a444-893e-450f-a396-4b68b325279f" x="8" y="10" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Γενικό Σύνολο:]]></text>
+			</staticText>
+
+			<line>
+				<reportElement x="5" y="62" width="550" height="2" forecolor="#000000"/>
+			</line>
+			<textField>
+				<reportElement uuid="0e783972-e631-4e61-a339-d251fdce0ff2" x="5" y="56" width="200" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="8"/>
+                                </textElement>
+				<textFieldExpression><![CDATA["Ώρα παραγωγής: "+Util.dateToElType2($P{DATE})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0e937109-e631-4e61-a829-d251fdce0ff2" x="356" y="56" width="200" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="8"/>
+                                </textElement>
+				<textFieldExpression><![CDATA["(# "+$V{totalCount}+")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
