@@ -80,9 +80,10 @@
 	<detail>
 		<band height="30">
 			<textField>
-				<reportElement uuid="20801ada-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="20"/>
+				<reportElement uuid="20801ada-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="20"
+                                               isPrintRepeatedValues="false"/>
 				<textElement>
-					<font isBold="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{reserve_name}]]></textFieldExpression>
 			</textField>
