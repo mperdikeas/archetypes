@@ -111,7 +111,7 @@ public class JasperApp
                 /*		parameters.put("ReportTitle", "The First Jasper Report Ever");
 		parameters.put("MaxOrderID", new Integer(10500));
 		parameters.put("SummaryImage", image); */
-                parameters.put("p_cafl_id", 1);
+                parameters.put("p_cafl_id", 5);
                 //parameters.put("p_tg_type", 0);
                 }
 

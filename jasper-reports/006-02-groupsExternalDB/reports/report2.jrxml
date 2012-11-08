@@ -144,7 +144,7 @@
 				<textElement textAlignment="Right">
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{revenue}==null?"":NumberFormat.getInstance().getNumberInstance(new Locale("EL")).format($F{revenue})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurrEmptyForNull($F{revenue})]]></textFieldExpression>
 
 
 			</textField>
@@ -153,7 +153,7 @@
 				<textElement textAlignment="Right">
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{expense}==null?"":NumberFormat.getInstance().getNumberInstance(new Locale("EL")).format($F{expense})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurrEmptyForNull($F{expense})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
