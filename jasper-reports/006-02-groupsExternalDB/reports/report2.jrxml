@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5639a997-01c3-4f49-bfa8-b1df9c4c048f">
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+        <import value="mutil.base.Util"/>
+	<style name="Base" isDefault="true" fontName="Arial Unicode MS" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+	<style name="Sans_Bold" fontName="Arial Unicode MS" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Sans_Bold_Italic" fontName="Arial Unicode MS" fontSize="8" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Sans_Italic" fontName="Arial Unicode MS" fontSize="8" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="p_cafl_id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+<!--	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter> -->
+	<parameter name="p_tg_type" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT reserve_name, revenue_expense_name, revenue, expense 
+                         FROM reserves_per_revexpense 
+                         WHERE cafl_id=$P{p_cafl_id}
+                         ORDER BY reserve_print_order, reserve_name, revenue_expense_print_order, revenue_expense_name]]>
+	</queryString>
+	<field name="reserve_name"         class="java.lang.String"    />
+	<field name="revenue_expense_name" class="java.lang.String"    />
+	<field name="revenue"              class="java.math.BigDecimal"/>
+	<field name="expense"              class="java.math.BigDecimal"/>
+	<variable name="reserve_revenue_total" class="java.math.BigDecimal" resetType="Group" resetGroup="reserve" calculation="Sum">
+		<variableExpression><![CDATA[$F{revenue}]]></variableExpression>
+	</variable>
+	<variable name="reserve_expense_total" class="java.math.BigDecimal" resetType="Group" resetGroup="reserve" calculation="Sum">
+		<variableExpression><![CDATA[$F{expense}]]></variableExpression>
+	</variable>
+	<variable name="revenue_grandTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{revenue}]]></variableExpression>
+	</variable>
+	<variable name="expense_grandTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{expense}]]></variableExpression>
+	</variable>
+
+	<group name="reserve" isStartNewColumn="false" isReprintHeaderOnEachPage="true" minHeightToStartNewPage="200">
+		<groupExpression><![CDATA[$F{reserve_name}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<staticText>
+					<reportElement style="Sans_Italic" mode="Opaque" x="8" y="0"
+                                                       width="130" height="15" forecolor="#000000" backcolor="#E3E3E3"/>
+					<textElement verticalAlignment="Bottom">
+						<font isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Τύπος Διαθεσίμου:]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="Sans_Bold_Italic" mode="Opaque" x="90" y="0"
+                                                       width="470" height="15" forecolor="#000000" backcolor="#E3E3E3"/>
+					<textElement verticalAlignment="Bottom"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{reserve_name}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="10"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<line>
+					<reportElement x="440" y="0" width="120" height="1" forecolor="#000000"/>
+				</line>
+				<line>
+					<reportElement x="440" y="2" width="120" height="1" forecolor="#000000"/>
+				</line>
+				<staticText>
+					<reportElement style="Sans_Bold" x="8" y="1" width="45" height="11" forecolor="#8A8A8A"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<text><![CDATA[Σύνολο :]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="Sans_Bold" x="428" y="1" width="61" height="11" forecolor="#8A8A8A"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[Util.amountToStringELnoCurrMDashForNull($V{reserve_revenue_total})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Sans_Bold" x="489" y="1" width="66" height="11" forecolor="#8A8A8A"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[Util.amountToStringELnoCurrMDashForNull($V{reserve_expense_total})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+
+	<title>
+            <band height="200" splitType="Stretch">
+                <staticText>
+                    <reportElement uuid="3754eb6f-0839-422e-a624-7f46932d3fed" x="8" y="0" width="330" height="200"/>
+	                <textElement markup="html" lineSpacing="Double">
+		            <font isBold="false"/>
+                	</textElement>
+	                <text><![CDATA[NEUROPUBLIC A.E.<br/>ΒΑΣ. ΓΕΩΡΓΙΟΥ 1Α ΤΚ.:54640<br/>ΑΦΜ:097343852]]></text>
+                </staticText>
+            </band>
+	</title>
+	<pageHeader>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3754eb6f-065d-433e-a624-7f4692bd3fed" x="8" y="0" width="198" height="21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Τύπος Είσπραξης/Πληρ.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bf95851-68e9-4657-97bc-ced506c0ed11" x="428" y="0" width="61" height="21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Είσπραξη]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07a99c56-33dc-419c-a84e-09af690ed976" x="489" y="0" width="66" height="21"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Πληρωμή]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement uuid="83032333234-bb10-42b6-b81d-c7b2560d0e5b" x="8" y="3" width="139" height="17"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{revenue_expense_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="83032333231-bb10-42b6-b92d-c7b2560d0e5b" x="428" y="3" width="61" height="17"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{revenue}==null?"":NumberFormat.getInstance().getNumberInstance(new Locale("EL")).format($F{revenue})]]></textFieldExpression>
+
+
+			</textField>
+			<textField>
+				<reportElement uuid="830323338291-bb10-42b6-b38d-c7b2560d0e5b" x="489" y="3" width="66" height="17"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expense}==null?"":NumberFormat.getInstance().getNumberInstance(new Locale("EL")).format($F{expense})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="40" splitType="Stretch">
+				<line>
+					<reportElement x="440" y="10" width="120" height="2" forecolor="#000000"/>
+				</line>
+				<line>
+					<reportElement x="440" y="12" width="120" height="2" forecolor="#000000"/>
+				</line>
+
+			<textField pattern="###0.00">
+				<reportElement uuid="0e7b32f0-e631-4e61-a339-d251fdce0ff2" x="428" y="10" width="61" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+                                    <font isBold="true"/>
+                                </textElement>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurr($V{revenue_grandTotal})]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement uuid="8973ce51-e7bf-498c-b164-9dad2995803e" x="489" y="10" width="66" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+                                    <font isBold="true"/>
+                                </textElement>
+				<textFieldExpression><![CDATA[Util.amountToStringELnoCurr($V{expense_grandTotal})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4b39a444-893e-450f-a396-4b68b325279f" x="8" y="10" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Γενικό Σύνολο:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
