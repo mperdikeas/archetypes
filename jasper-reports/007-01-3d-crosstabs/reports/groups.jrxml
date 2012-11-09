@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport 
+  xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+  name         ="report name" 
+  pageWidth    =        "500" 
+  pageHeight   =        "900"
+  columnWidth  =        "260" 
+  leftMargin   =         "20" 
+  rightMargin  =         "20" 
+  topMargin    =         "20" 
+  bottomMargin =         "20"
+>
+	<queryString language="SQL">
+		<![CDATA[
+SELECT X, Y, Z, VAL
+FROM (
+      select     1  x, 1 y, 1 z, '1-1-1' val  from public.dual UNION ALL
+      select     1  x, 1 y, 2 z, '1-1-2' val  from public.dual UNION ALL
+      select     1  x, 2 y, 1 z, '1-2-1' val  from public.dual UNION ALL
+      select     1  x, 2 y, 2 z, '1-2-2' val  from public.dual UNION ALL
+      select     1  x, 3 y, 1 z, '1-3-1' val  from public.dual UNION ALL
+      select     1  x, 3 y, 2 z, '1-3-2' val  from public.dual UNION ALL
+      select     1  x, 4 y, 1 z, '1-4-1' val  from public.dual UNION ALL
+      select     1  x, 4 y, 2 z, '1-4-2' val  from public.dual UNION ALL
+      select     1  x, 5 y, 1 z, '1-5-1' val  from public.dual UNION ALL
+      select     1  x, 5 y, 2 z, '1-5-2' val  from public.dual UNION ALL
+      select     2  x, 1 y, 1 z, '2-1-1' val  from public.dual UNION ALL
+      select     2  x, 1 y, 2 z, '2-1-2' val  from public.dual UNION ALL
+      select     2  x, 2 y, 1 z, '2-2-1' val  from public.dual UNION ALL
+      select     2  x, 2 y, 2 z, '2-2-2' val  from public.dual UNION ALL
+      select     2  x, 3 y, 1 z, '2-3-1' val  from public.dual UNION ALL
+      select     2  x, 3 y, 2 z, '2-3-2' val  from public.dual UNION ALL
+      select     2  x, 4 y, 1 z, '2-4-1' val  from public.dual UNION ALL
+      select     2  x, 4 y, 2 z, '2-4-2' val  from public.dual UNION ALL
+      select     2  x, 5 y, 1 z, '2-5-1' val  from public.dual UNION ALL
+      select     2  x, 5 y, 2 z, '2-5-2' val  from public.dual
+      ) 
+    foo_bar
+]]>
+</queryString>
+
+<field name="X"        class="java.lang.Integer"/>
+<field name="Y"        class="java.lang.Integer"/>
+<field name="Z"        class="java.lang.Integer"/>
+<field name="VAL"      class="java.lang.String" />
+
+ <title/>
+ <detail/>
+	<summary>
+		<band height="187" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="e66e9d67-8715-4714-b3e9-95365da06ef3" x="0" y="0" width="802" height="187"/>
+				<rowGroup name="X" width="70">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{X}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<textField>
+								<reportElement uuid="dd57ed24-cb32-4816-8ae8-13089d50f750" x="0" y="0"
+                                                                               width="70" height="25"/>
+								<textElement textAlignment="Left">
+									<font isBold="false" isItalic="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{X}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+				</rowGroup>
+				<rowGroup name="Y" width="70">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{Y}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<textField>
+								<reportElement uuid="dd57ed24-cb32-4816-8ae8-13089d50f750" x="0" y="0"
+                                                                               width="70" height="25"/>
+								<textElement textAlignment="Left">
+									<font isBold="false" isItalic="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{Y}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+				</rowGroup>
+				<columnGroup name="Z" height="30">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{Z}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<textField>
+								<reportElement uuid="b6f8d12e-4069-4f33-a032-28e92533fc2c" x="0" y="0"
+                                                                               width="86" height="30"/>
+								<textElement textAlignment="Right">
+									<font size="10" isBold="false" isItalic="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{Z}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+				</columnGroup>
+				<measure name="val" class="java.lang.String" calculation="Sum">
+					<measureExpression><![CDATA[$F{VAL}]]></measureExpression>
+				</measure>
+				<crosstabCell width="86" height="25">
+					<cellContents>
+						<textField>
+							<reportElement uuid="86eafff2-4bce-4ed3-8d52-3ef8e9f37e53" x="0" y="0"
+                                                                       width="86" height="25"/>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$V{val}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+
+
+
+</jasperReport>
