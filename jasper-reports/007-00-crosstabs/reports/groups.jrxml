@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport 
+  xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+  name         ="report name" 
+  pageWidth    =        "300" 
+  pageHeight   =        "900"
+  columnWidth  =        "260" 
+  leftMargin   =         "20" 
+  rightMargin  =         "20" 
+  topMargin    =         "20" 
+  bottomMargin =         "20"
+>
+
+	<queryString language="SQL">
+		<![CDATA[
+SELECT x, y, val
+FROM (
+      select     1  x, 1 y, '1-1' val  from public.dual union all
+      select     1  x, 2 y, '1-2' val  from public.dual union all
+      select     1  x, 3 y, '1-3' val  from public.dual union all
+      select     1  x, 4 y, '1-4' val  from public.dual union all
+      select     1  x, 5 y, '1-5' val  from public.dual union all
+      select     2  x, 1 y, '2-1' val  from public.dual union all
+      select     2  x, 2 y, '2-2' val  from public.dual union all
+      select     2  x, 3 y, '2-3' val  from public.dual union all
+      select     2  x, 4 y, '2-4' val  from public.dual union all
+      select     2  x, 5 y, '2-5' val  from public.dual
+      ) 
+    foo_bar
+]]>
+	</queryString>
+
+	<field name="X"        class="java.lang.Integer"></field>
+	<field name="Y"        class="java.lang.Integer"></field>
+	<field name="VAL"      class="java.lang.String" ></field>
+
+
+
+</jasperReport>
