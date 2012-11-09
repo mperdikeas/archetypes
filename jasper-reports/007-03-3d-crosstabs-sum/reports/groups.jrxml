@@ -16,26 +16,26 @@
 		<![CDATA[
 SELECT X, Y, Z, VAL
 FROM (
-      select     1  x, 1 y, 1 z, '1-1-1' val  from public.dual UNION ALL
-      select     1  x, 1 y, 2 z, '1-1-2' val  from public.dual UNION ALL
-      select     1  x, 2 y, 1 z, '1-2-1' val  from public.dual UNION ALL
-      select     1  x, 2 y, 2 z, '1-2-2' val  from public.dual UNION ALL
-      select     1  x, 3 y, 1 z, '1-3-1' val  from public.dual UNION ALL
-      select     1  x, 3 y, 2 z, '1-3-2' val  from public.dual UNION ALL
-      select     1  x, 4 y, 1 z, '1-4-1' val  from public.dual UNION ALL
-      select     1  x, 4 y, 2 z, '1-4-2' val  from public.dual UNION ALL
-      select     1  x, 5 y, 1 z, '1-5-1' val  from public.dual UNION ALL
-      select     1  x, 5 y, 2 z, '1-5-2' val  from public.dual UNION ALL
-      select     2  x, 1 y, 1 z, '2-1-1' val  from public.dual UNION ALL
-      select     2  x, 1 y, 2 z, '2-1-2' val  from public.dual UNION ALL
-      select     2  x, 2 y, 1 z, '2-2-1' val  from public.dual UNION ALL
-      select     2  x, 2 y, 2 z, '2-2-2' val  from public.dual UNION ALL
-      select     2  x, 3 y, 1 z, '2-3-1' val  from public.dual UNION ALL
-      select     2  x, 3 y, 2 z, '2-3-2' val  from public.dual UNION ALL
-      select     2  x, 4 y, 1 z, '2-4-1' val  from public.dual UNION ALL
-      select     2  x, 4 y, 2 z, '2-4-2' val  from public.dual UNION ALL
-      select     2  x, 5 y, 1 z, '2-5-1' val  from public.dual UNION ALL
-      select     2  x, 5 y, 2 z, '2-5-2' val  from public.dual
+      select     1  x, 1 y, 1 z, 0 val  from public.dual UNION ALL
+      select     1  x, 1 y, 2 z, 1 val  from public.dual UNION ALL
+      select     1  x, 2 y, 1 z, 2 val  from public.dual UNION ALL
+      select     1  x, 2 y, 2 z, 3 val  from public.dual UNION ALL
+      select     1  x, 3 y, 1 z, 4 val  from public.dual UNION ALL
+      select     1  x, 3 y, 2 z, 5 val  from public.dual UNION ALL
+      select     1  x, 4 y, 1 z, 6 val  from public.dual UNION ALL
+      select     1  x, 4 y, 2 z, 7 val  from public.dual UNION ALL
+      select     1  x, 5 y, 1 z, 8 val  from public.dual UNION ALL
+      select     1  x, 5 y, 2 z, 9 val  from public.dual UNION ALL
+      select     2  x, 1 y, 1 z, 10 val  from public.dual UNION ALL
+      select     2  x, 1 y, 2 z, 11 val  from public.dual UNION ALL
+      select     2  x, 2 y, 1 z, 12 val  from public.dual UNION ALL
+      select     2  x, 2 y, 2 z, 13 val  from public.dual UNION ALL
+      select     2  x, 3 y, 1 z, 14 val  from public.dual UNION ALL
+      select     2  x, 3 y, 2 z, 15 val  from public.dual UNION ALL
+      select     2  x, 4 y, 1 z, 16 val  from public.dual UNION ALL
+      select     2  x, 4 y, 2 z, 17 val  from public.dual UNION ALL
+      select     2  x, 5 y, 1 z, 18 val  from public.dual UNION ALL
+      select     2  x, 5 y, 2 z, 19 val  from public.dual
       ) 
     foo_bar
 ]]>
@@ -44,7 +44,7 @@ FROM (
 <field name="X"        class="java.lang.Integer"/>
 <field name="Y"        class="java.lang.Integer"/>
 <field name="Z"        class="java.lang.Integer"/>
-<field name="VAL"      class="java.lang.String" />
+<field name="VAL"      class="java.lang.Integer" />
 
  <title/>
  <detail/>
@@ -102,11 +102,23 @@ FROM (
 							</textField>
 						</cellContents>
 					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#FFFF60" mode="Opaque">
+							<box>
+								<pen lineWidth="1.0"/>
+							</box>
+							<staticText>
+								<reportElement x="5" y="5" width="35" height="15"/>
+								<textElement/>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="val" class="java.lang.String" calculation="Sum">
+				<measure name="val" class="java.lang.Integer" calculation="Sum">
 					<measureExpression><![CDATA[$F{VAL}]]></measureExpression>
 				</measure>
-				<crosstabCell width="86" height="25">
+				<crosstabCell width="86" height="25" columnTotalGroup="Z">
 					<cellContents>
 						<textField>
 							<reportElement uuid="86eafff2-4bce-4ed3-8d52-3ef8e9f37e53" x="0" y="0"
