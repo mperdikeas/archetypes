@@ -104,17 +104,17 @@ ORDER BY tran_date, counterparty_trgr_print_order, counterparty_trgr_name, trgr_
                 	</textElement>
 	                <text><![CDATA[ΑΦΜ:099746429]]></text>
                 </staticText>
-                <staticText>
-                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="450" y="0" width="90" height="10">
-                        <printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1]]></printWhenExpression> 
-                    </reportElement>
-	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
-		            <font isBold="false"/>
-                	</textElement>
-	                <text><![CDATA[Σελίδα:]]></text>
-                </staticText>
 		<textField>
-			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="0" width="30" height="17">
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="450" y="0" width="70" height="17">
+                            <printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1]]></printWhenExpression> 
+                        </reportElement>
+			<textElement textAlignment="Right">
+				<font isBold="false"/>
+			</textElement>
+			<textFieldExpression><![CDATA["Σελίδα "+$V{PAGE_NUMBER}+" από"]]></textFieldExpression>
+		</textField>
+		<textField evaluationTime="Report">
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="525" y="0" width="5" height="17">
                             <printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1]]></printWhenExpression> 
                         </reportElement>
 			<textElement textAlignment="Right">
@@ -124,7 +124,6 @@ ORDER BY tran_date, counterparty_trgr_print_order, counterparty_trgr_name, trgr_
 		</textField>
             </band>
 	</pageHeader>
-
 <detail/>
     <summary>
             <band height="287" splitType="Stretch">
