@@ -45,21 +45,33 @@ ORDER BY tran_date, counterparty_trgr_print_order, counterparty_trgr_name, trgr_
 	<title>
             <band height="200" splitType="Stretch">
                 <staticText>
-                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="130" y="130" width="500" height="10"/>
-	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="0" y="0" width="595" height="100"/>
+	                <textElement markup="html" lineSpacing="Single" textAlignment="Center"  verticalAlignment="Middle">
 		            <font isBold="true" isUnderline="true"/>
                 	</textElement>
 	                <text><![CDATA[ΚΑΤΑΣΤΑΣΗ ΕΙΣΠΡΑΞΕΩΝ / ΠΛΗΡΩΜΩΝ ΕΝΑΝΤΙ ΔΙΑΘΕΣΙΜΩΝ]]></text>
                 </staticText>
+                <staticText>
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="0" y="100" width="595" height="50"/>
+	                <textElement markup="html" lineSpacing="Single" textAlignment="Center"  verticalAlignment="Top"/>
+	                <text><![CDATA[της εταιρείας: NEUROPUBLIC Α.Ε.]]></text>
+                </staticText>
 		<textField>
-			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="130" y="160" width="200" height="17">
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="0" y="150" width="595" height="40">
                         </reportElement>
-			<textElement>
+			<textElement textAlignment="Center" verticalAlignment="Top">
 				<font isBold="false"/>
 			</textElement>
-			<textFieldExpression><![CDATA["Προϋπολογιστική απεικόνιση στις: "+$P{report_date}]]></textFieldExpression>
+			<textFieldExpression><![CDATA["(προϋπολογιστική απεικόνιση στις: "+$P{report_date}+")"]]></textFieldExpression>
 		</textField>
-
+		<textField evaluationTime="Report">
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="0" y="190" width="595" height="10">
+                        </reportElement>
+			<textElement textAlignment="Center" verticalAlignment="Middle">
+				<font isBold="false" isItalic="true" size="8"/>
+			</textElement>
+			<textFieldExpression><![CDATA["# σελίδων: "+$V{PAGE_NUMBER}+"    εκτύπωση: "+Util.dateToElType2($P{DATE})]]></textFieldExpression>
+		</textField>
             </band>
 	</title>
 
@@ -93,7 +105,7 @@ ORDER BY tran_date, counterparty_trgr_print_order, counterparty_trgr_name, trgr_
 	                <text><![CDATA[ΑΦΜ:099746429]]></text>
                 </staticText>
                 <staticText>
-                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="450" y="10" width="90" height="10">
+                    <reportElement uuid="3754eb7f-8273-827f-a624-7f46012d3fef" x="450" y="0" width="90" height="10">
                         <printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1]]></printWhenExpression> 
                     </reportElement>
 	                <textElement markup="html" lineSpacing="Single" textAlignment="Left">
@@ -102,7 +114,7 @@ ORDER BY tran_date, counterparty_trgr_print_order, counterparty_trgr_name, trgr_
 	                <text><![CDATA[Σελίδα:]]></text>
                 </staticText>
 		<textField>
-			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="10" width="50" height="17">
+			<reportElement uuid="82949285234-bb10-42b6-b81d-c7b2560d0e5b" x="510" y="0" width="30" height="17">
                             <printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1]]></printWhenExpression> 
                         </reportElement>
 			<textElement textAlignment="Right">
