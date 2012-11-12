@@ -1,4 +1,4 @@
-<project name="jasper-reports-003" basedir="." default="pdf"> a
+<project name="jasper-reports-003" basedir="." default="pdf">
 
     <property name="project.MainClass.name" value="JasperApp"/>
     <property name="project.distname"       value="${ant.project.name}"/>

@@ -1,4 +1,4 @@
-<project name="jasper-reports-003" basedir="." default="pdf"> a
+<project name="jasper-reports-003" basedir="." default="pdf">
 
     <property name="project.MainClass.name" value="JasperApp"/>
     <property name="project.distname"       value="${ant.project.name}"/>
@@ -63,7 +63,7 @@
         	keepjava="false">
         	<src>
         		<fileset dir="${reports.dir}">
-        			<include name="**/*.jrxml"/>
+        			<include name="*.jrxml"/>
         		</fileset>
         	</src>
         	<classpath refid="jasper-compile.classpath"/>
@@ -100,14 +100,14 @@
 
     <target name="pdf" depends="jar" description="create the PDF">
        <parallel>
-            <ant antfile="${hsqldb-instance.dir}/build.xml"
+<!--            <ant antfile="${hsqldb-instance.dir}/build.xml"
                  target="runServerOriginal" 
                  useNativeBasedir="true"
-                 />
+                 /> -->
             <sequential>
-                <property name="secondsToPause" value="4"/>
+<!--                <property name="secondsToPause" value="4"/>
                 <echo message="pausing for ${secondsToPause} seconds to give HSQLDB time to come up"/>
-                <sleep seconds="${secondsToPause}"/>
+                <sleep seconds="${secondsToPause}"/> -->
                 <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
                 <delete dir="${build.dir}"/>
                 <mkdir  dir="${reports-out.dir}"/>
