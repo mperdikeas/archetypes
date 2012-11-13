@@ -54,6 +54,7 @@
                >
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8"/> <!-- added that on 2012-XI-13 althought not fully convinced" -->
         </javac>
     </target>
 

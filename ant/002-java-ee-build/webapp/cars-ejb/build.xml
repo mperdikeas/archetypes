@@ -50,6 +50,7 @@
                >
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8"/> <!-- added that on 2012-XI-13 althought not fully convinced" -->
         </javac>
         <copy file="${conf.dir}/persistence.xml"   todir="${bin.dir}/META-INF"/>
         <copy file="${conf.dir}/hsqldb_foo-ds.xml" todir="${bin.dir}/META-INF"/>
