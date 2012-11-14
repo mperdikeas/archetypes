@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<h:head><title>User Area Main Page</title></h:head> <!-- do we need an empty head for composition purposes ? -->
+
+<body>
+<h3>User Area Main Page</h3>
+<h3>Welcome <shiro:principal /></h3>
+<p>Since our web site DOES have security, including access by role, only people logged in with a role of user can visit this web page because it's in our user area.</p>
+<p>
+<h:link value="Home" outcome="/index.xhtml"/>  <!-- <a href="<c:url value='/index.jsp' />">Home</a> -->
+ <shiro:hasRole name="admin">
+ | <h:link value="Admin Area" outcome="/admin/index.xhtml"/> <!-- <a href="<c:url value='/admin/index.jsp' />"> Admin Area </a> -->
+ </shiro:hasRole>
+ <shiro:hasPermission name="secure">
+ | <!-- <a href="<c:url value='/staff/index.jsp' />" > Staff Area</a> -->
+<h:link value="Staff Area" oucome="/staff/index.xhtml"/>
+ </shiro:hasPermission>
+ | <!-- <a href="<c:url value='/LogoutUser' />">Log Out</a></p> -->
+
+
+         <h:form id="logOutIdDummyForm">
+             <p:commandLink ajax="false" action="#{loginController.logout}" value="Log Out"/>
+         </h:form>
+
+         <!-- <h:link value="Log Out" oucome="/LogoutUser"/> -->
+</p>
+</body>
+</html>

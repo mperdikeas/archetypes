@@ -1,0 +1,26 @@
+In this use case (009) and stage (00) which draws its provenance from (003-03)
+I managed to integrate the new GaiaJdbcRealm (whose sources are now maintained
+in the NEURO project and is here available only as a jar).
+
+I used a very simplistic shiro.ini which delegates to the
+ServletContainerSessionManager and does not use a cache (either for 
+session replication or for caching auth-auth queries).
+
+The price for using the ServletContainerSessionManager is that it is
+now not easy to configure the cookie path (see line-34 in shiro.ini).
+
+Ideas for future stages:
+
+[1] I should try to see how (and if) things change when a 
+   DefaultWebSessionManager is used.
+
+[2] Use only a stand-alone EhCache (no RMI replication for auth-auth
+    caching)
+
+[3] Don't use any caching at all (for auth-auth results) and see what
+    happens. Also try to verify that in this case we have more SQL
+    requests towards the database. This could perhaps be achievable
+    and quantifiable if I were to use a console application.
+[4] Try to create the SecurityManager totally runtime, perhaps that 
+    would allow me to configure the datasource dynamically, at runtime
+    and not hardcodedly in the shiro.ini file.
