@@ -28,7 +28,7 @@
             <band height="187" splitType="Stretch">
                 <crosstab>
                     <reportElement uuid="e66e9d67-8715-4714-b3e9-95365da06ef3" x="0" y="0" width="802" height="187"/>
-                    <rowGroup name="X-GROUP" width="70">
+                    <rowGroup name="X-GROUP" width="70" totalPosition="End">
                         <bucket class="java.lang.Integer">
                             <bucketExpression><![CDATA[$F{X}]]></bucketExpression>
                         </bucket>
@@ -44,7 +44,7 @@
                         <crosstabTotalRowHeader>
                             <cellContents>
                                 <staticText>
-                                    <reportElement uuid="b6f8d12e-4069-4f33-a032-28e92111fc2c" x="5" y="0" width="70" height="25"/>
+                                    <reportElement uuid="b6f8d12e-4069-4f33-a032-28e92111fc2c" x="0" y="0" width="70" height="25"/>
                                     <text><![CDATA[TOTAL]]></text>
                                 </staticText>
                             </cellContents>
