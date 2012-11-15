@@ -1,0 +1,1 @@
+psql -h 172.31.128.76 -U postgres gm -f small 

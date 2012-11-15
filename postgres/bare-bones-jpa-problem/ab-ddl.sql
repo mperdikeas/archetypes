@@ -1,0 +1,40 @@
+CREATE TABLE A (
+    id integer NOT NULL,
+    a1 character varying(120)
+);
+
+CREATE TABLE B (
+    id integer NOT NULL,
+    b1 character varying(120),
+    a integer NOT NULL
+);
+
+
+CREATE SEQUENCE A_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE A_ID_seq OWNED BY A.id;
+
+CREATE SEQUENCE B_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE B_ID_seq OWNED BY B.id;
+
+
+ALTER TABLE ONLY a ALTER COLUMN id SET DEFAULT nextval('A_ID_seq'::regclass);
+ALTER TABLE ONLY b ALTER COLUMN id SET DEFAULT nextval('B_ID_seq'::regclass);
+
+
+ALTER TABLE ONLY a ADD CONSTRAINT a_pk PRIMARY KEY (id);
+ALTER TABLE ONLY b ADD CONSTRAINT b_pk PRIMARY KEY (id);
+
+ALTER TABLE ONLY b ADD CONSTRAINT b_a_fk FOREIGN KEY (a) REFERENCES a(id);
+

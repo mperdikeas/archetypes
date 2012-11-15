@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS "ab";
+DROP USER IF EXISTS "gaia-user";
