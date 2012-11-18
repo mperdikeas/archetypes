@@ -26,6 +26,8 @@ import javax.faces.event.ActionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
+
 @ManagedBean(name = "aBController")
 @ViewScoped
 public class ABController extends CRUDTableController<B> implements Serializable {
@@ -39,6 +41,12 @@ public class ABController extends CRUDTableController<B> implements Serializable
     protected IFacade getFacade() {
         return ejbFacade;
     }
+
+    @PostConstruct
+    public void foo() {
+        l.info(String.format("post construct called on BBBBBBBBBBBBBBBB managed bean %d", System.identityHashCode(this)));
+    }
+
 
     @Override
     protected List filterData(Map filters, int[] range, int[] rowCount, String sortField, boolean sortOrder) {
