@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:composition template="/templates/commonLayout.xhtml">
+        <ui:define name="javascript">
+            <h:outputScript name="js/script.js"/>
+            <script>
+               $(document).ready(function() {initActions(); focusCursor();});
+               $(document).bind('ajaxComplete', initActionsAjaxPartial);
+            </script>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="B"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="parentForm">
+                <p:layout fullPage="false" style="min-width:800px;min-height:700px;">
+                    <p:layoutUnit id="inner_north" position="north" >
+                        <p:layout fullPage="false">
+                            <p:layoutUnit  position="north" >
+                                <p:panelGrid id="B_search"  style="width:100%; table-layout:fixed; border:1px"  styleClass="FormRegion">
+                                    <f:facet name="header"><p:row><p:column colspan="4">Κριτήρια Αναζήτησης</p:column></p:row></f:facet>
+                                    <p:row > 
+                                        <p:column colspan="1" >
+                                            <div style="text-align:right;"><h:outputLabel for="B_search_b1" value="b1" /></div>
+                                        </p:column>
+                                        <p:column colspan="1" >
+                                            <p:inputText id="B_search_b1" value="#{bSearchController.b1}"    required="False" readonly="False" styleClass="textBoxWithinForm" />
+                                        </p:column>
+                                        <p:column colspan="1" >
+                                            <div style="text-align:right;"><h:outputLabel for="B_search_a" value="a" /></div>
+                                        </p:column>
+                                        <p:column colspan="1" >
+                                            <p:panelGrid id="B_search_a_panel_id"    styleClass="LovField">
+                                                <p:row > 
+                                                    <p:column colspan="1" >
+                                                        <h:inputText id="B_search_a" value="#{bSearchController.a.a1}"    required="False" readonly="True" styleClass="LovTextBox" />
+                                                    </p:column>
+                                                    <p:column colspan="1" >
+                                                        <p:commandLink  actionListener="#{bSearchController.prepareA}"  styleClass="ui-icon ui-icon-search" oncomplete="ALovBeandlg.show();" process="@this">
+                                                            <f:setPropertyActionListener value=":parentForm:B_search_a" target="#{viewScope.idForUpdate}" />    
+                                                        </p:commandLink>
+                                                    </p:column>
+                                                </p:row>
+                                            </p:panelGrid>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:layoutUnit>
+                            <p:layoutUnit  position="center"  style="min-height:35px;">
+                                <p:commandButton value="���������" id="searchBtn" actionListener="#{bSearchController.requestDataFromDBListener}" update="bSearchController_id" />
+                                <p:commandButton value="��� �������" id="newBtn" ajax="false" action="#{bSearchController.prepareCreate}" />
+                            </p:layoutUnit>
+                        </p:layout>
+                    </p:layoutUnit>
+                    <p:layoutUnit id="inner_center" position="center">
+                        <p:dataTable id="bSearchController_id" var="item" value="#{bSearchController.items}" 
+                                        rowKey="#{item.id}" paginator="true" rows="10"  paginatorPosition="bottom"
+                                        rowsPerPageTemplate="5,10,15" widgetVar="bSearchController_idWdgtVar" styleClass="KeyboardNavigableTable"
+                                        selectionMode="single" resizableColumns="false"
+                                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                        {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" filterEvent="enter"
+                                        currentPageReportTemplate="(#{msg['DatatableEntries']}: {startRecord} - {endRecord} of {totalRecords})">
+                            <f:facet name="footer">
+                                <p:dialog id="pcdlg" header="�������������" widgetVar="pcdlg" modal="true" appendToBody="true">
+                                    <h:outputText value="������������ ��� ������� ��� ��� �� ����������!" />
+                                </p:dialog>
+                            </f:facet>
+                            <p:column  style="text-align: center;width:65px;">
+                                <p:commandButton ajax="false" action="#{bSearchController.prepareEdit}" icon="ui-icon ui-icon-pencil"  style="width:25px; height:20px;">
+                                    <f:setPropertyActionListener value="#{item}" target="#{bSearchController.current}" />
+                                </p:commandButton>
+
+                                <p:spacer width="5" height="0" />
+
+                                <p:commandButton ajax="false" action="#{bSearchController.delete}" icon="ui-icon ui-icon-closethick"  style="width:25px; height:20px;" update="bSearchController_id">
+                                    <f:setPropertyActionListener value="#{item}" target="#{bSearchController.current}" />                                
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="b1" sortBy="#{item.b1}" id="ColB_search_b1" >
+                                <h:outputText id="B_search_b1clm" value="#{item.b1}"  />
+                            </p:column>
+
+                            <p:column headerText="a" sortBy="#{item.a}" id="ColB_search_a" >
+                                <h:outputText  value="#{item.a.a1}"  />
+                            </p:column>
+                        </p:dataTable>
+                    </p:layoutUnit>
+                </p:layout>
+            </h:form>
+            <!-- LIST OF VALUES -->
+            <ui:include src="../LOVs/ALovBean.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html> 

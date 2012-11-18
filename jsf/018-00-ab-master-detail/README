@@ -1,0 +1,9 @@
+This is a sample project created
+with the neuro code generator to 
+investigate master-detail problems
+in a simple database schema with
+only two tables: A and B organized
+in a master-detail relationship.
+
+The database used is external and
+is maintained in ~/archetypes/postgres/bare-bones-jpa-problem/

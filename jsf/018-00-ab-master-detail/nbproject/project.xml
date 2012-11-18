@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <name>ab_jpa</name>
+        </general-data>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+            <!-- Do not use Project Properties customizer when editing this file manually. -->
+            <name>ab_jpa</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>ab_jpa</label>
+                    <location>.</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ab_jpa-client\src\java</label>
+                    <type>java</type>
+                    <location>ab_jpa-client/src/java</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ab_jpa-ejb\src\java</label>
+                    <type>java</type>
+                    <location>ab_jpa-ejb/src/java</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+                <source-folder>
+                    <label>ab_jpa-war\src\java</label>
+                    <type>java</type>
+                    <location>ab_jpa-war/src/java</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>publish</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>publish</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="packages">
+                        <label>ab_jpa-client\src\java</label>
+                        <location>ab_jpa-client/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ab_jpa-ejb\src\java</label>
+                        <location>ab_jpa-ejb/src/java</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ab_jpa-war\src\java</label>
+                        <location>ab_jpa-war/src/java</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/3">
+            <compilation-unit>
+                <package-root>ab_jpa-client/src/java</package-root>
+                <classpath mode="compile">ab_jpa-client/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar;ab_jpa-client/lib/hibernate-core-4.0.1.Final.jar;ab_jpa-client/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar;ab_jpa-client/lib/joda-time-2.1.jar;ab_jpa-client/lib/mutil.jar;ab_jpa-client/lib/slf4j-api-1.6.6.jar;ab_jpa-client/lib/validation-api-1.0.0.GA.jar</classpath>
+                <source-level>1.7</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>ab_jpa-ejb/src/java</package-root>
+                <classpath mode="compile">ab_jpa-ejb/lib/commons-lang3-3.1.jar;ab_jpa-ejb/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar;ab_jpa-ejb/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar;ab_jpa-ejb/lib/joda-time-2.1.jar;ab_jpa-ejb/lib/mutil.jar;ab_jpa-ejb/lib/opencsv-2.3.jar;ab_jpa-ejb/lib/slf4j-api-1.6.6.jar;ab_jpa-ejb/lib/validation-api-1.0.0.GA.jar;ab_jpa-client/dist/ab_jpa-client.jar</classpath>
+                <source-level>1.7</source-level>
+            </compilation-unit>
+            <compilation-unit>
+                <package-root>ab_jpa-war/src/java</package-root>
+                <classpath mode="compile">ab_jpa-war/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar;ab_jpa-war/lib/jasperreports-4.7.0.jar;ab_jpa-war/lib/javaee-web-api-6.0.jar;ab_jpa-war/lib/javax.faces-2.1.8.jar;ab_jpa-war/lib/jboss-ejb-api_3.1_spec-1.0.1.Final.jar;ab_jpa-war/lib/jboss-el-api_2.2_spec-1.0.0.Final.jar;ab_jpa-war/lib/jboss-jsf-api_2.1_spec-2.0.1.Final.jar;ab_jpa-war/lib/joda-time-2.1.jar;ab_jpa-war/lib/mutil.jar;ab_jpa-war/lib/primefaces-3.4.jar;ab_jpa-war/lib/primefaces-extensions-0.5.1.jar;ab_jpa-war/lib/slf4j-api-1.6.6.jar;ab_jpa-war/lib/slf4j-simple-1.6.1.jar;ab_jpa-war/lib/validation-api-1.0.0.GA.jar;ab_jpa-client/dist/ab_jpa-client.jar</classpath>
+                <source-level>1.7</source-level>
+            </compilation-unit>
+        </java-data>
+    </configuration>
+</project>

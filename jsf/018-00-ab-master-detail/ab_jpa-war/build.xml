@@ -1,0 +1,110 @@
+<project name="${war-project.name}" basedir="." default="rewar">
+
+    <property file="build.properties"/>        <!-- IMPORTANT: at the top -->
+    <property name="project.distname"          value="${war-project.name}"/>
+    <property name="webroot.dir"               value="${basedir}/web"/>
+    <property name="webinf.dir"                value="${webroot.dir}/WEB-INF"/>
+    <property name="build.dir"                 value="${basedir}/build"/>
+    <property name="conf.dir"                  value="${basedir}/conf"/>
+    <property name="src.dir"                   value="${basedir}/src"/>
+    <property name="javasource.dir"            value="${src.dir}/java"/>
+    <property name="compilelibs.dir"           value="${basedir}/lib"/>
+    <property name="reports-out.dir"           value="${webroot.dir}/reports"/>
+    <property name="reports.dir"               value="${basedir}/reports"/>
+    <property name="jasper-compilelibs.dir"    value="${basedir}/lib-jaspercompile"/>
+
+    <property name="client-project.path"        value="../${client-project.name}"/>
+
+    <path id = "compile.classpath.without-ejb">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <path id = "compile.classpath">
+        <path refid = "compile.classpath.without-ejb"/>
+        <pathelement location="${client-project.path}/dist/${client-project.name}.jar"/>
+    </path>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
+            <fileset dir="${javasource.dir}">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile" depends="prepare,resources">
+        <echo message="invoking '${client-project.name}' build file, target: jar"/>
+        <ant antfile = "${client-project.path}/build.xml" target="jar" inheritAll="false"/>
+        <echo message="done invoking '${client-project.name}' build file"/>
+        <mkdir  dir="${webinf.dir}/classes"/>
+        <echo message="compile classpath is: ${toString:compile.classpath}"/>
+        <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+               source="1.6"
+               target="1.6"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+			<compilerarg line="-encoding utf-8"/>
+        </javac>
+    </target>
+
+
+
+    <target name="clean" description="Prepare for clean build">
+      <echo message="invoking '${client-project.name}' build file, target: clean"/>
+      <ant antfile = "${client-project.path}/build.xml" target="clean" inheritAll="false"/>
+      <echo message="done invoking '${client-project.name}' build.xml Ant file"/>
+      <delete dir="${webinf.dir}/classes"/>
+      <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="rewar" depends="clean,war"/>
+
+    <target name="war" depends="compile">
+      <mkdir dir="${build.dir}"/>
+      <war
+        needxmlfile="false"
+        basedir="${webroot.dir}"
+        warfile="${build.dir}/${project.distname}.war">
+        <exclude name="WEB-INF/src/**"/>
+       </war>
+    </target>
+    
+    <path id="jasper-compile.classpath">
+        <fileset dir="${jasper-compilelibs.dir}">
+            <include name ="*.jar"/>
+        </fileset>
+    </path>
+    
+    <target name="compile-jasper" description="compile the Jasper reports">
+        <mkdir dir="${reports-out.dir}"/> 
+        <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask"> 
+        	<classpath refid="jasper-compile.classpath"/>
+        </taskdef>
+        <jrc 
+        	destdir="${reports-out.dir}"
+        	tempdir="${reports-out.dir}"
+        	keepjava="false">
+        	<src>
+        		<fileset dir="${reports.dir}">
+        			<include name="**/*.jrxml"/>
+        		</fileset>
+        	</src>
+        	<classpath refid="jasper-compile.classpath"/>
+        </jrc> 
+    </target>
+
+</project>

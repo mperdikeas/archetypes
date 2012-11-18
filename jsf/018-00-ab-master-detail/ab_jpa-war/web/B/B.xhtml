@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/commonLayout.xhtml">
+        <ui:define name="javascript">
+            <h:outputScript name="js/script.js"/>
+            <SCRIPT>
+               $(document).ready(function() {initActions(); });
+               $(document).bind('ajaxComplete', initActionsAjaxPartial);
+            </SCRIPT>
+        </ui:define>
+        <ui:define name="title">
+            <h:outputText value="B"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+
+            <h:form id="parentForm">
+                <p:layout fullPage="false" style="min-width:800px;min-height:700px;">
+                    <p:layoutUnit id="inner_north" position="north" size="60">
+                        <h:panelGrid columns="2" style="width:100%;" columnClasses="titleBar,buttonsBar">
+                            <h:outputText id="titleBar" value="B" style="font-weight: bold; font-size: 150%;"/>
+                            <h:panelGrid id="buttonsBar" columns="4">
+                                <p:commandButton id="commitBtn" value="#{msg['SaveButtonLabel']}"  actionListener="#{bController.commit}"  update=":parentForm" icon="ui-icon ui-icon-disk"/>
+                                <p:commandButton id="searchBtn" value="���������"   update=":parentForm" icon="ui-icon ui-icon-search" actionListener="#{bController.searchListener}" process="@this"/>
+                                <p:commandButton id="deleteBtn" value="��������"    update=":parentForm" icon="ui-icon ui-icon-closethick" actionListener="#{bController.deleteListener}" process="@this" disabled="#{bController.deleteButtonIsDisable}"/>
+                                <p:commandButton id="cancelBtn" value="�������"    update=":parentForm"  actionListener="#{bController.cancelListener}" process="@this" />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:layoutUnit>
+                    <p:layoutUnit id="inner_center" position="center">
+                        <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+
+                        <p:panelGrid id="B"  style="width:100%;table-layout:fixed;"  styleClass="FormRegion">
+                        <p:row ><p:column colspan="2"></p:column></p:row>
+                            <p:row > 
+                                <p:column colspan="1" >
+                                    <div style="text-align:right;"><h:outputLabel for="B_b1" value="b1" /></div>
+                                </p:column>
+                                <p:column colspan="1" >
+                                    <p:inputText id="B_b1" value="#{bController.b1}"    required="False" readonly="False" styleClass="textBoxWithinForm" />
+                                </p:column>
+                            </p:row>
+                            <p:row > 
+                                <p:column colspan="1" >
+                                    <div style="text-align:right;"><h:outputLabel for="B_a" value="a" /></div>
+                                </p:column>
+                                <p:column colspan="1" >
+                                    <h:panelGrid id="B_a_panel_id" columns="2"   styleClass="LovField">
+                                        <h:inputText id="B_a" value="#{bController.a.a1}"    required="True" readonly="True" styleClass="textBoxWithinForm" />
+                                        <p:commandLink  actionListener="#{bController.prepareA}"  styleClass="ui-icon ui-icon-search" oncomplete="ALovBeandlg.show();" process="@this">
+                                            <f:setPropertyActionListener value="@([id$=B_a])" target="#{viewScope.idForUpdate}" />    
+                                        </p:commandLink>
+                                    </h:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                    </p:layoutUnit>
+                </p:layout>
+            </h:form>
+            <!-- LIST OF VALUES -->
+            <ui:include src="../LOVs/ALovBean.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html> 
