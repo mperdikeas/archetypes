@@ -5,14 +5,14 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
  
 
 <module>
- <ejb>TestApp-ejb.jar</ejb>
+ <ejb>ab_jpa-ejb.jar</ejb>
 </module>
 
 
 <module>
  <web>
-   <web-uri>TestApp-war.war</web-uri>
-   <context-root>TestApp</context-root>
+   <web-uri>ab_jpa-war.war</web-uri>
+   <context-root>ab_jpa</context-root>
  </web>
 </module>
  

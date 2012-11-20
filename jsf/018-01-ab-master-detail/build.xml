@@ -1,4 +1,4 @@
-<project name="TestApp" basedir="." default="republish">
+<project name="ab_jpa" basedir="." default="republish">
     <!-- Project settings -->
     <property name="project.distname"      value="${ant.project.name}"/>
     <property name="project.artefact"      value="${project.distname}.ear"/>
