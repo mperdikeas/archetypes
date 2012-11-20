@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <p:column headerText="#{msg['DeleteButtonLabel']}">
+        <p:commandButton icon="ui-icon ui-icon-closethick" onclick="confirmation.show();" immediate="true">
+            <!-- 
+                The reason why we pass the item to the confirmDialog through a viewScope parameter is because the nested 
+                confirm commandButton does not have access to the dataTable var attribute {item}
+            -->
+            <f:setPropertyActionListener value="#{item}" target="#{viewScope.itemToDelete}"/>
+        </p:commandButton>
+
+        <p:dialog id="confirmDialog" header="#{msg['WarningMsgHeader']}" widgetVar="confirmation"> 
+            <div style="padding:10px;">
+                <h:outputText value="#{msg['DeleteDialogMsg']}"/>
+            </div>
+            <div style="padding:10px;">
+                <p:commandButton id="confirm" value="Yes"  oncomplete="confirmation.hide();" update="#{targetId}" 
+                                 action="#{bean.delete(viewScope.itemToDelete)}" immediate="true"/>
+                <p:commandButton id="decline" value="No" onclick="confirmation.hide();" type="button"/> 
+            </div>
+        </p:dialog>
+    </p:column>
+</html>

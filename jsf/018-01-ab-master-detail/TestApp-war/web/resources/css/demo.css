@@ -1,0 +1,169 @@
+root { 
+    display: block;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 11px !important;
+}
+
+.ui-dt-c 
+{
+    padding:0px !important;
+    
+}
+
+.ui-panel {
+    border:0px !important;
+}
+
+.ui-panel .ui-panel-content {
+    padding: 0em 0em !important;
+}
+
+.ui-datatable .ui-column-filter
+{
+    background-color: #CCFDFF !important;
+}
+
+
+.LovField tr {
+    border: none !important;
+}
+
+.LovField td {
+	border-style: none !important; 
+	padding-bottom: 0px !important; 
+	padding-top: 0px !important; 
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	margin : 0 px !important;
+}
+
+.LovField input{
+	margin : 0 px;
+}
+
+.FormRegion tr, .FormRegion td {
+    border: none !important;
+	width: 100% !important;
+}
+
+
+.FormRegion input {
+	width: 100% !important;
+}
+
+.FormRegion table {
+	width: 100% !important;
+}
+
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+    -moz-box-shadow: inset 0 0px 0px #8f8f8f !important;
+    -webkit-box-shadow: inset 0 0px 2px #8F8F8F !important;
+    -webkit-border-radius: 0px !important;
+    box-shadow: inset 0 0px 0px #8F8F8F !important;
+    color: #313131;
+    text-shadow:none !important;
+    width: 100% !important;
+    padding: 2px !important;
+}
+
+.textBoxWithinTable {
+	padding: 2px !important;
+	-webkit-border-radius: 0px !important;
+	width: 100% !important;
+	box-shadow: inset 0 0px 0px !important;
+	border: 0px solid #A8A8A8 !important;
+	background-color :transparent !important;
+	text-shadow:none !important;
+}
+/*
+.textBoxWithinForm {
+	padding: 2px !important;
+	-webkit-border-radius: 0px !important;
+	width: 90% !important;
+	box-shadow: inset 0 0px 0px !important;
+	border: 1px solid #A8A8A8 !important;
+	background-color :transparent !important;
+	text-shadow:none !important;
+}
+*/
+.dateBoxWithinTable {
+	padding: 2px !important;
+	-webkit-border-radius: 0px !important;
+	width: 100% !important;
+	box-shadow: inset 0 0px 0px !important;
+	border: 0px solid #A8A8A8 !important;
+	background-color :transparent !important;
+	text-shadow:none !important;
+}
+/*
+.dateBoxWithinForm {
+	padding: 2px !important;
+	-webkit-border-radius: 0px !important;
+	width: 100% !important;
+	box-shadow: inset 0 0px 0px !important;
+	border: 0px solid #A8A8A8 !important;
+	background-color :transparent !important;
+	text-shadow:none !important;
+}
+*/
+.checkBoxWithinTable {
+	padding: 2px !important;
+	-webkit-border-radius: 0px !important;
+	width: 100% !important;
+	box-shadow: inset 0 0px 0px !important;
+	border: 0px solid #A8A8A8 !important;
+	background-color :transparent !important;
+	text-shadow:none !important;
+	text-align: center !important;
+}
+/*
+.checkBoxWithinForm {
+	padding: 2px !important;
+	-webkit-border-radius: 0px !important;
+	width: 100% !important;
+	box-shadow: inset 0 0px 0px !important;
+	border: 0px solid #A8A8A8 !important;
+	background-color :transparent !important;
+	text-shadow:none !important;
+}
+*/
+.titleBar {
+    width: 90%;
+    text-align: left;
+}
+
+.buttonsBar {
+    width: 10%;
+    text-align: right;
+    white-space:nowrap;
+}
+
+.logoBar {
+    width: 90%;
+    text-align: left;
+}
+
+.securityBar {
+    width: 10%;
+    text-align: right;
+    vertical-align:text-top;
+    font-size: 92%;
+    white-space:nowrap;
+}
+
+.accordionMenu .ui-menu {
+    width:100% !important; 
+
+}
+.accordionMenu .ui-accordion-content {
+    padding:0 !important;
+    overflow:inherit !important;
+}
+
+.accordionMenu .ui-helper-clearfix:after {
+    height:inherit !important;
+}
+

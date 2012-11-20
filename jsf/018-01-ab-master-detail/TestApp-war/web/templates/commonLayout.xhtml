@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet name="css/demo.css"/>
+        <h:outputScript name="js/translations.js"/>
+        <ui:insert name="javascript"></ui:insert>
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="north" size="60" resizable="true" closable="false" collapsible="false">  
+                <p:spacer width="20" height="0" />
+                <h:form>  
+                    <h:panelGrid columns="2" style="width:100%;" columnClasses="logoBar,securityBar" >
+                        <p:graphicImage id="logoBar"  value="/resources/images/logosmall.png" height="40" width="90" alt="logo goes here"/>
+                        <h:panelGrid styleClass="securityBar" columns="4">
+                            <h:outputLabel value="#{msg['LoggedInUserLabel']}"/>
+                            <h:outputText id="user" value="#{LoginController.loginUserName}"/>
+                            <p:spacer width="10" height="0"/>
+                            <p:commandLink id="logout" value="#{msg['LogoutLinkTitle']}"  action="#{LoginController.logoutAction}"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:form>
+            </p:layoutUnit>  
+            <p:layoutUnit position="west" size="250" resizable="true" closable="false" collapsible="true" header="Options">  
+                <h:form>
+
+                    <p:panelMenu>
+                        <p:submenu label="#{msg['MenuApplicationsTitle']}">
+                            <ui:include src="/common/menu.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="#{msg['MenuSettingsTitle']}">
+                            <p:menuitem value="#{msg['MenuAppSettingsTitle']}" action="/Common/AppSettings" ajax="false" immediate="true" />
+                        </p:submenu>
+                    </p:panelMenu>
+
+                </h:form>
+            </p:layoutUnit>  
+            <p:layoutUnit position="center" >  
+                <p:dialog modal="false" widgetVar="statusDialog" header="Φόρτωση στοιχείων. Παρακαλώ περιμένετε.."   
+                          draggable="false" closable="false">  
+                    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+                </p:dialog>
+                <p:ajaxStatus onstart="if (typeof(statusDialog) != 'undefined') statusDialog.show();" onsuccess="if (typeof(statusDialog) != 'undefined') statusDialog.hide();" onerror="if (typeof(statusDialog) != 'undefined') statusDialog.hide();" />  
+                <ui:insert name="body">Default Body</ui:insert>
+
+
+            </p:layoutUnit>  
+            <p:layoutUnit position="south" collapsible="true" closable="false" size="50">  
+                <h:outputText value="Copyright 2012"/>
+            </p:layoutUnit>
+        </p:layout>  
+    </h:body>
+
+</html>

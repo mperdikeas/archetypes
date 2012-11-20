@@ -1,0 +1,37 @@
+digraph G {
+        fontname = "Arial"
+        fontsize = 8
+
+
+        node [
+                fontname = "Arial"
+                fontsize = 8
+                shape = "record"
+        ]
+
+        edge [
+                fontname = "Arial"
+                fontsize = 8
+        ]
+
+    B [
+            shape = "Mrecord"
+            label = "{B|id : Integer\lb1 : String\la : A\l}"
+    ]
+    A [
+            shape = "record"
+            label = "{A|id : Integer\la1 : String\lbaCollection : List\<B\>\l}"
+    ]
+
+    B -> A [color = "black"]
+
+    edge [
+            arrowtail = "diamond"
+            arrowhead="none"
+            headlabel = "*"
+            dir=both
+    ]
+
+
+
+}
