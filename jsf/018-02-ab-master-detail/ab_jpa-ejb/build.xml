@@ -1,0 +1,99 @@
+<project name="cashflow-ejb (foo)" basedir="." default="reear">
+
+    <property file="build.properties"/> <!-- IMPORTANT: at the top -->
+    <property name="project.distname" value="${ejb-project.name}"/>
+    <property name="project.jar.artefact.name" value="${project.distname}.jar"/>
+    <property name="project.ear.artefact.name" value="${project.distname}.ear"/>
+    <property name="ear-lib.src.dir"       value="lib"/>
+    <property name="ear-lib.dest.preffix"  value="lib"/>
+    <property name="bin.dir" value="bin"/>
+    <property name="build.dir" value="build"/>
+    <property name="jarlib.dir" value="${build.dir}/lib"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="conf.dir" value="${src.dir}/conf"/>
+    <property name="javasource.dir" value="${src.dir}/java"/>
+    <property name="compilelibs.dir" value="${basedir}/lib"/>
+
+    <property name="client-project.dir"  value="${basedir}/../${client-project.name}"/>
+    <property name="client-lib.dir" value="${basedir}/../${client-project.name}/dist"/>
+    <property name="client-lib.jar" value="${client-project.name}.jar"/>
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${client-lib.dir}">
+        <include name ="${client-lib.jar}"/>
+      </fileset>
+    </path>
+
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <target name="jar-client">
+      <ant antfile = "${client-project.dir}/build.xml" target="jar" inheritAll="false"/>
+    </target>
+
+    <!-- Normal build of application -->
+    <target name="compile" depends="prepare, jar-client"
+            description="Compile java sources">
+        <property name="package-to-resource-files" value="gr/neuropublic/gaia/cashflow/services"/>
+        <mkdir  dir="${bin.dir}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${bin.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8"/>
+        </javac>
+        <copy file="${conf.dir}/persistence.xml"   todir="${bin.dir}/META-INF"/>
+    </target>
+
+    <target name="jar" depends="compile"
+            description="jar class files">
+      <mkdir  dir="${build.dir}"/>
+
+      <jar destfile="${build.dir}/${project.jar.artefact.name}"
+           basedir="${bin.dir}">
+      </jar>
+    </target>
+
+
+    <target name="ear" description="Building the ear file containing the ejb.jar and dependent libs" 
+                       depends="jar"> 
+      <mkdir dir="${dist.dir}"/>
+      <ear destfile="${dist.dir}/${project.ear.artefact.name}" appxml="conf/application.xml">
+        <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
+              <include name="commons-lang3-3.1.jar"/>
+              <include name="mutil.jar"/>
+              <include name="joda-time-2.1.jar"/>
+        </zipfileset>
+        <zipfileset dir="${client-lib.dir}" prefix="${ear-lib.dest.preffix}">
+            <include name ="${client-lib.jar}"/>
+        </zipfileset>
+        <fileset dir="${build.dir}" includes="${project.jar.artefact.name}"/>
+
+        <!--include name ="${basedir}/${build.dir}/${project.jar.artefact.name}"/-->
+
+      </ear>
+    </target>
+
+
+    <target name="clean"
+            description="Prepare for clean build">
+      <delete dir="${basedir}/${bin.dir}"/>
+      <delete dir="${basedir}/${build.dir}"/>
+      <delete dir="${basedir}/${dist.dir}"/>
+    </target>
+
+    <!-- Rebuild project -->
+    <target name="reear" depends="clean,ear" description="clean and ear anew"/>
+
+</project>
