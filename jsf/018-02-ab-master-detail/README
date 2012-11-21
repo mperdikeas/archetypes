@@ -1,2 +1,4 @@
 In this stage I am continuing the 'JSF # 018 # 01' use case
-and am trying to fix the jScript problems.
+and managed to fix the jScript. I 've tested the new jScript
+code with Firefox, Chrome and IE and it seems to work (very 
+minor glitches do remain but they are really minor).
