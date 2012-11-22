@@ -16,7 +16,7 @@ import gr.neuropublic.ab_jpa.entitiesBase.BBase;
 
 
 @Entity
-@Table(name = "b")
+@Table(name = "b", schema="public")
 public class B  extends BBase {
 
     public B() {
