@@ -9,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.application.NavigationHandler;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
@@ -122,6 +123,19 @@ public class LoginController implements Serializable {
             JdbcUtils.closeStatement(ps);
             JdbcUtils.closeConnection(conn);
         }
+    }
+
+    public void loginAuto() throws UnknownAccountException, IncorrectCredentialsException, NamingException, SQLException {
+        l.info("loginAuto() called with username={}, pwd={}", getUsername(), getPassword());
+        if ((getUsername()==null) || (getPassword()==null)) return;
+	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(token);
+        token.clear();
+        ensureNickname();
+        FacesContext context = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = context.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(context, null, "index?faces-redirect=true");
     }
 
     public String login() {

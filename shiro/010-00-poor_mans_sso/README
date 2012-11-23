@@ -1,5 +1,31 @@
-The target in this use case (SHIRO # 010 #00)
+The target in this series of use cases (SHIRO # 010)
 is to implement a poor-man's SSO passing usernames
-and passwords as URL parameters. In the next version,
-I'll just store the password in a MemCached for a
-short while.
+and passwords as URL parameters and ultimately 
+relying on a MemCached cache to store the passwords
+temporarily and so only provide a ticket to retrieve
+the password from MemCached.
+
+In this stage (SHIRO # 010 # 00) I managed to implement
+a very basic requirement for such an implementation
+which is to allow direct logins in a JSF application
+using Shiro and not display the login page at all (see
+[1] for more).
+
+The idea is to eventually enable this poor man's version
+of SSO using Shiro container-managed sessions only (note
+that this use case's shiro.ini uses container-managed
+sessions and that's how it should stay).
+
+NB: I noticed in this version that when redirection
+is disabled (see common-beans.xml) some buttons / links
+need to be pressed twice. It seems that this kind of 
+behaviour is not JSF-wide but only appears in the 
+login / logout pages so maybe it is Shiro-related.
+
+
+On the next stage I should try to implement this in the
+form of two separate applications.
+
+
+References
+[1] http://stackoverflow.com/questions/13530651/jsf-call-backing-bean-method-without-rendering-the-page-using-url-parameters
