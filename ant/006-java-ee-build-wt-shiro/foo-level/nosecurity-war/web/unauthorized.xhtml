@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:shiro="http://shiro.apache.org/tags">
+
+<h:head><title>Unauthorized Attempt Page</title></h:head>
+
+
+<body>
+<h3>Welcome to The Shiro / EhCache  Unauthorized Attempt Page</h3>
+<p>You must login to visit pages in our secure and admin areas</p>
+<p>You must have the correct role to view pages in our admin area.</p>
+<p style="color:red">You have attempted to visit an area of
+our web site that you are not authorized to view.</p>
+
+<br clear="left" />
+<p><a href='#{request.contextPath}/index.xhtml'>Home</a></p>
+</body>
+</html>

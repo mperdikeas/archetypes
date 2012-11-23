@@ -1,0 +1,4 @@
+Sample JEE application with Shiro.
+Relies on external "auth-auth" database and
+external "application-domain" database.
+The foo-level is because I'm too lazy to fix relative links
