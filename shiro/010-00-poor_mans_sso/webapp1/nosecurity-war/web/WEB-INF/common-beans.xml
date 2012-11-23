@@ -18,6 +18,21 @@
             </managed-property>
         </managed-bean>
 
+
+        <managed-bean>
+            <managed-bean-name>loginController</managed-bean-name>
+            <managed-bean-class>backingbeans.LoginController</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+            <managed-property>
+                <property-name>dataSourceURI</property-name>
+                <value>"java:/usermgmnt"</value>
+            </managed-property>
+            <managed-property>
+                <property-name>landingPage</property-name>
+                <value>index</value>
+            </managed-property>
+        </managed-bean>
+
     </application>
     
 </faces-config>
