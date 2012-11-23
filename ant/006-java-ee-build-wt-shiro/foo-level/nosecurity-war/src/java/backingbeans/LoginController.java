@@ -9,6 +9,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.application.NavigationHandler;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
@@ -58,6 +59,22 @@ public class LoginController implements Serializable {
 
     private static final Logger l = LoggerFactory.getLogger(LoginController.class);
 
+    private String dataSourceURI;
+    public void setDataSourceURI(String dataSourceURI) {
+        this.dataSourceURI = dataSourceURI;
+    }
+
+    private String landingPage;
+    public void setLandingPage(String landingPage) {
+        this.landingPage = landingPage;
+    }
+
+    @PostConstruct
+    public void ensureConfigured() {
+        if (this.dataSourceURI  == null) throw new RuntimeException("dataSource not configured");
+        if (this.landingPage    == null) throw new RuntimeException("landingPage not configured");
+    }
+
     private String message;
     
     public String getMessage() {
@@ -99,9 +116,9 @@ public class LoginController implements Serializable {
     public void ensureNickname() throws NamingException, SQLException {
         if (username==null) throw new RuntimeException();
         InitialContext ic = new InitialContext();
-        String dataSourceURL = "java:/usermgmnt";
-        l.debug("looking for the '{}' datasource", dataSourceURL);
-        DataSource dataSource = (DataSource) ic.lookup(dataSourceURL);
+        // String dataSourceURL = this.dataSource // "java:/usermgmnt";
+        l.debug("looking for the '{}' datasource", dataSourceURI);
+        DataSource dataSource = (DataSource) ic.lookup(dataSourceURI);
         l.debug("data source is: "+dataSource);
         Connection conn = dataSource.getConnection();
         PreparedStatement ps = null;
@@ -124,9 +141,21 @@ public class LoginController implements Serializable {
         }
     }
 
-    public String login() {
-	String navOutcome = "index";
+    public void loginAuto() throws UnknownAccountException, IncorrectCredentialsException, NamingException, SQLException {
+        l.info("loginAuto() called with username={}, pwd={}", getUsername(), getPassword());
+        if ((getUsername()==null) || (getPassword()==null)) return;
 	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(token);
+        token.clear();
+        ensureNickname();
+        FacesContext context = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = context.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(context, null, String.format("%s?faces-redirect=true", landingPage));
+    }
+
+    public String login() {
+		UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
 	try {
 		Subject subject = SecurityUtils.getSubject();
 		subject.login(token);
@@ -164,7 +193,7 @@ public class LoginController implements Serializable {
 		ex.printStackTrace();
                 throw new RuntimeException(); // panic
 	}
-        return JsfUtil.navigate(navOutcome);
+        return JsfUtil.navigate(landingPage);
     }
 
     public String logout() {

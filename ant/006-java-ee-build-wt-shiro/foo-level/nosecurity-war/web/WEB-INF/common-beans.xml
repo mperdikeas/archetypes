@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <application>
+
+        <managed-bean>
+            <managed-bean-name>navigationHandler</managed-bean-name>
+            <managed-bean-class>gr.neuropublic.jsf.util.NavigationHandler</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+            <managed-property>
+                <property-name>redirectionEnabled</property-name>
+                <value>true</value>
+            </managed-property>
+        </managed-bean>
+
+
+        <managed-bean>
+            <managed-bean-name>loginController</managed-bean-name>
+            <managed-bean-class>backingbeans.LoginController</managed-bean-class>
+            <managed-bean-scope>session</managed-bean-scope>
+            <managed-property>
+                <property-name>dataSourceURI</property-name>
+                <value>"java:/usermgmnt"</value>
+            </managed-property>
+            <managed-property>
+                <property-name>landingPage</property-name>
+                <value>index</value>
+            </managed-property>
+        </managed-bean>
+
+    </application>
+    
+</faces-config>

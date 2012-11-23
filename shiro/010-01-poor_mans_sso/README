@@ -1,0 +1,10 @@
+The target in this series of use cases (SHIRO # 010)
+is to implement a poor-man's SSO passing usernames
+and passwords as URL parameters and ultimately 
+relying on a MemCached cache to store the passwords
+temporarily and so only provide a ticket to retrieve
+the password from MemCached.
+
+In this stage (SHIRO # 010 # 01) I am aiming to 
+display and test the functionality using two
+different applications.
