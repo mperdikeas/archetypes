@@ -1,0 +1,5 @@
+The target in this use case (SHIRO # 010 #00)
+is to implement a poor-man's SSO passing usernames
+and passwords as URL parameters. In the next version,
+I'll just store the password in a MemCached for a
+short while.
