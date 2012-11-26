@@ -71,9 +71,13 @@ public class IndexController implements Serializable {
 
 
     public void otherApp(String where) throws ServletException, java.io.IOException {
-        l.info("otherApp("+where+") called");
+        l.info(String.format("otherApp("+where+") called. user,pwd=%s,%s",
+                                    loginController.getUsername(),
+                             loginController.getPassword()));
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(String.format("http://%s?user=%s&pwd=%s" ,where ,loginController.getUsername()
-                  ,loginController.getPassword()));
+        String redirectURL = String.format("http://%s?user=%s&pwd=%s" ,where ,loginController.getUsername()
+                                           ,loginController.getPassword());
+        l.info("redirecting to: "+redirectURL);
+        ec.redirect(redirectURL);
     }
 }

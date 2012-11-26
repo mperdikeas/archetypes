@@ -38,7 +38,7 @@
             </patternset>
             </fileset>
         </copy>
-        <copy file="${conf.dir}/${index.xhtml-to-use}" tofile="${webroot.dir}/index.xhtml"/>
+        <copy file="${conf.dir}/${index.xhtml-to-use}" tofile="${webroot.dir}/index.xhtml" overwrite="true"/>
     </target>
 
     <target name="compile" depends="prepare,resources">

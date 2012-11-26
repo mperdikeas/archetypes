@@ -1,0 +1,1 @@
+ant -Dpublish.dir=/home/mperdikeas/git-jboss-eap-6.0/jboss-eap-6.0/standalone/deployments/ -Dindex.xhtml-to-use=index-webapp1.xhtml -f webapp/build.xml

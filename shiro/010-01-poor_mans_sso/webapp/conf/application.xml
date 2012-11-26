@@ -12,7 +12,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 <module>
  <web>
    <web-uri>nosecurity-war.war</web-uri>
-   <context-root>webapp1</context-root>
+   <context-root>webapp</context-root>
  </web>
 </module>
  

@@ -58,16 +58,16 @@
         <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <servlet>
+  <!--servlet>
     <description>Finds all users in the data store</description>
     <display-name>GetAllUsers</display-name>
     <servlet-name>GetAllUsers</servlet-name>
     <servlet-class>name.brucephillips.nosecurity.servlet.GetAllUsers</servlet-class>
-  </servlet>
-  <servlet-mapping>
+  </servlet-->
+  <!--servlet-mapping>
     <servlet-name>GetAllUsers</servlet-name>
     <url-pattern>/GetAllUsers</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping-->
 
 
 <!-- disabled, for now
