@@ -5,14 +5,30 @@ relying on a MemCached cache to store the passwords
 temporarily and so only provide a ticket to retrieve
 the password from MemCached.
 
-In this stage (SHIRO # 010 # 02) I am trying
-to ensure that the user is only logged once.
+In this stage (SHIRO # 010 # 02) I implemented
+logic that would not login the user again, if user
+was already logged in.
+
+In trying to accomplish that I came across the 
+following problem when deploying to two different
+EAP instances: since both instances used the same 
+cookie name (JSESSIONID) when the user navigated
+from one app to another, the cookie used by the
+browser changed and so the apps were interfering.
+This I managed to solve by configuring the container
+to use a different session cookie name.In general,
+this kind of configuration can be done either in Shiro
+(when Shiro native sessions are used) or in the
+container (when container-managed sessions are used)
+in which last case it is container-specific and one
+has to refer to the container documentation.
+
+For reference I've kep the two start scripts I used
+to launch the EAP instances in folder ref-scripts.
 
 Things to do for the next stage:
-[  i]    make sure that if the user is already
-         logged in, he is not logged in again.
-[ ii]    check how to implement logic to log him
+[  i]    check how to implement logic to log him
          out if he is trying to access the application
          from more than one session.
-[iii]    implement the hiding of the password in 
+[ ii]    implement the hiding of the password in 
          a memory cache.

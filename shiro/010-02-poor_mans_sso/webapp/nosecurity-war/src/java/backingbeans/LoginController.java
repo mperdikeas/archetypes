@@ -146,9 +146,14 @@ public class LoginController implements Serializable {
         if ((getUsername()==null) || (getPassword()==null)) return;
 	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
         Subject subject = SecurityUtils.getSubject();
-        subject.login(token);
-        token.clear();
-        ensureNickname();
+        if (!subject.isAuthenticated()) {
+            l.info("subject is not authenticated, logging in");
+            subject.login(token);
+            token.clear();
+            ensureNickname();
+        }
+        else
+            l.info("subject is authenticated, not logging in again");
         FacesContext context = FacesContext.getCurrentInstance();
         NavigationHandler navigationHandler = context.getApplication().getNavigationHandler();
         navigationHandler.handleNavigation(context, null, String.format("%s?faces-redirect=true", landingPage));
