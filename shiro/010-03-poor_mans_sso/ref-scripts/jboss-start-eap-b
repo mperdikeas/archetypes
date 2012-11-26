@@ -1,0 +1,1 @@
+./jboss-eap-6.0/bin/standalone.sh -Djboss.bind.address=172.31.129.29 -bmanagement=127.0.0.1 -Djboss.socket.binding.port-offset=100 -Dorg.apache.catalina.JSESSIONID=EAP_B_JSESSIONID
