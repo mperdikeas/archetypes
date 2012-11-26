@@ -142,6 +142,8 @@ public class LoginController implements Serializable {
     }
 
     private void loginInternal() throws UnknownAccountException, IncorrectCredentialsException, NamingException, SQLException {
+        l.info(String.format("loginInternal: subject class is %s", SecurityUtils.getSubject().getClass().getName()));
+        l.info(String.format("loginInternal: session id is %s", SecurityUtils.getSubject().getSession().getId()));
 	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
         Subject subject = SecurityUtils.getSubject();
         if (!subject.isAuthenticated()) {
