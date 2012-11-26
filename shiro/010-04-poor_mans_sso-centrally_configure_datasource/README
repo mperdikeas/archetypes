@@ -1,0 +1,24 @@
+The target in this series of use cases (SHIRO # 010)
+is to implement a poor-man's SSO passing usernames
+and passwords as URL parameters and ultimately 
+relying on a MemCached cache to store the passwords
+temporarily and so only provide a ticket to retrieve
+the password from MemCached.
+
+In this stage (SHIRO # 010 # 04) I am trying
+to reproduce the functionality of stage (SHIRO # 010 # 03)
+but my ensuring that the datasource is configured only 
+in one place. I.e. not in both shiro.ini and common-beans.xml.
+
+This was accomplished albeit at a great cost (I had to copy-paste
+the entire JdbcRealm method implementation inside my GaiaJdbcRealm
+class so that I could insert a call to setup the datasource that
+would be evaluated in FacesContext). This version works with
+version 1005 of neuro-jsf-pilot-svn-stable.
+
+Things to do for the next stage:
+[  i]    check how to implement logic to log him
+         out if he is trying to access the application
+         from more than one session.
+[ ii]    implement the hiding of the password in 
+         a memory cache.
