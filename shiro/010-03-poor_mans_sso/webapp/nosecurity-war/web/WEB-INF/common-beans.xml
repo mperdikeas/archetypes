@@ -21,7 +21,7 @@
 
         <managed-bean>
             <managed-bean-name>loginController</managed-bean-name>
-            <managed-bean-class>backingbeans.LoginController</managed-bean-class>
+            <managed-bean-class>gr.neuropublic.shiro.LoginController</managed-bean-class>
             <managed-bean-scope>session</managed-bean-scope>
             <managed-property>
                 <property-name>dataSourceURI</property-name>

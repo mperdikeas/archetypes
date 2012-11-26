@@ -9,7 +9,8 @@ In this stage (SHIRO # 010 # 03) I am trying
 to reproduce the functionality of stage (SHIRO # 010 # 02)
 only this time using the LoginController and IndexController
 (now renamed to 'LinkController') as part of the neurolib-war
-library (jar).
+library (jar). This was accomplished and this version works
+with version 998 of neurolib-war.
 
 Things to do for the next stage:
 [  i]    check how to implement logic to log him
