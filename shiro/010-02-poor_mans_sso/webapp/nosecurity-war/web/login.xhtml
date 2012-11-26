@@ -9,19 +9,13 @@
 
 <!-- <h:head><title>Role Security Login Page</title></h:head> -->
 
-<f:metadata>
-    <f:viewParam name="user" value="#{loginController.username}" />
-    <f:viewParam name="pwd"  value="#{loginController.password}" />
-    <f:event type="preRenderView" listener="#{loginController.loginAuto}" />
-</f:metadata>
-
 <h:head></h:head>
 
 
 <h:body>
 <h3>Web application login page</h3>
 <p>You must login to visit pages in our secure area</p>
-<p style="color:red">${error}</p>
+<p style="color:red">${loginController.message}</p>
 
 
        <h:form id="loginForm">

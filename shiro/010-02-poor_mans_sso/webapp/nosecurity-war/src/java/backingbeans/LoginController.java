@@ -166,33 +166,12 @@ public class LoginController implements Serializable {
 		subject.login(token);
 		token.clear();
                 ensureNickname();
-                /*
-                       if (subject.isAuthenticated()) {
-                           try {
-                               if ( subject.hasRole("admin") ) System.out.println(subject.getPrincipal() + " has admin role");
-                               else                            System.out.println(subject.getPrincipal() +  " doesn't have admin role");
-                               if (subject.hasRole("user"))    System.out.println(subject.getPrincipal() + " has user role");
-                               else                            System.out.println(subject.getPrincipal() + " doesn't have user role");
-                               if (subject.hasRole("staff"))   System.out.println(subject.getPrincipal() + " has staff role");
-                               else                            System.out.println(subject.getPrincipal() + " doesn't have staff role");
-                               if (subject.hasRole("cacher"))   System.out.println(subject.getPrincipal() + " has cacher role");
-                               else                            System.out.println(subject.getPrincipal() + " doesn't have cacher role");
-                               
-                               if       (subject.isPermitted("secure")) System.out.println(subject.getPrincipal()+" has the 'secure' permission");
-                               if       (subject.isAuthenticated() && subject.isPermitted("secure"))  navOutcome = "goToStaffArea";
-                               else if  (subject.isAuthenticated() && subject.hasRole    ("user"  ))  navOutcome = "goToUserArea";
-                               else if  (subject.isAuthenticated() && subject.hasRole    ("admin" ))  navOutcome = "goToAdminArea";
-                               else if  (subject.isAuthenticated() && subject.hasRole    ("cacher" )) navOutcome = "goToEhCacheTest";
-                               else                                                                   navOutcome = "unauthorized";
-                           } catch (Exception e) { // due to the 'if' above we shouldn't see any exceptions in the above section
-                               e.printStackTrace();
-                               throw new RuntimeException("panic: "+e);
-                           }
-                           } */
 	} catch (UnknownAccountException ex) {
             setMessage("Ο λογαριασμός δεν υπάρχει - προσπαθήστε ξανά");
+            return null;
 	} catch (IncorrectCredentialsException ex) {
             setMessage("Λάθος συνθηματικό - προσπαθήστε ξανά");
+            return null;
 	}
 	catch (Exception ex) {
 		ex.printStackTrace();
