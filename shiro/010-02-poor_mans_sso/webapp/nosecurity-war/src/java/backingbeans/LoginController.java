@@ -197,7 +197,7 @@ public class LoginController implements Serializable {
         if (subject != null) {
             subject.logout();
         }
-        final boolean containerSessions = false;
+        final boolean containerSessions = true; // am not sure if the below code is absolutely needed
         if (containerSessions)  {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
