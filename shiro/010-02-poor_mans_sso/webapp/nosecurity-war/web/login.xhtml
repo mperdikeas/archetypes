@@ -9,6 +9,11 @@
 
 <!-- <h:head><title>Role Security Login Page</title></h:head> -->
 
+<f:metadata>
+    <f:event type="preRenderView" listener="#{loginController.redirectIfAlreadyLoggedIn}" />
+</f:metadata>
+
+
 <h:head></h:head>
 
 

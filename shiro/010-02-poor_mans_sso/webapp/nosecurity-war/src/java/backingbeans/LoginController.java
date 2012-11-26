@@ -141,9 +141,7 @@ public class LoginController implements Serializable {
         }
     }
 
-    public void loginAuto() throws UnknownAccountException, IncorrectCredentialsException, NamingException, SQLException {
-        l.info("loginAuto() called with username={}, pwd={}", getUsername(), getPassword());
-        if ((getUsername()==null) || (getPassword()==null)) return;
+    private void loginInternal() throws UnknownAccountException, IncorrectCredentialsException, NamingException, SQLException {
 	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
         Subject subject = SecurityUtils.getSubject();
         if (!subject.isAuthenticated()) {
@@ -154,6 +152,15 @@ public class LoginController implements Serializable {
         }
         else
             l.info("subject is authenticated, not logging in again");
+    }
+
+    public void loginAuto() throws UnknownAccountException, IncorrectCredentialsException, NamingException, SQLException {
+        l.info("loginAuto() called with username={}, pwd={}", getUsername(), getPassword());
+        loginInternal();
+        navigateToLandingPage();
+    }
+
+    private void navigateToLandingPage() {
         FacesContext context = FacesContext.getCurrentInstance();
         NavigationHandler navigationHandler = context.getApplication().getNavigationHandler();
         navigationHandler.handleNavigation(context, null, String.format("%s?faces-redirect=true", landingPage));
@@ -162,10 +169,7 @@ public class LoginController implements Serializable {
     public String login() {
 	UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword());
 	try {
-		Subject subject = SecurityUtils.getSubject();
-		subject.login(token);
-		token.clear();
-                ensureNickname();
+            loginInternal();
 	} catch (UnknownAccountException ex) {
             setMessage("Ο λογαριασμός δεν υπάρχει - προσπαθήστε ξανά");
             return null;
@@ -178,6 +182,12 @@ public class LoginController implements Serializable {
                 throw new RuntimeException(); // panic
 	}
         return JsfUtil.navigate(landingPage);
+    }
+
+    public void redirectIfAlreadyLoggedIn() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated())
+            try { navigateToLandingPage(); } catch (java.lang.IllegalStateException ignoreMe) {} // innocuous redirection: this is to implement the logic that if an authenticated subject revisits the login.xhtml view, he should be directed immediately to the landing page.
     }
 
     public String logout() {
