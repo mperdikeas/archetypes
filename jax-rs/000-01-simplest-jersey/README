@@ -1,0 +1,22 @@
+In this stage (JAX-RS # 000 # 01) I am trying
+to reproduce the work done in (JAX-RS # 000 # 00) only
+this time using the Jersey implementation of JAX-RS
+and trying to deploy it to JBoss. This 
+means that I will have to circumvent the following issue:
+
+https://issues.jboss.org/browse/AS7-3199
+
+which originally blocked the (JAX-RS # 000 # 00) stage and led
+to its implementation using resteasy.
+
+* Outcome:
+
+I managed to circumvent the above problem by disabling resteasy.scan
+in web.xml according to the instructions given here:
+
+http://stackoverflow.com/questions/6953516/deploying-a-jersey-webapp-on-jboss-as-7
+
+(answer by Anthony Dahanne). However, I then stumbled upon the following
+problem which seems unresolved for the moment:
+
+https://community.jboss.org/thread/198644
