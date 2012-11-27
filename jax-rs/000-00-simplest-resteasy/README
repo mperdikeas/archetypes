@@ -1,0 +1,17 @@
+In this example I managed to deploy a reasteasy-based class
+that exposes a REST API. The package and project names
+starting with 'jersey' are a misnomer as I am using
+JBoss's resteasy and not jersey. I originally set out
+to do with jersey but I stumbled upon the following issue:
+
+https://issues.jboss.org/browse/AS7-3199
+
+, and so it seems that I cannot bundly jersey or use the jersey
+configurations in web.xml when I deploy REST web services to 
+JBoss AS. Instead, I have to rely on resteasy which is provided
+by JBoss.
+
+The deployed REST web service (only a parameterless GET at the moment)
+is available at:
+
+http://mperdikeas:8080/helloJersey/rest/hellojersey
