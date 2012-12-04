@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <jasperReport 
+      xmlns="http://jasperreports.sourceforge.net/jasperreports" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" 
+      name         ="report name" 
+    >
+	<style name="Sans_Normal" isDefault="true" fontName="DejaVu Sans" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="P1" class="java.lang.String"></parameter>
+	<parameter name="P2" class="java.lang.Integer"></parameter>
+	<parameter name="P3" class="java.lang.Integer"></parameter>
+	<parameter name="P4" class="java.lang.Integer"></parameter>
+            <queryString language="SQL">
+                    <![CDATA[
+    SELECT X, Y, VAL
+    FROM (
+          select     1  x, 1 y, 1 val  from public.dual UNION ALL
+          select     1  x, 2 y, 2 val  from public.dual UNION ALL
+          select     2  x, 1 y, 3 val  from public.dual UNION ALL
+          select     2  x, 2 y, 4 val  from public.dual
+          ) 
+        foo_bar
+    ]]>
+    </queryString>
+    
+    <field name="X"    class="java.lang.Integer"/>
+    <field name="Y"    class="java.lang.Integer"/>
+    <field name="VAL"   class="java.lang.Integer" />
+    
+     <title/>
+     <detail/>
+        <summary>
+            <band height="187" splitType="Stretch">
+		<textField isBlankWhenNull="true">
+			<reportElement x="0" y="0" width="300" height="40" style="Sans_Normal"/>
+			<textElement textAlignment="Center">
+				<font size="15"/>
+			</textElement>
+			<textFieldExpression class="java.lang.String"><![CDATA["P1= "+String.valueOf($P{P1})+"."]]></textFieldExpression>
+		</textField>
+		<textField isBlankWhenNull="true">
+			<reportElement x="100" y="30" width="300" height="40" style="Sans_Normal"/>
+			<textElement textAlignment="Center">
+				<font size="15"/>
+			</textElement>
+			<textFieldExpression class="java.lang.Integer"><![CDATA["P2= "+String.valueOf($P{P2})+"."]]></textFieldExpression>
+		</textField>
+		<textField isBlankWhenNull="true">
+			<reportElement x="10" y="130" width="300" height="40" style="Sans_Normal"/>
+			<textElement textAlignment="Center">
+				<font size="15"/>
+			</textElement>
+			<textFieldExpression class="java.lang.Integer"><![CDATA["P3= "+String.valueOf($P{P3})+"."]]></textFieldExpression>
+		</textField>
+		<textField isBlankWhenNull="true">
+			<reportElement x="100" y="130" width="300" height="40" style="Sans_Normal"/>
+			<textElement textAlignment="Center">
+				<font size="15"/>
+			</textElement>
+			<textFieldExpression class="java.lang.Integer"><![CDATA["P3= "+String.valueOf($P{P4})+"."]]></textFieldExpression>
+		</textField>
+                <crosstab>
+                    <reportElement uuid="e66e9d67-8715-4714-b3e9-95365da06ef3" x="0" y="0" width="802" height="187"/>
+                    <rowGroup name="X-GROUP" width="70" totalPosition="End">
+                        <bucket class="java.lang.Integer">
+                            <bucketExpression><![CDATA[$F{X}]]></bucketExpression>
+                        </bucket>
+                        <crosstabRowHeader>
+                            <cellContents backcolor="#F0F8FF" mode="Opaque">
+                                <textField>
+                                    <reportElement uuid="dd57ed24-cb32-4816-8ae8-13089d50f750" x="0" y="0"
+                                            width="70" height="25"/>
+                                    <textFieldExpression><![CDATA[$V{X-GROUP}]]></textFieldExpression>
+                                </textField>
+                            </cellContents>
+                        </crosstabRowHeader>
+                        <crosstabTotalRowHeader>
+                            <cellContents>
+                                <staticText>
+                                    <reportElement uuid="b6f8d12e-4069-4f33-a032-28e92111fc2c" x="0" y="0" width="70" height="25"/>
+                                    <text><![CDATA[TOTAL]]></text>
+                                </staticText>
+                            </cellContents>
+                        </crosstabTotalRowHeader>
+                    </rowGroup>
+                    <columnGroup name="Y-GROUP" height="30">
+                        <bucket class="java.lang.Integer">
+                            <bucketExpression><![CDATA[$F{Y}]]></bucketExpression>
+                        </bucket>
+                        <crosstabColumnHeader>
+                            <cellContents>
+                                <textField>
+                                    <reportElement uuid="b6f8d12e-4069-4f33-a032-28e92533fc2c" x="0" y="0"
+                                            width="86" height="30"/>
+                                    <textFieldExpression><![CDATA[$V{Y-GROUP}]]></textFieldExpression>
+                                </textField>
+                            </cellContents>
+                        </crosstabColumnHeader>
+                    </columnGroup>
+                    <measure name="val" class="java.lang.Integer" calculation="Sum">
+                        <measureExpression><![CDATA[$F{VAL}]]></measureExpression>
+                    </measure>
+                    <crosstabCell width="86" height="25">
+                        <cellContents>
+                            <textField>
+                                <reportElement uuid="86eafff2-4bce-4ed3-8d52-3ef8e9f37e53" x="0" y="0"
+                                        width="86" height="25"/>
+                                <textFieldExpression><![CDATA[$V{val}]]></textFieldExpression>
+                            </textField>
+                        </cellContents>
+                    </crosstabCell>
+                    <crosstabCell width="86" height="25" rowTotalGroup="X-GROUP">
+                        <cellContents>
+                            <textField>
+                                <reportElement uuid="86eafff2-4bce-4ed3-8d52-3ef8e9f37e54" x="0" y="0"
+                                        width="86" height="25"/>
+                                <textFieldExpression><![CDATA[$V{val}]]></textFieldExpression>
+                            </textField>
+                        </cellContents>
+                    </crosstabCell>
+                </crosstab>
+            </band>
+        </summary>
+    
+    
+    
+    </jasperReport>
