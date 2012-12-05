@@ -166,7 +166,7 @@ public class JasperApp
         Pattern p0 = Pattern.compile(paramRegExp);
         Matcher m = p0.matcher(script);
         while (m.find()) {
-            retValue.add(m.group(0));
+            if (!retValue.contains(m.group(0))) retValue.add(m.group(0));
         }
         return retValue;
     }
@@ -177,6 +177,7 @@ public class JasperApp
 
     private static final String adorn(String script, String paramsVar) {
        List<String> paramNames = paramNames(script, "(STR|BD|I|D)_\\w*");
+       l.info(String.format("%d parameters detected", paramNames.size()));
        StringBuilder sb = new StringBuilder();
        sb.append("\n");
        for (String paramName : paramNames)
