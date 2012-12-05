@@ -79,9 +79,15 @@ public class QueryJythonHolder {
         }
     }*/
 
+    private StringBuffer queries = new StringBuffer();
+
+    public String getQueries() { return queries.toString(); }
+
     public Map<Integer, Map<Integer, Object>> qm(String query, int maxNumOfRows, boolean assertNoMore) throws SQLException {
         query = StringEscapeUtils.unescapeJava(query);
         System.out.println(query);
+        queries.append(query+"\n");
+        
         //Connection conn = DriverManager.getConnection(connectString, user, password);
         PreparedStatement ps = null;
         ResultSet rs = null;

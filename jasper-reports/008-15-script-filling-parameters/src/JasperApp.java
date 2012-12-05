@@ -55,6 +55,8 @@ import mutil.base.ExceptionAdapter;
 import mutil.base.Holder;
 import mutil.base.FileUtil;
 
+import org.apache.commons.io.FileUtils;
+
 import org.python.core.PyCode;
 import org.python.core.PyException;
 import org.python.core.PyObject;
@@ -90,8 +92,7 @@ public class JasperApp
 
     private static Properties readProperties(File paramsFile) throws IOException {
         Properties prop = new Properties();
-        // ClassLoader loader = Thread.currentThread().getContextClassLoader();           
-        InputStream stream = new FileInputStream(paramsFile); // loader.getResourceAsStream("params.ini");
+        InputStream stream = new FileInputStream(paramsFile);
         prop.load(stream);
         stream.close();
         return prop;
@@ -100,10 +101,10 @@ public class JasperApp
     private static Connection getConnection(File paramsFile) throws ClassNotFoundException, SQLException, IOException {
         Properties props = readProperties(paramsFile);
 	Connection conn;
-	String driver        = props.getProperty("driver"); // "org.postgresql.Driver";
-	String connectString = props.getProperty("url");    // "jdbc:postgresql://localhost:5432/usermgmnt";
-	String user          = props.getProperty("user");   // "gaia-user";
-	String password      = props.getProperty("pwd");    // "gaia-user-pwd"
+	String driver        = props.getProperty("driver");
+	String connectString = props.getProperty("url");   
+	String user          = props.getProperty("user");  
+	String password      = props.getProperty("pwd");   
 	Class.forName(driver);
 	conn = DriverManager.getConnection(connectString, user, password);
         System.out.println((conn!=null)?"Connection obtained":"CONNECTION NOT OBTAINED");
@@ -114,11 +115,15 @@ public class JasperApp
         String script         = FileUtil.readUTF8FileAsSingleString(new File(scriptFile), "\n");
         String scriptUTFReady = escapeUTFForPythonScript(script);
         String scriptUTFReadyWtFuncs = StringUtils.join(PYTHON_FUNCS, "\n")+"\n"+scriptUTFReady;
+        FileUtils.writeStringToFile(new File("out-script"), scriptUTFReadyWtFuncs);
         System.out.println(scriptUTFReadyWtFuncs+"\n---------------------------");
-        Map<String, Object> parameters = processParameters(getConnection(new File(paramsFile)), scriptUTFReadyWtFuncs);
+        QueryJythonHolder sql = new QueryJythonHolder(getConnection(new File(paramsFile)));
+        Map<String, Object> parameters = processParameters(sql, scriptUTFReadyWtFuncs);
+        FileUtils.writeStringToFile(new File("out-queries"), sql.getQueries());
         System.out.println("---------------------------");
         unescapeStringParameters(parameters);
         printParameters(paramNames, parameters);
+        writeParameters(paramNames, parameters, new File("out-results"));
         return parameters;
     }
 
@@ -186,11 +191,18 @@ public class JasperApp
         }
     }
 
-    public static Map<String, Object> processParameters(Connection conn, String script) throws PyException {
+    private static void writeParameters(List<String> paramNames, Map<String, Object> params, File out) throws IOException {
+        StringBuffer sb = new StringBuffer();
+        for (String key : paramNames) {
+            sb.append(key+"  -->  "+String.valueOf(params.get(key))+"\n");
+        }
+        FileUtils.writeStringToFile(out, sb.toString());
+    }
+
+    public static Map<String, Object> processParameters(QueryJythonHolder sql, String script) throws PyException {
         Map<String, Object> params = new HashMap<String, Object>();
         {
             PythonInterpreter pi = new PythonInterpreter();
-            QueryJythonHolder sql = new QueryJythonHolder(conn);
             pi.set("params", params);
             pi.set("sql", sql);
             pi.set("u", new JythonUtils());
