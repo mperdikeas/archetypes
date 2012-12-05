@@ -1,0 +1,13 @@
+In this stage I am trying to create an all-encompassing
+jar file. This necessitates changes in the build.xml script
+and the merging of lib-runtime and lib folders.
+
+I succeeded, the executable Jar file is produced with:
+ant package
+
+However, it is not all-encompassing as Java's jar format
+does not allow jars within jars. That's why the 'package'
+ANT task also copies the jars the param processor depends on.
+
+Run it with ./params-processor
+
