@@ -15,6 +15,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.regex.Matcher; 
 import java.util.regex.Pattern;
+import java.util.Properties;
+import java.io.InputStream;
+import java.io.FileInputStream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -72,7 +75,7 @@ public class JasperApp
                     pdf(args[1]); 
                     break;
                 case "print":
-                    prepareParameters();
+                    prepareParameters(args[1]);
                     break;
                 default:
                     throw new RuntimeException("unrecognized case");
@@ -86,24 +89,34 @@ public class JasperApp
         private static String pdfReportName     () { return reportCoreName()+".pdf"   ; }
 
 
-    private static Connection getHsqlConnection() throws ClassNotFoundException, SQLException {
+    private static Properties readProperties(File paramsFile) throws IOException {
+        Properties prop = new Properties();
+        // ClassLoader loader = Thread.currentThread().getContextClassLoader();           
+        InputStream stream = new FileInputStream(paramsFile); // loader.getResourceAsStream("params.ini");
+        prop.load(stream);
+        stream.close();
+        return prop;
+    }
+
+    private static Connection getConnection(File paramsFile) throws ClassNotFoundException, SQLException, IOException {
+        Properties props = readProperties(paramsFile);
 	Connection conn;
-	String driver        = "org.postgresql.Driver";
-	String connectString = "jdbc:postgresql://localhost:5432/usermgmnt";
-	String user          = "gaia-user";
-	String password      = "gaia-user-pwd";
+	String driver        = props.getProperty("driver"); // "org.postgresql.Driver";
+	String connectString = props.getProperty("url");    // "jdbc:postgresql://localhost:5432/usermgmnt";
+	String user          = props.getProperty("user");   // "gaia-user";
+	String password      = props.getProperty("pwd");    // "gaia-user-pwd"
 	Class.forName(driver);
 	conn = DriverManager.getConnection(connectString, user, password);
         System.out.println("Connection obtained: "+((conn==null)?"null":"not null"));
 	return conn;
     }
 
-    private static Map<String, Object> prepareParameters() throws ClassNotFoundException, SQLException, IOException {
+    private static Map<String, Object> prepareParameters(String paramsFile) throws ClassNotFoundException, SQLException, IOException {
         String script         = FileUtil.readFileAsSingleString(new File("script.py"), "\n");
         String scriptUTFReady = escapeUTFForPythonScript(script);
         String scriptUTFReadyWtFuncs = StringUtils.join(PYTHON_FUNCS, "\n")+"\n"+scriptUTFReady;
         System.out.println("escaped script is:\n"+scriptUTFReady+"\n---------------------------");
-        Map<String, Object> parameters = processParameters(getHsqlConnection(), scriptUTFReadyWtFuncs);
+        Map<String, Object> parameters = processParameters(getConnection(new File(paramsFile)), scriptUTFReadyWtFuncs);
         unescapeStringParameters(parameters);
         printParameters(paramNames, parameters);
         return parameters;
@@ -114,8 +127,8 @@ public class JasperApp
             String sourceFileLocation = "reports/"+compiledReportName();
             System.err.println(" sourceFileLocation : " + sourceFileLocation);
             JasperReport jasperReport = (JasperReport)JRLoader.loadObjectFromLocation(sourceFileLocation);
-            Map<String, Object> parameters = prepareParameters();
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, getHsqlConnection());
+            Map<String, Object> parameters = prepareParameters("this will break later");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, getConnection(new File("this will break later")));
             File destTempFile = null;
             try {
                 destTempFile = File.createTempFile("jasper-"+className(), ".jrprint");
