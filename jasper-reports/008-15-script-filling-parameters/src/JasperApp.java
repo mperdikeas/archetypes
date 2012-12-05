@@ -175,6 +175,7 @@ public class JasperApp
         String escapedScript                  = StringEscapeUtils.escapeJava(script);
         String escapedScriptNewLinesCorrected = escapedScript.replaceAll("\\\\n", "\n");
         String escapedScriptQuotesCorrected   = escapedScriptNewLinesCorrected.replaceAll("\\\\'", "\'");
+               escapedScriptQuotesCorrected   = escapedScriptQuotesCorrected.replaceAll("\\\\\"", "\"");
         //        String escapedScriptDoubleQuotesCorrected   = escapedScriptQuotesCorrected.replaceAll("\\\"", "\\\\\"");
         return escapedScriptQuotesCorrected;
     }

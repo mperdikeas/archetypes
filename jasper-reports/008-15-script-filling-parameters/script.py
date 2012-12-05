@@ -1,4 +1,12 @@
-q1 = sqls('SELECT MIN(USER_ID) foo FROM SS_USERS')
+q1s = """
+SELECT 
+      MIN(USER_ID)
+      foo
+      FROM
+      SS_USERS
+"""
+#q1 = sqls('SELECT MIN(USER_ID) foo FROM SS_USERS')
+q1 = sqls(q1s)
 if (q1[1]==1):
     BD_a = 3.234
 else:
@@ -18,7 +26,7 @@ STR_b=q2[1]
 STR_C=str(q3[1])
 q4 = sqls('SELECT user_surname FROM SS_USERS WHERE user_nickname=\''+q2[1]+'\'')
 STR_D = q4[1]
-q5 = sql.q('SELECT user_firstname FROM SS_USERS WHERE user_nickname=\'Βασιλάκης\'')
+q5 = sqls('SELECT user_firstname FROM SS_USERS WHERE user_nickname=\'Βασιλάκης\'')
 STR_D1 = q5[1]
 STR_D1 = str(q5[1])
 STR_D1 = q2.user_nickname
