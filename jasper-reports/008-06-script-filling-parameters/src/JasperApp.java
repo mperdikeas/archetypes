@@ -110,16 +110,16 @@ public class JasperApp
             String script = FileUtil.readFileAsSingleString(new File("script.py"), "\n");
             System.out.println("script file read as follows:\n");
             System.out.println(script);
-            /*
-                "q1 = sql.q('SELECT ORDERID FROM PUBLIC.ORDERS')\n"                           +
-                "STR_1 = 'Pi One'\n"                                                          +
-                "I_2=3**2\nI_3=2\n"                                                           +
-                "I_4=I_2**I_3\n"                                                              +
-                "I_5=q1[1]\n"                                                                 +
-                "q2 = sql.q('SELECT SHIPCOUNTRY FROM PUBLIC.ORDERS WHERE ORDERID=%d'%I_5)\n"  +
-                "STR_b=q2[1]"                                                                 ;*/
             System.out.println("\\---------------- end of script file ------------/");
-            Map<String, Object> parameters = processParameters(getHsqlConnection(), script);
+            String escapedScript = StringEscapeUtils.escapeJava(script);
+            System.out.println("escaped script file read as follows:\n");
+            System.out.println(escapedScript);
+            System.out.println("\\---------------- end of escaped script file ------------/");
+            String escapedScriptNewLinesCorrected = escapedScript.replaceAll("\\\\n", "\n"); 
+            System.out.println("escaped script new lines corrected file read as follows:\n");
+            System.out.println(escapedScriptNewLinesCorrected);
+            System.out.println("\\---------------- end of escaped script new lines corrected file ------------/");
+            Map<String, Object> parameters = processParameters(getHsqlConnection(), escapedScriptNewLinesCorrected); // script) ;// escapedScript);
             printParameters(parameters);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, getHsqlConnection());
             File destTempFile = null;
