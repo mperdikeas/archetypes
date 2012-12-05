@@ -6,17 +6,67 @@
     <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
     <property name="build.dir"              value="${basedir}/build"/>
     <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="dist-runnable.dir"      value="${basedir}/dist-runnable"/>
     <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
     <property name="src.dir"                value="${basedir}/src"/>
     <property name="javasource.dir"         value="${src.dir}"/>
     <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
     <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+    <property name="run-app.script.name"    value="run-app"/>
 
     <path id = "compile.classpath">
       <fileset dir="${compilelibs.dir}">
         <include name ="*.jar"/>
       </fileset>
     </path>
+
+<!-- Next, my package task uses that classpath -->
+<target name="package" depends="compile" description="package the project in a runnable Jar together with the dependencies">
+  <echo>=== PACKAGE ===</echo>
+  
+    <!-- convert compile.classpath to mf.classpath (the string needed for the manifest task) -->
+    <pathconvert property="mf.classpath" pathsep=" ">
+        <path refid="compile.classpath"/>
+        <flattenmapper/>
+    </pathconvert>
+
+
+  <!-- now build the manifest file, using mf.classpath -->
+  <tstamp/><!-- needed for TODAY -->
+  <manifest file="MANIFEST.MF">
+    <attribute name="Built-By" value="${manifest.built.by}"/>
+    <attribute name="Created-By" value="${manifest.created.by}"/>
+    <attribute name="Main-Class" value="${project.MainClass.name}"/>
+    <attribute name="Implementation-Version" value="${version.number}-b${build.number}"/>   
+    <attribute name="Built-Date" value="${TODAY}"/>
+    <attribute name="Class-Path" value="${mf.classpath}" />
+  </manifest>
+  
+  <!-- create the jar file, including the manifest file we just created -->
+  <jar basedir="${build.dir}"
+       destfile="${dist-runnable.dir}/${project.distname}.jar"
+       includes="**/*.*"
+       excludes="**/*Test*"
+       manifest="MANIFEST.MF" />
+
+  <!-- copy all the jar files out to the destination directory (dist.dir) -->
+  <copy todir="${dist-runnable.dir}">
+    <fileset dir="${compilelibs.dir}">
+      <exclude name="junit*" />
+      <include name="*.jar"/>
+      <include name="*.zip"/>
+    </fileset>
+  </copy>
+  <!-- move this file before the 'jar' task (and put it in the 'classes' dir) if you'd rather 
+       include it in the jar -->
+  <!--copy file="${resources.dir}/log4j.properties" tofile="${dest.dir}/log4j.properties" overwrite="true" />
+  <copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />
+  <delete dir="${dest.dir.classes}" /-->
+
+    <echo file="${run-app.script.name}" append="false">java -jar ${dist-runnable.dir}/${project.distname}.jar ${project.MainClass.name}</echo>
+    <chmod file="${run-app.script.name}" perm="ugo+rx"/>
+</target>
+
 
     <!-- Check timestamp on files -->
     <target name="prepare">
@@ -58,6 +108,8 @@
             description="Prepare for clean build">
       <delete dir="${build.dir}"/>
       <delete dir="${dist.dir}"/>
+      <delete dir="${dist-runnable.dir}"/>
+      <delete file="${run-app.script.name}"/>
     </target>
 
     <path id = "run.classpath">
