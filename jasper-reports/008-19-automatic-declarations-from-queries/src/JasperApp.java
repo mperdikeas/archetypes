@@ -166,9 +166,21 @@ public class JasperApp
         //        "# -*- coding: utf-8 -*-",
         "import sys",
         "import re",
+        "REPORT_PARAMS = re.compile(\"(STR|BD|I|D)_\\w*\")",
+        "",
+        "def isReportGlobal(s):",
+        "    return REPORT_PARAMS.match(s)",
+        "",
         "class MyRecord:",
-        "    def __init__(self, dictData):",
+        "    def __init__(self, dictData, calledFromSqlS=False):",
         "        self._dictData = dictData",
+        "        if calledFromSqlS:",
+        "            for k in dictData.internal.keySet():",
+        "                kUpper = k.upper()",
+        "                u.println('examining: %s'%kUpper)",
+        "                if isReportGlobal(kUpper):",
+        "                    u.println('adding SCRIPT-GLOBAL-PARAM : %s with value %s'%(kUpper, dictData.f(k)))",
+        "                    globals()[kUpper]=dictData.f(k)",
         "    def __getattr__(self, nameOfField):",
         //        "        global STR_debug",
         //        "        STR_debug = nameOfField",
@@ -189,15 +201,11 @@ public class JasperApp
         "    return MySQLrecords(sql.sqlm(query, num, panicIfLess, panicIfMore))",
         "",
         "def sqls(query):",
-        "    return MyRecord(sql.sqls(query))"
+        "    return MyRecord(sql.sqls(query), True)"
         };
 
 
     private static final String PYTHON_FOOTER[] = {
-        "REPORT_PARAMS = re.compile(\"(STR|BD|I|D)_\\w*\")",
-        "",
-        "def isReportGlobal(s):",
-        "    return REPORT_PARAMS.match(s)",
         "",
         "for (k,v) in globals().items():",
         "    if isReportGlobal(k):",

@@ -10,4 +10,8 @@ public class JythonUtils {
         return StringEscapeUtils.escapeJava(foo);
     }
 
+    public void println(String foo) {
+        System.out.println(foo);
+    }
+
 }
