@@ -1,0 +1,8 @@
+This is a trouble-shooting version where I am trying to fix the
+following problems:
+
+[1] problem with money types (likely related to the postgresql JDBC driver)
+[2] problem with """ foo """  %()
+[3] automatically detect parameters in SQL queries
+[4] handle blank lines in the script
+[5] do not detect parameters in comments
