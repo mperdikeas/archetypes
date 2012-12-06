@@ -1,0 +1,7 @@
+In this version I managed to solve the problem of:
+
+[1] do not detect parameters in comments
+
+Ideas for future versions:
+
+[1] automatically detect parameters in SQL queries
