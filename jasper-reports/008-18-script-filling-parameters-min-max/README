@@ -1,6 +1,6 @@
-In this version I managed to solve the problem of:
+In this version I managed to implement the following enhancement:
 
-[1] do not detect parameters in comments
+[1] more flexible row num configuration and panicIfMore, panicIfLess parameters
 
 Ideas for future versions:
 
