@@ -14,34 +14,10 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 public class QueryJythonHolder {
 
-    /*    private String driver;
-    private String connectString;
-    private String user;
-    private String password;
-
-    private QueryJythonHolder(String driver, String connectString, String user, String password) throws ClassNotFoundException {
-        this.driver = driver;
-        this.connectString = connectString;
-        this.user = user;
-        this.password = password;
-        Class.forName(driver);
-        }*/
-
     private Connection conn;
     public QueryJythonHolder(Connection conn) {
         this.conn = conn;
     }
-
-    /*    private static QueryJythonHolder singleton;
-
-    public static void initializeHolder(String driver, String connectString, String user, String password) {
-        if (singleton != null) throw new RuntimeException();
-        singleton = new QueryJythonHolder(driver, connectString, user, password);
-    }
-
-    public static Map<Integer, Object> q(String query) throws SQLException {
-        return singleton.query(query);
-    }*/
 
     public String escape(String foo) {
         return StringEscapeUtils.escapeJava(foo);
@@ -51,25 +27,41 @@ public class QueryJythonHolder {
         Map<Integer, Map<Integer, Object>> retValue = qm(query, 1, true);
         return retValue.get(1);
     }
-    /*
-    public Map<Integer, Object> q(String query) throws SQLException {
+
+    private StringBuffer queries = new StringBuffer();
+
+    public String getQueries() { return queries.toString(); }
+
+    public Map<Integer, Map<Integer, Object>> qm(String query, int maxNumOfRows, boolean assertNoMore) throws SQLException {
         query = StringEscapeUtils.unescapeJava(query);
-        System.out.println("running query:\n"+query);
-        //Connection conn = DriverManager.getConnection(connectString, user, password);
+        System.out.println(query);
+        queries.append(query+"\n");
+        
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Map<Integer, Object> retValue = new HashMap<Integer, Object>();
+        Map<Integer, Map<Integer, Object>> retValue = new HashMap<Integer, Map<Integer, Object>>();
         try {
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            boolean haveBeenHereBefore = false;
+            int rowNum = 0 ;    
             while (rs.next()) {
-                if (haveBeenHereBefore) throw new RuntimeException("more than one row returned from query: "+query);
-                for (int i = 1 ; i <= columnsNumber ; i++)
-                    retValue.put(i, rs.getObject(i));                                    
-                haveBeenHereBefore = true;
+                ExtendedHashMap insideRetValue = new ExtendedHashMap();
+                if (++rowNum > maxNumOfRows) {
+                    if (assertNoMore)
+                        throw new RuntimeException(String.format("more than the specified max number of rows (%d) returned from query:\n %s", maxNumOfRows, query));
+                    else
+                        break;
+                }
+                for (int i = 1 ; i <= columnsNumber ; i++) {
+                    //System.out.println(String.format("accessing column %d with name: %s", i, rsmd.getColumnName(i)));
+                    Object o = rs.getObject(i);
+                    //System.out.println("class of o is : "+ ((o == null)?"NULL object":o.getClass().getSimpleName()));
+                    //System.out.println("value is : "+o);
+                    insideRetValue.put(i, rsmd.getColumnName(i), rs.getObject(i));
+                }
+                retValue.put(rowNum, insideRetValue);
             }
             return retValue;
         } finally {
@@ -77,19 +69,11 @@ public class QueryJythonHolder {
             JdbcUtils.closeStatement(ps);
             //JdbcUtils.closeConnection(conn);
         }
-    }*/
+    }
 
-    private StringBuffer queries = new StringBuffer();
 
-    public String getQueries() { return queries.toString(); }
-
-    public Map<Integer, Map<Integer, Object>> qm(String query, int maxNumOfRows, boolean assertNoMore) throws SQLException {
-        //        query = StringEscapeUtils.unescapeJava(query);
-        //        System.out.println(query);
-        //        queries.append(query+"\n");
-        
-        query = "SELECT * from v_p_fpa_2012";
-        String query2 = " SELECT P001A STR_P001A, ---(Κωδικός Αρμόδιας Δ.Ο.Υ.)\n"+
+    public static final String PROBLEM_MONEY_QUERY_1 = "SELECT * from v_p_fpa_2012";
+    public static final String PROBLEM_MONEY_QUERY_2  = " SELECT P001A STR_P001A, ---(Κωδικός Αρμόδιας Δ.Ο.Υ.)\n"+
 "    p001b STR_P001B, ---(Αρμόδια Δ.Ο.Υ.)\n"+
 "    p006  STR_P006,  ---(Έτος)\n"+
 "    SUBSTRING(p007a FROM 1 FOR 2) STR_P007A_1, ---Ημερολογιακή Περίοδος από ημέρα\n"+
@@ -178,40 +162,14 @@ public class QueryJythonHolder {
 "    p522 BD_P522 ---(Υπόλοιπο Ποσό)\n"+
 "  FROM v_p_fpa_2012\n"+
 "  where rtfe_session_id=10";
+    public static final String PROBLEM_QUERIES[] = {PROBLEM_MONEY_QUERY_1, PROBLEM_MONEY_QUERY_2};
 
-        
-        //Connection conn = DriverManager.getConnection(connectString, user, password);
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Map<Integer, Map<Integer, Object>> retValue = new HashMap<Integer, Map<Integer, Object>>();
-        try {
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
-            int rowNum = 0 ;    
-            while (rs.next()) {
-                ExtendedHashMap insideRetValue = new ExtendedHashMap();
-                if (++rowNum > maxNumOfRows) {
-                    if (assertNoMore)
-                        throw new RuntimeException(String.format("more than the specified max number of rows (%d) returned from query:\n %s", maxNumOfRows, query));
-                    else
-                        break;
-                }
-                for (int i = 1 ; i <= columnsNumber ; i++) {
-                    System.out.println(String.format("accessing column %d with name: %s", i, rsmd.getColumnName(i)));
-                    Object o = rs.getObject(i);
-                    System.out.println("class of o is : "+ ((o == null)?"NULL object":o.getClass().getSimpleName()));
-                    System.out.println("value is : "+o);
-                    insideRetValue.put(i, rsmd.getColumnName(i), rs.getObject(i));
-                }
-                retValue.put(rowNum, insideRetValue);
-            }
-            return retValue;
-        } finally {
-            JdbcUtils.closeResultSet(rs);
-            JdbcUtils.closeStatement(ps);
-            //JdbcUtils.closeConnection(conn);
+    public void testProblemQueries() throws SQLException {
+        int i = 0 ;
+        for (String problemQuery : PROBLEM_QUERIES) {
+            System.out.println("trying problem query "+(++i));
+            qm(problemQuery, 5, false);
         }
     }
+
 }

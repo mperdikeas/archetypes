@@ -38,4 +38,9 @@ STR_USER1 = q7[1][1]
 STR_USER2 = q7[2].ypokoristiko
 STR_USER3 = q7[3][1]
 STR_USER4 = q7[4][1]
-STR_USER5 = q7[5][1]
+if q7.len()>=5:
+    STR_USER5 = q7[5][1]
+if q7.len()>=6:
+    STR_USER6 = q7[6][1]
+else:
+    STR_USER6 = "κενό"

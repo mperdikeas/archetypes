@@ -1,1 +1,1 @@
-java -jar dist/params-processor.jar print params.ini %1 > output
+java -jar dist/params-processor.jar %1 %2 %3 > output

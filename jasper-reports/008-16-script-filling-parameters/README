@@ -1,8 +1,16 @@
-This is a trouble-shooting version where I am trying to fix the
+This is a trouble-shooting version where I managed to diagnose the
 following problems:
 
 [1] problem with money types (likely related to the postgresql JDBC driver)
 [2] problem with """ foo """  %()
-[3] automatically detect parameters in SQL queries
-[4] handle blank lines in the script
-[5] do not detect parameters in comments
+
+About problem [1], it turns out there's nothing we can do. It is a bug
+in the JDBC postgresql driver for the Money type.
+Problem [2] is not a real problem. It was triggered by the presence
+of percentage characters ('%') in the SQL query.
+
+Ideas for future versions:
+[1] automatically detect parameters in SQL queries
+[2] handle blank lines in the script
+[3] do not detect parameters in comments
+[4]

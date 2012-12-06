@@ -72,18 +72,19 @@ public class JasperApp
     private static final Logger l = LoggerFactory.getLogger(JasperApp.class);
 	
         public static void main(String[] args) throws Exception {
-            switch (args[0]) {
+            System.out.println(JasperApp.class.getName()+"::main("+StringUtils.join(args, ','));
+            switch (args[2]) {
                 case "pdf":
                     pdf(args[1]); 
                     break;
                 case "print":
-                    prepareParameters(args[1], args[2]);
+                    prepareParameters(args[0], args[1]);
                     break;
-                case "runQuery":
-                    runQuery(args[1]);
+                case "test-prob-queries":
+                    runQuery(args[0]);
                     break;
                 default:
-                    throw new RuntimeException("unrecognized case");
+                    throw new RuntimeException(String.format("unrecognized case: %s\nWas expecting one of: 'print', 'test-prob-queries'", args[0]));
             }
 	}
 
@@ -103,7 +104,7 @@ public class JasperApp
 
     private static void runQuery(String paramsFile) throws SQLException, ClassNotFoundException, IOException {
         QueryJythonHolder sql = new QueryJythonHolder(getConnection(new File(paramsFile)));
-        sql.qm("foo", 5, true);        
+        sql.testProblemQueries();
     }
 
     private static Connection getConnection(File paramsFile) throws ClassNotFoundException, SQLException, IOException {
@@ -119,7 +120,7 @@ public class JasperApp
 	return conn;
     }
 
-    private static Map<String, Object> prepareParameters(String paramsFile, String scriptFile) throws ClassNotFoundException, SQLException, IOException {
+    private static Map<String, Object> prepareParameters(String paramsFile, String scriptFile) throws ClassNotFoundException, SQLException, IOException, PyException {
         String script         = FileUtil.readUTF8FileAsSingleString(new File(scriptFile), "\n");
         String scriptUTFReady = escapeUTFForPythonScript(script);
         String scriptUTFReadyWtFuncs = StringUtils.join(PYTHON_FUNCS, "\n")+"\n"+scriptUTFReady;
@@ -129,10 +130,8 @@ public class JasperApp
         Map<String, Object> parameters = null;
         try {
             parameters = processParameters(sql, scriptUTFReadyWtFuncs);
-        } catch (PyException e) {
-            e.printStackTrace();
+        } finally {
             FileUtils.writeStringToFile(new File("out-queries"), sql.getQueries());
-            System.exit(1);
         }
         FileUtils.writeStringToFile(new File("out-queries"), sql.getQueries());
         System.out.println("---------------------------");
@@ -178,6 +177,8 @@ public class JasperApp
         "        self._results = sqlData",
         "    def __getitem__(self, idx):",
         "        return MyRecord(self._results[idx])",
+        "    def len(self):",
+        "        return self._results.size()",
         "",
         "def sqlm(query, num, tolerance):",
         "    return MySQLrecords(sql.qm(query, num, tolerance))",
