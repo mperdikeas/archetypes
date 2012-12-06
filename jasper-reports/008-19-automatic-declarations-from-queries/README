@@ -1,0 +1,4 @@
+In this version I am trying to automatically and automagically add
+REPORT_PARAMS parameters found in queries in the global scope.
+
+Once that is done, there is nothing more left to be done.
