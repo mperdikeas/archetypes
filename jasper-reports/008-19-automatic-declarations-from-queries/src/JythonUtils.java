@@ -14,4 +14,8 @@ public class JythonUtils {
         System.out.println(foo);
     }
 
+    public void print(String foo) {
+        System.out.print(foo);
+    }
+
 }

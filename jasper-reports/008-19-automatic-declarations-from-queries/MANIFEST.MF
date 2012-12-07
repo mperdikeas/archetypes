@@ -4,7 +4,7 @@ Created-By: ${manifest.created.by}
 Built-By: ${manifest.built.by}
 Main-Class: JasperApp
 Implementation-Version: ${version.number}-b${build.number}
-Built-Date: December 6 2012
+Built-Date: December 7 2012
 Class-Path: commons-beanutils-1.8.0.jar commons-collections-2.1.1.jar 
  commons-digester-2.1.jar commons-io-2.4.jar commons-lang3-3.1.jar com
  mons-logging-1.1.1.jar hsqldb-1.8.0-10.jar iText-2.1.7.jar jasperrepo

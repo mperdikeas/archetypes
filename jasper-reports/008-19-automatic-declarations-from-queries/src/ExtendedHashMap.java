@@ -10,8 +10,9 @@ public class ExtendedHashMap extends HashMap<Integer, Object> {
     }
 
     public Object put(Integer key, String keys, Object value) {
+        // System.out.println(String.format("ExtendedHashMap: adding %d, %s -> %s", key, keys.toUpperCase(), value));
         Object retValue = super.put(key, value);
-        internal.put(keys, value);
+        internal.put(keys.toUpperCase(), value);
         return retValue;
     }
 
