@@ -76,6 +76,23 @@ STR_P101 =RD_COMP.COMP_DESCRIPTION
 STR_P102 =RD_COMP.COMP_FIRST_NAME
 STR_P103 =RD_COMP.COMP_FATHER_NAME
 STR_P104 =RD_COMP.COMP_TIN
+
+
+p_pfa_sqlm_MP = """
+SELECT
+ratf_code,
+retd_net_value
+FROM v_p_fpa_values 
+WHERE PERI_ID = %d
+AND reth_issue_date BETWEEN \'%s\' AND \'%s\'
+"""
+
+p_pfa_sqlm_MP_filled = p_pfa_sqlm_MP%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"))
+u.println('results query is : %s'%p_pfa_sqlm_MP_filled)
+results = sqlm(p_pfa_sqlm_MP_filled)
+
+materialize('BD_P', results, 'RATF_CODE', 'RETD_NET_VALUE')
+
 ##########################
 #      ekroes            #
 ########################## P301  
