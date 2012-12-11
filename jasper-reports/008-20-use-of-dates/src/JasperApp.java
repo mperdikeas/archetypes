@@ -169,6 +169,15 @@ public class JasperApp
         "from datetime import date",
         "REPORT_PARAMS = re.compile(\"(STR|BD|I|D)_\\w*\")",
         "",
+        "def NVL(v, default):",
+        " if (v==None):",
+        "  return default",
+        " else:",
+        "  return v",
+        "",
+        "def NVLZ(v):",
+        " return NVL(v, 0)",
+        "",
         "def isReportGlobal(s):",
         "    return REPORT_PARAMS.match(s)",
         "",
@@ -238,7 +247,8 @@ public class JasperApp
 
     private static void writeParameters(Map<String, Object> params, File out) throws IOException {
         StringBuffer sb = new StringBuffer();
-        for (String key : params.keySet()) {
+        SortedSet<String> keys = new TreeSet<String>(params.keySet());
+        for (String key : keys) {
             sb.append(key+"  -->  "+String.valueOf(params.get(key))+"\n");
         }
         FileUtils.writeStringToFile(out, sb.toString());

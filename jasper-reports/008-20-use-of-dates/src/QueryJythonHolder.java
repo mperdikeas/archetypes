@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSetMetaData;
 import java.util.Map;
 import java.util.HashMap;
+import java.math.BigDecimal;
 
 import mutil.base.ExceptionAdapter;
 import mutil.jdbc.JdbcUtils;
@@ -32,6 +33,12 @@ public class QueryJythonHolder {
 
     public String getQueries() { return queries.toString(); }
 
+    public Object bdToFloat(Object o) {
+        if (o == null) return null;
+        else if (o.getClass().equals(BigDecimal.class)) return ((BigDecimal) o).floatValue();
+        else return o;
+    }
+
     public Map<Integer, Map<Integer, Object>> sqlm(String query, int numOfRows, boolean panicIfLess, boolean panicIfMore) throws SQLException {
         query = StringEscapeUtils.unescapeJava(query);
         System.out.println(query);
@@ -55,11 +62,8 @@ public class QueryJythonHolder {
                         break;
                 }
                 for (int i = 1 ; i <= columnsNumber ; i++) {
-                    //System.out.println(String.format("accessing column %d with name: %s", i, rsmd.getColumnName(i)));
                     Object o = rs.getObject(i);
-                    //System.out.println("class of o is : "+ ((o == null)?"NULL object":o.getClass().getSimpleName()));
-                    //System.out.println("value is : "+o);
-                    insideRetValue.put(i, rsmd.getColumnName(i), rs.getObject(i));
+                    insideRetValue.put(i, rsmd.getColumnName(i), bdToFloat(rs.getObject(i)));
                 }
                 retValue.put(rowNum, insideRetValue);
             }
