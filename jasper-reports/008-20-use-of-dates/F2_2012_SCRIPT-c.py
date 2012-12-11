@@ -80,8 +80,8 @@ STR_P104 =RD_COMP.COMP_TIN
 
 p_pfa_sqlm_MP = """
 SELECT
-ratf_code,
-retd_net_value
+ratf_code S_RATF_CODE,
+retd_net_value BD_RETD_NET_VALUE
 FROM v_p_fpa_values 
 WHERE PERI_ID = %d
 AND reth_issue_date BETWEEN \'%s\' AND \'%s\'
@@ -90,6 +90,14 @@ AND reth_issue_date BETWEEN \'%s\' AND \'%s\'
 p_pfa_sqlm_MP_filled = p_pfa_sqlm_MP%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"))
 u.println('results query is : %s'%p_pfa_sqlm_MP_filled)
 results = sqlm(p_pfa_sqlm_MP_filled)
+u.println('CODE #1 IS %s'%results[1].S_RATF_CODE)
+u.println('CODE #2 IS %s'%results[2].S_RATF_CODE)
+u.println('CODE #3 IS %s'%results[3].S_RATF_CODE)
+
+for i in range(results.len()):
+    u.println('external loop %d of %d'%(i, results.len()))
+    for k in results[i+1].keys():
+        u.println('k = %s'%k)
 
 materialize('BD_P', results, 'RATF_CODE', 'RETD_NET_VALUE')
 
