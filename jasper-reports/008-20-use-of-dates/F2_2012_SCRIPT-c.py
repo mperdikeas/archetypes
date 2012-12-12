@@ -80,8 +80,8 @@ STR_P104 =RD_COMP.COMP_TIN
 
 p_pfa_sqlm_MP = """
 SELECT
-ratf_code S_RATF_CODE,
-retd_net_value BD_RETD_NET_VALUE
+ratf_code,
+retd_net_value
 FROM v_p_fpa_values 
 WHERE PERI_ID = %d
 AND reth_issue_date BETWEEN \'%s\' AND \'%s\'
@@ -94,12 +94,14 @@ u.println('CODE #1 IS %s'%results[1].S_RATF_CODE)
 u.println('CODE #2 IS %s'%results[2].S_RATF_CODE)
 u.println('CODE #3 IS %s'%results[3].S_RATF_CODE)
 
-for i in range(results.len()):
-    u.println('external loop %d of %d'%(i, results.len()))
-    for k in results[i+1].keys():
-        u.println('k = %s'%k)
 
-materialize('BD_P', results, 'RATF_CODE', 'RETD_NET_VALUE')
+#for i in range(results.len()):
+#    u.println('external loop %d of %d'%(i, results.len()))
+#    for k in results[i+1].keys():
+#        u.println('k = %s'%k)
+
+#materialize('BD_P', results, 'RATF_CODE', 'RETD_NET_VALUE')
+materialize('BD_P', results, 'RATF_CODE', 'RETD_NET_VALUE', NVLZ)
 
 ##########################
 #      ekroes            #
@@ -110,26 +112,26 @@ BD_P331=BD_P301*.13
 BD_P307 = RD_P_FPA.RETD_NET_VALUE
 SALES_VAT =RD_P_FPA.RETD_VAT_VALUE
 ########################## P302  
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'302'))
-BD_P302=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'302'))
+##BD_P302=RD_P_FPA.RETD_NET_VALUE
 BD_P332=BD_P302*.065
 BD_P307 = BD_P307+RD_P_FPA.RETD_NET_VALUE
 SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
 ########################## P303  
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'303'))
-BD_P303=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'303'))
+##BD_P303=RD_P_FPA.RETD_NET_VALUE
 BD_P333=BD_P303*.23
 BD_P307 = BD_P307+RD_P_FPA.RETD_NET_VALUE
 SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
 ########################## P304
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'304'))
-BD_P304=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'304'))
+##BD_P304=RD_P_FPA.RETD_NET_VALUE
 ###BD_P334=BD_P304*.09
 ## BD_P307 = BD_P307 + RD_P_FPA.RETD_NET_VALUE
 ####SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
 ########################## P305
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'305'))
-BD_P305=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'305'))
+##BD_P305=RD_P_FPA.RETD_NET_VALUE
 ###BD_P335=BD_P305*.05
 ###BD_P307 = BD_P307+RD_P_FPA.RETD_NET_VALUE
 ###BD_SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
@@ -140,17 +142,17 @@ BD_P336=NVLZ(BD_P306)*.23
 ##BD_P307 = BD_P307+RD_P_FPA.RETD_NET_VALUE
 ##BD_SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
 ########################## P308  
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'308'))
-BD_P308=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'308'))
+##BD_P308=RD_P_FPA.RETD_NET_VALUE
 BD_P311 = RD_P_FPA.RETD_NET_VALUE
 ##BD_SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
 ########################## P309  
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'309'))
-BD_P309=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'309'))
+##BD_P309=RD_P_FPA.RETD_NET_VALUE
 ##BD_P311 = BD_P311+RD_P_FPA.RETD_NET_VALUE
 ###BD_SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE
 ########################## P310  
-RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'310'))
-BD_P310=RD_P_FPA.RETD_NET_VALUE
+##RD_P_FPA = sqls(p_pfa_sqls%(I_peri_id,D_date_from.strftime("%Y-%m-%d"),D_date_to.strftime("%Y-%m-%d"),'310'))
+##BD_P310=RD_P_FPA.RETD_NET_VALUE
 ###BD_P311 = BD_P311+RD_P_FPA.RETD_NET_VALUE
 ##BD_SALES_VAT =SALES_VAT+RD_P_FPA.RETD_VAT_VALUE

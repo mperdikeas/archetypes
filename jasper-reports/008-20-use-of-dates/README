@@ -1,4 +1,7 @@
-In this version I am trying to automatically and automagically add
-REPORT_PARAMS parameters found in queries in the global scope.
+In this version I managed to:
 
-Once that is done, there is nothing more left to be done.
+[ i] automatically and automagically add REPORT_PARAMS parameters
+     found in queries in the global scope.
+[ii] implement the materialize function for queries that return
+     parameters and values.
+
