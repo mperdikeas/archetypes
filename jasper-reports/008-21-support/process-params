@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ $# -ne 3 ]
+then
+    echo "usage is $0 <JDBC ini file> <script file> <print | test-prob-queries>"
+else
+    rm -f out-queries out-script out-results
+    java -jar dist/params-processor.jar $1 $2 $3
+fi
