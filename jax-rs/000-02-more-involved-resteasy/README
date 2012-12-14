@@ -1,0 +1,7 @@
+In this example I built upon 000-00-simplest-resteasy
+and deployed a more complicated REST service that 
+uses URI path components (not parameters).
+
+The service is available at:
+
+http://mperdikeas:8080/helloJersey/rest/sayHi/JamesBaker

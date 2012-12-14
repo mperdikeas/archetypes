@@ -1,0 +1,44 @@
+root { 
+    display: block;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 12px !important;
+}
+
+.titleBar {
+    width: 90%;
+    text-align: left;
+}
+
+.buttonsBar {
+    width: 10%;
+    text-align: right;
+}
+
+.logoBar {
+    width: 90%;
+    text-align: left;
+}
+
+.securityBar {
+    width: 10%;
+    text-align: right;
+    vertical-align:text-top;
+    font-size: 92%;
+    white-space:nowrap;
+}
+
+.accordionMenu .ui-menu {
+    width:100% !important; 
+
+}
+.accordionMenu .ui-accordion-content {
+    padding:0 !important;
+    overflow:inherit !important;
+}
+
+.accordionMenu .ui-helper-clearfix:after {
+    height:inherit !important;
+}
+
