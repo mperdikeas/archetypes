@@ -1,0 +1,8 @@
+In this example I built upon 000-02
+to deploy a more involved path-components-based
+REST JX-RX service.
+
+The service can be tested at:
+
+http://mperdikeas:8080/helloJersey/rest/actions/say/fuck_you/to/her
+http://mperdikeas:8080/helloJersey/rest/actions/do/kill/to/George_Bush
