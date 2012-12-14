@@ -1,0 +1,12 @@
+In this example I built upon 000-03
+and added some query parameters as well to my REST JX-RX service.
+
+The service can be tested at:
+
+http://mperdikeas:8080/helloJersey/rest/actions/say/fuck_you/to/her
+http://mperdikeas:8080/helloJersey/rest/actions/do/kill/to/George_Bush
+http://mperdikeas:8080/helloJersey/rest/actions/browserInfo
+http://mperdikeas:8080/helloJersey/rest/actions?a=23&b=25&c=2344  
+
+
+(as you can see from the last example, extra query parameters do no hurt)
