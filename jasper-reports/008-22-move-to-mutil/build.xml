@@ -1,0 +1,191 @@
+<project name="params-processor" basedir="." default="package">
+
+    <property name="project.MainClass.name" value="JasperApp"/>
+    <property name="project.distname"       value="${ant.project.name}"/>
+    <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
+    <property name="build.dir"              value="${basedir}/build"/>
+    <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="src.dir"                value="${basedir}/src"/>
+    <property name="javasource.dir"         value="${src.dir}"/>
+    <property name="compilelibs.dir"        value="${basedir}/lib"/>
+    <property name="jasper-compilelibs.dir" value="${basedir}/lib-jaspercompile"/>
+    <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+    <property name="reports.dir"            value="${basedir}/reports"/>
+    <property name="reports-out.dir"        value="${basedir}/reports-out"/>
+    <property name="hsqldb-instance.dir"    value="${basedir}/hsqldb-instance"/>
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+
+<!-- Next, my package task uses that classpath -->
+<target name="package" depends="compile">
+  <echo>=== PACKAGE ===</echo>
+  
+    <!-- convert compile.classpath to mf.classpath (the string needed for the manifest task) -->
+    <pathconvert property="mf.classpath" pathsep=" ">
+        <path refid="compile.classpath"/>
+        <flattenmapper/>
+    </pathconvert>
+
+
+  <!-- now build the manifest file, using mf.classpath -->
+  <tstamp/><!-- needed for TODAY -->
+  <manifest file="MANIFEST.MF">
+    <attribute name="Built-By" value="${manifest.built.by}"/>
+    <attribute name="Created-By" value="${manifest.created.by}"/>
+    <attribute name="Main-Class" value="JasperApp"/>
+    <attribute name="Implementation-Version" value="${version.number}-b${build.number}"/>   
+    <attribute name="Built-Date" value="${TODAY}"/>
+    <attribute name="Class-Path" value="${mf.classpath}" />
+  </manifest>
+  
+  <!-- create the jar file, including the manifest file we just created -->
+  <jar basedir="${build.dir}"
+       destfile="${dist.dir}/${project.distname}.jar"
+       includes="**/*.*"
+       excludes="**/*Test*"
+       manifest="MANIFEST.MF" />
+
+  <!-- copy all the jar files out to the destination directory (dist.dir) -->
+  <copy todir="${dist.dir}">
+    <fileset dir="${compilelibs.dir}">
+      <exclude name="junit*" />
+      <include name="*.jar"/>
+      <include name="*.zip"/>
+    </fileset>
+  </copy>
+  <!-- move this file before the 'jar' task (and put it in the 'classes' dir) if you'd rather 
+       include it in the jar -->
+  <!--copy file="${resources.dir}/log4j.properties" tofile="${dest.dir}/log4j.properties" overwrite="true" />
+  <copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />
+  <delete dir="${dest.dir.classes}" /-->
+</target>
+
+
+
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <target name="compile" depends="prepare"
+            description="Compile java sources">
+        <mkdir  dir="${build.dir}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <path id="jasper-compile.classpath">
+        <fileset dir="${jasper-compilelibs.dir}">
+            <include name ="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="compile-jasper" description="compile the Jasper reports">
+        <mkdir dir="${build.dir}/reports"/> 
+        <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask"> 
+        	<classpath refid="jasper-compile.classpath"/>
+        </taskdef>
+        <jrc 
+        	destdir="${build.dir}/reports"
+        	tempdir="${build.dir}/reports"
+        	keepjava="false">
+        	<src>
+        		<fileset dir="${reports.dir}">
+        			<include name="**/*.jrxml"/>
+        		</fileset>
+        	</src>
+        	<classpath refid="jasper-compile.classpath"/>
+        </jrc> 
+    </target>
+
+    <target name="jar" depends="compile, compile-jasper"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
+    <target name="clean"
+            description="Prepare for clean build">
+      <delete dir="${build.dir}"/>
+      <delete dir="${dist.dir}"/>
+      <delete dir="${reports-out.dir}"/>
+      <delete>
+        <fileset dir="${reports.dir}" includes="*.jasper"/>
+        <fileset dir="${reports.dir}" includes="*.jrprint"/>
+        <fileset dir="${reports.dir}" includes="*.pdf"/>
+      </delete>
+      <delete file="${build.dir}/reports/${project.MainClass.name}Report.jrprint"/>
+    </target>
+
+    <path id = "run.classpath">
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+        <pathelement path = "${jar-artefact}"/>
+    </path>
+
+    <target name="pdf" depends="jar" description="create the PDF">
+       <parallel>
+            <ant antfile="${hsqldb-instance.dir}/build.xml"
+                 target="runServerOriginal" 
+                 useNativeBasedir="true"
+                 />
+            <sequential>
+                <property name="secondsToPause" value="4"/>
+                <echo message="pausing for ${secondsToPause} seconds to give HSQLDB time to come up"/>
+                <sleep seconds="${secondsToPause}"/>
+                <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                <delete dir="${build.dir}"/>
+                <mkdir  dir="${reports-out.dir}"/>
+                <property name="classpath.msg" refid="run.classpath"/>
+                <echo message="classpath = ${classpath.msg}"/>
+                <echo message="when you see the message that indicates exiting from ${project.MainClass.name}#main you may CTRL+C to close both the HSQLDB instance and the Ant task"/>
+                <java classname ="${project.MainClass.name}">
+                     <arg value="pdf"/>
+                     <arg value="${reports-out.dir}"/>
+                     <classpath refid="run.classpath"/>
+                </java>
+            </sequential>
+       </parallel>
+    </target>
+
+
+    <target name="print" depends="jar" description="print the parameters">
+                <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                <delete dir="${build.dir}"/>
+                <property name="classpath.msg" refid="run.classpath"/>
+                <echo message="classpath = ${classpath.msg}"/>
+                <java classname ="${project.MainClass.name}">
+                     <arg value="print"/>
+                     <arg value="./params.ini"/>
+                     <classpath refid="run.classpath"/>
+                </java>
+    </target>
+
+    <!-- Rebuild project -->
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+    <target name="all" depends="clean,jar,compile-jasper" description="clean, jar and compile Jasper report"/>
+</project>

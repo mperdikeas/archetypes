@@ -1,0 +1,5 @@
+In this stage I managed to break up the report processor 
+into a library and the rest of the application.
+On the next step the library part should be moved and 
+maintained in the mutil Java module.
+
