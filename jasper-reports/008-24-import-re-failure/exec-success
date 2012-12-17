@@ -1,0 +1,5 @@
+ant clean
+cd lib-compile/ && rm -f *.jar && ln -s ../../../repo-wide-libs/jython.jar && cd -
+ant rejar
+java -classpath lib-runtime/jython.jar:dist/foo.jar ImportTest
+
