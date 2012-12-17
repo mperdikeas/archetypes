@@ -1,3 +1,9 @@
 In this stage (23), I am building upon the previous one (22)
 by moving the library part of the report-processor to mutil.
+I 've managed to move the library part to mutil
+but I'm stuck with a python import module problem. Specifically,
+when I link with the jython-2.5.3.jar (instead of the jython.jar)
+the script interpretation fails with 'module re not found' (or
+something along these lines). I now have to investigate this
+issue on its own, on the new stage (24).
 
