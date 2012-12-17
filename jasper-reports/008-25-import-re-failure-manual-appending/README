@@ -1,0 +1,25 @@
+I managed in this stage (24) to narrow down the problem
+and solve it, too, for a console application by 
+zipping the Lib/ folder into jython-2.5.3.jar
+as described here:
+
+http://stackoverflow.com/questions/1252965/distributing-my-python-scripts-as-jars-with-jython
+
+Basically I only did the following:
+ cd ~/jython2.5.3/
+ cp jython.jar jython-2.5.3-wtLib.jar
+ zip -r jython-2.5.3-wtLib.jar Lib/
+ cp jython-2.5.3-wtLib.jar ~/archetypes/repo-wide-libs/
+
+
+( the jython.jar file I originally started working on came from 
+  a clean download of Jython 2.5.3 and had an md5sum of:
+  33a405a327ee368c55ddf55119c255c4
+)
+
+
+However, although the hackery DID work on the console, it failed to work in 
+a web context (mysteriously). Therefore my only hope is to now manulally
+append datatime.py at the beginning of my script. I will try that on the
+next stage (25).
+
