@@ -1,0 +1,5 @@
+ant clean
+cd lib-compile/ && rm -f *.jar && ln -s ../../../repo-wide-libs/jython-2.5.3-wtLib.jar && cd -
+ant rejar
+java -classpath lib-runtime/jython-2.5.3-wtLib.jar:dist/foo.jar ImportTest
+
