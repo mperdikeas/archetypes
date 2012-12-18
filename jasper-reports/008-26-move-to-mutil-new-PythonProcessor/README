@@ -1,0 +1,27 @@
+In this stage (26), I am testing the new python report-processor
+implementation of PyhonExposer that appends datetime.py and re.py
+at the beginning of the script.
+
+This one seemed to work, however, it turned out that one, particular
+script (F1_2012_SCRIPT.py) resulted in the following stack trace:
+
+
+java.io.IOException: Mark invalid
+                     at java.io.BufferedReader.reset(BufferedReader.java:505)
+                     at org.python.core.ParserFacade.parseExpressionOrModule(ParserFacade.java:127)
+                     at org.python.util.PythonInterpreter.compile(PythonInterpreter.java:259)
+                     at org.python.util.PythonInterpreter.compile(PythonInterpreter.java:253)
+                     at mutil.reportprocessor.PythonExposer.processParameters(PythonExposer.java:120)
+                     at mutil.reportprocessor.PythonExposer.prepareParameters(PythonExposer.java:83)
+                     at JasperApp.prepareParameters(JasperApp.java:131)
+                     at JasperApp.main(JasperApp.java:85)
+
+java.io.IOException: java.io.IOException: Mark invalid
+Exception in thread "main" java.lang.NullPointerException
+          at JasperApp.writeParameters(JasperApp.java:164)
+          at JasperApp.prepareParameters(JasperApp.java:138)
+          at JasperApp.main(JasperApp.java:85)
+
+
+So, on the next stage I'll have to try to reproduce this so I can post it on Jython
+if it is (as it appears to be) a parsing error.
