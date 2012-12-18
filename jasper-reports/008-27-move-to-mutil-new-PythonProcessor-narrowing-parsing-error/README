@@ -1,0 +1,3 @@
+In this stage (27) I managed to reproduce the parsing error
+in Jython when using the particular offending python script
+from stage (26). I should now post it on Jython forum.
