@@ -3,4 +3,4 @@ ant package
 sudo rm -fr /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/
 sudo mkdir -p /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/dist
 sudo cp -pr dist/* /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/dist
-sudo cp process-params process-params.bat params.ini script.py /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/
+sudo cp process-params process-params.bat params.ini script.py F2_2012_SCRIPT.py /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/
