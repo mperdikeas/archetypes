@@ -65,6 +65,7 @@
 
     <echo file="${run-app.script.name}" append="false">java -jar ${dist-runnable.dir}/${project.distname}.jar ${project.MainClass.name}</echo>
     <chmod file="${run-app.script.name}" perm="ugo+rx"/>
+    <delete file= "MANIFEST.MF"/>
 </target>
 
 

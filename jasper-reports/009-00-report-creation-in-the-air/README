@@ -1,0 +1,6 @@
+In this stage, the goal is to create a PDF where
+all the ingredients (jrxml or compiled jasper plus the
+resources - gifs, etc, it may be using, plus the 
+Python exposer string) are provided at runtime in
+the air (not bundled in the jar) - then I will have
+to reproduce that in a web context.
