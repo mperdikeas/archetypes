@@ -61,10 +61,7 @@ import mutil.reportprocessor2.*;
 
 import org.apache.commons.io.FileUtils;
 
-import org.python.core.PyCode;
 import org.python.core.PyException;
-import org.python.core.PyObject;
-import org.python.util.PythonInterpreter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,12 +124,12 @@ public class JasperApp
     private static Map<String, Object> prepareParameters(String paramsFile, String scriptFile) throws ClassNotFoundException, SQLException, IOException, PyException {
         String script   = FileUtil.readUTF8FileAsSingleString(new File(scriptFile), "\n");
         Connection conn = getConnection(new File(paramsFile));
-        PythonExposer pythonExposer = new PythonExposer(conn);
-        Triad<Map<String, Object>, String, String> out = pythonExposer.prepareParameters(script);
+        Triad<Map<String, Object>, String, String> out = DBPythonExposer.prepareParameters(conn, script);
         Map<String, Object> params = out.a;
         String outScriptS          = out.b;
         String outQueriesS         = out.c;
 
+        DBPythonExposer.printParameters(params);
         FileUtils.writeStringToFile(             new File("out-script" ), outScriptS);
         FileUtils.writeStringToFile(             new File("out-queries"), outQueriesS);
         writeParameters                 (params, new File("out-results"));
