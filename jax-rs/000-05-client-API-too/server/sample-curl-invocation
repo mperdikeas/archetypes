@@ -1,0 +1,1 @@
+curl http://mp.gaia.gr:8080/helloJersey/rest/actions/say/hi/to/me
