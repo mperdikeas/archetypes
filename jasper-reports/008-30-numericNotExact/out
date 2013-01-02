@@ -1,0 +1,576 @@
+JasperApp::main(params-008-30-params.ini,script-008-30-E3_2012_script.py,print)
+Connection obtained
+
+SELECT *
+FROM v_comp_all
+WHERE COMP_ID=1
+
+
+SELECT *
+  FROM ER_RE_E3_MASTER
+  WHERE PERI_ID =1
+
+
+SELECT *
+  FROM ER_TAX_OFFICES
+  WHERE TAOF_ID =1
+
+
+SELECT *
+  FROM ER_CODE_OF_ACTIVITIES
+  WHERE COOA_ID =1
+
+
+SELECT REEI_DESCRIPTION,
+REEI_FROM_NUMBER,
+REEI_TO_NUMBER
+  FROM ER_RE_E3_INVOICES
+  WHERE REEM_ID =1 
+  limit 10
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='231'   
+
+************* S_RATF_CODE = 251
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='235'   
+
+************* S_RATF_CODE = 251
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='239'   
+
+************* S_RATF_CODE = 251
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='243'   
+
+************* S_RATF_CODE = 251
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='247'   
+
+************* S_RATF_CODE = 251
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='811'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='232'   
+
+************* S_RATF_CODE = 252
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='236'   
+
+************* S_RATF_CODE = 252
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='240'   
+
+************* S_RATF_CODE = 252
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='244'   
+
+************* S_RATF_CODE = 252
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='248'   
+
+************* S_RATF_CODE = 252
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='812'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='263'   
+
+************* S_RATF_CODE = 540
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='266'   
+
+************* S_RATF_CODE = 540
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='269'   
+
+************* S_RATF_CODE = 540
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='272'   
+
+************* S_RATF_CODE = 540
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='273'   
+
+************* S_RATF_CODE = 540
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='279'   
+
+************* S_RATF_CODE = 547
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='276'   
+
+************* S_RATF_CODE = 547
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='519'   
+
+************* S_RATF_CODE = 547
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='282'   
+
+************* S_RATF_CODE = 547
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='273'   
+
+************* S_RATF_CODE = 547
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='274'   
+
+************* S_RATF_CODE = 283
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='277'   
+
+************* S_RATF_CODE = 283
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='280'   
+
+************* S_RATF_CODE = 283
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='275'   
+
+************* S_RATF_CODE = 283
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='278'   
+
+************* S_RATF_CODE = 283
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='522'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='523'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='524'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='525'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='526'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='527'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='528'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='529'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='530'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='531'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='532'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='533'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='534'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='535'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='536'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='537'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='538'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='539'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='541'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='542'   
+
+
+SELECT
+SUM (retd_net_value) retd_net_value,
+SUM (retd_vat_value) retd_vat_value,
+SUM (retd_gross_value) retd_gross_value 
+FROM v_e3_values 
+WHERE PERI_ID = 1
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND ratf_code ='543'   
+
+
+SELECT rnpc_code,rnpc_percent,
+sum( retd.retd_net_value ) AS retd_net_value,
+sum( retd.retd_vat_value ) AS retd_vat_value,
+sum( retd.retd_gross_value ) AS retd_gross_value
+FROM 
+er_re_tran_details retd,
+er_re_net_profit_codes rnpc,
+er_re_accounts reac,
+er_re_tran_headers reth
+WHERE reac.PERI_ID = 1
+AND reth.peri_id = reac.peri_id
+AND reth_issue_date BETWEEN '2012-01-01' AND '2012-03-31'
+AND retd.reth_id = reth.reth_id
+AND retd.reac_id = reac.reac_id 
+AND reac.rnpc_id is not null
+and rnpc.rnpc_id = reac.rnpc_id
+GROUP BY rnpc_code,rnpc_percent
+limit  6
+
+
+select sum(REFORM_VALUE) from
+(select retf_id,retf_code,
+CASE
+WHEN rtrk_id = 9 THEN (
+SELECT SUM (rtrt_value)
+from er_re_tax_reforms_trans
+WHERE PERI_ID = 1
+AND retf_id = a.retf_id)
+WHEN rtrk_id = 1 THEN (
+SELECT SUM (rtrM_deductible_value)
+FROM er_re_tax_reform_mobiles
+WHERE PERI_ID = 1)
+WHEN rtrk_id = 2 THEN (
+SELECT SUM (rtrc_deductible_value)
+FROM er_re_tax_reform_cars_trans
+WHERE PERI_ID = 1)
+end  REFORM_VALUE 
+from er_re_tax_reforms a
+WHERE retf_is_printed IS TRUE) as SU
+

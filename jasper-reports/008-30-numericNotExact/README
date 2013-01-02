@@ -1,0 +1,6 @@
+In this stage (29), I fixed a bug / wrong feature reported to me by Elias,
+namely that the form-provided map of fields does not override the fields
+defined in the form. This required:
+
+* implementation and interface changes in mutil.jar, package reportprocessor2
+* implementation (but NOT interface changes) in ReportPrinter.java
