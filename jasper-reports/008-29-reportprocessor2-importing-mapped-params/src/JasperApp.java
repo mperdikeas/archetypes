@@ -130,7 +130,7 @@ public class JasperApp
         test.put("formStr", "the value for formStr");
         test.put("STR_CCC", "ccc");
 
-        Triad<Map<String, Object>, String, String> out = DBPythonExposer.prepareParameters(conn, test, script);
+        Triad<Map<String, Object>, String, String> out = DBPythonExposer.prepareParameters(conn, test, script, false);
         Map<String, Object> params = out.a;
         String outScriptS          = out.b;
         String outQueriesS         = out.c;

@@ -1,24 +1,24 @@
 ############## PARAMETROI     
-I_peri_id = 1
-I_comp_id = 1
-D_date_from = date(2012, 1, 1)
+defineFormParam('I_peri_id', 1)
+defineFormParam('I_comp_id', 1)
+defineFormParam('D_date_from', date(2012, 1, 1))
 ###I_year = D_date_from.year %100
 ###I_month= D_date_from.month
 ###I_day  = D_date_from.day
 ###D_date_to = date.today()
-D_date_to =date(2012, 12, 31)
-I_rtfe_session_id = 10
-I_rtfh_id = 8
-I_liquidation_rfch_id = 0
-I_increment_percent = 0
-I_rerp_id = 0
-I_modifiable = 0
-I_payment_value = 0
-I_external  = 0
-I_month_intra  = 12
-STR_exempt ='APPALAGH LOGV MH 2012'
-B_reserved = True
-I_modifiable = 0
+defineFormParam('D_date_to', date(2012, 12, 31))
+defineFormParam('I_rtfe_session_id', 10)
+defineFormParam('I_rtfh_id', 8)
+defineFormParam('I_liquidation_rfch_id', 0)
+defineFormParam('I_increment_percent', 0)
+defineFormParam('I_rerp_id', 0)
+defineFormParam('I_modifiable', 0)
+defineFormParam('I_payment_value', 0)
+defineFormParam('I_external', 0)
+defineFormParam('I_month_intra', 12)
+defineFormParam('STR_exempt', 'APPALAGH LOGV MH 2012')
+defineFormParam('B_reserved', True)
+defineFormParam('I_modifiable', 0)
 ########################################
 
 
