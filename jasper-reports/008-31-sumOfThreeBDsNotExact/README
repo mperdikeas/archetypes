@@ -1,0 +1,22 @@
+In this stage (31), I investigated a complaint by Christos on why
+upon adding three floats with two decimal decimal places of precision the
+answer had approximately 8 decimal places of precision.
+The reason was the following (copy from my email to Christos):
+
+/------------ START OF COPY ------------------\
+Χρίστο το αναπαρήγαγα αυτό που μου έλεγες με την άθροιση 3 δεκαδικών με 2 δεκαδικά ψηφία που βγάζει αποτέλεσμα με πολύ περισσότερα δεκαδικά και όπως βλέπεις στο παρακάτω απόσπασμα, είναι η συμπεριφορά της python αυτή, δεν μπορώ να κάνω κάτι από την μεριά μου, μοναδική λύση να χρησιμοποιείς explicit round. Παρακάτω επισυνάπτω απόσπασμα από τον python interpreter:
+
+>>> a = -42227.66
+>>> b = -2093.33
+>>> a+b
+-44320.990000000005
+>>> c = a+b
+>>> c
+-44320.990000000005
+>>> c = round(a+b, 2)
+>>> c
+-44320.99 
+
+\------------ END OF COPY ------------------/
+
+Resolution: not a bug / will not do anything.
