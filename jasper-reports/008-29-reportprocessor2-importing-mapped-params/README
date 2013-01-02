@@ -1,18 +1,6 @@
-In this stage (28), I am building upon stage (26) (skipping step 27 which I
-consider closed) to replace the report processor implementation with a new
-one (package mutil.reportprocessor2) that uses leaner utf-8 processing.
+In this stage (29), I fixed a bug / wrong feature reported to me by Elias,
+namely that the form-provided map of fields does not override the fields
+defined in the form. This required:
 
-What I managed to do is to properly convert two scripts into their equivalent
-scripts in utf8 encoding (ending in 'utf8.py') and it seems to be working 
-nicely with the new reportprocessor2 package.
-
-I then set out to do some regression testing and I asked both Christos
-and Dimitris to send my scripts and params.ini files to test. As of this
-time only Christos has responded and the scripts he provided appeared to
-work flawlessly with the new reportprocessor2 without requiring any 
-modifications whatsoever (without even requiring a conversion of the file
-to the utf-8 format). But this has led me to believe that the tests
-aren't as stringent as they should have been and I now have to implement
-the user management application GUI using the code generator so this 
-effort (or replacing reportprocessor with reportprocessor2 is abandonded)
-DUE TO INSUFFICIENT TIME TO PERFORM PROPER REGRESSION TESTING.
+* implementation and interface changes in mutil.jar, package reportprocessor2
+* implementation (but NOT interface changes) in ReportPrinter.java
