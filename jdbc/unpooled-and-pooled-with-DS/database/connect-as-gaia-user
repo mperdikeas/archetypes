@@ -1,0 +1,2 @@
+# psql -h 172.31.129.29 -p 5432 -Ugaia-user timetests
+psql  -Ugaia-user timetests

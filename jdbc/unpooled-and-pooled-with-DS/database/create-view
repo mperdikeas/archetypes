@@ -1,0 +1,1 @@
+psql -h 172.31.128.116 -p5444 -Ugaia-user gaia_rg -f $1
