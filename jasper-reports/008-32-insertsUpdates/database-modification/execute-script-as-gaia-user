@@ -1,0 +1,2 @@
+SCRIPT=$1
+psql -h 172.31.128.76 -p 5432 -Ugaia-user rev_exp -f $SCRIPT

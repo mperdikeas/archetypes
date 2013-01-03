@@ -1,0 +1,6 @@
+ant clean
+ant package
+sudo rm -fr /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/
+sudo mkdir -p /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/dist
+sudo cp -pr dist/* /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/dist
+sudo cp process-params process-params.bat script.py F2_2012_SCRIPT-initvalues.py F2_2012_SCRIPT.py params-008-32-params.ini script-008-32-E3_2012_script.py /media/odyssey-tmimata/Anaptiksi_Efarmogwn/GAIA\ ΕΠΙΧΕΙΡΕΙΝ/report-processor/

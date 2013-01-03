@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS testdata;
+DROP SEQUENCE IF EXISTS testdata_id_seq;

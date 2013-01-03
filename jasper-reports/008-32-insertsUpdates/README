@@ -1,0 +1,13 @@
+In this stage (32), I implemented a major extension in the
+DBPythonExposer to allow the execution of INSERT / UPDATE
+statements.
+
+Major challenges were:
+[1] The ReportPrinter will need to catch Python exceptions
+    and rollback / commit accordingly.
+[2] The interface of the ReportPrinter will need to be changed
+    to capture the exception in the execution of the report.
+[3] I will need to change the interfaces to report the newly
+    handled PyException
+[4] I will need to also collect and report in the out-queries
+    the statements given to sql_exec
