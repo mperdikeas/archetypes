@@ -1,0 +1,2 @@
+SCRIPT=$1
+psql -U postgres postgres -f $1

@@ -7,6 +7,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:shiro="http://shiro.apache.org/tags">
 
+    <f:metadata>
+        <f:viewParam name="invId" value="#{registerBean.invId}"/>
+    </f:metadata>
     <ui:composition template="/template.xhtml">
         <ui:define name="title">GAIA User Registration Page</ui:define>
         <ui:define name="header">
@@ -15,6 +18,7 @@
 
 
         <ui:define name="body">
+            <h:outputText value="invitation id= #{registerBean.invId}"/>
         </ui:define>
     </ui:composition>
 
