@@ -158,7 +158,7 @@ where reac.peri_id = %d
 AND reth_issue_date BETWEEN \'%s\' AND \'%s\'
 """
 ##############################
-# E√≈Ÿ—√… œ’ ≈…”œƒ«Ã¡‘œ”      #
+# E√É√Ö√ô√ë√É√â√ä√è√ï √Ö√â√ì√è√Ñ√á√å√Å√î√è√ì      #
 ##############################
 reai_sqlm = """
 SELECT reai_municipality,
@@ -866,8 +866,16 @@ if RD_REEM.len() != 0:
         STR_P_ID_C_I      = 'X'
     STR_PNOTICE=RD_REEM[1].REEM_NOTICE
 
+to_twra = datetime.now()
+to_shmera = date(2012,12,31)
+sql_exec('INSERT INTO testdata(a,b,c,d,e) VALUES(%s,%s,%s,%s,%s)'%(N2N(1)   , N2N('alpha')                 , N2N(None)                               , N2N(None), N2N(None)))
+sql_exec('INSERT INTO testdata(a,b,c,d,e) VALUES(%s,%s,%s,%s,%s)'%(N2N(2)   , N2N(None)                    , N2N(3.3333333333333333333333333)        , N2N(to_twra), N2N(to_shmera)))
+sql_exec('INSERT INTO testdata(a,b,c,d,e) VALUES(%s,%s,%s,%s,%s)'%(N2N(None), N2N('c')                     , N2N(3.3333333333333333333333333, "%.2f"), N2N(to_twra, '%Y-%m-%d'), N2N(to_shmera, '%Y-%m-%d')))
+sql_exec('INSERT INTO testdata(a,b,c,d) VALUES(%s,%s,%s,%s)'%(N2N(None), N2N(None)                    , N2N(3.14, "%.20f")                      , N2N(to_twra, '%Y-%m-%dT%H:%M:%SEET')))
+sql_exec('INSERT INTO testdata(a,b,c,d) VALUES(%s,%s,%s,%s)'%(N2N(None), N2N(u'ŒºŒØŒ± ŒπŒøœÖŒΩŒπŒ∫œéŒ¥Œ∑œÇ string'), N2N(3, "%2.3f")                         , N2N(None, '%Y')))
 
-sql_exec('INSERT INTO testdata(a,b) VALUES(1, \'a\')')
-sql_exec('INSERT INTO testdata(a,b) VALUES(1xx, \'b\')')
+
+##sql_exec('INSERT INTO testdata(a,b) VALUES(2d, \'b\')')
+
 #boo
 

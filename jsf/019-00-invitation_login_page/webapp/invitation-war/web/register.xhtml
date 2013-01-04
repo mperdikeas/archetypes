@@ -19,7 +19,39 @@
 
         <ui:define name="body">
             <h:outputText value="invitation id= #{registerBean.invId}"/>
+
+            <h:form id="registrationForm">
+                <p:layout fullPage="false" style="min-width:300px;min-height:300px;">
+                    <p:layoutUnit id="inner_center" position="center" size="300">
+                        <h:panelGrid columns="1" style="width:50%;" columnClasses="titleBar,buttonsBar">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="First name:"/>
+                                <p:inputText  value="#{registerBean.firstname}"/>
+                                <h:outputText value="Surname:"/>
+                                <p:inputText  value="#{registerBean.surname}"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Age:"/>
+                                <p:inputText  value="#{registerBean.age}"/>
+                                <h:outputText value="Profession:"/>
+                                <p:inputText  value="#{registerBean.profession}"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Street:"/>
+                                <p:inputText  value="#{registerBean.street}"/>
+                                <h:outputText value="Street no:"/>
+                                <p:inputText  value="#{registerBean.streetNo}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:layoutUnit>
+                </p:layout>
+                <p:commandButton value="register" action="#{registerBean.register}"
+                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
+            </h:form>
+
         </ui:define>
+        
+        
     </ui:composition>
 
 </html>

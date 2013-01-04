@@ -15,7 +15,10 @@ CREATE SEQUENCE testdata_id_seq
 CREATE TABLE testdata (
     id INTEGER       DEFAULT nextval('testdata_id_seq'::regclass) NOT NULL,
      a INTEGER,
-     b VARCHAR
+     b VARCHAR,
+     c NUMERIC(20,10),
+     d TIMESTAMP WITH TIME ZONE,
+     e TIMESTAMP WITHOUT TIME ZONE
 );
 
 ALTER TABLE ONLY testdata ADD CONSTRAINT id_pk PRIMARY KEY (id);

@@ -31,4 +31,33 @@ public class RegisterBean implements Serializable {
         l.info("setInvId("+invId+") called");
         this.invId = invId;
     }
+
+    private String firstname;
+    public String getFirstname() { return firstname; }
+    public void setFirstname(String firstname) { this.firstname = firstname; }
+
+    private String surname;
+    public String getSurname() { return surname; }
+    public void setSurname(String surname) { this.surname = surname; }
+
+    private int age;
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    private String profession;
+    public String getProfession() { return profession; }
+    public void setProfession(String profession) { this.profession = profession; }
+
+    private String street;
+    public String getStreet() { return street; }
+    public void setStreet(String street) { this.street = street; }
+
+    private int streetNo;
+    public int getStreetNo() { return streetNo; }
+    public void setStreetNo(int streetNo) { this.streetNo = streetNo; }
+
+    public void register() {
+        // invoke operation on RegisterEJB
+    }
+
 }

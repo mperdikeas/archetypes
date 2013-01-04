@@ -9,7 +9,8 @@ CREATE TABLE invitation (
     id         INTEGER                      NOT NULL,
     email      CHARACTER VARYING (120 )     NOT NULL,
     guid       CHARACTER VARYING (1000)     NOT NULL,
-    valid_till TIMESTAMP (0) WITH TIME ZONE NOT NULL
+    valid_till TIMESTAMP (0) WITH TIME ZONE NOT NULL,
+    accepted   TIMESTAMP (0) WITH TIME ZONE     NULL
 );
 
 CREATE SEQUENCE invitation_id_seq

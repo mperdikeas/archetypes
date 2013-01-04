@@ -11,3 +11,6 @@ Major challenges were:
     handled PyException
 [4] I will need to also collect and report in the out-queries
     the statements given to sql_exec
+
+update 2013.I.4: need to change the implementation for correct
+                 handling of None values.
