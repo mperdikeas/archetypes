@@ -76,9 +76,22 @@ public class RegisterEJB implements IRegisterEJB.ILocal, IRegisterEJB.IRemote{
     @Resource(mappedName="java:/invitation") DataSource dataSource;
 
     @Override
-    public boolean register(String invId, String email, String firstname, String lastname) {
-        l.info(String.format("register(%s, %s, %s, %s)", invId, email, firstname, lastname));
-        return true;
+    public boolean register(String email, String firstname, String lastname) throws SQLException {
+        l.info(String.format("register(%s, %s, %s)", email, firstname, lastname));
+        Connection        conn = null;
+        PreparedStatement pstm = null; 
+        try {
+            conn = dataSource.getConnection();
+            String pstmStr = "INSERT INTO gaiauser(email, firstname, lastname, membersince) values(?, ?, ?, now())";
+            pstm = conn.prepareStatement( pstmStr );
+            pstm.setString   (1, email);
+            pstm.setString   (2, firstname);
+            pstm.setString   (3, lastname);
+            pstm.executeUpdate();
+            return true;
+        } finally {
+            DbUtils.closeQuietly(conn, pstm, null);
+        }                
     }
 
  

@@ -21,7 +21,7 @@ import gr.neuropublic.gaia.invitation.api.InvitationStatus;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class RegisterBean implements Serializable {
     
     @ManagedProperty(value="#{invId}")
@@ -35,7 +35,12 @@ public class RegisterBean implements Serializable {
     public String getInvId() { return invId; }
     public void   setInvId(String invId) {
         l.info("setInvId("+invId+") called");
-        this.invId = invId;
+        if (this.invId==null) {
+            l.info(String.format("this.invId was null and now takes the value of %s", invId));
+            this.invId= invId;
+        } else {
+            l.info(String.format("this.invId alread had a value (%s) and is thus not modified", this.invId));
+        }
     }
 
     private String email;
@@ -93,10 +98,17 @@ public class RegisterBean implements Serializable {
         return registerEJB.invitationStatus(this.invId).equals(is);
     }
 
-    public void register() throws SQLException {
-        l.info("about to call EJB method register");
-        registerEJB.register(invId, email, firstname, surname);
-        l.info("just returned from EJB method register");
+    public String register() {
+        try {
+            l.info(String.format("****************\n****************\n****************\n****************\n****************\n"));
+            registerEJB.register(email, firstname, surname);
+            String outcome = "successfulRegistration";
+            l.info(String.format("****************\n****************\n****************\n****************\n****************\nreturning outcome = %s", outcome));
+            return outcome;
+        } catch (SQLException s) {
+            return "sqlException";
+        }
+
     }
 
     private void assertNotNull(Object ...objs) {

@@ -51,7 +51,7 @@
                                 </h:panelGrid>
                             </p:layoutUnit>
                         </p:layout>
-                        <p:commandButton value="register" action="#{registerBean.register}"
+                        <p:commandButton value="register" process="@this" action="#{registerBean.register}" immediate="true"
                                          ajax="false" icon="ui-icon ui-icon-newwin"/>
                     </h:form>
                 </c:when>
