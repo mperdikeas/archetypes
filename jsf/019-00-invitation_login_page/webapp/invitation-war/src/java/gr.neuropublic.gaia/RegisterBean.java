@@ -11,10 +11,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.bean.ManagedProperty;
 import javax.naming.NamingException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import gr.neuropublic.gaia.invitation.api.IRegisterEJB;
+import gr.neuropublic.gaia.invitation.api.InvitationStatus;
 
 
 @ManagedBean
@@ -24,6 +27,9 @@ public class RegisterBean implements Serializable {
     @ManagedProperty(value="#{invId}")
     private String invId;
 
+    @EJB(beanName="RegisterEJB")
+    IRegisterEJB.ILocal registerEJB;
+
     private static Logger l = LoggerFactory.getLogger(RegisterBean.class); 
 
     public String getInvId() { return invId; }
@@ -31,6 +37,10 @@ public class RegisterBean implements Serializable {
         l.info("setInvId("+invId+") called");
         this.invId = invId;
     }
+
+    private String email;
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email;}
 
     private String firstname;
     public String getFirstname() { return firstname; }
@@ -56,8 +66,42 @@ public class RegisterBean implements Serializable {
     public int getStreetNo() { return streetNo; }
     public void setStreetNo(int streetNo) { this.streetNo = streetNo; }
 
-    public void register() {
-        // invoke operation on RegisterEJB
+    
+    public void init() throws SQLException {
+        assertNotNull(this.invId);
+        setEmail(registerEJB.getEmailAssocWithInvitation(this.invId));
+    }
+
+    public boolean getInvitationCurrent() throws SQLException {
+        return invitationStatusIs(InvitationStatus.CURRENT);
+    }
+
+    public boolean getInvitationExpired() throws SQLException {
+        return invitationStatusIs(InvitationStatus.EXPIRED);
+    }
+
+    public boolean getInvitationNotFound() throws SQLException {
+        return invitationStatusIs(InvitationStatus.NOT_FOUND);
+    }
+
+    public boolean getInvitationAlreadyAccepted() throws SQLException {
+        return invitationStatusIs(InvitationStatus.ALREADY_ACCEPTED);
+    }
+
+    private boolean invitationStatusIs(InvitationStatus is) throws SQLException {
+        assertNotNull(invId);
+        return registerEJB.invitationStatus(this.invId).equals(is);
+    }
+
+    public void register() throws SQLException {
+        l.info("about to call EJB method register");
+        registerEJB.register(invId, email, firstname, surname);
+        l.info("just returned from EJB method register");
+    }
+
+    private void assertNotNull(Object ...objs) {
+        for (Object obj : objs)
+            if (obj==null) throw new RuntimeException(String.format("%s", obj));
     }
 
 }

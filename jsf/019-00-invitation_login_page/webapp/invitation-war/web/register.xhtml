@@ -5,10 +5,12 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:shiro="http://shiro.apache.org/tags">
-
+      xmlns:shiro="http://shiro.apache.org/tags"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
     <f:metadata>
         <f:viewParam name="invId" value="#{registerBean.invId}"/>
+        <f:event     type="preRenderView" listener="#{registerBean.init}"/>
     </f:metadata>
     <ui:composition template="/template.xhtml">
         <ui:define name="title">GAIA User Registration Page</ui:define>
@@ -18,37 +20,51 @@
 
 
         <ui:define name="body">
-            <h:outputText value="invitation id= #{registerBean.invId}"/>
-
-            <h:form id="registrationForm">
-                <p:layout fullPage="false" style="min-width:300px;min-height:300px;">
-                    <p:layoutUnit id="inner_center" position="center" size="300">
-                        <h:panelGrid columns="1" style="width:50%;" columnClasses="titleBar,buttonsBar">
-                            <h:panelGrid columns="2">
-                                <h:outputText value="First name:"/>
-                                <p:inputText  value="#{registerBean.firstname}"/>
-                                <h:outputText value="Surname:"/>
-                                <p:inputText  value="#{registerBean.surname}"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2">
-                                <h:outputText value="Age:"/>
-                                <p:inputText  value="#{registerBean.age}"/>
-                                <h:outputText value="Profession:"/>
-                                <p:inputText  value="#{registerBean.profession}"/>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2">
-                                <h:outputText value="Street:"/>
-                                <p:inputText  value="#{registerBean.street}"/>
-                                <h:outputText value="Street no:"/>
-                                <p:inputText  value="#{registerBean.streetNo}"/>
-                            </h:panelGrid>
-                        </h:panelGrid>
-                    </p:layoutUnit>
-                </p:layout>
-                <p:commandButton value="register" action="#{registerBean.register}"
-                                 ajax="false" icon="ui-icon ui-icon-newwin"/>
-            </h:form>
-
+            <c:choose>
+                <c:when test="#{registerBean.invitationCurrent}">
+                    <h:outputText value="invitation id= #{registerBean.invId}"/>
+        
+                    <h:form id="registrationForm">
+                        <p:layout fullPage="false" style="min-width:300px;min-height:300px;">
+                            <p:layoutUnit id="inner_center" position="center" size="300">
+                                <h:panelGrid columns="1" style="width:50%;" columnClasses="titleBar,buttonsBar">
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="email:"/>
+                                        <p:inputText  value="#{registerBean.email}"/>
+                                        <h:outputText value="First name:"/>
+                                        <p:inputText  value="#{registerBean.firstname}"/>
+                                        <h:outputText value="Surname:"/>
+                                        <p:inputText  value="#{registerBean.surname}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="Age:"/>
+                                        <p:inputText  value="#{registerBean.age}"/>
+                                        <h:outputText value="Profession:"/>
+                                        <p:inputText  value="#{registerBean.profession}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="Street:"/>
+                                        <p:inputText  value="#{registerBean.street}"/>
+                                        <h:outputText value="Street no:"/>
+                                        <p:inputText  value="#{registerBean.streetNo}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:layoutUnit>
+                        </p:layout>
+                        <p:commandButton value="register" action="#{registerBean.register}"
+                                         ajax="false" icon="ui-icon ui-icon-newwin"/>
+                    </h:form>
+                </c:when>
+                <c:when test="#{registerBean.invitationExpired}">
+                    <h:outputText value="this invitation has expired"/>
+                </c:when>
+                <c:when test="#{registerBean.invitationNotFound}">
+                    <h:outputText value="invitation not found"/>
+                </c:when>
+                <c:when test="#{registerBean.invitationAlreadyAccepted}">
+                    <h:outputText value="invitation already accepted"/>
+                </c:when>
+            </c:choose>
         </ui:define>
         
         

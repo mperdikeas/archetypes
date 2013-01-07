@@ -69,12 +69,19 @@ public class RegisterEJB implements IRegisterEJB.ILocal, IRegisterEJB.IRemote{
 
     private static Logger l = LoggerFactory.getLogger(RegisterEJB.class);
 
+    public RegisterEJB() {
+        l.info("inside constructor of bean RegisterEJB");
+    }
+
     @Resource(mappedName="java:/invitation") DataSource dataSource;
 
     @Override
-    public boolean register(String email, String firstname, String lastname, Timestamp memberSince) {
+    public boolean register(String invId, String email, String firstname, String lastname) {
+        l.info(String.format("register(%s, %s, %s, %s)", invId, email, firstname, lastname));
         return true;
     }
+
+ 
     
     @Override
     public InvitationStatus invitationStatus(String invId) throws SQLException {
@@ -82,11 +89,11 @@ public class RegisterEJB implements IRegisterEJB.ILocal, IRegisterEJB.IRemote{
         PreparedStatement ps   = null;
         ResultSet         rs   = null;
         try {
-            int now = Util.secondsSinceTheEpoch();
-            boolean atLeastOneRow       = false;
-            boolean haveBeenHereBefore  = false;
-            int     valid_till          = Integer.MIN_VALUE;
-            Integer accepted            = null;
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            boolean   atLeastOneRow       = false;
+            boolean   haveBeenHereBefore  = false;
+            Timestamp valid_till          = null;
+            Timestamp accepted            = null;
             conn = dataSource.getConnection();
             ps = conn.prepareStatement( "select valid_till, accepted from invitation where guid = ?" );
             ps.setString(1, invId);
@@ -94,18 +101,41 @@ public class RegisterEJB implements IRegisterEJB.ILocal, IRegisterEJB.IRemote{
             while (rs.next()) {
                 if (haveBeenHereBefore) throw new RuntimeException(invId);
                 haveBeenHereBefore = true;
-                valid_till  = rs.getInt (1);
-                accepted    = rs.getInt (2);
+                valid_till  = rs.getTimestamp (1);
+                accepted    = rs.getTimestamp (2);
                 atLeastOneRow = true;
             }
-            if      ( accepted==null  &&  atLeastOneRow && now <= valid_till) return InvitationStatus.CURRENT;
-            else if ( accepted==null  &&  atLeastOneRow && now >  valid_till) return InvitationStatus.EXPIRED;
-            else if ( accepted==null  && !atLeastOneRow                     ) return InvitationStatus.NOT_FOUND;
-            else if ( accepted!=null  &&  atLeastOneRow                     ) return InvitationStatus.ALREADY_ACCEPTED;
+            if      ( accepted==null  &&  atLeastOneRow && (!now.after(valid_till))) return InvitationStatus.CURRENT;
+            else if ( accepted==null  &&  atLeastOneRow &&   now.after(valid_till) ) return InvitationStatus.EXPIRED;
+            else if ( accepted==null  && !atLeastOneRow                            ) return InvitationStatus.NOT_FOUND;
+            else if ( accepted!=null  &&  atLeastOneRow                            ) return InvitationStatus.ALREADY_ACCEPTED;
             else throw new RuntimeException(invId);
         } finally {
             DbUtils.closeQuietly(conn, ps, rs);
         }
+    }
+
+    @Override
+    public String getEmailAssocWithInvitation(String invId) throws SQLException {
+        Connection        conn = null;
+        PreparedStatement ps   = null;
+        ResultSet         rs   = null;
+        try {
+            boolean haveBeenHereBefore  = false;
+            String email = null;
+            conn = dataSource.getConnection();
+            ps = conn.prepareStatement( "SELECT email FROM INVITATION WHERE guid=?" );
+            ps.setString(1, invId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                if (haveBeenHereBefore) throw new RuntimeException(invId);
+                haveBeenHereBefore = true;
+                email = rs.getString (1);
+            }
+            return email;
+        } finally {
+            DbUtils.closeQuietly(conn, ps, rs);
+        }     
     }
 }
 

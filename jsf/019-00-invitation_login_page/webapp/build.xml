@@ -40,6 +40,7 @@
               <include name="commons-lang3-3.1.jar"/>
               <include name="mutil.jar"/>
               <include name="joda-time-2.1.jar"/>
+              <include name="commons-dbutils-1.5.jar"/>
         </zipfileset>
         <zipfileset dir="${client-project.dir}/dist" prefix="${ear-lib.dest.preffix}">
             <include name="${client-project.name}.jar"/>
