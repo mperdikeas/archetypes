@@ -22,6 +22,8 @@ CREATE SEQUENCE invitation_id_seq
 
 ALTER SEQUENCE invitation_id_seq OWNED BY invitation.id;
 
+ALTER TABLE ONLY invitation ALTER COLUMN id SET DEFAULT nextval('invitation_id_seq'::regclass);
+
 CREATE TABLE gaiauser (
     id          INTEGER                      NOT NULL,
     email       CHARACTER VARYING (120)      NOT NULL,
@@ -38,5 +40,7 @@ CREATE SEQUENCE gaiauser_id_seq
     CACHE 1;
 
 ALTER SEQUENCE gaiauser_id_seq OWNED BY gaiauser.id;
+
+ALTER TABLE ONLY gaiauser ALTER COLUMN id SET DEFAULT nextval('gaiauser_id_seq'::regclass);
 
 
