@@ -51,8 +51,9 @@
                                 </h:panelGrid>
                             </p:layoutUnit>
                         </p:layout>
-                        <p:commandButton value="register" process="@this" action="#{registerBean.register}" immediate="true"
-                                         ajax="false" icon="ui-icon ui-icon-newwin"/>
+                        <h:commandButton value="register" action="#{registerBean.register}" icon="ui-icon ui-icon-newwin" ajax="false">
+                            <f:ajax execute="@form" render="@form" />
+                        </h:commandButton>
                     </h:form>
                 </c:when>
                 <c:when test="#{registerBean.invitationExpired}">

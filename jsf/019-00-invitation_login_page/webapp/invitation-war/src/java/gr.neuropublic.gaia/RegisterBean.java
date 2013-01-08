@@ -73,8 +73,8 @@ public class RegisterBean implements Serializable {
 
     
     public void init() throws SQLException {
-        assertNotNull(this.invId);
-        setEmail(registerEJB.getEmailAssocWithInvitation(this.invId));
+        if (invId!=null)
+            setEmail(registerEJB.getEmailAssocWithInvitation(this.invId));
     }
 
     public boolean getInvitationCurrent() throws SQLException {
@@ -99,6 +99,7 @@ public class RegisterBean implements Serializable {
     }
 
     public String register() {
+        assertNotNull(invId);
         try {
             l.info(String.format("****************\n****************\n****************\n****************\n****************\n"));
             registerEJB.register(email, firstname, surname);
