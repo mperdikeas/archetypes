@@ -21,7 +21,7 @@ import gr.neuropublic.gaia.invitation.api.InvitationStatus;
 
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RegisterBean implements Serializable {
     
     private String invId;
@@ -37,15 +37,7 @@ public class RegisterBean implements Serializable {
     }
 
     public String getInvId() { return invId; }
-    public void   setInvId(String invId) {
-        l.info("setInvId("+invId+") called");
-        if (this.invId==null) {
-            l.info(String.format("this.invId was null and now takes the value of %s", invId));
-            this.invId= invId;
-        } else {
-            l.info(String.format("this.invId alread had a value (%s) and is thus not modified", this.invId));
-        }
-    }
+    public void   setInvId(String invId) {this.invId = invId;}
 
     private String email;
     public String getEmail() { return email; }
@@ -105,11 +97,8 @@ public class RegisterBean implements Serializable {
     public String register() {
         assertNotNull(invId);
         try {
-            l.info(String.format("****************\n****************\n****************\n****************\n****************\n"));
-            registerEJB.register(email, firstname, surname);
-            String outcome = "successfulRegistration";
-            l.info(String.format("****************\n****************\n****************\n****************\n****************\nreturning outcome = %s", outcome));
-            return outcome;
+            registerEJB.register(invId, email, firstname, surname);
+            return "successfulRegistration";
         } catch (SQLException s) {
             return "sqlException";
         }

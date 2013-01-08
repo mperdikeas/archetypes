@@ -1,0 +1,7 @@
+2013-01-08
+I successfully concluded the prototype and I stumbled upon and
+fixed the problem I had with the ViewScoped bean's recreation
+which was due to the use of the <c:when> and <c:if> types of
+attributes. See the following link for more:
+
+http://stackoverflow.com/questions/14215098/view-scoped-bean-recreated-on-post-when-url-parameters-not-used#comment19714618_14215098

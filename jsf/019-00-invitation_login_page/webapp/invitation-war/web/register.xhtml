@@ -20,11 +20,10 @@
 
 
         <ui:define name="body">
-            <c:choose>
-                <c:when test="#{registerBean.invitationCurrent}">
+
                     <h:outputText value="invitation id= #{registerBean.invId}"/>
         
-                    <h:form id="registrationForm">
+                    <h:form id="registrationForm" rendered="#{registerBean.invitationCurrent}">
                         <p:layout fullPage="false" style="min-width:300px;min-height:300px;">
                             <p:layoutUnit id="inner_center" position="center" size="300">
                                 <h:panelGrid columns="1" style="width:50%;" columnClasses="titleBar,buttonsBar">
@@ -51,21 +50,22 @@
                                 </h:panelGrid>
                             </p:layoutUnit>
                         </p:layout>
-                        <p:commandButton value="register" action="#{registerBean.register}" icon="ui-icon ui-icon-newwin" ajax="false">
-                            <ui:remove><f:ajax execute="@form" render="@form" /></ui:remove>
-                        </p:commandButton>
+                        <p:commandButton value="register" action="#{registerBean.register}" icon="ui-icon ui-icon-newwin" ajax="false"/>
                     </h:form>
-                </c:when>
-                <c:when test="#{registerBean.invitationExpired}">
+
+                    <h:outputText value="this invitation has expired" rendered="${registerBean.invitationExpired}"        />
+                    <h:outputText value="invitation not found"        rendered="${registerBean.invitationNotFound}"       />
+                    <h:outputText value="invitation already accepted" rendered="${registerBean.invitationAlreadyAccepted}"/>
+                <!--c:when test="#{registerBean.invitationExpired}">
                     <h:outputText value="this invitation has expired"/>
-                </c:when>
-                <c:when test="#{registerBean.invitationNotFound}">
+                </c:when-->
+                <!--c:when test="#{registerBean.invitationNotFound}">
                     <h:outputText value="invitation not found"/>
-                </c:when>
-                <c:when test="#{registerBean.invitationAlreadyAccepted}">
+                </c:when-->
+                <!--c:when test="#{registerBean.invitationAlreadyAccepted}">
                     <h:outputText value="invitation already accepted"/>
-                </c:when>
-            </c:choose>
+                </c:when-->
+
         </ui:define>
         
         
