@@ -21,7 +21,7 @@ import gr.neuropublic.gaia.invitation.api.InvitationStatus;
 
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class RegisterBean implements Serializable {
     
     @ManagedProperty(value="#{invId}")
@@ -31,6 +31,11 @@ public class RegisterBean implements Serializable {
     IRegisterEJB.ILocal registerEJB;
 
     private static Logger l = LoggerFactory.getLogger(RegisterBean.class); 
+
+    @javax.annotation.PostConstruct
+    private void postconstructinit() {
+        l.info("################\n################\n################");
+    }
 
     public String getInvId() { return invId; }
     public void   setInvId(String invId) {
