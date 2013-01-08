@@ -24,7 +24,6 @@ import gr.neuropublic.gaia.invitation.api.InvitationStatus;
 @SessionScoped
 public class RegisterBean implements Serializable {
     
-    @ManagedProperty(value="#{invId}")
     private String invId;
 
     @EJB(beanName="RegisterEJB")
