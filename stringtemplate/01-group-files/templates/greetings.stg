@@ -1,0 +1,15 @@
+//group Greetings;
+
+
+
+formal(name, date) ::= <<
+Dear <name>
+With this short message
+I would like to extend to you
+my wishes for your birthday on <date>.
+>>
+
+casual(name, date) ::= <<
+Hi <name>, dear chap,
+All the best for your birthday.
+>>

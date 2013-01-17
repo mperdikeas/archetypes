@@ -1,0 +1,14 @@
+class(name, body) ::= <<
+public class <name> {
+<body>
+}
+>>
+
+body(constructor) ::= <<
+<constructor>
+>>
+
+constructor(name, paramlist) ::= <<
+public <name>(<paramlist>) {
+}
+>>
