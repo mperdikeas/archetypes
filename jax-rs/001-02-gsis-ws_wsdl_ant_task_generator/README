@@ -4,3 +4,10 @@ fails with:
     Caused by: java.lang.NoClassDefFoundError: org/jboss/wsf/spi/tools/WSContractConsumerFactory
 
 (haven't solved this yet)
+
+Actually, reading the JBoss EAP6 Development Guide ([1]) it appears that only the
+command-line wsconsume tool is supported.
+
+
+--- references ---
+[1] JBoss_Enterprise_Application_Platform-6-Development_Guide-en-US.pdf document
