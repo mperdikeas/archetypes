@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<servlet>
+		<servlet-name>WSNPBridge</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WSNPBridge</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+
+
+<!-- the following configs added because of this: http://stackoverflow.com/questions/6953516/deploying-a-jersey-webapp-on-jboss-as-7 -->
+<context-param>
+    <param-name>resteasy.scan</param-name>
+    <param-value>false</param-value>
+</context-param>
+<context-param>
+    <param-name>resteasy.scan.providers</param-name>
+    <param-value>false</param-value>
+</context-param>
+<context-param>
+    <param-name>resteasy.scan.resources</param-name>
+    <param-value>false</param-value>
+</context-param>
+<!-- the following configs added because of this: END -->
+</web-app>
