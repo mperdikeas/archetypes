@@ -1,0 +1,6 @@
+Invoking the ant and trying to use the wsconsume Ant task here
+fails with:
+
+    Caused by: java.lang.NoClassDefFoundError: org/jboss/wsf/spi/tools/WSContractConsumerFactory
+
+(haven't solved this yet)
