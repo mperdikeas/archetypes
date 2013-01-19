@@ -131,6 +131,7 @@
                 </then> 
             </if>
         <property name="classpath-run.msg" refid="run.classpath"/>
+        <echo message="ant.java.version=${ant.java.version}" />
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
         <java classname ="${project.MainClass.name}">
              <classpath refid="run.classpath"/>
