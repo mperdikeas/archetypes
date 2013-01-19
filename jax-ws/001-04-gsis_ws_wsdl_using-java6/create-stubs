@@ -1,1 +1,1 @@
-wsimport -Xnocompile  https://www1.gsis.gr/wsgsis/RgWsBasStoixN/RgWsBasStoixNSoapHttpPort?WSDL
+wsimport -d src -Xnocompile gsis.wsdl
