@@ -133,7 +133,7 @@
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
         <echo message="ant.java.version=${ant.java.version}" />
-        <java classname ="${project.MainClass.name}">
+        <java classname ="${project.MainClass.name}" fork="true">
              <classpath refid="run.classpath"/>
         </java>
         </sequential>
