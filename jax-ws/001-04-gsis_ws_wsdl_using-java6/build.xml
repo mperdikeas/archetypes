@@ -133,7 +133,7 @@
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
         <echo message="ant.java.version=${ant.java.version}" />
-        <java classname ="${project.MainClass.name}" fork="true">
+        <java classname ="${project.MainClass.name}" fork="true"> <!-- set it to "false" and watch it fail unless rt.jar is explicitly added in the runtime classspaht -->
              <classpath refid="run.classpath"/>
         </java>
         </sequential>
