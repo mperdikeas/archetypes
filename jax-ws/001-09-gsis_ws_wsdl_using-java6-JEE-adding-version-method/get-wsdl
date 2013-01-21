@@ -1,0 +1,1 @@
+wget https://www1.gsis.gr/wsgsis/RgWsBasStoixN/RgWsBasStoixNSoapHttpPort?WSDL -O gsis.wsdl

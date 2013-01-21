@@ -1,0 +1,95 @@
+<project name="gsiswsdlbridge" basedir="." default="republish">
+
+    <property file="build.properties"/>        <!-- IMPORTANT: at the top -->
+    <property name="project.distname"          value="${ant.project.name}"/>
+    <property name="project.artifact"          value="${project.distname}.war"/>
+    <property name="webroot.dir"               value="${basedir}/war"/>
+    <property name="webinf.dir"                value="${webroot.dir}/WEB-INF"/>
+    <property name="build.dir"                 value="${basedir}/dist"/>
+    <property name="project.artifact.file"      value="${build.dir}/${project.artifact}"/>
+    <property name="conf.dir"                  value="${basedir}/conf"/>
+    <property name="src.dir"                   value="${basedir}/src"/>
+    <property name="javasource.dir"            value="${src.dir}/java"/>
+    <property name="localcompilelibs.dir"      value="${basedir}/lib-compile"/>
+    <property name="compilelibs.dir"           value="${webinf.dir}/lib"/>
+    <property name="wsdl-source.dir"           value="${basedir}/src-wsdl-auto"/>
+
+
+
+    <path id = "compile.classpath">
+      <fileset dir="${localcompilelibs.dir}">
+        <include name = "*.jar"/>
+      </fileset>
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
+            <fileset dir="${javasource.dir}">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="create-wsdl-files" description="create WSDL files">
+        <mkdir dir="${wsdl-source.dir}"/>
+        <exec executable="./create-stubs">
+            <arg value="${wsdl-source.dir}"/>
+        </exec>
+    </target>
+
+    <target name="compile" depends="prepare,resources, create-wsdl-files">
+        <mkdir  dir="${webinf.dir}/classes"/>
+        <javac destdir="${webinf.dir}/classes"
+               source="1.6"
+               target="1.6"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8"/> <!-- added that on 2012-XI-13 althought not fully convinced" -->
+            <src path="${javasource.dir}"/>
+            <src path="${wsdl-source.dir}"/>
+        </javac>
+    </target>
+
+
+
+    <target name="clean" description="Prepare for clean build">
+      <delete dir="${webinf.dir}/classes"/>
+      <delete dir="${build.dir}"/>
+      <delete dir="${wsdl-source.dir}"/>
+    </target>
+
+    <target name="rewar" depends="clean,war"/>
+
+    <target name="war" depends="compile">
+      <mkdir dir="${build.dir}"/>
+      <war
+        needxmlfile="false"
+        basedir="${webroot.dir}"
+        warfile="${build.dir}/${project.distname}.war">
+        <exclude name="WEB-INF/src/**"/>
+       </war>
+    </target>
+
+    <target name="publish" depends="war" description="publish to locally configured app server">
+      <echo message="copying ${project.artifact.file} to ${publish.dir}"/>
+      <copy file="${project.artifact.file}" todir="${publish.dir}"/>
+    </target>
+
+    <target name="republish" depends="clean, publish"/>
+
+</project>
