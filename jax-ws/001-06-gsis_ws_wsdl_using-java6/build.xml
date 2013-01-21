@@ -78,6 +78,7 @@
     <target name="create-wsdl-files">
         <mkdir dir="${wsdl-source.dir}"/>
         <exec executable="./create-stubs">
+            <arg value="${wsdl-source.dir}"/>
         </exec>
     </target>
 

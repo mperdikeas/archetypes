@@ -1,1 +1,2 @@
-wsimport -d src-wsdl-auto -Xnocompile gsis.wsdl
+#!/bin/bash
+wsimport -d $1 -Xnocompile gsis.wsdl
