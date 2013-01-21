@@ -1,0 +1,5 @@
+See:
+
+http://stackoverflow.com/questions/14428937/what-is-on-ants-classpath-for-the-default-java-task-fork-set-to-false
+
+When fork in the build.xml is set to "false" the ClassNotFoundException is triggered.
