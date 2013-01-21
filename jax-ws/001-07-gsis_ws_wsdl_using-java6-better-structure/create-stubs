@@ -1,0 +1,2 @@
+#!/bin/bash
+wsimport -d $1 -Xnocompile gsis.wsdl
