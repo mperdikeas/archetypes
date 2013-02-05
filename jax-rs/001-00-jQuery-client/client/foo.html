@@ -1,0 +1,63 @@
+<html>
+<head>
+    <script type="text/javascript" src="jquery-1.8.2.js"></script>
+</head>
+
+<body>  
+
+<button id="ajax"       >ajax call  </button>
+<button id="json"       >json       </button>
+<button id="jsonp"      >jsonp      </button>
+<button id="jsonp-clean">jsonp clean</button>
+
+<script type="text/javascript">
+    $('#json').click(function(){ 
+        alert('json');
+         $.getJSON("http://mperdikeas:8080/cars/rest/name",
+         function(data) {
+            alert(data);         
+          });   
+    });
+
+    $('#ajax').click(function(){ 
+        alert('ajax');
+         $.ajax({ 
+             type: "GET",
+             dataType: "json",
+             url: "http://mperdikeas:8080/cars/rest/name",
+             success: function(data){        
+                alert(data);
+             }
+         });
+    });
+
+    $('#jsonp').click(function(){ 
+        alert('ajax with jsonp');
+         $.ajax({ 
+             type: "GET",
+             dataType: "jsonp",
+             url: "http://mperdikeas:8080/cars/rest/name2",
+             success: function(data){        
+                alert(data);
+             }
+         });
+    });
+
+    $('#jsonp-clean').click(function(){ 
+         $.ajax({ 
+             type: "GET",
+             dataType: "jsonp",
+             url: "http://mperdikeas:8080/cars/rest/name2",
+             success: function(data){        
+                alert('the retrieved value was: '+data);
+             }
+         });
+    });
+
+</script>
+
+
+
+</body>
+
+</html>
