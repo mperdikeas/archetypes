@@ -87,7 +87,7 @@
                >
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
-            <compilerarg line="-encoding utf-8"/> <!-- added that on 2012-XI-13 althought not fully convinced" -->
+            <compilerarg line="-encoding utf-8"/> <!-- added on 2012-XI-13 should be the same as utf8 but I'm not fully convinced, it may need to be coupled with java -Dfile.encoding=UTF8 at execution time" -->
         </javac>
 	<copy todir="${build.dir}">
             <fileset dir="${javasource.dir}">
