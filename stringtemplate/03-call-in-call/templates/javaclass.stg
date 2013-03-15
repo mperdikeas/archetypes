@@ -1,0 +1,4 @@
+    echo(foo) ::="<foo>"
+    zoo()::="zoo"
+    boo() ::= << <echo( <zoo()> )> >>
+

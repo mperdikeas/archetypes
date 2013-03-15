@@ -1,0 +1,4 @@
+This example demonstrates the failure of invoking a template
+within the call to another template. If the call to the 
+zoo template is replaced with the hardcoded "zoo" literal
+then the example works just fine.
