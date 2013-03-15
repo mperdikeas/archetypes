@@ -36,11 +36,21 @@ public class FooMain {
          PdfWriter.getInstance(document, new FileOutputStream(filename));
         document.open();
         document.add(new Paragraph("iText αυτά τα ελληνικά δεν δουλεύουν", BOLD_UNDERLINED));
-        document.add(new Paragraph("iText αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("Times New Roman", BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
-        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("DejaVu"         , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
-        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("DejaVu Serif"   , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+        document.add(new Paragraph("iText αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("Times New Roman"     , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("DejaVu"              , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("DejaVu Serif"        , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+        try {
+        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont(BaseFont.TIMES_ROMAN  , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+        } catch (java.nio.charset.UnsupportedCharsetException e) {System.out.println("fails but why ?");}
+        try {
+        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont(BaseFont.HELVETICA    , BaseFont.IDENTITY_H, BaseFont.EMBEDDED)));
+        } catch (java.nio.charset.UnsupportedCharsetException e) {System.out.println("fails but why ?");}
+        document.add(new Paragraph("iText Αυτά τα ελληνικά δεν δουλεύουν", FontFactory.getFont("Times New Roman", "UTF-8", BaseFont.EMBEDDED)));
+
+
         BaseFont bf = BaseFont.createFont("DejaVuSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         document.add(new Paragraph("iText !! Αυτά τα ελληνικά δουλεύουν", new Font(bf, 12)));
         document.close();
+
     }
 }
