@@ -1,4 +1,5 @@
 *.class
 dist/
 dist-runnable/
-build/*.pdf
+build/
+*.pdf
