@@ -1,22 +1,10 @@
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.IOException;
-import java.awt.GraphicsEnvironment;
+import java.io.FileOutputStream; import java.io.OutputStream; import java.io.IOException; import java.awt.GraphicsEnvironment;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.apache.commons.lang3.StringUtils;
+import java.util.List; import java.util.ArrayList; import java.util.Arrays; import org.apache.commons.lang3.StringUtils;
  
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Chapter;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Document; import com.itextpdf.text.DocumentException; import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Chapter; import com.itextpdf.text.Font; import com.itextpdf.text.FontFactory; import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.BaseFont; import com.itextpdf.text.pdf.PdfWriter;
 
 import static mutil.base.Util.greekText;
 
@@ -27,6 +15,9 @@ class DocumentCreator {
     private static Font CHAPTER  = null;
     private static Font HEADING  = null;
     private static Font NORMAL   = null;
+
+    private static float FIRST_LINE_INDENT = (float) 0.0;
+    private static float INDENT = (float) 20.0;
 
     static {
         try {
@@ -46,7 +37,8 @@ class DocumentCreator {
     private OutputStream os;
     private int _chaptIdx;
 
-    private static int HEADING_IDX[] = {0,0,0,0,0,0,0,0,0,0,0,0};
+    private static int HEADING_IDX[]      = { 0,0,0,0,0,0,0,0,0,0,0,0};
+    private static int LINES_BEF_HEADING[]= { 4,2,2,1,0,0,0,0,0,0,0,0};
     private int headingIdx[] = HEADING_IDX;
     private int level ;
     private void clearHeadings() {
@@ -65,6 +57,7 @@ class DocumentCreator {
         headingIdx[level-1]=0;
         level--;
         headingIdx[level-1]++;
+        if (level<0) throw new RuntimeException();
     }
 
     public void printVector(String header) {
@@ -93,7 +86,10 @@ class DocumentCreator {
 
 
     public void heading(String headingTitle) throws DocumentException {
-        document.add(new Paragraph(String.format("%d - %s", _chaptIdx, nextHeadingVectorS())+" - "+headingTitle, HEADING));
+        document.add(_emptyLines(LINES_BEF_HEADING[level]));
+        Paragraph p = new Paragraph(String.format("%d - %s", _chaptIdx, nextHeadingVectorS())+" - "+headingTitle, HEADING);
+        p.setIndentationLeft(level * INDENT);
+        document.add(p);
     }
 
     
@@ -110,7 +106,6 @@ class DocumentCreator {
         level = 1;
     }
 
-
     private static Paragraph _emptyLines(int n) throws DocumentException {
         Paragraph rv = new Paragraph(" ");
         for (int i = 0; i < n-1; i++) {
@@ -125,7 +120,8 @@ class DocumentCreator {
 
     public void paragraph(String text) throws DocumentException {
         Paragraph p = new Paragraph(text, NORMAL);
-        p.setFirstLineIndent(15);
+        p.setFirstLineIndent(FIRST_LINE_INDENT);
+        p.setIndentationLeft(level * INDENT);
         document.add(p);
     }
     
@@ -149,17 +145,11 @@ public class FooMain {
     private static void createPdf(String filename) throws DocumentException, IOException {
         DocumentCreator dc = new DocumentCreator(new FileOutputStream(filename));
         dc.chapter("Εκτίμηση για την Δράση 314.1.1");
-        dc.emptyLines(3);
-        dc.printVector("A:");
         dc.heading("Συνολική Επιλεξιμότητα");
-        dc.printVector("B:");
         dc.heading("Συνολική Επιλεξιμότητα 2");
-        dc.printVector("C:");
         dc.paragraph(greekText(30));
-        dc.emptyLines(1);
         dc.heading("Επιλεξιμότητα Προσώπου");
         dc.paragraph(greekText(100));
-        dc.emptyLines(1);
         dc.levelIn();
         dc.heading("κριτήριο κατοικίας");
         dc.paragraph(greekText(100));
@@ -183,13 +173,10 @@ public class FooMain {
         dc.paragraph(greekText(50));
 
         dc.chapter("Εκτίμηση για την Δράση 314.1.2");
-        dc.emptyLines(3);
         dc.heading("Συνολική Επιλεξιμότητα");
         dc.paragraph(greekText(30));
-        dc.emptyLines(1);
         dc.heading("Επιλεξιμότητα Προσώπου");
         dc.paragraph(greekText(1000));
-        dc.emptyLines(1);
         dc.heading("Επιλεξιμότητα Κεφαλαίου");
         dc.paragraph(greekText(50));
         dc.close();
