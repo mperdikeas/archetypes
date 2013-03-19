@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Font.FontFamily;
@@ -15,15 +16,17 @@ public class FooMain {
  
     private static final String RESULT = "./paragraphs.pdf";
 
-    private static BaseFont bf = null;
-    private static Font TITLE  = null;
-    private static Font NORMAL = null;
+    private static BaseFont bf   = null;
+    private static Font TITLE    = null;
+    private static Font CHAPTER  = null;
+    private static Font NORMAL   = null;
 
     static {
         try {
             bf     = BaseFont.createFont("DejaVuSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            TITLE  = new Font(bf, 14, Font.BOLD | Font.UNDERLINE);
-            NORMAL = new Font(bf, 11);
+            TITLE    = new Font(bf, 14, Font.BOLD | Font.UNDERLINE);
+            CHAPTER  = new Font(bf, 13, Font.BOLD | Font.ITALIC);
+            NORMAL   = new Font(bf, 11);
         } catch (DocumentException e) {
             System.out.println(e);  
         } catch (IOException e) {
@@ -58,13 +61,16 @@ public class FooMain {
         Document document = new Document();
         PdfWriter.getInstance(document, new FileOutputStream(filename));
         document.open();
-        document.add(new Paragraph("Εκτίμηση για την Δράση 314.1.2", TITLE));
+        document.add(new Chapter(new Paragraph("Εκτίμηση για την Δράση 314.1.2", TITLE), 1));
         document.add(emptyLines(3));
-        document.add(new Paragraph("Συνολική Επιλεξιμότητα - "+text(  30) , NORMAL));
+        document.add(new Paragraph("Συνολική Επιλεξιμότητα", CHAPTER));
+        document.add(new Paragraph( text(  30) , NORMAL));
         document.add(emptyLines(1));
-        document.add(new Paragraph("Επιλεξιμότητα Προσώπου- "+text(1000) , NORMAL));
+        document.add(new Paragraph("1.1 - Επιλεξιμότητα Προσώπου", CHAPTER));
+        document.add(new Paragraph( text(1000) , NORMAL));
         document.add(emptyLines(1));
-        document.add(new Paragraph("Επιλεξιμότητα Κεφαλαίου - "+text(   3) , NORMAL));
+        document.add(new Paragraph("1.2 - Επιλεξιμότητα Κεφαλαίου", CHAPTER));
+        document.add(new Paragraph(text(50) , NORMAL));
         document.close();
     }
 }
