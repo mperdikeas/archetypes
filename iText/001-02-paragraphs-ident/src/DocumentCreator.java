@@ -34,6 +34,10 @@ public class DocumentCreator {
         }
     }
 
+    public static Font getNormal() {
+        return NORMAL;
+    }
+
     private Document     document;
     private OutputStream os;
     private int _chaptIdx;
@@ -96,7 +100,8 @@ public class DocumentCreator {
     
     public DocumentCreator(OutputStream os) throws DocumentException {
         this.document = new Document();
-        PdfWriter.getInstance(this.document, os);
+        PdfWriter writer = PdfWriter.getInstance(this.document, os);
+        writer.setPageEvent(new HeaderAndFooter());
         this.document.open();
         this._chaptIdx = 0;
         this.level = 0;
