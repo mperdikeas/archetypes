@@ -4,7 +4,8 @@ import java.util.List; import java.util.ArrayList; import java.util.Arrays; impo
  
 import com.itextpdf.text.Document; import com.itextpdf.text.DocumentException; import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Chapter; import com.itextpdf.text.Font; import com.itextpdf.text.FontFactory; import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.pdf.BaseFont; import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.BaseFont; import com.itextpdf.text.pdf.PdfWriter; import com.itextpdf.text.pdf.PdfPCell; import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.Phrase; import com.itextpdf.text.ListItem;
 
 import static mutil.base.Util.greekText;
 
@@ -129,6 +130,41 @@ public class DocumentCreator {
         p.setFirstLineIndent(FIRST_LINE_INDENT);
         p.setIndentationLeft(level * INDENT);
         document.add(p);
+    }
+
+    public static PdfPTable createTable1() throws DocumentException {
+        PdfPTable table = new PdfPTable(3);
+        table.setWidthPercentage(488 / 5.23f);
+        table.setWidths(new int[]{2, 1, 1});
+        PdfPCell cell;
+        cell = new PdfPCell(new Phrase("Πίνακας 1", NORMAL));
+        cell.setColspan(3);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase("κελί με rowspan 2", NORMAL));
+        cell.setRowspan(2);
+        table.addCell(cell);
+        table.addCell( new Phrase ("κελί 1-1", NORMAL));
+        table.addCell( new Phrase ("κελί 1-2", NORMAL));
+        table.addCell( new Phrase ("κελί 2-1", NORMAL));
+        table.addCell( new Phrase ("κελί 2-2", NORMAL));
+        return table;
+    }
+
+
+    public void table(PdfPTable table) throws DocumentException {
+        document.add(table);
+    }
+
+    public void list(String ... strings) throws DocumentException {
+        list(Arrays.asList(strings));
+    }
+    public void list(List<String> strings) throws DocumentException {
+        com.itextpdf.text.List list = new com.itextpdf.text.List();
+        list.setAutoindent(false);
+        list.setSymbolIndent(36);
+        for (String string : strings)
+            list.add(new ListItem(string, NORMAL));
+        document.add(list);
     }
     
     public void close() throws DocumentException {

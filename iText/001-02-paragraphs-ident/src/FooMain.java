@@ -23,6 +23,12 @@ public class FooMain {
 
     private static void createPdf(String filename) throws DocumentException, IOException {
         DocumentCreator dc = new DocumentCreator(new FileOutputStream(filename));
+        dc.chapter("Συνολική Εκτίμηση");
+        dc.emptyLines(3);
+        dc.table(DocumentCreator.createTable1());
+        dc.emptyLines(3);
+        dc.paragraph("Συνολική εκτίμηση σε μορφή λίστας");
+        dc.list("δράση 1.1: ΝΑΙ", "δράση 1.2: OXI");
         dc.chapter("Εκτίμηση για την Δράση 314.1.1");
         dc.heading("Συνολική Επιλεξιμότητα");
         dc.heading("Συνολική Επιλεξιμότητα 2");
