@@ -1,3 +1,11 @@
+UPDATE: I manage to solve this after some time,
+see:
+
+http://stackoverflow.com/questions/15432109/stringtemplate4-template-call-inside-template-call
+
+
+Old, obsolete description:
+
 This example demonstrates the failure of invoking a template
 within the call to another template. If the call to the 
 zoo template is replaced with the hardcoded "zoo" literal
