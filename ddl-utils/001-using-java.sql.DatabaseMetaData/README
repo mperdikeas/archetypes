@@ -1,0 +1,23 @@
+I tried with both databases found in the build.properties
+file and discovered that in both cases the library fails with a
+trace like the following:
+
+     [java] Caused by: org.apache.ddlutils.model.ModelException: There are multiple column with the name bips_id in the table bi_paper_series
+     [java]        at org.apache.ddlutils.model.Database.initialize(Database.java:295)
+     [java]        at org.apache.ddlutils.platform.JdbcModelReader.getDatabase(JdbcModelReader.java:484)
+     [java]        at org.apache.ddlutils.platform.JdbcModelReader.getDatabase(JdbcModelReader.java:432)
+     [java]        at org.apache.ddlutils.platform.PlatformImplBase.readModelFromDatabase(PlatformImplBase.java:1884)
+     [java]        at org.apache.ddlutils.platform.PlatformImplBase.readModelFromDatabase(PlatformImplBase.java:1869)
+     [java]        at FooMain.readDatabase(FooMain.java:51)
+     [java]        at FooMain.main(FooMain.java:46)
+     [java]        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+     [java]        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+     [java]        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+     [java]        at java.lang.reflect.Method.invoke(Method.java:601)
+     [java]        at org.apache.tools.ant.taskdefs.ExecuteJava.run(ExecuteJava.java:217)
+     [java]        at org.apache.tools.ant.taskdefs.ExecuteJava.execute(ExecuteJava.java:152)
+     [java]        ... 34 more
+
+
+When I googled it I discovered other similar reports but no solution dating back from 2008.
+Conclusion: the library is unreliable.
