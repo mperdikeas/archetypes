@@ -1,0 +1,1 @@
+java -cp .:slink-to-mutil-directory:$(cat .clojure):$(echo lib/*.jar | tr ' ' ':') clojure.main foo.clj
