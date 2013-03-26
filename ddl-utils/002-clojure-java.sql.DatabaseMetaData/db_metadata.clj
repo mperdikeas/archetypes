@@ -123,10 +123,13 @@
   (map first (filter #(= (second %) "TABLE") (:tables mdata))))
 
 (defn columns
-  "returns a quadruple: (column name, data type , number of decimal, is nullable)
+  "returns a map: (column name, data type , number of decimal, is nullable)
    of the columns of a tabley (table or view) in the correct order"
   [mdata tabley]
-  (map #(vector (:name %) (:dtyp %) (:ndec %) (:nlbl %))
+  (map #(hash-map :name  (:name %)
+                  :dtype (:dtyp %)
+                  :ndec  (:ndec %)
+                  :nlbl  (:nlbl %))
        (sort-by :ordn (filter #(= (:tble %) tabley)
                               (:columns mdata)))))
 
@@ -138,7 +141,7 @@
   (let
       [
        columnsInPK (map :name (only (vals (group-by :cnst (filter #(= (:tble %) table) (:pKeys mdata))))))]
-    (reorder columnsInPK (map first
+    (reorder columnsInPK (map :name
                               (columns mdata table)))))
 
 (defn ukConstraints
@@ -147,7 +150,7 @@
   (let
       [columnsInUK (map #(map :name %) (vals (group-by :cnst (filter #(= (:tble %) table)
                                                             (:uIndcs mdata)))))]
-    (map #(reorder % (map first (columns mdata table))) columnsInUK)))
+    (map #(reorder % (map :name (columns mdata table))) columnsInUK)))
   
 (defn fkConstraints
   "returns a list of the FKs pointing to this table
