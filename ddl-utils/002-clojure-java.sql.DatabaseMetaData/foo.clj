@@ -25,29 +25,29 @@
 
 (println (message "tables"))
 
-(doall (map println (table-views mtdt CATALOG SCHEMA)))
+(doall (map println (_table-views mtdt CATALOG SCHEMA)))
 
 (println (message "columns"))
 
-(doall (map println (columns mtdt CATALOG SCHEMA)))
+(doall (map println (_columns mtdt CATALOG SCHEMA)))
 
 (println (message "primary keys"))
 
-(doall (map println (primaryKeys mtdt CATALOG SCHEMA)))
+(doall (map println (_primaryKeys mtdt CATALOG SCHEMA)))
 
 (println (message "unique indices"))
 
-(doall (map println (uniqueIndices mtdt CATALOG SCHEMA)))
+(doall (map println (_uniqueIndices mtdt CATALOG SCHEMA)))
 
 (println (message "unique except primary keys"))
-(doall (map println (coll-sub (uniqueIndices mtdt CATALOG SCHEMA)
-                              (primaryKeys   mtdt CATALOG SCHEMA))))
+(doall (map println (coll-sub (_uniqueIndices mtdt CATALOG SCHEMA)
+                              (_primaryKeys   mtdt CATALOG SCHEMA))))
 
 (println (message "foreign keys columns of troolean table"))
-(doall (map println (exportedKeys mtdt CATALOG SCHEMA "troolean")))
+(doall (map println (_exportedKeys mtdt CATALOG SCHEMA "troolean")))
 
 (println (message "all foreign key columns"))
-(doall (map println (exportedKeys mtdt CATALOG SCHEMA)))
+(doall (map println (_exportedKeys mtdt CATALOG SCHEMA)))
 
 (println "****** SECOND FETCHING *******")
 
@@ -57,3 +57,22 @@
                  (println (format "\n\nCOLLECTION: %s" %))
                  (doall (map println (% mtdtrslts))))
               (keys mtdtrslts))))
+
+(println "\n\n\n\n\n****** THIRD FETCHING ********\n\n\n\n\n")
+(let [mdata (metadata conn CATALOG SCHEMA)
+      tablenames (tables mdata)]
+  (println "tables are: " tablenames)
+  (println "\n")
+  (doseq [tablename tablenames]
+    (println "columns of table: " tablename "are: " (columns mdata tablename)))
+  (println "\n")
+  (doseq [tablename tablenames]
+    (println "PK columns of table: " tablename "are: " (pkColumns mdata tablename)))
+  (println "\n")  
+  (doseq [tablename tablenames]
+    (println "UK constraints of table: " tablename "are: " (ukConstraints mdata tablename)))
+  (println "\n")
+  (doseq [tablename tablenames]
+    (println "FK cols lists of table: " tablename "are: " (fkConstraints mdata tablename))))
+  
+        
