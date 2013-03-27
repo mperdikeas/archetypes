@@ -73,6 +73,9 @@
     (println "UK constraints of table: " tablename "are: " (ukConstraints mdata tablename)))
   (println "\n")
   (doseq [tablename tablenames]
-    (println "FK cols lists of table: " tablename "are: " (fkConstraints mdata tablename))))
+    (println "FK cols lists of table: " tablename "are: " (fkConstraints mdata tablename)))
+  (println "\n")
+  (doseq [tablename tablenames]
+    (println "FK OUT cols lists of table: " tablename "are: " (fkConstraintsOut mdata tablename))))
   
         

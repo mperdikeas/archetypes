@@ -3,7 +3,9 @@
   (:use [clojure.repl])
   (:use [clojure.set])
   (:use [jdbc-types :only (code->str)])
-  (:use [mutil :only (in? not-empty? strct1lvlFlatten only reorder group-by-only third)]))
+  (:use [mutil :only (in? not-empty? strct1lvlFlatten only reorder
+                          group-by-only third coll-sub project2
+                          only-distinct)]))
 (import '(java.io File))
 (import '(java.sql ResultSet))
 
@@ -151,6 +153,13 @@
       [columnsInUK (map #(map :name %) (vals (group-by :cnst (filter #(= (:tble %) table)
                                                             (:uIndcs mdata)))))]
     (map #(reorder % (map :name (columns mdata table))) columnsInUK)))
+
+(defn ukExcPkConstraints
+  "returns a list of the lists of UK constraint columns except those
+   belonging to Primary Keys"
+  [mdata table]
+  (coll-sub (ukConstraints  mdata table)
+            (list (pkColumns mdata table))))
   
 (defn fkConstraints
   "returns a list of the FKs pointing to this table
@@ -174,5 +183,24 @@
                                                                       (third _v))]))]))
        ]
     fkColsMap_))
-    
+
+(defn fkConstraintsOut
+  "returns a map of the FKs leaving this table
+   as a map: foreign key name-> [pktable, ordn-> [fkcolumn pkcolumn]"
+  [mdata table]
+  (let
+      [___fkColsForTbl (filter #(= (:fktable %) table)
+                               (:fKeys mdata))
+       __fkColsForTbl (group-by :fkname
+                                (project2 ___fkColsForTbl [:fkname :pktable :ordn :fkcolumn :pkcolumn]))
+       _fkColsForTbl (into {} (for [ [k v] __fkColsForTbl] [k (vector (only-distinct (map :pktable v))
+                                                                      (project2 v [:ordn :fkcolumn :pkcolumn]))]))
+       fkColsForTbl (into {} (for [ [k [tbl colla]] _fkColsForTbl] [k [tbl (group-by :ordn colla)]]))
+       fkColsForTbl_ (into {} (for [ [k [tbl mapa]] fkColsForTbl] [k [tbl
+                                                                      (into {}
+                                                                            (for [ [ord lmap] mapa]
+                                                                              [ord [(:fkcolumn (only lmap))
+                                                                                    (:pkcolumn (only lmap))]]))]]))
+       ]
+    fkColsForTbl_))
 
