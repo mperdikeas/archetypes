@@ -16,3 +16,8 @@ create table measureactions.a
   ba2 integer not null,
   constraint b_pk_b1 primary key (b1),
   constraint b_2_a_fk foreign key (ba1, ba2) references measureactions.a(a1,a2));
+
+create table measureactions.c
+(c1 integer not null,
+ c2 boolean,
+constraint c_pk_c1 primary key (c1));

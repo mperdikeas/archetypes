@@ -204,3 +204,14 @@
        ]
     fkColsForTbl_))
 
+(defn columnName->data
+  [mdata tableName columnName]
+  (let [allTableColumnData (columns mdata tableName)]
+    (only (filter #(= columnName (:name %))
+                  allTableColumnData))))
+
+(defn columnNames->data
+  [mdata tableName collOfColumnNames]
+  (let [allTableColumnData (columns mdata tableName)]
+    (filter #(in? collOfColumnNames (:name %))
+                  allTableColumnData)))
