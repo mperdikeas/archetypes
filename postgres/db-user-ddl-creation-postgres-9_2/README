@@ -1,0 +1,3 @@
+I had to modify the pg_hba.conf file
+to allow trust-based access to postgres user
+(see mperdikeas.github.com/postgresql.html)
