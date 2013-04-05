@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS"cashflow";
+DROP USER IF EXISTS "gaia-user";
