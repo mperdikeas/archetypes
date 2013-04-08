@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS"cashflow";
-DROP USER IF EXISTS "gaia-user";
+DROP DATABASE IF EXISTS "throwAwayTestDB";
+DROP USER IF EXISTS "throwAwayTestUser";

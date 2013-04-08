@@ -1,2 +1,0 @@
-SCRIPT=$1
-psql -U gaia-user cashflow -f $1

@@ -1,3 +1,11 @@
 I had to modify the pg_hba.conf file
 to allow trust-based access to postgres user
-(see mperdikeas.github.com/postgresql.html)
+(see mperdikeas.github.com/postgresql.html).
+
+Also, looking at the output of postgresql status shows:
+
+    sudo /etc/init.d/postgresql status
+    9.1/main (port 5432): online
+    9.2/main (port 5433): online
+
+... therefore the scripts had to be updated to use port 5433 (for Postgresql 9.2)

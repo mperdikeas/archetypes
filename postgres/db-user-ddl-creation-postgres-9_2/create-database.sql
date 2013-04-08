@@ -1,2 +1,2 @@
-CREATE DATABASE "cashflow" WITH OWNER "gaia-user";
+CREATE DATABASE "throwAwayTestDB" WITH OWNER "throwAwayTestUser";
 

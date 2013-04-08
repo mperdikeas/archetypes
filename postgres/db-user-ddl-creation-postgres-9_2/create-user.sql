@@ -4,9 +4,9 @@ BEGIN
    IF NOT EXISTS (
       SELECT *
       FROM   pg_catalog.pg_user
-      WHERE  usename = 'gaia-user') THEN
+      WHERE  usename = 'throwAwayTestUser') THEN
 
-      CREATE ROLE "gaia-user" WITH CREATEDB LOGIN PASSWORD 'gaia-user-pwd';
+      CREATE ROLE "throwAwayTestUser" WITH CREATEDB LOGIN PASSWORD 'throwAwayTestUser-pwd';
    END IF;
 END
 $body$

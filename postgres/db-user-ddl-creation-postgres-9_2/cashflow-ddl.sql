@@ -1,3 +1,5 @@
+SET client_min_messages TO WARNING;
+
 CREATE TABLE KM_CASH_FLOWS (
     CAFL_ID integer NOT NULL,
     COMP_ID integer NOT NULL,
