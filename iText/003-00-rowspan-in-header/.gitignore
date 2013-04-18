@@ -1,0 +1,5 @@
+*.class
+dist/
+dist-runnable/
+build/
+*.pdf
