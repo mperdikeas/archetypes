@@ -13,11 +13,24 @@ class HeaderAndFooter extends PdfPageEventHelper{
 
     @Override
     public void onEndPage(PdfWriter writer, Document document) {
-        PdfContentByte cb = writer.getDirectContent();
-        float x   = document.leftMargin();
-        float hei = header.getTotalHeight();
-        float y   = document.top()+hei;
-        header.writeSelectedRows(0, -1, x , y, cb);
+        try {
+            PdfContentByte cb = writer.getDirectContent();
+            float x   = document.leftMargin();
+            float hei = header.getTotalHeight();
+            float y   = document.top()+hei;
+            boolean toggleBetweenTheTwoSolutions = false;
+            if (toggleBetweenTheTwoSolutions) { // see: http://stackoverflow.com/questions/16087542/itext-setrowspan-not-working-for-tables-in-headers
+                header.writeSelectedRows(0, -1, x , y, cb);
+            }
+            else {
+                ColumnText column = new ColumnText(writer.getDirectContent());
+                column.addElement(header);
+                column.setSimpleColumn(-12, -20, 604, 803); // set LLx, LLy, URx, and URy of the header
+                column.go();
+            }
+        } catch (DocumentException e) {
+            throw new RuntimeException();
+        }
     }
 }
  

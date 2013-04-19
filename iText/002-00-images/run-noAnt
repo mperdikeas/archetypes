@@ -1,0 +1,1 @@
+java -classpath fonts:lib-runtime/commons-lang3-3.1.jar:lib-runtime/itextpdf-5.4.0.jar:lib-runtime/mutil.jar:dist/foo.jar FooMain

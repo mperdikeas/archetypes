@@ -1,3 +1,4 @@
+package a;
 import java.io.FileOutputStream; import java.io.OutputStream; import java.io.IOException; import java.awt.GraphicsEnvironment;
 
 import java.util.List; import java.util.ArrayList; import java.util.Arrays; import org.apache.commons.lang3.StringUtils;
@@ -13,11 +14,14 @@ import static mutil.base.Util.greekText;
 
 
 public class DocumentCreator {
-    private static BaseFont bf   = null;
-    private static Font TITLE    = null;
-    private static Font CHAPTER  = null;
-    private static Font HEADING  = null;
-    private static Font NORMAL   = null;
+    private static BaseFont bf      = null;
+    private static Font TITLE       = null;
+    private static Font CHAPTER     = null;
+    private static Font HEADING     = null;
+    private static Font NORMAL      = null;
+    private static Font SMALL       = null;
+    private static Font TINY        = null;
+    private static Font TEENYWEENY  = null;
 
     private static float FIRST_LINE_INDENT = (float) 0.0;
     private static float INDENT = (float) 20.0;
@@ -29,6 +33,9 @@ public class DocumentCreator {
             CHAPTER  = new Font(bf, 13, Font.BOLD | Font.ITALIC);
             HEADING  = new Font(bf, 12, Font.BOLD | Font.ITALIC);
             NORMAL   = new Font(bf, 11);
+            SMALL    = new Font(bf,  9);
+            TINY     = new Font(bf,  7);
+            TEENYWEENY = new Font(bf, 5);
         } catch (DocumentException e) {
             System.out.println(e);  
         } catch (IOException e) {
@@ -36,9 +43,10 @@ public class DocumentCreator {
         }
     }
 
-    public static Font getNormal() {
-        return NORMAL;
-    }
+    public static Font getNormal()          { return NORMAL; }
+    public static Font getSmall()           { return SMALL; }
+    public static Font getTiny()            { return TINY; }
+    public static Font getTeenyWeeny()      { return TEENYWEENY; }
 
     private Document     document;
     private OutputStream os;
@@ -101,7 +109,7 @@ public class DocumentCreator {
 
     
     public DocumentCreator(OutputStream os) throws DocumentException, MalformedURLException, IOException {
-        this.document = new Document(PageSize.A4, 30, 30, 150, 40);
+        this.document = new Document(PageSize.A4, 30, 30, 100, 80);
         PdfWriter writer = PdfWriter.getInstance(this.document, os);
         writer.setPageEvent(new HeaderAndFooter());
         this.document.open();
