@@ -1,0 +1,289 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="foo" basedir="." default="run">
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+    <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpath="${basedir}/tools/jaxb-xjc-2.2.7.jar:
+                                                                         ${basedir}/tools/jaxb-core-2.2.7.jar:
+                                                                         ${basedir}/tools/jaxb-impl-2.2.7.jar"/>
+
+    <property name="project.MainClass.name" value="FooMain"/>
+    <property name="project.distname"       value="${ant.project.name}"/>
+    <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
+    <property name="build.dir"              value="${basedir}/build"/>
+    <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="dist-runnable.dir"      value="${basedir}/dist-runnable"/>
+    <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="src.dir"                value="${basedir}/src"/>
+    <property name="javasource.dir"         value="${src.dir}"/>
+    <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
+    <property name="ivylibs.dir"            value="${basedir}/lib-ivy"/>
+    <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+    <property name="run-app.script.name"    value="run-app"/>
+
+
+
+    <property name="a.schema"         value="A.xsd"/>
+    <property name="a.schema.file"    value="${basedir}/${a.schema}"/>
+    <property name="a.package"        value="a"/>
+    <property name="a.dir"            value="${src.dir}/a"/>
+
+
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${ivylibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+
+<target name="test-ivy" description="Test ivy installation">
+    <ivy:settings />
+</target>
+
+<target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+    <ivy:resolve/> <!-- this is redundant as it is triggered by retrieve in any case -->
+    <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
+</target>
+
+<!-- Next, my package task uses that classpath -->
+<target name="package" depends="compile" description="package the project in a runnable Jar together with the dependencies">
+  <echo>=== PACKAGE ===</echo>
+  
+    <!-- convert compile.classpath to mf.classpath (the string needed for the manifest task) -->
+    <pathconvert property="mf.classpath" pathsep=" ">
+        <path refid="compile.classpath"/>
+        <flattenmapper/>
+    </pathconvert>
+
+
+  <!-- now build the manifest file, using mf.classpath -->
+  <tstamp/><!-- needed for TODAY -->
+  <manifest file="MANIFEST.MF">
+    <attribute name="Built-By" value="${manifest.built.by}"/>
+    <attribute name="Created-By" value="${manifest.created.by}"/>
+    <attribute name="Main-Class" value="${project.MainClass.name}"/>
+    <attribute name="Implementation-Version" value="${version.number}-b${build.number}"/>   
+    <attribute name="Built-Date" value="${TODAY}"/>
+    <attribute name="Class-Path" value="${mf.classpath}" />
+  </manifest>
+  
+  <!-- create the jar file, including the manifest file we just created -->
+  <jar basedir="${build.dir}"
+       destfile="${dist-runnable.dir}/${project.distname}.jar"
+       includes="**/*.*"
+       excludes="**/*Test*"
+       manifest="MANIFEST.MF" />
+
+  <!-- copy all the jar files out to the destination directory (dist.dir) -->
+  <copy todir="${dist-runnable.dir}">
+    <fileset dir="${compilelibs.dir}">
+      <exclude name="junit*" />
+      <include name="*.jar"/>
+      <include name="*.zip"/>
+    </fileset>
+  </copy>
+  <!-- move this file before the 'jar' task (and put it in the 'classes' dir) if you'd rather 
+       include it in the jar -->
+  <!--copy file="${resources.dir}/log4j.properties" tofile="${dest.dir}/log4j.properties" overwrite="true" />
+  <copy file="${resources.dir}/${properties.file}" tofile="${dest.dir}/${properties.file}" overwrite="true" />
+  <delete dir="${dest.dir.classes}" /-->
+
+    <echo file="${run-app.script.name}" append="false">java -jar ${dist-runnable.dir}/${project.distname}.jar ${project.MainClass.name}</echo>
+    <chmod file="${run-app.script.name}" perm="ugo+rx"/>
+    <delete file= "MANIFEST.MF"/>
+</target>
+
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+        <mkdir dir="${ivylibs.dir}"/>
+    </target>
+
+<!--  examples of using JXC command line and Ant task with depends / produces and episode files
+    <target name="jaxb-generate-commandline" description="manual generation of JAXB from commandline">
+        <mkdir dir="${jaxb-commandline.dir}"/>
+        <exec executable="xjc">
+            <arg value="-d"/>
+            <arg value="${jaxb-commandline.dir}"/>
+            <arg value="-p"/>
+            <arg value="${jaxb-auto-package.name}"/>
+            <arg value="${schema.file.name}"/>
+        </exec>
+    </target>
+
+    <target name="jaxb-generate" description="generate JAXB bindings" depends="jaxb-generate-commandline">
+        <xjc schema="${schema.file.name}" destdir="${src.dir}" package="${jaxb-auto-package.name}">
+        </xjc>
+        <exec executable="${basedir}/diff-ignore-comments"
+               resultproperty = "diff.result"
+               failonerror    = "true"/>
+        <echo message="difference result was: ${diff.result}"/>
+        <delete dir="${jaxb-commandline.dir}"/>
+    </target>
+
+    <target name="jaxb-generate-voresource" description="generate JAXB bindings for the VO resource">
+        <mkdir dir="${vo.resource.dir}"/>
+        <xjc schema="${vo.resource.schema.file}" destdir="${src.dir}" package="${vo.resource.package}" extension="true">
+            <arg value="-npa"/>
+            <arg value="-episode"/>
+            <arg value="${vo.resource.episode}"/>
+            <depends dir="${basedir}">
+                <include name="${vo.resource.schema}"/>
+            </depends>
+            <produces dir="${vo.resource.dir}">
+                <include name="*.java"/>
+            </produces>
+        </xjc>
+    </target>
+
+    <target name="jaxb-generate-stc" description="generate JAXB bindings for stc">
+        <mkdir dir="${vo.stc.dir}"/>
+        <xjc schema="${vo.stc.schema.file}" destdir="${src.dir}" package="${vo.stc.package}" extension="true">
+            <arg value="-npa"/>
+            <arg value="-episode"/>
+            <arg value="${vo.stc.episode}"/>
+            <depends dir="${basedir}">
+                <include name="${vo.stc.schema}"/>
+            </depends>
+            <produces dir="${vo.stc.dir}">
+                <include name="*.java"/>
+            </produces>
+        </xjc>
+    </target>
+
+    <target name="jaxb-generate-voregistry" depends="jaxb-generate-voresource">
+        <mkdir dir="${vo.registry.dir}"/>
+        <xjc schema="${vo.registry.schema.file}" destdir="${src.dir}" package="${vo.registry.package}" extension="true">
+            <arg value="-npa"/>
+            <arg value="-b"/>
+            <arg value="${vo.resource.episode}"/>
+            <depends dir="${basedir}">
+                <include name="${vo.registry.schema}"/>
+            </depends>
+            <produces dir="${vo.registry.dir}">
+                <include name="*.java"/>
+            </produces>
+        </xjc>
+    </target>
+
+    <target name="jaxb-generate-vodataservice" depends="jaxb-generate-voresource, jaxb-generate-stc">
+        <mkdir dir="${vo.dataservice.dir}"/>
+        <xjc schema="${vo.dataservice.schema.file}" destdir="${src.dir}" package="${vo.dataservice.package}" extension="true">
+            <arg value="-npa"/>
+            <arg value="-b"/>
+            <arg value="${vo.resource.episode}"/>
+            <arg value="-b"/>
+            <arg value="${vo.stc.episode}"/>
+            <depends dir="${basedir}">
+                <include name="${vo.dataservice.schema}"/>
+            </depends>
+            <produces dir="${vo.dataservice.dir}">
+                <include name="*.java"/>
+            </produces>
+        </xjc>
+    </target>
+-->
+
+    <target name="jaxb-a">
+        <mkdir dir="${a.dir}"/>
+        <xjc schema="${a.schema.file}" destdir="${src.dir}" package="${a.package}" extension="true">
+            <arg value="-npa"/>
+            <depends dir="${basedir}">
+                <include name="${a.schema}"/>
+            </depends>
+            <produces dir="${a.dir}">
+                <include name="*.java"/>
+            </produces>
+        </xjc>
+    </target>
+
+    <target name="compile" depends="prepare, resolve, jaxb-a"
+            description="Compile java sources">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> <!-- added on 2012-XI-13 should be the same as utf8 but I'm not fully convinced, it may need to be coupled with java -Dfile.encoding=UTF8 at execution time" -->
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="jar" depends="compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
+    <target name="clean"
+            description="Prepare for clean build">
+      <delete dir ="${build.dir}"/>
+      <delete dir ="${dist.dir}"/>
+      <delete dir ="${dist-runnable.dir}"/>
+      <delete dir ="${ivylibs.dir}"/>
+      <delete file="${run-app.script.name}"/>
+      <!--delete dir ="${jaxb-auto-package.dir}"/-->
+      <delete dir ="${jaxb-commandline.dir}"/>
+      <!--delete dir ="${vo.resource.dir}"/>
+      <delete dir ="${vo.stc.dir}"/>
+      <delete dir ="${vo.registry.dir}"/>
+      <delete dir ="${vo.dataservice.dir}"/>
+      <delete file="${vo.resource.episode}"/-->
+      <delete dir="${a.dir}"/>
+    </target>
+
+    <path id = "run.classpath">
+        <path refid="compile.classpath"/>
+        <pathelement path = "${jar-artefact}"/>
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+    </path>
+
+    <macrodef name="run-generic">
+        <attribute name="paranoid" />
+        <sequential>
+            <if>
+                <equals arg1="@{paranoid}" arg2="true" />
+                <then>
+                    <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                    <delete dir="${build.dir}"/>
+                </then> 
+            </if>
+        <property name="classpath-run.msg" refid="run.classpath"/>
+        <echo message="ant.java.version=${ant.java.version}" />
+        <echo message="running the app with classpath = ${classpath-run.msg}"/>
+        <java classname ="${project.MainClass.name}">
+             <classpath refid="run.classpath"/>
+        </java>
+        </sequential>
+    </macrodef>
+
+    <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="run-paranoid" depends="jar" description="run the jared application (paranoid mode)">
+        <run-generic paranoid="true"/>
+    </target>
+
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+
+
+</project>

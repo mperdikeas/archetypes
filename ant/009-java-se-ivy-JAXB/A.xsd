@@ -1,0 +1,14 @@
+<xs:schema targetNamespace="foo://a" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns="foo://a">
+
+   <xs:element name="type" type="Type"/>
+
+   <xs:simpleType name="Type">
+     <xs:restriction base="xs:token">
+         <xs:enumeration value="Archive"/>
+         <xs:enumeration value="Organisation"/>
+       </xs:restriction>
+   </xs:simpleType>
+
+</xs:schema>
