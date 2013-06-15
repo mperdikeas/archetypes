@@ -1,0 +1,40 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="foo" basedir="." default="run">
+    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+
+    <property name="clojure-libs.dir"       value="${basedir}/clojure-libs"/>
+    <property name="runtime-jars.dir"       value="${basedir}/lib-runtime"/>
+    <property name="lib-ivy.dir"            value="${basedir}/lib-ivy"/>
+
+    <path id = "runtime.classpath">
+      <pathelement location="${basedir}"/>
+      <pathelement location="${clojure-libs.dir}"/>
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${runtime-jars.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <target name="test-ivy" description="Test ivy installation">
+        <ivy:settings />
+    </target>
+    
+    <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+        <ivy:resolve/>
+        <ivy:retrieve sync="true" type="jar" pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
+    </target>
+
+    <target name="run" depends="resolve">
+       <java classname="clojure.main" fork="true" failonerror="true">
+         <arg value="foo.clj"/>
+         <!--arg value="MEASURES-config.clj"/-->
+         <classpath refid="runtime.classpath"/>
+       </java>
+    </target>
+
+    <target name="clean" description="Prepare for clean build">
+      <delete dir ="${lib-ivy.dir}"/>
+    </target>
+
+</project>
