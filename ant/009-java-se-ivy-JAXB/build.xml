@@ -43,7 +43,8 @@
 
 <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
     <ivy:resolve/> <!-- this is redundant as it is triggered by retrieve in any case -->
-    <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
+    <!--ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/--> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
+    <ivy:retrieve sync="true" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- not using type="jar", see: http://stackoverflow.com/questions/16526937/ivy-used-to-retrieve-guava-now-it-does-not -->
 </target>
 
 <!-- Next, my package task uses that classpath -->
