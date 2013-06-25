@@ -1,8 +1,9 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant" name="foo" basedir="." default="run">
     <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
-    <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpath="${basedir}/tools/jaxb-xjc-2.2.7.jar:
-                                                                         ${basedir}/tools/jaxb-core-2.2.7.jar:
-                                                                         ${basedir}/tools/jaxb-impl-2.2.7.jar"/>
+    <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpath="${basedir}/tools/jaxb-xjc.jar:
+                                                                         ${basedir}/tools/jaxb-core.jar:
+                                                                         ${basedir}/tools/jaxb-impl.jar:
+                                                                         ${basedir}/tools/jaxb-api.jar"/>
 
     <property name="project.MainClass.name" value="FooMain"/>
     <property name="project.distname"       value="${ant.project.name}"/>
