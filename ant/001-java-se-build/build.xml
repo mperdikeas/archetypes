@@ -1,5 +1,8 @@
-<project name="foo" basedir="." default="run">
-    <taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+<project
+     xmlns:contrib="http://net.sf.antcontrib"
+     name="foo"
+     basedir="." default="run">
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
 
     <property name="project.MainClass.name" value="FooMain"/>
     <property name="project.distname"       value="${ant.project.name}"/>
@@ -124,13 +127,13 @@
     <macrodef name="run-generic">
         <attribute name="paranoid" />
         <sequential>
-            <if>
+            <contrib:if>
                 <equals arg1="@{paranoid}" arg2="true" />
                 <then>
                     <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
                     <delete dir="${build.dir}"/>
                 </then> 
-            </if>
+            </contrib:if>
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="ant.java.version=${ant.java.version}" />
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
