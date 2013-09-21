@@ -1,0 +1,114 @@
+<project
+    xmlns:contrib="http://net.sf.antcontrib"
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="foo" basedir="." default="jar">
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+    <property name="ant-ivylibs.dir"            value="${basedir}/lib-ivy-ant"/>
+    <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport" classpath="${ant-ivylibs.dir}/jaxws-tools-2.2.8.jar:${ant-ivylibs.dir}/jaxb-xjc-2.2.7.jar:${ant-ivylibs.dir}/jaxb-core-2.2.7.jar:${ant-ivylibs.dir}/jaxws-rt-2.2.8.jar:${ant-ivylibs.dir}/jaxb-impl-2.2.7.jar:${ant-ivylibs.dir}/jaxb-jxc-2.2.7.jar:${ant-ivylibs.dir}/streambuffer-1.5.1.jar:${ant-ivylibs.dir}/policy-2.3.1.jar:${ant-ivylibs.dir}/stax-ex-1.7.1.jar"/>
+    <property name="project.distname"               value="${ant.project.name}"/>
+    <property name="jar-artefact.name"              value="${ant.project.name}.jar"/>
+    <property name="build.dir"                      value="${basedir}/build"/>
+    <property name="dist.dir"                       value="${basedir}/dist"/>
+    <property name="jar-artefact"                   value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="javasource-auto-wsimport.dir"   value="${basedir}/src-auto-wsimport"/>
+    <property name="wsdl.dir"                       value="specs"/>
+    <property name="compilelibs.dir"                value="${basedir}/lib-compile"/>
+    <property name="ivylibs.dir"                    value="${basedir}/lib-ivy"/>
+    <!-- DISCRETIONARY -->
+    <property name="project.MainClass.name"         value="FooMain"/>
+    <property name="wsimport-package.name"          value="foo.client"/>
+    <property name="wsdl.file"                      value="${wsdl.dir}/MyService.wsdl"/>
+
+
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${ivylibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+
+    <target name="test-ivy" description="Test ivy installation">
+        <ivy:settings />
+    </target>
+    
+    <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+        <ivy:resolve/> 
+        <ivy:retrieve sync="true" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+    </target>
+
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+        <mkdir dir="${ivylibs.dir}"/>
+        <mkdir dir="${compilelibs.dir}"/>
+    </target>
+
+    <target name="wsimport">
+    <!-- the command line invocation used to be:  wsimport -d src-auto-wsimport/ -p foo.client  -Xnocompile wsdl-auto/MyService.wsdl -->
+        <mkdir dir="${javasource-auto-wsimport.dir}"/>
+        <wsimport
+            verbose    = "true"
+            destdir    ="${javasource-auto-wsimport.dir}"
+            package    ="${wsimport-package.name}"
+            xnocompile ="true"
+            wsdl       ="${wsdl.file}">
+            <depends dir="${wsdl.dir}"/>
+            <produces dir="${javasource-auto-wsimport.dir}"/>
+        </wsimport>
+    </target>
+
+
+    <target name="compile" depends="prepare, resolve, wsimport"
+            description="Compile java sources">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac srcdir="${javasource-auto-wsimport.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> 
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource-auto-wsimport.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target name="jar" depends="compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
+    <target name="clean"
+            description="Prepare for clean build">
+      <delete dir ="${build.dir}"/>
+      <delete dir ="${dist.dir}"/>
+      <delete dir ="${ivylibs.dir}"/>
+      <delete includeemptydirs="true">
+        <fileset dir ="${javasource-auto-wsimport.dir}" defaultexcludes="false">
+            <include name="*/**"/>
+        </fileset>
+      </delete>
+    </target>
+
+
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+
+
+</project>
