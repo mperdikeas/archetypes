@@ -1,7 +1,7 @@
 import org.apache.commons.lang3.StringUtils;
 
-import foo.client.IHello;
-import foo.client.MyService;
+import playground.jax_ws.IHello;
+import playground.jax_ws.MyService;
 
 import java.net.URL;
 import javax.xml.namespace.QName;

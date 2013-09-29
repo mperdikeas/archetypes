@@ -51,10 +51,12 @@
     <target name="wsimport">
     <!-- the command line invocation used to be:  wsimport -d src-auto-wsimport/ -p foo.client  -Xnocompile wsdl-auto/MyService.wsdl -->
         <mkdir dir="${javasource-auto-wsimport.dir}"/>
+    <!-- the below attribute used to be part of the wsimprt task below but is removed to avoid clashes when same elements are declared
+     in different XSD schemas (see: 'http://stackoverflow.com/questions/11883790/wsimport-two-declarations-cause-a-collision-same-line-given' for more)
+            package    ="${wsimport-package.name}" -->
         <wsimport
             verbose    = "true"
             destdir    ="${javasource-auto-wsimport.dir}"
-            package    ="${wsimport-package.name}"
             xnocompile ="true"
             wsdl       ="${wsdl.file}">
             <depends dir="${wsdl.dir}"/>
