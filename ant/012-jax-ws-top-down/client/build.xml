@@ -10,7 +10,9 @@
     <property name="dist-runnable.dir"              value="${basedir}/dist-runnable"/>
     <property name="jar-artefact"                   value="${dist.dir}/${jar-artefact.name}"/>
     <property name="javasource.dir"                 value="${basedir}/src"/>
-    <property name="wsdl-dist.dir"                  value="../wsdl/dist"/>
+    <property name="wsdl.dir"                       value="../wsdl"/>
+    <property name="wsdl.ant.file"                  value="${wsdl.dir}/build.xml"/>
+    <property name="wsdl-dist.dir"                  value="${wsdl.dir}/dist"/>
     <property name="compilelibs.dir"                value="${basedir}/lib-compile"/>
     <property name="ivylibs.dir"                    value="${basedir}/lib-ivy"/>
     <property name="runtimelibs.dir"                value="${basedir}/lib-runtime"/>
@@ -46,11 +48,14 @@
     <target name="prepare">
         <tstamp/>
         <mkdir dir="${ivylibs.dir}"/>
+        <mkdir dir="${compilelibs.dir}"/>
     </target>
 
+    <target name="wsdl-gen">
+        <ant antfile="${wsdl.ant.file}" target="jar" inheritAll="false"/>
+    </target>
 
-
-    <target name="compile" depends="prepare, resolve"
+    <target name="compile" depends="prepare, resolve, wsdl-gen"
             description="Compile java sources">
         <mkdir  dir="${build.dir}"/>
         <property name="classpath-comp.msg" refid="compile.classpath"/>
@@ -81,13 +86,34 @@
       />
     </target>
 
-    <target name="clean"
-            description="Prepare for clean build">
+
+
+    <target name="clean-ivy" description="clean IVY">
+      <!--delete>
+        <fileset dir ="${ivylibs.dir}" includes="*.jar"/>
+      </delete-->
+      <delete dir ="${ivylibs.dir}"/>
+    </target>
+
+    <target name="clean-except-ivy"
+            description="Prepare for clean build (except for IVY deps)">
       <delete dir ="${build.dir}"/>
       <delete dir ="${dist.dir}"/>
       <delete dir ="${dist-runnable.dir}"/>
-      <delete dir ="${ivylibs.dir}"/>
     </target>
+
+
+    <target name="clean"
+            depends="clean-ivy, clean-except-ivy"
+            description="Prepare for clean build (including IVY deps)">
+    </target>
+
+    <target name="cclean"
+            depends="clean"
+            description="clean dependencies as well">
+        <ant antfile="${wsdl.ant.file}" target="clean" inheritAll="false"/>
+    </target>
+
 
     <path id = "run.classpath">
         <path refid="compile.classpath"/>
@@ -110,7 +136,7 @@
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="ant.java.version=${ant.java.version}" />
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
-        <java classname ="${project.MainClass.name}">
+        <java classname ="${project.MainClass.name}" fork="true">
              <classpath refid="run.classpath"/>
         </java>
         </sequential>

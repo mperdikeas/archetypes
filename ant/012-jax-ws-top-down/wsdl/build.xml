@@ -11,12 +11,11 @@
     <property name="dist.dir"                       value="${basedir}/dist"/>
     <property name="jar-artefact"                   value="${dist.dir}/${jar-artefact.name}"/>
     <property name="javasource-auto-wsimport.dir"   value="${basedir}/src-auto-wsimport"/>
-    <property name="wsdl.dir"                       value="specs"/>
+    <property name="wsdl.dir"                       value="${basedir}/specs"/>
     <property name="compilelibs.dir"                value="${basedir}/lib-compile"/>
     <property name="ivylibs.dir"                    value="${basedir}/lib-ivy"/>
     <!-- DISCRETIONARY -->
     <property name="project.MainClass.name"         value="FooMain"/>
-    <property name="wsimport-package.name"          value="foo.client"/>
     <property name="wsdl.file"                      value="${wsdl.dir}/MyService.wsdl"/>
 
 
@@ -36,7 +35,7 @@
     </target>
     
     <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
-        <ivy:resolve/> 
+        <ivy:resolve/>
         <ivy:retrieve sync="true" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
     </target>
 
@@ -56,13 +55,22 @@
             package    ="${wsimport-package.name}" -->
         <wsimport
             verbose    = "true"
-            destdir    ="${javasource-auto-wsimport.dir}"
+            catalog    ="specs/catalog.dat"
+            sourcedestdir ="${javasource-auto-wsimport.dir}"
             xnocompile ="true"
+            target     = "2.2"
             wsdl       ="${wsdl.file}">
+            <!--binding dir="${wsdl.dir}">
+                <include name="VODataService-v1.0.xsd"/>
+                <include name="CEAService.xsd"/>
+            </binding-->
+            <!-- the additional 'binding' schemas were added to avoid the "Unable to create an instance .." javax.xml.bind.UnmarshalException exceptions, TODO: I have to ensure the catalog resolves everything locally -->
+            <!-- but then I failed caused I had to add another XSD file and in the end I run into the "'..' is already defined" wsimport problem -->
             <depends dir="${wsdl.dir}"/>
             <produces dir="${javasource-auto-wsimport.dir}"/>
         </wsimport>
     </target>
+
 
 
     <target name="compile" depends="prepare, resolve, wsimport"
@@ -96,17 +104,23 @@
       />
     </target>
 
-    <target name="clean"
-            description="Prepare for clean build">
+    <target name="clean-except-ivy"
+            description="Prepare for clean build (except for IVY deps)">
       <delete dir ="${build.dir}"/>
       <delete dir ="${dist.dir}"/>
-      <delete dir ="${ivylibs.dir}"/>
       <delete includeemptydirs="true">
         <fileset dir ="${javasource-auto-wsimport.dir}" defaultexcludes="false">
             <include name="*/**"/>
         </fileset>
       </delete>
     </target>
+
+    <target name="clean"
+            depends="clean-except-ivy"
+            description="Prepare for clean build (including IVY deps)">
+      <delete dir ="${ivylibs.dir}"/>
+    </target>
+
 
 
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
