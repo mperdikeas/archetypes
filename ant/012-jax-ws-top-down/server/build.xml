@@ -106,12 +106,21 @@
       />
     </target>
 
+    <target name="dry-jar" depends="dry-compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
 
 
     <target name="clean-ivy" description="clean IVY">
-      <delete>
+      <delete dir ="${ivylibs.dir}"/>
+      <!--delete>
         <fileset dir ="${ivylibs.dir}" includes="*.jar"/>
-      </delete>
+      </delete-->
     </target>
 
     <target name="clean-except-ivy"
@@ -123,9 +132,8 @@
 
 
     <target name="clean"
-            depends="clean-except-ivy"
+            depends="clean-except-ivy, clean-ivy"
             description="Prepare for clean build (including IVY deps)">
-      <delete dir ="${ivylibs.dir}"/>
     </target>
 
     <target name="cclean"
@@ -163,6 +171,10 @@
     </macrodef>
 
     <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="dry-run" depends="dry-jar" description="run the jared application">
         <run-generic paranoid="false"/>
     </target>
 

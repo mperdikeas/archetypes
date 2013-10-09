@@ -77,6 +77,28 @@
         </copy>
     </target>
 
+    <target name="dry-compile" 
+            description="dry compile without IVY deps resolve and wsgen">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> 
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
 
     <target name="jar" depends="compile"
             description="jar class files">
@@ -86,6 +108,13 @@
       />
     </target>
 
+    <target name="dry-jar" depends="dry-compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
 
 
     <target name="clean-ivy" description="clean IVY">
@@ -143,6 +172,10 @@
     </macrodef>
 
     <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="dry-run" depends="dry-jar" description="run the jared application">
         <run-generic paranoid="false"/>
     </target>
 

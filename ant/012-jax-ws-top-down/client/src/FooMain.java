@@ -7,6 +7,8 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
+import javax.xml.ws.BindingProvider;
+
 public class FooMain {
 
     public static void main(String[] args) throws Exception {
@@ -31,6 +33,19 @@ public class FooMain {
             QName qname = new QName("urn:playground:jax-ws", "MyService");
             MyService service = new MyService(url, qname);
             IHello port = service.getHelloPort();
+            System.out.println(port.sayHello("Long John Silver"));
+        }
+        {   // WAY 4
+            QName qname = new QName("urn:playground:jax-ws", "MyService");
+            // see:
+            //    http://stackoverflow.com/questions/8085826/instantiate-jax-ws-service-without-downloading-wsdl
+            // - and -
+            //    http://stackoverflow.com/questions/18925888/jax-ws-ways-to-call-a-web-service-from-a-standalone-java-7-se-client
+            MyService service = new MyService(null, qname);
+            IHello port = service.getHelloPort();
+            BindingProvider bindingProvider = (BindingProvider) port;
+            bindingProvider.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, serviceURL);
+
             System.out.println(port.sayHello("Long John Silver"));
         }
     }
