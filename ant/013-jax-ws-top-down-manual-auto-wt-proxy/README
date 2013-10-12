@@ -1,0 +1,10 @@
+This archetype demonstrates use of the JAX-WS `standard` toolchain (default `wsimport`)
+for a SOAP top-down approach using both:
+    * the automated way (`wsimport` and, eventually, the creation of JAXB types)
+    * the manual way (SOAP directly on top of HTTP)
+
+It also shows how to do the above with a proxy (for logging incoming and outgoing HTTP 
+messages).
+
+NB: this archetype has dependencies with jar artifacts in the ESAVO project so there
+exist symlinks pointing out of this repo. No time to worry about *that* now.

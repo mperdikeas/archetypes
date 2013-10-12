@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://zar.bar.foo/" xmlns:tns="http://zar.bar.foo/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="sayHello" type="tns:sayHello"/>
+
+  <xs:element name="sayHelloResponse" type="tns:sayHelloResponse"/>
+
+  <xs:complexType name="sayHello">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sayHelloResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="mulStringRequest" type="tns:mulStringRequest"/>
+
+  <xs:element name="mulStringResponse" type="tns:mulStringResponse"/>
+
+  <xs:complexType name="mulStringRequest">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:int"    minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mulStringResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
