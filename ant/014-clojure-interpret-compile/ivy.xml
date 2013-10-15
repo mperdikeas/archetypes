@@ -5,5 +5,14 @@
     <info organisation="person.mperdikeas" module="dummy" status="integration"/>
     <dependencies>
         <dependency org="org.clojure" name="clojure"    rev="1.5.1"/>
+        <!-- NB: it is also possibly to obtain the below dependencies via IVY and comment out the pathelements
+                 to ${clojure-libs.dir} in the following points in the build.xml file: point-1, point-2 and point-3 -->
+        <!-- I thought that that would result in a dist/*.jar file that would not include clojure.math, combinatronics, etc.
+             but I was mistaken so I don't see the benefit of this approach (except that it doesn't require a soft link to
+             the various clojure extensions *.clj files -->
+        <!--dependency org="org.clojure" name="tools.cli" rev="0.2.4"/>
+        <dependency org="org.clojure" name="java.jdbc" rev="0.2.3"/>
+        <dependency org="org.clojure" name="clojure-contrib" rev="1.2.0"/>
+        <dependency org="org.clojure" name="math.combinatorics" rev="0.0.4"/-->
     </dependencies>
 </ivy-module>
