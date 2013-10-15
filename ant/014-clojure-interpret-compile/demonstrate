@@ -1,0 +1,1 @@
+ant clean && ant interpret && ant && ant dry-run && ant dry-run && ant clean && ant interpret && echo "notice how \"ant interpret\" doesn't produce any class files"

@@ -1,0 +1,235 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:contrib="http://net.sf.antcontrib" name="foo" basedir="." default="run">
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+
+    <property name="clojure-libs.dir"         value="${basedir}/clojure-libs"/>
+    <property name="compiletime-lib.dir"     value="${basedir}/lib-compile"/>
+    <property name="runtime-jars.dir"       value="${basedir}/lib-runtime"/>
+    <property name="lib-ivy.dir"            value="${basedir}/lib-ivy"/>
+    <property name="cljsrc.dir"             value="${basedir}/src"/>
+    <property name="cljbuild.dir"           value="${basedir}/build"/>
+    <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="jarfile.name"           value="${ant.project.name}.jar"/>
+    <property name="jarfile.file"           value="${dist.dir}/${jarfile.name}"/>
+    <property name="project.MainClass.name" value="bar.zar.Foo"/>
+
+    <contrib:propertyregex property="interpret.file.segment"
+                           input="${project.MainClass.name}"
+                           regexp="\."
+                           replace="/"
+                           global="true"
+                           casesensitive="false" />
+    <path id = "interpret.classpath">
+      <pathelement location="${cljsrc.dir}"/>
+      <pathelement location="${clojure-libs.dir}"/>
+      <pathelement location="${compiletime-lib.dir}"/>
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${runtime-jars.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <path id = "compile.classpath">
+      <pathelement location="${cljsrc.dir}"/>
+      <pathelement location="${compiletime-lib.dir}"/>
+      <!--pathelement location="${cljbuild.dir}"/-->
+      <pathelement location="${clojure-libs.dir}"/>
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <!--fileset dir="${runtime-jars.dir}">
+        <include name ="*.jar"/>
+      </fileset-->
+    </path>
+
+    <path id = "compile.dependency.artifacts">
+      <fileset dir="${cljsrc.dir}">
+        <include name ="**/*.clj"/>
+      </fileset>
+      <fileset dir="${clojure-libs.dir}">
+        <include name ="**/*.clj"/>
+      </fileset>
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${compiletime-lib.dir}">
+        <include name ="**/*.clj"/>
+      </fileset>
+    </path>
+
+    <path id = "runtime.classpath">
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${runtime-jars.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <pathelement path = "${jarfile.file}"/>
+    </path>
+
+
+    <target name="test-ivy" description="Test ivy installation">
+        <ivy:settings />
+    </target>
+    
+    <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+        <ivy:resolve/>
+        <ivy:retrieve sync="true" type="jar" pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
+    </target>
+
+  <target name="compile-clojure" description="Compile Clojure sources." depends="resolve">
+    <property name="compile-classpath.msg" refid="compile.classpath"/>
+    <echo message="ant.java.version=${ant.java.version}" />
+    <echo message="invoking clojure.lang.Compile with, AT LEAST, the following classpath: ${compile-classpath.msg}"/>
+    <mkdir dir="${cljbuild.dir}"/>
+    <contrib:outofdate>
+        <deletetargets all="true"/>
+        <sourcefiles>
+            <path refid="compile.dependency.artifacts"/>
+        </sourcefiles>
+        <targetfiles>
+            <fileset dir="${cljbuild.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </targetfiles> 
+        <sequential>
+            <!-- task copied from Clojure's own build.xml (e.g. in file ~/software-downloads/clojure-1.5.1/clojure-1.5.1.zip) -->
+            <java classname="clojure.lang.Compile" 
+                  failonerror="true"
+                  fork="true">
+              <classpath refid="compile.classpath"/>
+              <sysproperty key="clojure.compile.path" value="${cljbuild.dir}"/>
+                 <!--<sysproperty key="clojure.compiler.elide-meta" value="[:doc :file :line :added]"/>-->
+                 <!--<sysproperty key="clojure.compiler.disable-locals-clearing" value="true"/>-->
+              <!-- <sysproperty key="clojure.compile.warn-on-reflection" value="true"/> -->
+              <arg value="${project.MainClass.name}"/>
+              <!--arg value="clojure.core.protocols"/>
+              <arg value="clojure.main"/>
+                ...
+              <arg value="clojure.reflect"/-->
+            </java>
+        </sequential>
+    </contrib:outofdate>
+  </target>
+
+  <target name="dry-compile-clojure" description="Compile Clojure sources without resolving IVY">
+    <property name="compile-classpath.msg" refid="compile.classpath"/>
+    <echo message="ant.java.version=${ant.java.version}" />
+    <echo message="invoking clojure.lang.Compile with, AT LEAST, the following classpath: ${compile-classpath.msg}"/>
+    <mkdir dir="${cljbuild.dir}"/>
+    <contrib:outofdate>
+        <deletetargets all="true"/>
+        <sourcefiles>
+            <path refid="compile.dependency.artifacts"/>
+        </sourcefiles>
+        <targetfiles>
+            <fileset dir="${cljbuild.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </targetfiles> 
+        <sequential>
+            <java classname="clojure.lang.Compile" 
+                  failonerror="true"
+                  fork="true">
+              <classpath refid="compile.classpath"/>
+              <sysproperty key="clojure.compile.path" value="${cljbuild.dir}"/>
+              <arg value="${project.MainClass.name}"/>
+            </java>
+        </sequential>
+    </contrib:outofdate>
+  </target>
+
+  <target name="jar" depends="compile-clojure"
+          description="Create clojure jar file.">
+    <mkdir dir="${dist.dir}"/>
+    <jar jarfile="${jarfile.file}" basedir="${cljbuild.dir}">
+      <fileset dir="${cljbuild.dir}">
+        <include name="**/*.class"/>
+      </fileset>
+      <manifest>
+        <attribute name="Main-Class" value="${project.MainClass.name}"/>
+        <attribute name="Class-Path" value="."/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="dry-jar" depends="dry-compile-clojure"
+          description="Create clojure jar file without invoking IVY.">
+    <mkdir dir="${dist.dir}"/>
+    <jar jarfile="${jarfile.file}" basedir="${cljbuild.dir}">
+      <fileset dir="${cljbuild.dir}">
+        <include name="**/*.class"/>
+      </fileset>
+      <manifest>
+        <attribute name="Main-Class" value="${project.MainClass.name}"/>
+        <attribute name="Class-Path" value="."/>
+      </manifest>
+    </jar>
+  </target>
+
+    <!-- this is equivalent to executing the following on the commnad line:                             -->
+    <!-- $ java -cp lib-ivy/clojure-1.5.1.jar:lib-compile:clojure-libs clojure.main src/bar/zar/Foo.clj -->
+    <target name="interpret" depends="resolve">
+       <java classname="clojure.main" fork="true" failonerror="true">
+         <!--arg value="${cljsrc.dir}/${interpret.file.segment}.clj"/-->
+         <arg value="${cljsrc.dir}/wrapper.clj"/>
+         <classpath refid="interpret.classpath"/>
+       </java>
+    </target>
+
+    <!--path id = "run.classpath">
+        <path refid="compile.classpath"/>
+        <pathelement path = "${jar-artefact}"/>
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+    </path-->
+
+    <macrodef name="run-generic">
+        <attribute name="paranoid" />
+        <sequential>
+            <contrib:if>
+                <equals arg1="@{paranoid}" arg2="true" />
+                <then>
+                    <echo message="removing ${cljbuild.dir} folder to be sure we run from the jar"/>
+                    <delete dir="${cljbuild.dir}"/>
+                </then> 
+            </contrib:if>
+        <property name="classpath-run.msg" refid="runtime.classpath"/>
+        <echo message="ant.java.version=${ant.java.version}" />
+        <echo message="running the app with classpath = ${classpath-run.msg}"/>
+        <java classname ="${project.MainClass.name}" fork="true">
+             <classpath refid="runtime.classpath"/>
+             <arg value="-m"/>
+             <arg value="this is the message"/>
+             <arg value="-n"/>
+             <arg value="10"/>
+        </java>
+        </sequential>
+    </macrodef>
+
+    <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="dry-run" depends="dry-jar" description="run the jared application without invoking IVY">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="run-paranoid" depends="jar" description="run the jared application (paranoid mode)">
+        <run-generic paranoid="true"/>
+    </target>
+
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+
+    <target name="clean" description="Prepare for clean build">
+      <delete dir ="${lib-ivy.dir}"/>
+      <delete dir ="${cljbuild.dir}"/>
+      <delete dir ="${dist.dir}"/>
+    </target>
+
+
+
+</project>
