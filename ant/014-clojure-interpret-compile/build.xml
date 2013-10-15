@@ -175,6 +175,10 @@
          <!--arg value="${cljsrc.dir}/${interpret.file.segment}.clj"/-->
          <arg value="${cljsrc.dir}/wrapper.clj"/>
          <classpath refid="interpret.classpath"/>
+         <arg value="-m"/>
+         <arg value="this is the message for the interpreted complex case (five times)"/>
+         <arg value="-n"/>
+         <arg value="5"/>
        </java>
     </target>
 

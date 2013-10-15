@@ -1,16 +1,3 @@
 PROVENANCE:
-    ../045-trying-to-package-Clojure-as-JAR-STAGE-03
-
-GOAL:
-    Incorporate command-line arguments, compile *.clj sources only on newer modifications, 
-    implement dry-run and dry-jar tasks
-
-
-RESULT:
-    Success.
-
-NEXT:
-    No subsequent stage.
-    Copy this code to a Clojure Ant archetype and move on.
-
+    ~/playground/clojure/045-trying-to-package-Clojure-as-JAR-STAGE-04
     
