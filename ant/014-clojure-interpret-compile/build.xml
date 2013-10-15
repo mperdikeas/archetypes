@@ -170,9 +170,19 @@
     </jar>
   </target>
 
-    <!-- this is equivalent to executing the following on the commnad line:                             -->
-    <!-- $ java -cp lib-ivy/clojure-1.5.1.jar:lib-compile:clojure-libs clojure.main src/bar/zar/Foo.clj -->
-    <target name="interpret" depends="resolve">
+    <target name="interpret" depends="resolve" description="interpret (using the wrapper file)">
+       <java classname="clojure.main" fork="true" failonerror="true">
+         <!--arg value="${cljsrc.dir}/${interpret.file.segment}.clj"/-->
+         <arg value="${cljsrc.dir}/wrapper.clj"/>
+         <classpath refid="interpret.classpath"/>
+         <arg value="-m"/>
+         <arg value="this is the message for the interpreted complex case (five times)"/>
+         <arg value="-n"/>
+         <arg value="5"/>
+       </java>
+    </target>
+
+    <target name="dry-interpret" description="interpret (using the wrapper file) - wihout resolving Ivy">
        <java classname="clojure.main" fork="true" failonerror="true">
          <!--arg value="${cljsrc.dir}/${interpret.file.segment}.clj"/-->
          <arg value="${cljsrc.dir}/wrapper.clj"/>
