@@ -146,9 +146,6 @@
           description="Create clojure jar file.">
     <mkdir dir="${dist.dir}"/>
     <jar jarfile="${jarfile.file}" basedir="${cljbuild.dir}">
-      <fileset dir="${cljbuild.dir}">
-        <include name="**/*.class"/>
-      </fileset>
       <manifest>
         <attribute name="Main-Class" value="${project.MainClass.name}"/>
         <attribute name="Class-Path" value="."/>
@@ -160,9 +157,6 @@
           description="Create clojure jar file without invoking IVY.">
     <mkdir dir="${dist.dir}"/>
     <jar jarfile="${jarfile.file}" basedir="${cljbuild.dir}">
-      <fileset dir="${cljbuild.dir}">
-        <include name="**/*.class"/>
-      </fileset>
       <manifest>
         <attribute name="Main-Class" value="${project.MainClass.name}"/>
         <attribute name="Class-Path" value="."/>
