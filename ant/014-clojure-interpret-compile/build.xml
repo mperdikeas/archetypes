@@ -234,11 +234,23 @@
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
 
 
-    <target name="clean" description="Prepare for clean build">
-      <delete dir ="${lib-ivy.dir}"/>
+    <target name="clean-ivy" description="clean IVY">
+      <delete dir ="${ivylibs.dir}"/>
+      <!--delete>
+        <fileset dir ="${ivylibs.dir}" includes="*.jar"/>
+      </delete-->
+    </target>
+
+    <target name="clean-except-ivy" description="Prepare for clean build (except for IVY deps)">
       <delete dir ="${cljbuild.dir}"/>
       <delete dir ="${dist.dir}"/>
     </target>
+
+    <target name="clean"
+            depends="clean-except-ivy, clean-ivy"
+            description="Prepare for clean build (including IVY deps)">
+    </target>
+
 
 
 
