@@ -36,6 +36,9 @@
     <path id = "compile.classpath">
       <pathelement location="${cljsrc.dir}"/>
       <pathelement location="${compiletime-lib.dir}"/>
+      <fileset dir="${compiletime-lib.dir}">
+        <include name="*.jar"/>
+      </fileset>
       <!--pathelement location="${cljbuild.dir}"/-->
       <pathelement location="${clojure-libs.dir}"/>
       <fileset dir="${lib-ivy.dir}">
