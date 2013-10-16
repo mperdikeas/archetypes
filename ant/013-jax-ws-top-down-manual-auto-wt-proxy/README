@@ -8,3 +8,8 @@ messages).
 
 NB: this archetype has dependencies with jar artifacts in the ESAVO project so there
 exist symlinks pointing out of this repo. No time to worry about *that* now.
+
+UPDATE:
+    This archtetype is now obsoleted by ../013-jax-ws-top-down-manual-auto-wt-proxy-SOAPGEN/ which
+    creates file `server/src/foo/POSTSkeletonSOAPHandler.java` automatically using the soapgen
+    utility (~/esavo-reg-II/soap-stubgen/01/tool)

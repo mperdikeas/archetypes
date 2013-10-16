@@ -1,0 +1,1 @@
+ant dry-run -Dwsimport=0

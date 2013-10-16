@@ -1,0 +1,46 @@
+POST /soap?wsdl HTTP/1.1
+Accept: text/xml, multipart/related
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://zar.bar.foo/IHello/sayHelloRequest"
+User-Agent: JAX-WS RI 2.2.8 svn-revision#13980
+Host: localhost:9001
+Connection: keep-alive
+Content-Length: 222
+
+<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:sayHello xmlns:ns2="http://zar.bar.foo/"><arg0>Long John Silver</arg0></ns2:sayHello></S:Body></S:Envelope>POST /soap?wsdl HTTP/1.1
+Accept: text/xml, multipart/related
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://zar.bar.foo/IHello/sayHelloRequest"
+User-Agent: JAX-WS RI 2.2.8 svn-revision#13980
+Host: localhost:9001
+Connection: keep-alive
+Content-Length: 222
+
+<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:sayHello xmlns:ns2="http://zar.bar.foo/"><arg0>Long John Silver</arg0></ns2:sayHello></S:Body></S:Envelope>POST /soap?wsdl HTTP/1.1
+Accept: text/xml, multipart/related
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://zar.bar.foo/IHello/sayHelloRequest"
+User-Agent: JAX-WS RI 2.2.8 svn-revision#13980
+Host: localhost:9001
+Connection: keep-alive
+Content-Length: 222
+
+<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:sayHello xmlns:ns2="http://zar.bar.foo/"><arg0>Long John Silver</arg0></ns2:sayHello></S:Body></S:Envelope>POST /soap?wsdl HTTP/1.1
+Accept: text/xml, multipart/related
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://zar.bar.foo/IHello/sayHelloRequest"
+User-Agent: JAX-WS RI 2.2.8 svn-revision#13980
+Host: localhost:9001
+Connection: keep-alive
+Content-Length: 222
+
+<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:sayHello xmlns:ns2="http://zar.bar.foo/"><arg0>Long John Silver</arg0></ns2:sayHello></S:Body></S:Envelope>POST /soap?wsdl HTTP/1.1
+Accept: text/xml, multipart/related
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://zar.bar.foo/IHello/sayHelloRequest"
+User-Agent: JAX-WS RI 2.2.8 svn-revision#13980
+Host: localhost:9001
+Connection: keep-alive
+Content-Length: 222
+
+<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:sayHello xmlns:ns2="http://zar.bar.foo/"><arg0>Long John Silver</arg0></ns2:sayHello></S:Body></S:Envelope>

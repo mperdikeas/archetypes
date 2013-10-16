@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.3" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="person.mperdikeas" module="hello-ivy" status="integration"/>
+    <dependencies>
+        <dependency org="org.apache.commons"   name="commons-lang3"  rev="3.1"/>
+        <dependency org="commons-io"           name="commons-io"     rev="2.4"/>
+        <dependency org="com.sun.xml.ws"       name="jaxws-rt"       rev="2.2.8"/>
+        <dependency org="org.eclipse.jetty"    name="jetty-server"   rev="9.1.0.M0"/>
+        <dependency org="org.eclipse.jetty"    name="jetty-servlet"  rev="9.1.0.M0"/>
+        <dependency org="com.beust"            name="jcommander"     rev="1.30"/>
+        <dependency org="com.google.code.gson" name="gson"           rev="2.2.2"/>
+
+        <!-- below deps are needed for soapgen (commons-io ommited since it also appears above) -->
+        <dependency org="org.clojure" name="clojure"    rev="1.5.1"/>
+     <!--dependency org="commons-io"  name="commons-io" rev="2.4"/-->
+        <dependency org="org.antlr"   name="ST4"        rev="4.0.7"/>
+    </dependencies>
+</ivy-module>
