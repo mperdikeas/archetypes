@@ -1,4 +1,9 @@
 PROVENANCE:
     ~/esavo-reg-II/soap-stubgen/01/
     ~/esavo-reg-II/playground/non-wsimport-soap/03/README
+    ../013-jax-ws-top-down-manual-auto-wt-proxy/
+
+This archetype improves upon ancestor #3 above in that the abstract class
+of the SOAP manual server is automatically generated with my soapgen tool
+(ancestor #1 above).
 
