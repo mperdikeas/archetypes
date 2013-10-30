@@ -18,6 +18,10 @@ import _int.esa.esavo.common.CLIUtil;
 
 import mutil.base.JsonProvider;
 
+import _int.esa.esavo.webservices.soap.direct.BaseSOAPHandler;
+import _int.esa.esavo.webservices.soap.direct.ResourceMap;
+import _int.esa.esavo.webservices.soap.direct.ResourceMapBuilder;
+
 public class FooMain {
 
 
