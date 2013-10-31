@@ -1,3 +1,8 @@
-<a:type xmlns:a="foo://a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="foo://a A.xsd"
->Organisation</a:type>
+<a:root xmlns:a="foo://a/b/c" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="foo://a/b/c A.xsd"
+>
+<type>Organisation</type>
+<foo value="monster's popular name" name="count Dracula" >
+    boo ha ha
+</foo>
+</a:root>

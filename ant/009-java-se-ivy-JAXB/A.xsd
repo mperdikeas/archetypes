@@ -1,8 +1,15 @@
-<xs:schema targetNamespace="foo://a" 
+<xs:schema targetNamespace="foo://a/b/c" 
            xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-           xmlns="foo://a">
+           xmlns="foo://a/b/c">
 
-   <xs:element name="type" type="Type"/>
+    <xs:element name="root" type="Root"/>
+
+    <xs:complexType name="Root">
+       <xs:sequence>
+           <xs:element name="type" type="Type"/>
+           <xs:element name="foo" type="Foo"/>
+       </xs:sequence>
+   </xs:complexType>
 
    <xs:simpleType name="Type">
      <xs:restriction base="xs:token">
@@ -10,5 +17,14 @@
          <xs:enumeration value="Organisation"/>
        </xs:restriction>
    </xs:simpleType>
+
+    <xs:complexType name="Foo">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                 <xs:attribute name="name"   type="xs:token" use="required"/> 
+                 <xs:attribute name="value"  type="xs:string" use="required"/> 
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
 </xs:schema>

@@ -43,7 +43,7 @@ import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 
 
 // autogen packages:
-import a.*;
+import foo.a.b.c.*;
 
 import org.w3c.dom.Node;
 
@@ -51,13 +51,19 @@ public class FooMain {
 
     public static void main(String args[]) throws Exception {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        JAXBContext payloadContext = JAXBContext.newInstance("a");
+        JAXBContext payloadContext = JAXBContext.newInstance("foo.a.b.c");
         Unmarshaller unmarshaller = payloadContext.createUnmarshaller();
         unmarshaller.setSchema(schemaFactory.newSchema(new Source[]{new StreamSource(new FileInputStream(new File("A.xsd")))}));
         JAXBElement<?> oUnmarshalled = (JAXBElement<?>) unmarshaller.unmarshal(new File("a.xml"));
         Object o = oUnmarshalled.getValue();
         System.out.println("the type of object is: "+o.getClass().getName());
-        Type type = (Type) o;
-        System.out.println("value is: "+type.value());
+        Type type = ((Root) o).getType();
+        Foo foo = ( (Root) o).getFoo();
+        System.out.println("type is: "+type);
+        System.out.println("foo is: "+foo);
+        if (type != null)
+            System.out.println("value is: "+type.value());
+        System.out.printf("%s: %s, cry is: %s\n", foo.getValueAttribute(), foo.getName(), foo.getValue());
+
     }
 }
