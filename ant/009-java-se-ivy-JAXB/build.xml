@@ -15,7 +15,7 @@
     <property name="src.dir"                value="${basedir}/src"/>
     <property name="javasource.dir"         value="${src.dir}"/>
     <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
-    <property name="ivylibs.dir"            value="${basedir}/lib-ivy"/>
+    <property name="lib-ivy.dir"            value="${basedir}/lib-ivy"/>
     <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
     <property name="run-app.script.name"    value="run-app"/>
 
@@ -32,7 +32,7 @@
       <fileset dir="${compilelibs.dir}">
         <include name ="*.jar"/>
       </fileset>
-      <fileset dir="${ivylibs.dir}">
+      <fileset dir="${lib-ivy.dir}">
         <include name ="*.jar"/>
       </fileset>
     </path>
@@ -44,8 +44,8 @@
 
 <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
     <ivy:resolve/> <!-- this is redundant as it is triggered by retrieve in any case -->
-    <!--ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/--> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
-    <ivy:retrieve sync="true" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- not using type="jar", see: http://stackoverflow.com/questions/16526937/ivy-used-to-retrieve-guava-now-it-does-not -->
+    <!--ivy:retrieve sync="true" type="jar" pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/--> <!-- sync to clean the lib-ivy folder and jar to only copy the class jar artifact and not sources or javadoc artifacts -->
+    <ivy:retrieve sync="true" pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> <!-- not using type="jar", see: http://stackoverflow.com/questions/16526937/ivy-used-to-retrieve-guava-now-it-does-not -->
 </target>
 
 <!-- Next, my package task uses that classpath -->
@@ -100,7 +100,7 @@
     <!-- Check timestamp on files -->
     <target name="prepare">
         <tstamp/>
-        <mkdir dir="${ivylibs.dir}"/>
+        <mkdir dir="${lib-ivy.dir}"/>
     </target>
 
 <!--  examples of using JXC command line and Ant task with depends / produces and episode files
@@ -223,6 +223,28 @@
         </copy>
     </target>
 
+    <target name="dry-compile" depends="prepare, jaxb-a"
+            description="Compile java sources without IVY resolve">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> <!-- added on 2012-XI-13 should be the same as utf8 but I'm not fully convinced, it may need to be coupled with java -Dfile.encoding=UTF8 at execution time" -->
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
 
     <target name="jar" depends="compile"
             description="jar class files">
@@ -232,12 +254,19 @@
       />
     </target>
 
-    <target name="clean"
+    <target name="dry-jar" depends="dry-compile"
+            description="jar class files (without IVY resolve)">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+    </target>
+
+    <target name="clean-except-ivy"
             description="Prepare for clean build">
       <delete dir ="${build.dir}"/>
       <delete dir ="${dist.dir}"/>
       <delete dir ="${dist-runnable.dir}"/>
-      <delete dir ="${ivylibs.dir}"/>
       <delete file="${run-app.script.name}"/>
       <!--delete dir ="${jaxb-auto-package.dir}"/-->
       <delete dir ="${jaxb-commandline.dir}"/>
@@ -248,6 +277,17 @@
       <delete file="${vo.resource.episode}"/-->
       <delete dir="${a.dir}"/>
     </target>
+
+
+    <target name="clean-ivy" description="clean IVY">
+      <delete dir ="${lib-ivy.dir}"/>
+    </target>
+
+    <target name="clean"
+            depends="clean-except-ivy, clean-ivy"
+            description="Prepare for clean build (including IVY deps)">
+    </target>
+
 
     <path id = "run.classpath">
         <path refid="compile.classpath"/>
@@ -277,6 +317,10 @@
     </macrodef>
 
     <target name="run" depends="jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="dry-run" depends="dry-jar" description="run the jared application (without IVY resolve)">
         <run-generic paranoid="false"/>
     </target>
 
