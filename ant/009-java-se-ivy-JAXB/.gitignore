@@ -2,4 +2,4 @@ jaxb-commandline-output/
 lib-ivy/
 build/
 dist/
-src/a
+src/foo
