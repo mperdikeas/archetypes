@@ -202,7 +202,7 @@
      <!--xjc schema="${a.schema.file}" destdir="${src.dir}" package="${a.package}" extension="true"-->
         <xjc schema="${a.schema.file}" destdir="${src.dir}"                        extension="true">
             <arg value="-npa"/>
-            <arg value="-b"/> <!-- this is only necessary because of the "value" attribute in "Foo" type, remove binding file otherwise -->
+            <arg value="-b"/> <!-- this is only necessary because of the "value" attribute in "Foo" type, remove binding file otherwise (see: http://stackoverflow.com/q/4394134/274677) -->
             <arg value="bindings.xjb"/>
             <depends dir="${basedir}">
                 <include name="${a.schema}"/>
