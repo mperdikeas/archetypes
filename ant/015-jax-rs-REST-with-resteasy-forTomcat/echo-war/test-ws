@@ -1,0 +1,3 @@
+#!/bin/bash
+export http_proxy=
+curl http://localhost:8080/echo/rest/echo?msg=lord_jesus

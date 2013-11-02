@@ -1,0 +1,4 @@
+*.class
+/dist
+lib-ivy/
+web/WEB-INF/lib/

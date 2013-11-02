@@ -1,0 +1,6 @@
+Provenance:
+    ~/playground/REST-tomcat-resteasy/01/
+
+This is a prototype WAR application that has been tested with Tomcat and shows how to do
+REST web services using JBoss Resteasy (one of the two dominant jax-rs implementations - the 
+other one being Jersey).
