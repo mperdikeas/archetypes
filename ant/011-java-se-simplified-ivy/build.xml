@@ -35,8 +35,8 @@
 </target>
 
 <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
-    <ivy:resolve/> 
-    <ivy:retrieve sync="true" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+    <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources -->
+    <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
 </target>
 
 
