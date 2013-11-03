@@ -166,6 +166,7 @@
         <echo message="ant.java.version=${ant.java.version}" />
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
         <java classname ="${project.MainClass.name}" fork="true">
+             <jvmarg value="-Xmx1024m"/>
              <classpath refid="run.classpath"/>
               <arg value="-proxy"/>
               <arg value="${PROXY}"/>

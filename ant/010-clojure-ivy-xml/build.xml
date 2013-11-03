@@ -30,6 +30,7 @@
        <java classname="clojure.main" fork="true" failonerror="true">
          <arg value="foo.clj"/>
          <!--arg value="MEASURES-config.clj"/-->
+         <jvmarg value="-Xmx1024m"/>
          <classpath refid="runtime.classpath"/>
        </java>
     </target>

@@ -104,6 +104,7 @@
             <java classname="clojure.lang.Compile" 
                   failonerror="true"
                   fork="true">
+              <jvmarg value="-Xmx1024m"/>
               <classpath refid="compile.classpath"/>
               <sysproperty key="clojure.compile.path" value="${cljbuild.dir}"/>
                  <!--<sysproperty key="clojure.compiler.elide-meta" value="[:doc :file :line :added]"/>-->
