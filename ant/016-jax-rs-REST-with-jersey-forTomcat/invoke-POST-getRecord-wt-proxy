@@ -1,0 +1,1 @@
+curl --proxy 127.0.0.1:9000 --data "verb=GetRecord&identifier=oai%3AarXiv.org%3Ahep-th@2F9900001&metadataPrefix=oai_dc" http://localhost:8080/jaxrshello/jax-rs/webservice/getRecord

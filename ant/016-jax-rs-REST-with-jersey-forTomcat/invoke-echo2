@@ -1,0 +1,1 @@
+curl http://localhost:8080/jaxrshello/jax-rs/webservice/echo2?verb=believe\&action=in%20Jesus

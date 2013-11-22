@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="person.mperdikeas" module="hello-ivy" status="integration"/>
+   <configurations>
+        <conf name="compile-time" description="jars used while building the war"/>
+        <conf name="deploy-time"  description="jars used by the war when deployed in Tomcat"/>
+   </configurations>
+    <dependencies>
+        <!--dependency org="org.apache.commons" name="commons-lang3"     rev="3.1"           conf="compile-time->master"/--> <!-- at compile time we only need the remote module's artifact only (no transitive dependencies) see: http://stackoverflow.com/a/11420292/274677 -->
+        <!--dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="3.0.5.Final"                              /-->
+        <!--dependency org="org.apache.tomcat"  name="servlet-api"       rev="6.0.37"        conf="compile-time->master"/>
+        <dependency org="org.apache.tomcat"  name="tomcat-catalina"   rev="7.0.47"        conf="compile-time->master"/>
+        <dependency org="org.apache.commons" name="commons-lang3"     rev="3.1"           conf="deploy-time->default"/>
+        <dependency org="postgresql"         name="postgresql"        rev="9.1-901.jdbc4" conf="deploy-time->default"/>
+        <dependency org="commons-dbutils"    name="commons-dbutils"   rev="1.5"           conf="deploy-time->default"/-->
+        <dependency org="javax.ws.rs"                     name="jsr311-api"                    rev="1.1.1" conf="compile-time->master"/> <!-- we only need that at compile time, no transitive deps -->
+        <dependency org="org.glassfish.jersey.containers" name="jersey-container-servlet-core" rev="2.4.1" conf="deploy-time->default"/> <!-- we need that at deploy time, with transitive deps -->
+            
+    </dependencies>
+</ivy-module>
