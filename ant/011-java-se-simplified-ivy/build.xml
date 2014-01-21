@@ -131,7 +131,7 @@
     <target name="cclean"
             depends="clean"
             description="clean dependencies as well">
-        <ant antfile="${wsdl.ant.file}" target="clean" inheritAll="false"/>
+        <!--ant antfile="${wsdl.ant.file}" target="clean" inheritAll="false"/-->
     </target>
 
 
