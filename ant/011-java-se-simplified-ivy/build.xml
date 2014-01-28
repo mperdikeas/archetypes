@@ -47,27 +47,7 @@
     </target>
 
 
-    <target name="compile" depends="prepare, resolve"
-            description="Compile java sources">
-        <mkdir  dir="${build.dir}"/>
-        <property name="classpath-comp.msg" refid="compile.classpath"/>
-        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
-        <javac srcdir="${javasource.dir}" 
-               destdir="${build.dir}"
-               source="1.7"
-               target="1.7"
-               debug="true"
-               >
-            <include name="**/*.java"/>
-            <classpath refid="compile.classpath"/>
-            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> 
-        </javac>
-	<copy todir="${build.dir}">
-            <fileset dir="${javasource.dir}">
-	        <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
+    <target name="compile" depends="prepare, resolve, dry-compile" description="Compile java sources"/>
 
     <target name="dry-compile" 
             description="dry compile without IVY deps resolve and wsgen">
