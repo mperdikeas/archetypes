@@ -62,7 +62,9 @@
                >
             <include name="**/*.java"/>
             <classpath refid="compile.classpath"/>
-            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> 
+            <!--compilerarg line="-encoding utf-8 -Xlint:unchecked"                                                                                                                                                     -->
+            <!-- 2014-I-30 change: compile with all warnings except -Xlint:path (do not use the plain "-Xlint" options which includes all, i.e. including -Xlint:path, cause I get many false positives in Ubuntu / Ant -->
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked -Xlint:cast -Xlint:deprecation -Xlint:divzero -Xlint:empty -Xlint:fallthrough -Xlint:finally -Xlint:overrides -Xlint:serial"/>
         </javac>
 	<copy todir="${build.dir}">
             <fileset dir="${javasource.dir}">
