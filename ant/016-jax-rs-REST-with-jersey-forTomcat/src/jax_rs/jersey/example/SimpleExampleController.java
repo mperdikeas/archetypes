@@ -9,6 +9,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
 
 
 
@@ -19,43 +20,43 @@ public class SimpleExampleController {
 
      @GET  
      @Path("/hello")  
-     @Produces("text/plain")  
+         @Produces(MediaType.TEXT_PLAIN)
      public String hello(){  
          return "Hello World!";
      }
 
     @GET  
     @Path("/echo/{message}")  
-    @Produces("text/plain")  
+    @Produces(MediaType.TEXT_PLAIN)
     public String echo(@PathParam("message") String message) {
         return message;
     }
 
     @GET
     @Path("/echo2")
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     public String echo2(@QueryParam("verb") String verb, @QueryParam("action") String action) {
         return String.format("I %s %s", verb, action);
     }
 
     @GET
     @Path("/person")
-    @Produces("application/xml")
+    @Produces(MediaType.APPLICATION_XML)
     public PersonInfo person() {
         return PERSON_INFO;
     }
 
     @GET
     @Path("/person2")
-    @Produces("text/xml")
+    @Produces(MediaType.TEXT_XML)
     public PersonInfo person2() {
         return PERSON_INFO;
     }
 
     @POST
-    @Consumes({"application/x-www-form-urlencoded"})
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Path("/getRecord")
-    @Produces("text/xml")
+    @Produces(MediaType.TEXT_XML)
     public String getRecord(@FormParam("verb") String verb, @FormParam("identifier") String identifier, @FormParam("metadataPrefix") String metadataPrefix) {
         String rv = String.format("%-20s is: %s\n%-20s is: %s\n%-20s is: %s\n", "verb", verb, "identifier", identifier, "metadataPrefix", metadataPrefix);
         return rv;
