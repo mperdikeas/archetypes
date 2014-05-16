@@ -18,6 +18,8 @@
     <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
     <property name="run-app.script.name"    value="run-app"/>
 
+    <property name="ivy.xml.file"               value="${basedir}/ivy.xml"/>
+    <property name="ivy.xml.control.file"       value="${basedir}/ivy.xml.control"/>
 
 
     <path id = "compile.classpath">
@@ -34,11 +36,23 @@
     <ivy:settings />
 </target>
 
-<target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
-    <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources -->
-    <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
-</target>
 
+<target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+    <contrib:outofdate>
+        <deletetargets all="true"/>
+        <sourcefiles>
+            <pathelement path="${ivy.xml.file}"/>
+        </sourcefiles>
+        <targetfiles>
+            <pathelement path="${ivy.xml.control.file}"/>
+        </targetfiles>
+        <sequential>
+            <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources -->
+            <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <touch file="${ivy.xml.control.file}"/>
+        </sequential>
+    </contrib:outofdate>
+</target>
 
     <!-- Check timestamp on files -->
     <target name="prepare">
@@ -74,16 +88,10 @@
     </target>
 
 
-    <target name="jar" depends="compile"
-            description="jar class files">
-      <mkdir  dir="${dist.dir}"/>
-      <jar destfile="${dist.dir}/${project.distname}.jar"
-           basedir="${build.dir}"
-      />
-    </target>
+    <target name="jar" depends="compile, dry-jar" description="jar class files"/>
 
     <target name="dry-jar" depends="dry-compile"
-            description="jar class files">
+            description="dry-jar class files">
       <mkdir  dir="${dist.dir}"/>
       <jar destfile="${dist.dir}/${project.distname}.jar"
            basedir="${build.dir}"
@@ -92,6 +100,7 @@
 
     <target name="clean-ivy" description="clean IVY">
       <delete dir ="${ivylibs.dir}"/>
+      <delete file ="${ivy.xml.control.file}"/>
       <!--delete>
         <fileset dir ="${ivylibs.dir}" includes="*.jar"/>
       </delete-->
@@ -145,9 +154,7 @@
         </sequential>
     </macrodef>
 
-    <target name="run" depends="jar" description="run the jared application">
-        <run-generic paranoid="false"/>
-    </target>
+    <target name="run" depends="jar, dry-run" description="run the jared application"/>
 
     <target name="dry-run" depends="dry-jar" description="run the jared application">
         <run-generic paranoid="false"/>
