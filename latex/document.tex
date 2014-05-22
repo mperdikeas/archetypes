@@ -1,0 +1,158 @@
+\documentclass[11pt,twoside,a4paper]{report}
+\usepackage{pslatex,palatino,avant,graphicx,color}
+\usepackage{nextpage}
+\usepackage{afterpage}
+\usepackage[margin=2cm]{geometry}
+\usepackage{comment}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage[htt]{hyphenat}
+
+\usepackage[absolute]{textpos}
+
+\usepackage[hyphens]{url}
+\PassOptionsToPackage{hyphens}{url}
+
+\begin{comment}
+    \usepackage{hyperref}
+\end{comment}
+
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z}
+
+\begin{comment}
+\textfloatsep — distance between floats on the top or the bottom and the text;
+\floatsep — distance between two floats;
+\intextsep — distance between floats inserted inside the page text (using h) and the text proper.
+The command used to change them is \setlength:
+
+\setlength{\textfloatsep}{10pt plus 1.0pt minus 2.0pt}
+\end{comment}
+
+\setlength{\intextsep}{30pt}
+
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\begin{comment}
+\lstset{numbers=left,
+  inputencoding=latin1,
+  basicstyle=\fontsize{9}{12}\selectfont\ttfamily,
+  basewidth  = {0.5em,0.5em},
+  keywordstyle=\color{blue},
+  commentstyle=\color{mygreen},
+  breaklines=true, 
+  showtabs=false,
+  showstringspaces=false,
+  numberstyle=\tiny\color{mygray}
+}
+\end{comment}
+
+\lstdefinestyle{default-style}{
+  inputencoding=latin1,
+  basicstyle=\fontsize{9}{12}\selectfont\ttfamily,
+  basewidth  = {0.5em,0.5em},
+  keywordstyle=\color{blue},
+  commentstyle=\color{mygreen},
+  breaklines=true, 
+  showtabs=false,
+  showstringspaces=false,
+  numbers             =left, 
+  stepnumber          =   1,  
+  numbersep           =   10pt,
+  numberstyle=\tiny\color{mygray}
+}
+
+\lstdefinestyle{small-style}{
+  inputencoding=latin1,
+  basicstyle=\fontsize{8}{10}\selectfont\ttfamily,
+  basewidth  = {0.5em,0.5em},
+  keywordstyle=\color{blue},
+  commentstyle=\color{mygreen},
+  breaklines=true, 
+  showtabs=false,
+  showstringspaces=false,
+  numbers             =   left, 
+  stepnumber          =   1,  
+  numbersep           =   10pt,
+  numberstyle=\tiny\color{mygray}
+}
+
+\lstset{style=default-style}
+
+\begin{document}
+\title{\color{blue}Document Title}
+\author{Menelaus Perdikeas\\ Company SA}
+\date{June 2014}
+\maketitle
+
+\tableofcontents
+\listoffigures
+\lstlistoflistings
+
+\renewcommand{\abstractname}{Executive Summary}
+\begin{abstract}
+...
+\end{abstract}
+
+\chapter{Introduction}
+As can be read in the \textit{Ten Commandments} \cite{ref:ten-commandments} ..
+
+Figure \ref{fig:black-knight} shows a typical scene from the block-buster
+film ``The Black Knight''.
+
+% comments
+
+\begin{comment}
+    another way to write comments
+\end{comment}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.2\textwidth]{BlackKnight.png}
+    \caption{The Black Knight}
+    \label{fig:black-knight}
+\end{figure}
+
+The pseudocode of listing \ref{lst:movie-instructions} shows how to
+make a block-buster.
+
+\lstset{language=Java}
+\begin{lstlisting}[float, frame=single, caption=How to make a block-buster, label=lst:movie-instructions]
+
+while (enoughMoneyAtTheBank()) {
+    buyBookRights();
+    contractFemaleStar();
+    produceMovie();
+}
+\end{lstlisting}
+
+
+\clearpage
+
+The document is organized as follows:
+\begin{itemize}
+\item Chapter ... 
+\end{itemize}
+
+
+
+
+
+\renewcommand{\bibname}{References}
+
+\begin{thebibliography}{1}
+    \bibitem{ref:ten-commandments}God {\em The Ten Commandments}, carved in stone, 2000BC, Mount Sinai Publishing
+\end{thebibliography}
+
+\end{document}
+
