@@ -142,7 +142,7 @@ while (enoughMoneyAtTheBank()) {
 
 \clearpage
 
-The document is organized as follows:
+The document is organized as follows\footnote{Footnote here.}:
 \begin{itemize}
 \item Chapter ... 
 \end{itemize}
@@ -158,6 +158,9 @@ A3 stuff in landscape goes here ...
 \recalctypearea
 }
 
+\clearpage
+%\restoregeometry % NB: in one document I had to explicitly invoke the \restoregeometry command to restore geometry, apparently it is not needed in this archetype.
+Back on A3\footnote{Footnotes and normal page geometry is restored.}.
 
 
 
