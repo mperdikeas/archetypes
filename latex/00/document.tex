@@ -13,7 +13,7 @@
 \usepackage{typearea}
 \usepackage[hyphens]{url}
 \PassOptionsToPackage{hyphens}{url}
-
+\usepackage{paralist}
 \begin{comment}
     \usepackage{hyperref}
 \end{comment}
@@ -110,6 +110,13 @@ As can be read in the \textit{Ten Commandments} \cite{ref:ten-commandments} ..
 \begin{quoting}
 fancy quote
 \end{quoting}
+
+Here's how to use inline enumerations:
+\begin{inparaenum}[i)]
+\item first thing
+\item second thing, and
+\item third thing
+\end{inparaenum}.
 
 Figure \ref{fig:black-knight} shows a typical scene from the block-buster
 film ``The Black Knight''.
