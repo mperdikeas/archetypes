@@ -1,5 +1,7 @@
 \documentclass[11pt,twoside,a4paper,pagesize]{report}
-\usepackage{pslatex,palatino,avant,graphicx,color}
+\usepackage{pslatex,palatino,avant,,color}
+%\usepackage{graphicx}
+\usepackage[demo]{graphicx}
 \usepackage{nextpage}
 \usepackage{afterpage}
 \usepackage[margin=2cm]{geometry}
@@ -128,13 +130,36 @@ film ``The Black Knight''.
     another way to write comments
 \end{comment}
 
-
+\begin{comment}
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\textwidth]{BlackKnight.png}
     \caption{The Black Knight}
     \label{fig:black-knight}
 \end{figure}
+\end{comment}
+
+
+\afterpage{ % Insert after the current page
+\clearpage
+
+\KOMAoptions{paper=a3}
+\addtolength{\hoffset}{-2.0cm}
+\recalctypearea
+\begin{figure}[htbp]
+    \centering
+    %\includegraphics[width=1.25\textwidth]{vo-business-schema.png}
+    \includegraphics[width=1.35\textwidth]{}
+    \caption{\texttt{vo\ business} schema tables}
+    \label{fig:vo-business-schema}
+\end{figure}
+
+\clearpage
+\KOMAoptions{paper=A4,pagesize}
+\recalctypearea
+}
+\restoregeometry
+
 
 
 
