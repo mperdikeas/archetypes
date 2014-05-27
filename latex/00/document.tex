@@ -1,4 +1,4 @@
-\documentclass[11pt,twoside,a4paper,pagesize]{report}
+\documentclass[11pt,twoside,openright,a4paper,pagesize]{report}
 \usepackage{pslatex,palatino,avant,,color}
 %\usepackage{graphicx}
 \usepackage[demo]{graphicx}
@@ -95,6 +95,7 @@ The command used to change them is \setlength:
 \lstset{style=default-style}
 
 \begin{document}
+\pagenumbering{Roman}
 \title{\color{blue}Document Title}
 \author{Menelaus Perdikeas\\ Company SA}
 \date{June 2014}
@@ -104,11 +105,13 @@ The command used to change them is \setlength:
 \listoffigures
 \lstlistoflistings
 
+\cleardoublepage
 \renewcommand{\abstractname}{Executive Summary}
 \begin{abstract}
-...
+Blah blah blah \ldots
 \end{abstract}
-
+\cleardoublepage
+\pagenumbering{arabic}
 \chapter{Introduction}
 As can be read in the \textit{Ten Commandments} \cite{ref:ten-commandments} ..
 
