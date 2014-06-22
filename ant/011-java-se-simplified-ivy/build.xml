@@ -87,7 +87,7 @@
         </copy>
     </target>
 
-
+    <target name="build" depends="jar"/>
     <target name="jar" depends="compile, dry-jar" description="jar class files"/>
 
     <target name="dry-jar" depends="dry-compile"
