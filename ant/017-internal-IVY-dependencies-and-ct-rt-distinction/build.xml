@@ -1,0 +1,25 @@
+<project
+    xmlns:contrib="http://net.sf.antcontrib"
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="build-all" basedir="." default="build-all">
+    <!--taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" /-->
+
+    <ivy:buildlist reference="build-path">
+          <fileset dir="${basedir}" includes="**/build.xml">
+            <exclude name="build.xml"/> <!-- exclude the top-level build.xml file -->
+          </fileset>
+    </ivy:buildlist>
+
+    <target name="build-all" depends="" description="build all projects">
+        <property name="build-path" refid="build-path"/>
+        <echo message="${line.separator}${line.separator}${line.separator}build files in the right dependency order are:${line.separator}${build-path}${line.separator}${line.separator}${line.separator}" />
+        <subant target="build-or-publish" buildpathref="build-path" />
+    </target>
+
+    <target name="clean-all" description="clean all projects">
+        <subant target="clean" buildpathref="build-path"/>
+    </target>
+
+
+
+</project>
