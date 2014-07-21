@@ -8,6 +8,6 @@
     </publications>
     <dependencies>
         <dependency org="org.apache.commons" name="commons-lang3" rev="3.1"/>
-        <dependency org="person.mperdikeas"  name="dependency-a"  rev="1.0"/>
+        <dependency org="person.mperdikeas"  name="dependency-a"  rev="latest.integration"/> <!-- or use "1.0" to nail down a specific version -->
     </dependencies>
 </ivy-module>

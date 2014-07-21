@@ -1,7 +1,7 @@
 <project
     xmlns:contrib="http://net.sf.antcontrib"
     xmlns:ivy="antlib:org.apache.ivy.ant"
-    name="a-lib" basedir="." default="publish">
+    name="a-lib" basedir="." default="build-or-publish">
     <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
 
     <property name="project.MainClass.name" value="FooMain"/>
@@ -125,7 +125,7 @@
     <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
 
     <target name="publish" depends="clean,build">
-      <ivy:publish pubrevision="1.0" status="release" resolver="local" overwrite="true" >
+      <ivy:publish pubrevision="1.7" status="release" resolver="local" overwrite="true" >
          <artifacts pattern="dist/[artifact].[ext]"/>
       </ivy:publish>
     </target>
