@@ -14,7 +14,8 @@
     <property name="src.dir"                value="${basedir}/src"/>
     <property name="javasource.dir"         value="${src.dir}"/>
     <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
-    <property name="ivylibs.dir"            value="${basedir}/lib-ivy"/>
+    <property name="ivylibs.compile.dir"    value="${basedir}/lib-ivy-compile"/>
+    <property name="ivylibs.runtime.dir"    value="${basedir}/lib-ivy-runtime"/>
     <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
     <property name="run-app.script.name"    value="run-app"/>
 
@@ -26,7 +27,7 @@
       <fileset dir="${compilelibs.dir}">
         <include name ="*.jar"/>
       </fileset>
-      <fileset dir="${ivylibs.dir}">
+      <fileset dir="${ivylibs.compile.dir}">
         <include name ="*.jar"/>
       </fileset>
     </path>
@@ -48,7 +49,8 @@
         </targetfiles>
         <sequential>
             <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources -->
-            <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="compile-time" sync="true" type="jar" pattern="${ivylibs.compile.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="run-time"     sync="true" type="jar" pattern="${ivylibs.runtime.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
             <touch file="${ivy.xml.control.file}"/>
         </sequential>
     </contrib:outofdate>
@@ -57,7 +59,8 @@
     <!-- Check timestamp on files -->
     <target name="prepare">
         <tstamp/>
-        <mkdir dir="${ivylibs.dir}"/>
+        <mkdir dir="${ivylibs.compile.dir}"/>
+        <mkdir dir="${ivylibs.runtime.dir}"/>
     </target>
 
 
@@ -99,7 +102,8 @@
     </target>
 
     <target name="clean-ivy" description="clean IVY">
-      <delete dir ="${ivylibs.dir}"/>
+      <delete dir ="${ivylibs.compile.dir}"/>
+      <delete dir ="${ivylibs.runtime.dir}"/>
       <delete file ="${ivy.xml.control.file}"/>
       <!--delete>
         <fileset dir ="${ivylibs.dir}" includes="*.jar"/>
@@ -132,6 +136,10 @@
         <fileset dir="${runtimelibs.dir}">
           <include name ="*.jar"/>
         </fileset>
+      <fileset dir="${ivylibs.runtime.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+
     </path>
 
     <macrodef name="run-generic">

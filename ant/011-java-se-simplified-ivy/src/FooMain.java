@@ -5,5 +5,6 @@ public class FooMain {
 
     public static void main(String args[]) throws Exception {
         System.out.println(StringUtils.join( new String[]{"hello", "world"}, " "));
+        Class<?> klass = Class.forName("org.postgresql.Driver");
     }
 }
