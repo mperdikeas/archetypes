@@ -1,4 +1,5 @@
-lib-ivy/
+lib-ivy-compile/
+lib-ivy-runtime/
 build/
 dist/
 ivy.xml.control
