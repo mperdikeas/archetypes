@@ -1,6 +1,6 @@
 all:
-	pdflatex front-end-approach.tex 
-	pdflatex front-end-approach.tex 
+	pdflatex short-article.tex 
+	pdflatex short-article.tex 
 clean:
 	rm -f *.pdf
 	rm -f *.log
