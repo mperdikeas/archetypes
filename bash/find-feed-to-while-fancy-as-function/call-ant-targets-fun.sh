@@ -31,9 +31,9 @@ COL=80 # $(tput cols) # you can hardcode a value here, e.g. 80 or use $(tput col
 while IFS= read -r -u3 -d $'\0' file; do
         INTRO="$TARGET on: $file ... "
            echo -n $INTRO
-           ant -f "$file" $TARGET > "$file.build.log" 2>&1 &&
+           ant -f "$file" $TARGET > "$file.log" 2>&1 &&
              printf '%s%*s%s\n' "$GREEN" $((COL - ${#INTRO})) "[OK]"   "$NORMAL" ||
-           { printf '%s%*s%s\n' "$RED"   $((COL - ${#INTRO})) "[FAIL]" "$NORMAL" && cat "$file.build.log" ; RESULT=1 ; break; }
+           { printf '%s%*s%s\n' "$RED"   $((COL - ${#INTRO})) "[FAIL]" "$NORMAL" && cat "$file.log" ; RESULT=1 ; break; }
         COUNTER=$((COUNTER + 1))
 done 3< <(find $DIRS -iname build.xml -print0)
 
