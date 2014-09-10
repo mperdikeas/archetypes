@@ -3,6 +3,11 @@
 
 
 source call-ant-targets-fun.sh
-call-ant-targets build "project-a project-c project-delta-delta-delta-delta" 
+if call-ant-targets build "project-a project-c project-delta-delta-delta-delta" ; then
+    exit 0
+else
+    exit 1
+fi
+
 
 

@@ -44,8 +44,10 @@ DIFF=$($EXPR $END - $START)
 if [ $RESULT -eq 0 ]
 then
     printf '%s%s%s%s\n' "$GREEN" "$REVERSE" "builds (target: '$TARGET') successfully concluded for all $COUNTER projects in $DIFF seconds" "$NORMAL"
+    return 0
 else
     printf '%s%s%s%s\n' "$RED" "$REVERSE" "! build failed after $COUNTER projects" "$NORMAL"
+    return 1
 fi
 }
 

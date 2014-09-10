@@ -3,6 +3,10 @@
 
 
 source call-ant-targets-fun.sh
-call-ant-targets clean "."
+if call-ant-targets clean "." ; then
+    exit 0
+else
+    exit 1
+fi
 
 
