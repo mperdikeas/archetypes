@@ -155,7 +155,7 @@
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="ant.java.version=${ant.java.version}" />
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
-        <java classname ="${project.MainClass.name}" fork="true">
+        <java classname ="${project.MainClass.name}" failonerror="true" fork="true">
              <jvmarg value="-Xmx1024m"/>
              <classpath refid="run.classpath"/>
         </java>
