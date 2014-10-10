@@ -10,3 +10,5 @@ clean:
 	rm -f *.toc
 	rm -f *.out
 	rm -f *.aux
+	rm -f *.nav
+	rm -f *.snm
