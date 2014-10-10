@@ -1,6 +1,7 @@
+SOURCE=short-article.tex
 all:
-	pdflatex short-article.tex 
-	pdflatex short-article.tex 
+	pdflatex $(SOURCE)
+	pdflatex $(SOURCE)
 clean:
 	rm -f *.pdf
 	rm -f *.log

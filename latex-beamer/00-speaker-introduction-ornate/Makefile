@@ -1,4 +1,4 @@
-SOURCE=document.tex
+SOURCE=speaker_introduction-ornate-2min.en.tex
 all:
 	pdflatex $(SOURCE)
 	pdflatex $(SOURCE)
