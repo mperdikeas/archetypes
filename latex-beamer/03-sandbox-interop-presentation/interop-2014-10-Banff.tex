@@ -1,0 +1,259 @@
+% $Header: /home/vedranm/bitbucket/beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
+
+\documentclass{beamer}
+\usepackage{comment}
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+
+\title[ESAVO Curation Reports] % (optional, use only with long paper titles)
+{ESAVO Curation Reports}
+
+\begin{comment}
+\subtitle
+{Include Only If Paper Has a Subtitle}
+\end{comment}
+
+\author[Menelaus Perdikeas] % (optional, use only with lots of authors)
+{Menelaus Perdikeas\inst{1}.}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[ESAC | Neuropublic SA] % (optional, but mostly needed)
+{
+  \inst{1}%
+  ESAC
+}
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+\date[CFP 2003] % (optional, should be abbreviation of conference name)
+{IVOA Banff InterOp October 2014}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+%\subject{Theoretical Computer Science}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Context}
+
+\subsection{Architecture}
+\begin{frame}{Architecture}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{high-level-design-02.png}
+    %\caption{The Black Knight}
+    %\label{fig:black-knight}
+\end{figure}
+
+\end{frame}
+
+\subsection{Curation library}
+\begin{frame}{Curation Library}
+
+  \begin{itemize}
+    \item developed new Java-based curation library for IVOA services (SCS, SIA and SSA)
+    \item library does not require user to input values for service parameters (e.g. right ascension, declination or search radius) so its suitable for automated tests that lack a human to provide reasonable values.
+    \item only requires type of service and access URL of service
+    \item as such can be exposed as a rest-web service:
+    \vfill
+    \tiny{\texttt{http://10.66.180.5//sval/[type-of-service]?accessURL=[accessURL]}}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Sample Invocation}
+\tiny{\texttt{sval acc -t scs -u http://wfaudata.roe.ac.uk/twomass-dsa/DirectCone?DSACAT=TWOMASS\%26DSATAB=twomass\_psc\%26}}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{sample-sval-invocation.png}
+    %\caption{The Black Knight}
+    %\label{fig:black-knight}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Testing the validation result}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{sample-sval-invocation-validation.png}
+    %\caption{The Black Knight}
+    %\label{fig:black-knight}
+\end{figure}
+\end{frame}
+
+\section{Compliance statistics}
+\begin{frame}{from a criteria vector to service compliance classes}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{mapping-results-vectors-to-compliance-categories.png}
+    %\caption{The Black Knight}
+    %\label{fig:black-knight}
+\end{figure}
+\end{frame}
+
+\section{Registry curation}
+
+\section*{Summary}
+
+\begin{frame}{Summary}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item
+    The \alert{first main message} of your talk in one or two lines.
+  \item
+    The \alert{second main message} of your talk in one or two lines.
+  \item
+    Perhaps a \alert{third message}, but not more than that.
+  \end{itemize}
+  
+  % The following outlook is optional.
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Outlook
+    \begin{itemize}
+    \item
+      Something you haven't solved.
+    \item
+      Something else you haven't solved.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{For Further Reading}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{For Further Reading}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{Author1990}
+    A.~Author.
+    \newblock {\em Handbook of Everything}.
+    \newblock Some Press, 1990.
+ 
+    
+  \beamertemplatearticlebibitems
+  % Followed by interesting articles. Keep the list short. 
+
+  \bibitem{Someone2000}
+    S.~Someone.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100,
+    2000.
+  \end{thebibliography}
+\end{frame}
+
+\end{document}
+
+
