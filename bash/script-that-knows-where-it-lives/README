@@ -16,3 +16,4 @@ The technique used is apparently symlink-safe as can be verified by doing a:
 ./location-a-link/where-am-I.sh
 
 ... which demonstrates that the method also works.
+

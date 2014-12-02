@@ -1,0 +1,34 @@
+Provenance:
+    ../script-that-knows-where-it-lives    
+
+We established in the provenance the utility of the following one-liner:
+    ${BASH_SOURCE[0]/%${me}/.}
+
+The above one liner allows a script to access the contents of a file located relative
+to it (refer to the README found in that location). It was also demonstrated that the
+script could also be accessed through a symlinked directory. There is however a twist:
+directory links that lead to the script will work, but the script itself cannot be
+symlinked.
+
+For the script to work even if it itself symlinked a multi-line solution is necessary
+as shown in the script:
+    location-a/where-am-I.sh
+
+(source: http://stackoverflow.com/a/246128/274677)
+
+To verify try call the script:
+
+[a] either directly:
+    ./location-a/where-am-I.sh 
+    ... in which case both methods work
+
+[b] either through a **directory** symlink (but the final script file is not symlinked):
+    ./location-b/location-a/where-am-I.sh 
+    ... in which case, again, both methods work
+
+[c] or, upping the ante, via a convoluted chain of scripts:
+    ./location-b/b/c/d/e/f/g/h/where-am-I.sh
+    ... in which case only the multiliner works
+
+
+

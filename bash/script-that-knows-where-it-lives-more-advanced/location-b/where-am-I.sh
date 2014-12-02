@@ -1,0 +1,1 @@
+../location-a/where-am-I.sh
