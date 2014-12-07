@@ -48,9 +48,9 @@
             <pathelement path="${ivy.xml.control.file}"/>
         </targetfiles>
         <sequential>
-            <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources -->
-            <ivy:retrieve conf="compile-time" sync="true" type="jar" pattern="${ivylibs.compile.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
-            <ivy:retrieve conf="run-time"     sync="true" type="jar" pattern="${ivylibs.runtime.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources; "bundle" is used because of this: http://stackoverflow.com/a/23804543/274677 -->
+            <ivy:retrieve conf="compile-time" sync="true" type="jar, bundle" pattern="${ivylibs.compile.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="run-time"     sync="true" type="jar, bundle" pattern="${ivylibs.runtime.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
             <touch file="${ivy.xml.control.file}"/>
         </sequential>
     </contrib:outofdate>

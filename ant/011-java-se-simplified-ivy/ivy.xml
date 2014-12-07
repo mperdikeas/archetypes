@@ -10,5 +10,12 @@
     <dependencies>
         <dependency org="org.apache.commons" name="commons-lang3" rev="3.1"            conf="compile-time->master"/> <!-- we only need that at compile time, no transitive deps -->
         <dependency org="postgresql"         name="postgresql"    rev="9.1-901.jdbc4"  conf="run-time->default"/> <!-- we need this at runtime, along with its transitive deps -->
+        <!-- DEPENDENCY org="log4j"                   name="log4j"               rev="1.2.17"/-->
+        <!-- for some reason Ivy can't fetch the [log4j] dependency in the above simple way and it has to be done in the more convoluted way below: -->
+        <!-- however, for this particular ivy.xml file explicitly bringing in the log4j dependency is not necessary as it is called in via the transitive dependencies of [commons-logging] -->
+        <!--dependency org="log4j"              name="log4j"          rev="1.2.17" conf="run-time->default">
+            <artifact name="log4j" type="jar" />
+        </dependency-->
+        <dependency org="commons-logging"             name="commons-logging"     rev="1.2"           conf="run-time->default"/>
     </dependencies>
 </ivy-module>
