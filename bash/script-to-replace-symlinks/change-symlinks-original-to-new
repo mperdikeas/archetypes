@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+shopt -s globstar
+echo "Slightly modified from the answer given in [http://unix.stackexchange.com/a/172016/24044]"
+for file in $(find c1 d1 -type l); do
+    if [[ -h "$file" ]]; then
+        if [[ "$(readlink -f "$file")" == "$(realpath a/b/original-target)" ]]; then
+            ln -sf "$(dirname "$(readlink "$file")")"/new-target "$(dirname "$file")" && rm -f "$file"
+        fi
+    fi
+done
