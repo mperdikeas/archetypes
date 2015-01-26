@@ -155,10 +155,17 @@
         <property name="classpath-run.msg" refid="run.classpath"/>
         <echo message="ant.java.version=${ant.java.version}" />
         <echo message="running the app with classpath = ${classpath-run.msg}"/>
-        <java classname ="${project.MainClass.name}" failonerror="true" fork="true">
+        <java classname ="${project.MainClass.name}" failonerror="true" fork="true" resultproperty="javaExitCode">
              <jvmarg value="-Xmx1024m"/>
              <classpath refid="run.classpath"/>
         </java>
+        <fail message="java invocation failure [${javaExitCode}]" status="${javaExitCode}">
+            <condition>
+                <not>
+                    <equals arg1="${javaExitCode}" arg2="0"/>
+                </not>
+            </condition>
+        </fail>
         </sequential>
     </macrodef>
 
