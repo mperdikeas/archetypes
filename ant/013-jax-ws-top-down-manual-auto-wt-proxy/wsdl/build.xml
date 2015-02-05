@@ -78,7 +78,7 @@
         <mkdir  dir="${build.dir}"/>
         <property name="classpath-comp.msg" refid="compile.classpath"/>
         <echo message="compiling with classpath = ${classpath-comp.msg}"/>
-        <javac srcdir="${javasource-auto-wsimport.dir}" 
+        <javac includeAntRuntime="false" srcdir="${javasource-auto-wsimport.dir}" 
                destdir="${build.dir}"
                source="1.7"
                target="1.7"

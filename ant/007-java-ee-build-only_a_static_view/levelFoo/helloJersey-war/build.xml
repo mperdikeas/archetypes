@@ -47,7 +47,7 @@
         <ant antfile = "${client-project.path}/build.xml" target="jar" inheritAll="false"/>
         <echo message="done invoking '${client-project.name}' build file"/>
         <mkdir  dir="${webinf.dir}/classes"/>
-        <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
                source="1.6"
                target="1.6"
                debug="true"

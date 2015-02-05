@@ -24,7 +24,7 @@
     <target name="compile" depends="prepare"
             description="Compile java sources">
         <mkdir  dir="${build.dir}"/>
-        <javac srcdir="${javasource.dir}" 
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" 
                destdir="${build.dir}"
                source="1.7"
                target="1.7"

@@ -69,7 +69,7 @@
     <target name="compile" depends="prepare, resolve, resources">
         <echo message="compile classpath is: ${toString:compile.classpath}"/>
         <mkdir  dir="${webinf.dir}/classes"/>
-        <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
                source="1.7"
                target="1.7"
                debug="true"
@@ -83,7 +83,7 @@
     <target name="dry-compile" depends="prepare,resources">
         <echo message="compile classpath is: ${toString:compile.classpath}"/>
         <mkdir  dir="${webinf.dir}/classes"/>
-        <javac srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
                source="1.7"
                target="1.7"
                debug="true"

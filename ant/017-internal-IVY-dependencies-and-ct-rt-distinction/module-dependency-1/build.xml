@@ -65,7 +65,7 @@
         <mkdir  dir="${build.dir}"/>
         <property name="classpath-comp.msg" refid="compile.classpath"/>
         <echo message="compiling with classpath = ${classpath-comp.msg}"/>
-        <javac srcdir="${javasource.dir}" 
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" 
                destdir="${build.dir}"
                source="1.7"
                target="1.7"
