@@ -3,19 +3,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info organisation="ACME industries" module="component-x" status="integration"/>
+    <configurations>
+        <conf name="compile-time"  description="artifacts for the compile-time classpath"/>
+        <conf name="test-time"     description="artifacts for the test-time classpath (additional to the above)"/>
+    </configurations>
     <dependencies>
         <!-- for some weird reason the file axiom.jar is not downloaded in lib-ivy with the below two lines
              and I had to manually copy it from ~/software-downloads/axiom -->
         <!--dependency org="org.apache.ws.commons.axiom" name="axiom-impl"          rev="1.2.14"/>
         <dependency org="org.apache.ws.commons.axiom" name="axiom-api"           rev="1.2.14"/-->
-        <dependency org="com.sun.xml.bind"            name="jaxb-impl"           rev="2.2.7"/>
-        <dependency org="com.sun.xml.bind"            name="jaxb-xjc"            rev="2.2.7"/>
-        <dependency org="org.apache.httpcomponents"   name="httpcore"            rev="4.2.4"/>
-        <dependency org="org.apache.httpcomponents"   name="httpclient"          rev="4.2.5"/>
-        <dependency org="commons-collections"         name="commons-collections" rev="3.2.1"/>
-        <dependency org="commons-io"                  name="commons-io"          rev="2.4"/>
-        <dependency org="org.apache.commons"          name="commons-lang3"       rev="3.1"/>
-        <dependency org="org.slf4j"                   name="slf4j-api"           rev="1.7.5"/>
-        <dependency org="org.ini4j"                   name="ini4j"               rev="0.5.2"/>
+        <dependency org="org.apache.commons" name="commons-lang3" rev="3.1"           conf="compile-time->master"/>
+        <dependency org="postgresql"         name="postgresql"    rev="9.1-901.jdbc4" conf="test-time->default"/>
     </dependencies>
 </ivy-module>
