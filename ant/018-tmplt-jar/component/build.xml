@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="oai-pmh-harvester" default="dist" basedir="."
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    xmlns:contrib="http://net.sf.antcontrib"
+>
+
+    <description>
+        project description...
+    </description>
+    <property file="build.properties"/>
+    <property file="build.properties.defaults"/>
+
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${ant.deps.dir}/ant-contrib-1.0b3.jar" />
+
+    <property name="compilelibs.dir"            value="${basedir}/lib-compile"/>
+    <property name="ivylibs.dir"                value="${basedir}/lib-ivy"/>
+    <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+
+    <property name="ivy.xml.file"           value="${basedir}/ivy.xml"/>
+    <property name="ivy.xml.control.file"   value="${basedir}/ivy.xml.control"/>
+
+    <!--property name="oai-pmh.dir"        value="${basedir}/../oai-pmh/"/>
+    <property name="oai-pmh.build.file" value="${oai-pmh.dir}/build.xml"/>
+    <property name="oai-pmh.dist.dir"   value="${oai-pmh.dir}/dist"/>
+
+
+    <property name="esavo-common.dir"      value="${basedir}/../common"/>
+    <property name="esavo-common.ant.file" value="${esavo-common.dir}/build.xml"/>
+    <property name="esavo-common.dist.dir" value="${esavo-common.dir}/dist"/>
+
+    <property name="ivoa-lib.dir"      value="${basedir}/../ivoa-util"/>
+    <property name="ivoa-lib.ant.file" value="${ivoa-lib.dir}/build.xml"/>
+    <property name="ivoa-lib.dist.dir" value="${ivoa-lib.dir}/dist"/-->
+
+    <target name="all" depends="dist, test, docs, check"
+            description="Build, pack, test, document and check the application"/>
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${ivylibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <!--fileset dir="${oai-pmh.dist.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${esavo-common.dist.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${ivoa-lib.dist.dir}">
+        <include name ="*.jar"/>
+      </fileset-->
+    </path>
+
+    <path id="test.path">
+        <path refid="compile.classpath"/>
+        <pathelement location="${dist.jar.file}"/>
+        <pathelement location="${runtimelibs.dir}"/>
+        <pathelement location="${lib.junit.jar}"/>
+        <pathelement location="${lib.hamcrest.jar}"/>
+    </path>
+
+
+<target name="test-ivy" description="Test ivy installation">
+    <ivy:settings />
+</target>
+
+<target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+    <contrib:outofdate>
+        <deletetargets all="true"/>
+        <sourcefiles>
+            <pathelement path="${ivy.xml.file}"/>
+        </sourcefiles>
+        <targetfiles>
+            <pathelement path="${ivy.xml.control.file}"/>
+        </targetfiles>
+        <sequential>
+            <ivy:resolve/> 
+            <ivy:retrieve sync="true" type="jar" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <touch file="${ivy.xml.control.file}"/>
+        </sequential>
+    </contrib:outofdate>
+</target>
+
+
+    <target name="init" description="Initialize the environment">
+        <tstamp/>
+        <mkdir dir="${ivylibs.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${findbugs.outputDir}"/>
+    </target>
+
+    <!--target name="oai-pmh-build">
+        <ant antfile="${oai-pmh.build.file}" target="jar" inheritAll="false"/>
+    </target>
+    
+    <target name="esavo-common-build">
+        <ant antfile="${esavo-common.ant.file}" target="jar" inheritAll="false"/>
+    </target>
+    
+    <target name="ivoa-lib-build">
+        <ant antfile="${ivoa-lib.ant.file}" target="jar" inheritAll="false"/>
+    </target-->
+
+
+
+    <target name="compile" depends="init, resolve, dry-compile"
+            description="Compile java sources"/>
+
+    <target name="dry-compile" depends="init"
+            description="dry-compile java">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac includeAntRuntime="false" srcdir="${java.dir}" destdir="${build.classes.dir}"
+               source="${javac.source}" target="${javac.target}" compiler="${javac.compiler}"
+               nowarn="${javac.nowarn}" debug="${javac.debug}" deprecation="${javac.deprec}">
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> 
+        </javac>
+	<copy todir="${build.classes.dir}">
+            <fileset dir="${java.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="dist" depends="jar"/>
+    <target name="build" depends="jar"/>
+    <target name="jar" depends="compile"
+            description="jar class files">
+      <mkdir  dir="${dist.dir}"/>
+        <jar destfile="${dist.jar.file}" basedir="${build.classes.dir}"
+                                         compress="${jar.compress}"
+             index="${jar.index}" update="${jar.update}" filesetmanifest="merge">
+
+        </jar>
+    </target>
+
+    <target name="clean-except-ivy"
+            description="Prepare for clean build">
+      <delete dir ="${build.dir}"             failonerror="true" />
+      <delete dir ="${dist.dir}"              failonerror="true" />
+      <delete file ="${ivy.xml.control.file}" failonerror="true" />
+    </target>
+
+    <target name="clean-ivy"
+            description="Prepare for clean build">
+      <delete dir ="${ivylibs.dir}"/>
+    </target>
+
+    <target name="clean" depends="clean-except-ivy, clean-ivy"/>
+
+    <target name="cclean" description="clean deps too" depends="clean">
+        <!--ant antfile="${oai-pmh.build.file}"    target="clean" inheritAll="false"/>
+        <ant antfile="${esavo-common.ant.file}" target="clean" inheritAll="false"/>
+        <ant antfile="${ivoa-lib.ant.file}"     target="clean" inheritAll="false"/-->
+    </target>
+
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+    <target name="test" depends="build"
+            description="Run the unit tests (using JUnit or other specific tests)">
+        <mkdir dir="${build.testclass.dir}"/>
+        <mkdir dir="${build.jureport.dir}"/>
+        <javac includeAntRuntime="false" srcdir="${java.test.dir}" destdir="${build.testclass.dir}" classpathref="test.path"/>
+	<copy todir="${build.testclass.dir}" includeEmptyDirs="false">
+            <fileset dir="${test.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <echo message="target friendly name is: ${target-friendly-name}"/>        
+        <junit printsummary="${junit.summary}" showoutput="${junit.output}">
+            <sysproperty key="target-friendly-name" value="${target-friendly-name}"/>       
+            <classpath>
+                <path refid="test.path"/>
+                <pathelement location="${build.testclass.dir}"/>
+            </classpath>
+            <batchtest todir="${build.jureport.dir}" haltonfailure="${junit.halt}">
+                <fileset dir="${build.testclass.dir}" includes="**/*Test.class"/>
+            </batchtest>
+            <!--formatter type="plain" usefile="false"/-->
+            <formatter type="xml"/>
+        </junit>
+        
+        <junitreport todir="${build.jureport.dir}">
+            <fileset dir="${build.jureport.dir}" includes="TEST-*.xml"/>
+            <report todir="${build.jureport.dir}"/>
+        </junitreport>
+    </target>
+
+    <target name="docs" depends="init"
+            description="Generate the API javadoc (and other documentation files)">
+        <mkdir dir="${build.javadoc.dir}"/>
+        
+        <javadoc sourcepath="${java.dir}" destdir="${build.javadoc.dir}"
+                 source="${javac.source}" packagenames="${javadoc.packages}"
+                 access="${javadoc.access}" failonerror="${javadoc.fail}">
+            <classpath refid="compile.classpath"/>
+            <link href="http://docs.oracle.com/javase/7/docs/api/"/>
+        </javadoc>
+    </target>
+
+
+    <target name="check" depends="build, dry-check-style, dry-findbugs, dry-pmd"/>
+
+    <target name="check-style" depends="build, dry-check-style"/>
+
+    <target name="dry-check-style" 
+            description="Check the sources for style violations (and report them)">
+        <mkdir dir="${build.csreport.dir}"/>
+        <taskdef resource="checkstyletask.properties" classpath="${lib.checkstyle.jar}"/>
+        
+        <checkstyle config="${checkstyle.config}" failonviolation="${checkstyle.fail}">
+            <classpath>
+                <path refid="compile.classpath"/>
+                <pathelement location="${build.classes.dir}"/>
+            </classpath>
+            <fileset dir="${java.dir}" includes="**/*.java"/>
+            <formatter type="xml" tofile="${build.csreport.dir}/csreport.xml"/>
+        </checkstyle>
+        
+        <xslt basedir="${build.csreport.dir}" includes="*.xml"
+              destdir="${build.csreport.dir}" style="${checkstyle.style}">
+            <param name="output.dir" expression="${build.csreport.dir}"/>
+            <param name="source.dir" expression="${basedir}/${java.dir}/"/>
+        </xslt>
+    </target>
+
+
+    <target name="findbugs" depends="build, dry-findbugs"/>
+
+    <target name="dry-findbugs">
+        <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${ant.deps.dir}/findbugs-ant.jar"/>
+        <findbugs home="${findbugs.home}"
+                  output="${findbugs.output}"
+                  effort="${findbugs.effort}"
+                  reportLevel="${findbugs.reportLevel}" quieterrors="true"
+                  outputFile="${findbugs.outputDir}/findbug.html" >
+            <auxClasspath>
+                <path refid="compile.classpath"/>
+            </auxClasspath>
+            <sourcePath path="${basedir}/src" />
+            <class location="${dist.jar.file}"/>
+        </findbugs>
+    </target>
+
+
+    <target name="vspace">
+        <echo message="${line.separator}${line.separator}${line.separator}${line.separator}"/>
+    </target>
+
+    <target name="pmd" depends="init, dry-pmd"/>
+
+    <target name="dry-pmd">
+        <path id = "pmd.classpath">
+            <fileset dir="${pmd.libs.dir}">
+                <include name ="*.jar"/>
+            </fileset>
+            <pathelement location="${pmd.libs.dir}"/>
+        </path>
+        <property name="pmd.classpath.msg" refid="pmd.classpath"/>
+        <echo message="PMD classpath is: ${pmd.classpath.msg}"/>
+        <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+            <classpath>
+                <path refid="pmd.classpath"/>
+            </classpath>
+        </taskdef><!-- classpath="${ant.deps.dir}/pmd/pmd-core-5.2.2.jar"/> -->
+        <property name="pmd.rule.violations.num" value="0"/>
+        <pmd shortFilenames      = "${pmd.shortFilenames}"             
+             rulesetfiles        = "${pmd.rulesetfiles}"
+             failonerror         = "${pmd.failonerror}"
+             failonruleviolation = "${pmd.failonruleviolation}"
+             suppressMarker      = "${pmd.suppressMarker}"
+             failuresPropertyName= "pmd.rule.violations.num">
+             <sourceLanguage name="java" version="${javac.source}"/>
+             <!--
+             <ruleset>rulesets/java/design.xml</ruleset>
+             <ruleset>java-basic</ruleset> 
+             -->
+             <!-- the latter of the above two examples shows alternative way of indicating ruleset
+                  translation occurs in RuleSetReferenceId.java#resolveBuiltInRuleset (for v5.2.2) -->
+             <formatter type="${pmd.formatter.type}" toFile="${pmd.formatter.toFile}">
+                 <param name="linkPrefix" value="http://pmd.sourceforge.net/xref/"/>
+             </formatter>
+             <fileset dir="${java.dir}">
+                 <include name="**/*.java"/>
+            </fileset>
+        </pmd>
+        <antcall target="vspace"/>
+        <echo message="PMD detected a total of ${pmd.rule.violations.num} rule violations."/>
+        <antcall target="vspace"/>
+    </target>
+
+
+</project>
