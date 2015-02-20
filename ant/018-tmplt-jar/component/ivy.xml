@@ -2,7 +2,7 @@
 <ivy-module version="2.0" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info organisation="esa" module="harvester-lib" status="integration"/>
+    <info organisation="ACME industries" module="component-x" status="integration"/>
     <dependencies>
         <!-- for some weird reason the file axiom.jar is not downloaded in lib-ivy with the below two lines
              and I had to manually copy it from ~/software-downloads/axiom -->

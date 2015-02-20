@@ -25,10 +25,6 @@
     <property name="oai-pmh.dist.dir"   value="${oai-pmh.dir}/dist"/>
 
 
-    <property name="esavo-common.dir"      value="${basedir}/../common"/>
-    <property name="esavo-common.ant.file" value="${esavo-common.dir}/build.xml"/>
-    <property name="esavo-common.dist.dir" value="${esavo-common.dir}/dist"/>
-
     <property name="ivoa-lib.dir"      value="${basedir}/../ivoa-util"/>
     <property name="ivoa-lib.ant.file" value="${ivoa-lib.dir}/build.xml"/>
     <property name="ivoa-lib.dist.dir" value="${ivoa-lib.dir}/dist"/-->
@@ -46,9 +42,7 @@
       <!--fileset dir="${oai-pmh.dist.dir}">
         <include name ="*.jar"/>
       </fileset>
-      <fileset dir="${esavo-common.dist.dir}">
-        <include name ="*.jar"/>
-      </fileset>
+
       <fileset dir="${ivoa-lib.dist.dir}">
         <include name ="*.jar"/>
       </fileset-->
@@ -97,9 +91,7 @@
         <ant antfile="${oai-pmh.build.file}" target="jar" inheritAll="false"/>
     </target>
     
-    <target name="esavo-common-build">
-        <ant antfile="${esavo-common.ant.file}" target="jar" inheritAll="false"/>
-    </target>
+
     
     <target name="ivoa-lib-build">
         <ant antfile="${ivoa-lib.ant.file}" target="jar" inheritAll="false"/>
@@ -157,7 +149,6 @@
 
     <target name="cclean" description="clean deps too" depends="clean">
         <!--ant antfile="${oai-pmh.build.file}"    target="clean" inheritAll="false"/>
-        <ant antfile="${esavo-common.ant.file}" target="clean" inheritAll="false"/>
         <ant antfile="${ivoa-lib.ant.file}"     target="clean" inheritAll="false"/-->
     </target>
 
