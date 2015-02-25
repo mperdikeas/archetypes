@@ -209,7 +209,7 @@
     </target>
 
 
-    <target name="check" depends="build, dry-check-style, dry-findbugs, dry-pmd"/>
+    <target name="check" depends="build, dry-check-style, dry-findbugs, pmd"/>
 
     <target name="check-style" depends="build, dry-check-style"/>
 
@@ -257,9 +257,7 @@
         <echo message="${line.separator}${line.separator}${line.separator}${line.separator}"/>
     </target>
 
-    <target name="pmd" depends="init, dry-pmd"/>
-
-    <target name="dry-pmd">
+    <target name="pmd" depends="init">
         <path id = "pmd.classpath">
             <fileset dir="${pmd.libs.dir}">
                 <include name ="*.jar"/>
