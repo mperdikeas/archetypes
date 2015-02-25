@@ -1,0 +1,5 @@
+This test uses an advance Ant build.xml template that allows style reports
+and JUnit tests to also be produced. More importantly it shows how to
+use the JUnit Parameterized class for data-driven testing and my solution
+to the problem of who to invoke the Parameterized execution of a test case
+for a single data point (also here: http://stackoverflow.com/a/27386564/274677).

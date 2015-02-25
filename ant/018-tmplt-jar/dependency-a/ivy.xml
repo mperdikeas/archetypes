@@ -2,17 +2,19 @@
 <ivy-module version="2.0" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-    <info organisation="ACME industries" module="component-x" status="integration"/>
+    <info organisation="ACME industries" module="dependency-a" status="integration"/>
     <configurations>
         <conf name="compile-time"  description="artifacts for the compile-time classpath"/>
         <conf name="test-time"     description="artifacts for the test-time classpath (additional to the above)"/>
     </configurations>
     <dependencies>
-        <!-- compile-time dependencies -->
+        <!-- for some weird reason the file axiom.jar is not downloaded in lib-ivy with the below two lines
+             and I had to manually copy it from ~/software-downloads/axiom -->
+        <!--dependency org="org.apache.ws.commons.axiom" name="axiom-impl"          rev="1.2.14"/>
+        <dependency org="org.apache.ws.commons.axiom" name="axiom-api"           rev="1.2.14"/-->
         <dependency org="org.apache.commons"   name="commons-lang3"       rev="3.1"           conf="compile-time->master"/>
-        <dependency org="commons-collections"  name="commons-collections" rev="3.2.1"         conf="compile-time->master"/>
-        <!-- test-time dependencies -->
         <dependency org="postgresql"           name="postgresql"          rev="9.1-901.jdbc4" conf="test-time->default"/>
         <dependency org="commons-io"           name="commons-io"          rev="2.4"           conf="test-time->default"/>
+        <dependency org="commons-collections"  name="commons-collections" rev="3.2.1"         conf="compile-time->master"/>
     </dependencies>
 </ivy-module>

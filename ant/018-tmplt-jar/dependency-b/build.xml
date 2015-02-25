@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="component-X" default="dist" basedir="."
+<project name="dependency-b" default="dist" basedir="."
     xmlns:ivy="antlib:org.apache.ivy.ant"
     xmlns:contrib="http://net.sf.antcontrib"
 >
@@ -13,11 +13,11 @@
 
     <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${ant.deps.dir}/ant-contrib-1.0b3.jar" />
 
-    <property name="lib-static-compile.dir"        value="${basedir}/lib-static-compile"/>
-    <property name="lib-static-test.dir"           value="${basedir}/lib-static-test"/>
+    <property name="libs.compile.dir"        value="${basedir}/lib-compile"/>
+    <property name="libs.test.dir"           value="${basedir}/lib-test"/>
 
-    <property name="lib-ivy-compile.dir"    value="${basedir}/lib-ivy-compile"/>
-    <property name="lib-ivy-test.dir"       value="${basedir}/lib-ivy-test"/>
+    <property name="ivylibs.compile.dir"    value="${basedir}/lib-ivy-compile"/>
+    <property name="ivylibs.test.dir"       value="${basedir}/lib-ivy-test"/>
 
 
     <property name="ivy.xml.file"           value="${basedir}/ivy.xml"/>
@@ -37,10 +37,10 @@
 
 
     <path id = "compile.classpath">
-      <fileset dir="${lib-static-compile.dir}">
+      <fileset dir="${libs.compile.dir}">
         <include name ="*.jar"/>
       </fileset>
-      <fileset dir="${lib-ivy-compile.dir}">
+      <fileset dir="${ivylibs.compile.dir}">
         <include name ="*.jar"/>
       </fileset>
       <!--fileset dir="${oai-pmh.dist.dir}">
@@ -55,10 +55,10 @@
     <path id="test.classpath">
         <path refid="compile.classpath"/>
         <pathelement location="${dist.jar.file}"/>
-        <fileset dir="${lib-static-test.dir}">
+        <fileset dir="${libs.test.dir}">
             <include name ="*.jar"/>
         </fileset>
-        <fileset dir="${lib-ivy-test.dir}">
+        <fileset dir="${ivylibs.test.dir}">
             <include name ="*.jar"/>
         </fileset>
         <pathelement location="${lib.junit.jar}"/>
@@ -81,8 +81,8 @@
         </targetfiles>
         <sequential>
             <ivy:resolve/>       <!-- type="jar" means only jar files, not javadoc or sources; "bundle" is used because of this: http://stackoverflow.com/a/23804543/274677 -->
-            <ivy:retrieve conf="compile-time" sync="true" type="jar, bundle" pattern="${lib-ivy-compile.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
-            <ivy:retrieve conf="test-time"    sync="true" type="jar, bundle" pattern="${lib-ivy-test.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="compile-time" sync="true" type="jar, bundle" pattern="${ivylibs.compile.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="test-time"    sync="true" type="jar, bundle" pattern="${ivylibs.test.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
             <touch file="${ivy.xml.control.file}"/>
         </sequential>
     </contrib:outofdate>
@@ -91,8 +91,8 @@
 
     <target name="init" description="Initialize the environment">
         <tstamp/>
-        <mkdir dir="${lib-ivy-compile.dir}"/>
-        <mkdir dir="${lib-ivy-test.dir}"/>
+        <mkdir dir="${ivylibs.compile.dir}"/>
+        <mkdir dir="${ivylibs.test.dir}"/>
         <mkdir dir="${build.dir}"/>
         <mkdir dir="${build.classes.dir}"/>
         <mkdir dir="${findbugs.outputDir}"/>
@@ -153,8 +153,8 @@
 
     <target name="clean-ivy"
             description="Prepare for clean build">
-      <delete dir ="${lib-ivy-compile.dir}"/>
-      <delete dir ="${lib-ivy-test.dir}"/>
+      <delete dir ="${ivylibs.compile.dir}"/>
+      <delete dir ="${ivylibs.test.dir}"/>
     </target>
 
     <target name="clean" depends="clean-except-ivy, clean-ivy"/>
@@ -177,7 +177,7 @@
             </fileset>
         </copy>
         <echo message="target friendly name is: ${target-friendly-name}"/>        
-        <junit printsummary="${junit.summary}" showoutput="${junit.output}" fork="true">
+        <junit printsummary="${junit.summary}" showoutput="${junit.output}">
             <sysproperty key="target-friendly-name" value="${target-friendly-name}"/>       
             <classpath>
                 <path refid="test.classpath"/>
