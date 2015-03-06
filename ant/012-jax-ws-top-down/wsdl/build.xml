@@ -4,7 +4,6 @@
     name="foo" basedir="." default="jar">
     <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
     <property name="ant-ivylibs.dir"            value="${basedir}/lib-ivy-ant"/>
-    <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport" classpath="${ant-ivylibs.dir}/jaxws-tools-2.2.8.jar:${ant-ivylibs.dir}/jaxb-xjc-2.2.7.jar:${ant-ivylibs.dir}/jaxb-core-2.2.7.jar:${ant-ivylibs.dir}/jaxws-rt-2.2.8.jar:${ant-ivylibs.dir}/jaxb-impl-2.2.7.jar:${ant-ivylibs.dir}/jaxb-jxc-2.2.7.jar:${ant-ivylibs.dir}/streambuffer-1.5.1.jar:${ant-ivylibs.dir}/policy-2.3.1.jar:${ant-ivylibs.dir}/stax-ex-1.7.1.jar"/>
     <property name="project.distname"               value="${ant.project.name}"/>
     <property name="jar-artefact.name"              value="${ant.project.name}.jar"/>
     <property name="build.dir"                      value="${basedir}/build"/>
@@ -47,7 +46,28 @@
         <mkdir dir="${compilelibs.dir}"/>
     </target>
 
-    <target name="wsimport">
+    <target name="ant-tooling-Ivy-deps-fetch">
+        <property name="ant-ivy.xml.file" value="${basedir}/ivy-ant.xml"/>
+        <ivy:resolve file="${ant-ivy.xml.file}"/> 
+        <ivy:retrieve sync="true" pattern="${ant-ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+    </target>
+
+    <target name="ant-tooling-Ivy-deps-clean" description="clean Ant tooling Ivy dependencies">
+        <delete dir="${ant-ivylibs.dir}"/>
+    </target>
+
+
+    <target name="wsimport" depends="ant-tooling-Ivy-deps-fetch">
+        <path id = "wsimport.classpath">
+          <fileset dir="${ant-ivylibs.dir}">
+            <include name ="*.jar"/>
+          </fileset>
+        </path>
+
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath refid="wsimport.classpath"/>
+        </taskdef>
+
     <!-- the command line invocation used to be:  wsimport -d src-auto-wsimport/ -p foo.client  -Xnocompile wsdl-auto/MyService.wsdl -->
         <mkdir dir="${javasource-auto-wsimport.dir}"/>
     <!-- the below attribute used to be part of the wsimprt task below but is removed to avoid clashes when same elements are declared
@@ -116,7 +136,7 @@
     </target>
 
     <target name="clean"
-            depends="clean-except-ivy"
+            depends="clean-except-ivy, ant-tooling-Ivy-deps-clean"
             description="Prepare for clean build (including IVY deps)">
       <delete dir ="${ivylibs.dir}"/>
     </target>
