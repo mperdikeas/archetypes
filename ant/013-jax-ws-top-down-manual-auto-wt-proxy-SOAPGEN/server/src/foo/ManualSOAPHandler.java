@@ -38,7 +38,8 @@ import _int.esa.esavo.common.FileUtil;
 public class ManualSOAPHandler extends POSTSkeletonSOAPHandler {
 
     @Override
-    public String sayHello(String soapBody) throws XPathExpressionException, IOException, ParserConfigurationException, SAXException {
+    public String sayHello(String soapBody) throws ServletException {
+        try {
         System.out.println("inside sayHello implementation method");
         XPath xpath = XMLUtils.namespaceAwareXpath("ns", "http://zar.bar.foo/");
         Document doc = XMLUtils.slurpXML(soapBody);
@@ -46,10 +47,14 @@ public class ManualSOAPHandler extends POSTSkeletonSOAPHandler {
         String rv = String.format("hello, %s", arg0);
         String MASK = "<ns2:sayHelloResponse xmlns:ns2=\"http://zar.bar.foo/\"><return>%s</return></ns2:sayHelloResponse>";
         return String.format(MASK, rv);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
-    public String mulString(String soapBody) throws XPathExpressionException, IOException, ParserConfigurationException, SAXException {
+    public String mulString(String soapBody) throws ServletException {
+        try {
         XPath xpath = XMLUtils.namespaceAwareXpath("ns", "http://zar.bar.foo/");
         Document doc = XMLUtils.slurpXML(soapBody);
         String s = (String) xpath.compile("/ns:mulStringRequest/arg0/.").evaluate(doc, XPathConstants.STRING);
@@ -63,5 +68,8 @@ public class ManualSOAPHandler extends POSTSkeletonSOAPHandler {
         }
         String MASK = "<ns:mulStringResponse xmlns:ns=\"http://zar.bar.foo/\"><return>%s</return></ns:mulStringResponse>";
         return String.format(MASK, _rv);
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
     }
 }

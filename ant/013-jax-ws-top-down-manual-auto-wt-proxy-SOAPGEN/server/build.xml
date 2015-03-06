@@ -80,7 +80,7 @@
                 </fileset>
             </targetfiles> 
             <sequential>
-                <java classname ="soapgen.Generate" fork="true" failonerror="yes">
+                <java classname ="_int.esa.esavo.soapgentool.Generate" fork="true" failonerror="yes">
                      <classpath refid="codegeneration.classpath"/>
                      <arg value="-p"/>
                      <arg value="foo"/>
