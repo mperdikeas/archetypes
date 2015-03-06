@@ -2,3 +2,7 @@ For an alternative that avoids having a hardcoded filesystem location in the gen
 Java files look at the following project:
 
     ~/esac-rawdar/playground/trying-to-use-wsdl-00/wsdl/
+
+Also, the above project demonstrates correct use of a catalog file (catalog.xml) that
+ensures that during [wsimport] code-generation no schema file is fetched over the 
+network.
