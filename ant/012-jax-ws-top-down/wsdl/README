@@ -1,0 +1,4 @@
+For an alternative that avoids having a hardcoded filesystem location in the generated
+Java files look at the following project:
+
+    ~/esac-rawdar/playground/trying-to-use-wsdl-00/wsdl/
