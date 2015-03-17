@@ -54,6 +54,9 @@
             <touch file="${ivy.xml.control.file}"/>
         </sequential>
     </contrib:outofdate>
+    <!-- go ahead and create the IVY directories in the off-chance that nothing was configured to be retrieved via Ivy-->
+    <mkdir dir="${ivylibs.compile.dir}"/> 
+    <mkdir dir="${ivylibs.runtime.dir}"/>
 </target>
 
     <!-- Check timestamp on files -->

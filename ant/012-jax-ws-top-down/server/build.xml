@@ -39,6 +39,8 @@
 <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
     <ivy:resolve/> 
     <ivy:retrieve sync="true" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+    <!-- go ahead and create the IVY dir in the off-chance that nothing was configured to be retrieved via Ivy-->
+    <mkdir dir="${ivylibs.dir}"/> 
 </target>
 
 

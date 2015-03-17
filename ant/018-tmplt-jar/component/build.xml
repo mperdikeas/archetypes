@@ -86,6 +86,8 @@
             <touch file="${ivy.xml.control.file}"/>
         </sequential>
     </contrib:outofdate>
+    <mkdir dir="${lib-ivy-compile.dir}"/> 
+    <mkdir dir="${lib-ivy-test.dir}"/> 
 </target>
 
 

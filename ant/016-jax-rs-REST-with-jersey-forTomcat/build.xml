@@ -36,6 +36,9 @@
         <ivy:resolve/> 
         <ivy:retrieve conf="compile-time" sync="true"  pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
         <ivy:retrieve conf="deploy-time"  sync="true"  pattern="${webinf-lib.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+        <!-- go ahead and create the IVY directories in the off-chance that nothing was configured to be retrieved via Ivy-->
+        <mkdir dir="${lib-ivy.dir}"/> 
+        <mkdir dir="${webinf-lib.dir}"/> 
     </target>
 
     <!-- Check timestamp on files -->
