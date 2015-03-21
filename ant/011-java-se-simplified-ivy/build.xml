@@ -11,6 +11,7 @@
     <property name="dist.dir"               value="${basedir}/dist"/>
     <property name="dist-runnable.dir"      value="${basedir}/dist-runnable"/>
     <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="dist.sources-jar.file"  value="${dist.dir}/${ant.project.name}-sources.jar"/>
     <property name="src.dir"                value="${basedir}/src"/>
     <property name="javasource.dir"         value="${src.dir}"/>
     <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
@@ -102,6 +103,10 @@
       <jar destfile="${dist.dir}/${project.distname}.jar"
            basedir="${build.dir}"
       />
+      <jar destfile="${dist.sources-jar.file}" basedir="${src.dir}"
+                                       compress="${jar.compress}"
+           index="${jar.index}" update="${jar.update}" filesetmanifest="merge">
+      </jar>
     </target>
 
     <target name="clean-ivy" description="clean IVY">
