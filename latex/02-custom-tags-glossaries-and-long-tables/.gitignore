@@ -1,0 +1,17 @@
+*.aux
+*.lof
+*.log
+*.pdf
+*.toc
+*.bak
+*.out
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.idx
+*.ids
+*.acn
+*.acr
+*.ist
