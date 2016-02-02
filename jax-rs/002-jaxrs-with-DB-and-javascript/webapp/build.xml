@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="sample"  basedir="." default="publish"
+    xmlns:contrib="http://net.sf.antcontrib"
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+>
+
+    <description>
+        Web application providing a REST service
+    </description>
+
+    <property file="build.properties"/>
+    <property file="build.properties.defaults"/>
+
+    
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib.jar" />
+    <taskdef name="file-pronouncer" classname="mant.tasks.filepronouncer.FilePronouncer" classpath="${basedir}/tools/mant-tasks.jar"/> <!-- to do in the future: how to expose that in the antcontrib form? (with a uri prefix, e.g. <mant:file-pronounce> -->
+
+
+    <property name="compilelibs.dir"               value="${basedir}/lib-compile"/>
+    <property name="deploylibs.dir"                value="${basedir}/lib-deploy"/>
+    <property name="lib-ivy.dir"                   value="${basedir}/lib-ivy"/>
+    <property name="lib-ivy-deploy.dir"            value="${basedir}/lib-ivy-deploy"/>
+
+
+    <!--property name="tap-servlet.dir"               value="${basedir}/../../../components/tap-servlet-for-tap-v2.0"/>
+    <property name="tap-servlet.ant.file"          value="${tap-servlet.dir}/build.xml"/>
+    <property name="tap-servlet.dist.dir"          value="${tap-servlet.dir}/dist"/>
+
+
+    <property name="esavo-dbbusiness.dir"          value="${basedir}/../../../components/db-dal"/>
+    <property name="esavo-dbbusiness.ant.file"     value="${esavo-dbbusiness.dir}/build.xml"/>
+    <property name="esavo-dbbusiness.dist.dir"     value="${esavo-dbbusiness.dir}/dist"/-->
+
+    <property name="db-dal.dir"          value="${basedir}/../db-dal/"/>
+    <property name="db-dal.ant.file"     value="${db-dal.dir}/build.xml"/>
+    <property name="db-dal.dist.dir"     value="${db-dal.dir}/dist"/>
+
+    
+    <property name="businesslogic.dir"          value="${basedir}/../businesslogic/"/>
+    <property name="businesslogic.ant.file"     value="${businesslogic.dir}/build.xml"/>
+    <property name="businesslogic.dist.dir"     value="${businesslogic.dir}/dist"/>
+    
+    <property name="ivy.xml.file"           value="${basedir}/ivy.xml"/>
+    <property name="ivy.xml.control.file"   value="${basedir}/ivy.xml.control"/>
+
+    <path id="test.path">
+        <path refid="compile.classpath"/>
+        <pathelement location="${build.classes.dir}"/>
+        <!-- you may need to extend this list with the jars that are placed inside the /WEB-INF/lib 
+             directory of the resultant WAR (see the [lib] elements of the [war] target)            -->
+        <pathelement location="${lib.junit.jar}"/>
+        <pathelement location="${lib.hamcrest.jar}"/>
+    </path>
+
+    <target name="all" depends="dist, test, docs, check"
+            description="Build, pack, test, document and check the application"/>
+
+
+
+    <target name="build-db-dal">
+        <ant antfile="${db-dal.ant.file}" target="jar" inheritAll="false"/> 
+    </target>    
+
+    <target name="build-businesslogic">
+        <ant antfile="${businesslogic.ant.file}" target="jar" inheritAll="false"/> 
+    </target>    
+
+    <target name="fail-if-symlink-not-ok">
+        <file-pronouncer filePath="${symlink.file}" retProperty="status"/>
+        <echo message="the file-pronouncer task for file [${symlink.file}] returned: [${status}]"/>
+        <contrib:switch value="${status}">
+            <case value="symlink-ok">
+                <echo message="ok then"/>
+            </case>
+            <default>
+                <fail message="file [${symlink.file}] found to be in state: [${status}]; this is unexpected at this stage; investigate"/>
+            </default>
+        </contrib:switch>
+    </target>
+
+
+
+
+
+
+
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${db-dal.dist.dir}">
+        <include name="*.jar"/>
+      </fileset>            
+      <fileset dir="${businesslogic.dist.dir}">
+        <include name="*.jar"/>
+      </fileset>      
+      <!--fileset dir="${esavo-dbbusiness.dist.dir}">
+        <include name="*.jar"/>
+      </fileset>
+      <fileset dir="${tap-servlet.dist.dir}">
+        <include name="*.jar"/>
+      </fileset-->
+    </path>
+
+    <target name="test-ivy" description="Test ivy installation">
+        <ivy:settings />
+    </target>
+    
+<target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+    <contrib:outofdate>
+        <deletetargets all="true"/>
+        <sourcefiles>
+            <pathelement path="${ivy.xml.file}"/>
+        </sourcefiles>
+        <targetfiles>
+            <pathelement path="${ivy.xml.control.file}"/>
+        </targetfiles>
+        <sequential>
+            <ivy:resolve/> 
+            <ivy:retrieve conf="compile-time" sync="true"  pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="deploy-time"  sync="true"  pattern="${lib-ivy-deploy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <touch file="${ivy.xml.control.file}"/>
+        </sequential>
+    </contrib:outofdate>
+</target>
+
+    <macrodef name="fail-if-file-not-exists">
+        <attribute name="file" />
+        <attribute name="msg"/>
+        <sequential>
+        <contrib:if>
+            <not>
+                <available file="@{file}"/>
+            </not>
+            <then>
+                <fail message="@{msg}"/>
+            </then>
+        </contrib:if>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="fail-if-customized-file-not-exists">
+        <attribute name="customized-file" />
+        <sequential>
+        <fail-if-file-not-exists file="@{customized-file}"
+                                 msg ="File @{customized-file} does not exist - read the comments in file @{customized-file}.TEMPLATE"/>
+        </sequential>
+    </macrodef>
+
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${lib-ivy.dir}"/>
+        <mkdir dir="${lib-ivy-deploy.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <fail-if-customized-file-not-exists customized-file="${conf.context.file}"/>
+        <echo message="Project [${ant.project.name}] initialized; using ant jar: [${ant.core.lib}]"/>
+    </target>
+
+    <target name="fail-if-all-symlinks-in-dir-not-ok">
+      <contrib:foreach target="fail-if-symlink-not-ok" param="symlink.file">
+        <fileset dir="${the.dir}" casesensitive="yes">
+          <include name="*.jar"/>
+        </fileset>
+      </contrib:foreach>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
+            <fileset dir="${java.dir}">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+        <antcall target="fail-if-all-symlinks-in-dir-not-ok">
+            <param name="the.dir" value="${deploylibs.dir}"/>
+        </antcall>
+    </target>
+
+    <!--target name="compile" depends="init, resolve, build-dbbusiness, build-tap-servlet, resources, dry-compile"/-->
+    <target name="compile" depends="init, resolve, build-businesslogic, resources, dry-compile"/>    
+
+    <target name="dry-compile" depends="init" description="dry compile">
+        <echo message="compile classpath is: ${toString:compile.classpath}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <javac includeantruntime="false" srcdir="${java.dir}" destdir="${build.classes.dir}"
+               source="${javac.source}" target="${javac.target}" compiler="${javac.compiler}"
+               nowarn="${javac.nowarn}" debug="${javac.debug}" deprecation="${javac.deprec}">
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked"/> 
+        </javac>
+    </target>
+
+
+
+    <target name="clean-ivy" description="clean IVY">
+      <delete dir = "${lib-ivy.dir}"          failonerror="true" />
+      <delete dir = "${lib-ivy-deploy.dir}"   failonerror="true" />
+    </target>
+
+    <target name="clean-except-ivy"
+            description="Prepare for clean build (except for IVY deps)">
+      <delete dir  ="${build.dir}"            failonerror="true" />
+      <delete dir  ="${dist.dir}"             failonerror="true" />
+      <delete file ="${ivy.xml.control.file}" failonerror="true" />
+    </target>
+
+
+    <target name="clean"
+            depends="clean-except-ivy, clean-ivy"
+            description="Prepare for clean build (including IVY deps)">
+    </target>
+
+    <target name="cclean"
+            depends="clean">
+        <ant antfile="${tap-v2.0-lib.ant.file}"       target="clean"  inheritAll="false"/>
+        <ant antfile="${tap-servlet.ant.file}"      target="clean"  inheritAll="false"/> 
+        <ant antfile="${esavo-dbbusiness.ant.file}" target="clean"  inheritAll="false"/> 
+
+    </target>
+
+
+    <target name="rewar" depends="clean,war" description="clean and war anew"/>
+
+    <target name="dist" depends="war"/>
+    <target name="build" depends="war"/>
+    <target name="war" depends="compile" description="prepare war">
+      <mkdir dir="${dist.dir}"/>
+        <war destfile="${dist.war.file}" basedir="${war.basedir}"
+             webxml="${conf.webxml.file}" 
+             compress="${war.compress}" update="${war.update}">
+            <metainf file="${conf.context.file}"/>
+            <classes dir="${build.classes.dir}"/>
+            <lib dir="${compilelibs.dir}">
+              <include name ="*.jar"/>
+            </lib>
+            <lib dir="${deploylibs.dir}">
+              <include name ="*.jar"/>
+            </lib>
+            <lib dir="${lib-ivy-deploy.dir}">
+              <include name ="*.jar"/>
+            </lib>
+        </war>
+    </target>
+
+
+
+    <target name="publish" depends="war" description="publish to local configured web server">
+      <echo message="copying ${dist.war.file} to ${publish.dir}/${software.name}.war"/>
+      <copy file="${dist.war.file}" tofile="${publish.dir}/${software.name}.war"/>
+      <!-- Tomcat 7.0.26 does not recognize the /Context/@path in context.xml and so we rename the file
+           so as not to embed the version number in the web application context                        -->
+    </target>
+
+
+
+    <target name="republish"     depends="clean,                publish" description="clean and publish anew"/>
+
+
+    <target name="test" depends="build"
+            description="Run the unit tests (using JUnit or other specific tests)">
+        <mkdir dir="${build.testclass.dir}"/>
+        <mkdir dir="${build.jureport.dir}"/>
+        <javac includeantruntime="false" srcdir="test" destdir="${build.testclass.dir}" classpathref="test.path"/>
+        
+        <junit printsummary="${junit.summary}" showoutput="${junit.output}">
+            <classpath>
+                <path refid="test.path"/>
+                <pathelement location="${build.testclass.dir}"/>
+            </classpath>
+            <batchtest todir="${build.jureport.dir}" haltonfailure="${junit.halt}">
+                <fileset dir="${build.testclass.dir}" includes="**/*Test.class"/>
+            </batchtest>
+            <formatter type="xml"/>
+        </junit>
+        
+        <junitreport todir="${build.jureport.dir}">
+            <fileset dir="${build.jureport.dir}" includes="TEST-*.xml"/>
+            <report todir="${build.jureport.dir}"/>
+        </junitreport>
+    </target>
+
+    <target name="docs" depends="init"
+            description="Generate the API javadoc (and other documentation files)">
+        <mkdir dir="${build.javadoc.dir}"/>
+        
+        <javadoc sourcepath="${java.dir}" destdir="${build.javadoc.dir}"
+                 source="${javac.source}" packagenames="${javadoc.packages}"
+                 access="${javadoc.access}" failonerror="${javadoc.fail}">
+            <classpath refid="compile.classpath"/>
+            <link href="http://docs.oracle.com/javase/7/docs/api/"/>
+        </javadoc>
+    </target>
+
+
+    <target name="check" depends="build"
+            description="Check the sources for style violations (and report them)">
+        <mkdir dir="${build.csreport.dir}"/>
+        <taskdef resource="checkstyletask.properties" classpath="${lib.checkstyle.jar}"/>
+        
+        <checkstyle config="${checkstyle.config}" failonviolation="${checkstyle.fail}">
+            <classpath>
+                <path refid="compile.classpath"/>
+                <pathelement location="${build.classes.dir}"/>
+            </classpath>
+            <fileset dir="${java.dir}" includes="**/*.java"/>
+            <formatter type="xml" tofile="${build.csreport.dir}/csreport.xml"/>
+        </checkstyle>
+        
+        <xslt basedir="${build.csreport.dir}" includes="*.xml"
+              destdir="${build.csreport.dir}" style="${checkstyle.style}">
+            <param name="output.dir" expression="${build.csreport.dir}"/>
+            <param name="source.dir" expression="${basedir}/${java.dir}/"/>
+        </xslt>
+    </target>
+
+
+</project>

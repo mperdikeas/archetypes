@@ -1,0 +1,48 @@
+Apache Ant(TM) version 1.9.3 compiled on April 8 2014
+Buildfile: /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build.xml
+[2;32mDetected Java version: 1.7 in: /usr/lib/jvm/java-7-oracle/jre[m
+[2;32mDetected OS: Linux[m
+[2;32mparsing buildfile /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build.xml with URI = file:/home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build.xml[m
+[2;32mProject base dir set to: /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp[m
+[2;32mparsing buildfile jar:file:/usr/share/ant/lib/ant.jar!/org/apache/tools/ant/antlib.xml with URI = jar:file:/usr/share/ant/lib/ant.jar!/org/apache/tools/ant/antlib.xml from a zip file[m
+[2;32m [property] Loading /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build.properties[m
+[2;32m [property] Loading /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build.properties.defaults[m
+[2;32mparsing buildfile jar:file:/home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/tools/ant-contrib.jar!/net/sf/antcontrib/antlib.xml with URI = jar:file:/home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/tools/ant-contrib.jar!/net/sf/antcontrib/antlib.xml from a zip file[m
+[2;32m [macrodef] creating macro  fail-if-file-not-exists[m
+[2;32m [macrodef] creating macro  fail-if-customized-file-not-exists[m
+[2;32mBuild sequence for target(s) `clean' is [clean-except-ivy, clean-ivy, clean][m
+[2;32mComplete build sequence is [clean-except-ivy, clean-ivy, clean, init, test-ivy, resolve, build-dbbusiness, build-tap-servlet, resources, dry-compile, compile, war, dist, build, test, docs, check, all, build-tap-v2.0, fail-if-symlink-not-ok, publish, republish, fail-if-all-symlinks-in-dir-not-ok, rewar, cclean, ][m
+[2;32m
+clean-except-ivy:[m
+[2;36m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int/esa/esavo/tapservlet/regtap/TAPQueryStatisticsListener.class[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int/esa/esavo/tapservlet/regtap/TAPQueryStatisticsListenerFactory.class[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int/esa/esavo/tapservlet/regtap[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int/esa/esavo/tapservlet[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int/esa/esavo[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int/esa[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes/_int[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build/classes[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/build[m
+[2;36m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/dist[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/dist/regtap-v2.0.war[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/dist[m
+[2;36m   [delete] Deleting: /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/ivy.xml.control[m
+[2;32m
+clean-ivy:[m
+[2;36m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy/servlet-api-6.0.37.jar[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy/commons-lang3-3.1.jar[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy/tomcat-catalina-7.0.47.jar[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy[m
+[2;36m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy-deploy[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy-deploy/commons-dbutils-1.5.jar[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy-deploy/commons-io-2.4.jar[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy-deploy/postgresql-9.1-901.jdbc4.jar[m
+[2;32m   [delete] Deleting /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy-deploy/commons-lang3-3.1.jar[m
+[2;32m   [delete] Deleting directory /home/mperdikeas/esavo-reg-II/apps/tap-service-for-tap-v2.0/webapp/lib-ivy-deploy[m
+[2;32m
+clean:[m
+[2;32m
+BUILD SUCCESSFUL
+Total time: 0 seconds[m

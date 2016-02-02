@@ -1,0 +1,63 @@
+# build.properties.defaults
+#
+# <software name>  -  <software description>
+# Copyright (C) <year>  ESA - ESAC - Madrid, Spain
+
+### software name & version
+software.name=sample-jaxrs
+software.version=2.0
+
+### compiler flags & options
+javac.source=1.7
+javac.target=1.7
+javac.compiler=javac1.7
+
+javac.nowarn=false
+javac.debug=true
+javac.deprec=true
+
+### archiver flags & options
+war.compress=true
+war.basedir=web
+war.update=false
+
+### junit flags & options
+junit.summary=true
+junit.output=false
+junit.halt=false
+
+### javadoc flags & options
+javadoc.packages=*
+javadoc.access=protected
+javadoc.fail=true
+
+### checkstyle flags & options
+checkstyle.config=${basedir}/setup/sun_checks.xml
+checkstyle.fail=false
+checkstyle.style=${basedir}/setup/checkstyle.xsl
+
+### conf & java directories
+conf.dir=${basedir}/src/conf
+conf.webxml.file=${conf.dir}/web.xml
+conf.context.file=${conf.dir}/context.xml
+conf.manifest.file=${conf.dir}/MANIFEST.MF
+java.dir=src/java
+
+### build & dist directories
+build.dir=${basedir}/build
+build.classes.dir=${build.dir}/classes
+build.javadoc.dir=${build.dir}/javadoc
+build.testclass.dir=${build.dir}/testclass
+build.jureport.dir=${build.dir}/jureport
+build.csreport.dir=${build.dir}/csreport
+
+dist.dir=dist
+dist.war.file=${dist.dir}/${software.name}-v${software.version}.war
+
+### application third-party libs
+#lib.whatever.jar=lib/whatever-vX.x.jar
+
+### project third-party libs
+lib.junit.jar=${basedir}/tools/junit.jar
+lib.hamcrest.jar=${basedir}/tools/hamcrest-core.jar
+lib.checkstyle.jar=${basedir}/tools/checkstyle-all.jar

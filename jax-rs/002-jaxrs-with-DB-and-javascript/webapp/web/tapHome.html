@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>RegTAP query frontend</title>
+	</head>
+	<body>
+		<h1>RegTAP query frontend</h1>
+                First two sample queries from the <a href="http://www.ivoa.net/documents/RegTAP/20141030/PR-RegTAP-1.0-20141030.html#tth_sEc10">RegTAP recommendation</a>.
+                <br/>(Refer to the link above for more examples)
+                
+                <ul>
+                    <li>Find all TAP services; return their accessURLs</li>
+                    <pre class="listing">
+SELECT ivoid, access_url 
+FROM rr.capability
+NATURAL JOIN rr.interface
+WHERE standard_id like 'ivo://ivoa.net/std/tap' AND intf_type='vs:paramhttp'
+                    </pre>
+Other possible standard ids include: <tt>ivo://ivoa.net/std/registry</tt> (with <tt>intf_type</tt> equal to '<tt>vg:oaihttp</tt>'), <tt>ivo://ivoa.net/std/sia</tt>, <tt>ivo://ivoa.net/std/conesearch</tt> and <tt>ivo://ivoa.net/std/ssa</tt>.
+                    <li>Find all SIA services that might have spiral galaxies</li>
+                    <pre class="listing">
+SELECT ivoid, access_url 
+FROM rr.capability 
+  NATURAL JOIN rr.resource    
+  NATURAL JOIN rr.interface   
+  NATURAL JOIN rr.res_subject 
+WHERE standard_id='ivo://ivoa.net/std/sia'
+  AND intf_type='vs:paramhttp'
+  AND (
+    1=ivo_nocasematch(res_subject, 'spiral') OR
+    1=ivo_hasword(res_description, 'spiral') OR
+    1=ivo_hasword(res_title, 'spiral'))
+                    </pre>
+                </ul>
+		<h2>Synchronous ADQL query</h2>
+                Use this form to see the results in your browser.
+		<form action="/regtap/tap/sync" method="POST">  <!-- regtap needs to be the name of the web application (software.name in build.properties.defaults) -->
+			<input type="hidden" name="request" value="doQuery" />
+			<input type="hidden" name="format" value="votable" />
+			<input type="hidden" name="lang" value="adql" />
+			<input type="hidden" name="phase" value="RUN" />
+			<textarea name="query" rows="13" cols="120"></textarea>
+			<br /><input type="submit" value="Post" style="font-size:1.2em; font-weight: bold; color: blue"></input>
+		</form>
+		<h2>Asynchronous ADQL query</h2>
+                If using this form, suffix "<tt>/results/result</tt>" to the URL generated (once the <i>progression</i> parameter takes the value <i>FINISHED</i>)
+		<form action="/regtap/tap/async" method="POST"> <!-- regtap needs to be the name of the web application (software.name in build.properties.defaults) -->
+			<input type="hidden" name="request" value="doQuery" />
+			<input type="hidden" name="format" value="votable" />
+			<input type="hidden" name="lang" value="adql" />
+			<input type="hidden" name="phase" value="RUN" />
+			<textarea name="query" rows="13" cols="120"></textarea>
+			<br /><input type="submit" value="Post" style="font-size:1.2em; font-weight: bold; color: blue"></input>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="project-name" default="build" basedir="."
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    xmlns:contrib="http://net.sf.antcontrib"
+>
+
+    <description>
+        project description...
+    </description>
+    <mainclass name="_does_not_exist"/>
+    <dependencies>
+        <compile>
+            <dependency name="db-dal" coverage="yes" depTarget="../db-dal"/>
+            <!-- example use: -->
+            <!--dependency name="common"         coverage="yes" depTarget="../../../../components/common"/>
+            <dependency name="xml-validation" coverage="yes" depTarget="../../../../components/xml-validation/lib"/-->
+        </compile>
+        <test>
+            <!--dependency name="ivoa-util"      coverage="yes" depTarget="../../../../components/ivoa-util/"/-->
+        </test>
+    </dependencies>
+
+    <build-properties/>
+    <build-properties-default/>
+    <taskdef-ant-contrib/>
+
+
+    <property-lib-static-compile-dir/>
+    <property-lib-static-test-dir/>
+    <property-lib-ivy-compile-dir/>
+    <property-lib-ivy-test-dir/>
+
+    <property-ivy-xml-file/>
+    <property-ivy-xml-control-file/>
+
+    <dependency-dynamic-properties/>    
+
+    <compile-classpath/>
+
+    <test-classpath/>
+
+    <property-cobertura-dir/>
+    <property-instrumented-dir/>
+    <property-coverage-dir/>
+    <property-coverage-xml-dir/>
+    <property-coverage-summaryxml-dir/>
+    <property-coverage-html-dir/>
+    <property-cobertura-data-file/>
+
+    <cobertura-classpath/>
+    <taskdef-cobertura/>
+    <cobertura-auxpath>
+        <!--jarfile location="../../../../components/common/dist/esavo-common-v1.0.jar"/>
+        <jarfile location="../../../../components/xml-validation/lib/dist/xml-validation-v1.0.jar"/-->
+    </cobertura-auxpath>
+    <cobertura-instrumented-classpath/>
+
+    <target-all/>
+
+    <target-test-ivy/>
+
+    <target-resolve/>
+
+    <target-init/>
+
+    <target-dependency-builds/>
+
+    <compile/>
+    <dry-compile/>
+    <instrument/>
+
+    <build/>
+    <jar/>
+    <dry-jar/>
+
+    <clean-except-ivy/>
+    <clean-ivy/>
+    <clean/>
+    <cclean/>
+
+
+    <test/>
+    <docs/>
+    <check/>
+    <check-style/>
+    <dry-check-style/>
+    <findbugs/>
+    <dry-findbugs/>
+    <vspace/>
+    <pmd/>
+    <coverage-report-xml/>
+    <coverage-report-xml-summary/>
+    <coverage-report-html/>
+    <!--coverage/--><!-- TODO: enable that as well (for integration-level coverage)-->
+    <test-coverage/>
+
+
+
+    <run-classpath/>
+    <macrodef-run-generic/>
+    <run/>
+    <dry-run/>
+    <run-instrumented-coverage/>
+
+
+</project>
+
