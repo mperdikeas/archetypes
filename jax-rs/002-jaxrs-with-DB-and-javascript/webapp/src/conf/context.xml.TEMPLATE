@@ -27,13 +27,14 @@
 
   
 
-    <Resource name="jdbc/postgres/esavo-registry-database"
+    <Resource name="jdbc/postgres/silly-test-database"
               auth="Container"
               type="javax.sql.DataSource"
               driverClassName="org.postgresql.Driver"
-              url="jdbc:postgresql://localhost:5432/RegTAP-test"
-              username="TODO-replace-with-actual-user-name" password="TODO-replace-with-actual-password"
-              maxActive="60" maxIdle="0" maxWait="-1"/> <!-- maxIdle used to be 10 -->
+              url="jdbc:postgresql://localhost:5432/silly-test-db"
+              username="silly-test-user" password="guessme"
+              factory="org.apache.commons.dbcp.BasicDataSourceFactory" 
+              maxActive="2" maxIdle="0" maxWait="-1"/> <!-- maxActive and maxIdle have to change in a production setting -->
 
     <!-- NB: when deploying to Ubuntu 14.04 (not a supported configuration) I also had to add the following property in the Resource
              element above:
@@ -59,8 +60,4 @@
                  ls /usr/share/tomcat7/lib/ | grep jdbc
                 \===========================================================================================/
     -->
-
-
-
-
 </Context>

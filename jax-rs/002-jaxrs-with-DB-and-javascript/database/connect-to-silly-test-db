@@ -1,0 +1,1 @@
+psql -U silly-test-user silly-test-db

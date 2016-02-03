@@ -1,0 +1,17 @@
+include ${CREDNTLS}
+.PHONY: all drop-db create-db graph clean reslap-business-views check-env
+all: drop-db create-db graph
+
+drop-db: check-env
+	./drop-user-database.sh  $(USER) $(DB)
+create-db: check-env
+	./create-user-database.sh $(USER) $(DB) $(PWD)
+graph: check-env
+	java -jar ./schemaSpy_5.0.0.jar -t pgsql -host localhost -db $(DB) -s silly_schema -u $(USER) -p $(PWD) -o schema-viz -dp ./postgresql-9.1-901.jdbc4.jar
+clean: check-env
+	./drop-user-database.sh $(USER) $(DB)
+	rm -fr schema-viz
+check-env:
+ifndef CREDNTLS
+	$(error CREDNTLS is undefined)
+endif

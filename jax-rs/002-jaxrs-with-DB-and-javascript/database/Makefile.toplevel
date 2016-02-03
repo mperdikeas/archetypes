@@ -1,0 +1,6 @@
+.PHONY : safetyvalve do
+safetyvalve:
+	echo "safety valve - does nothing"
+do:
+	make -f Makefile.database CREDNTLS=credentials
+

@@ -23,14 +23,6 @@
     <property name="lib-ivy-deploy.dir"            value="${basedir}/lib-ivy-deploy"/>
 
 
-    <!--property name="tap-servlet.dir"               value="${basedir}/../../../components/tap-servlet-for-tap-v2.0"/>
-    <property name="tap-servlet.ant.file"          value="${tap-servlet.dir}/build.xml"/>
-    <property name="tap-servlet.dist.dir"          value="${tap-servlet.dir}/dist"/>
-
-
-    <property name="esavo-dbbusiness.dir"          value="${basedir}/../../../components/db-dal"/>
-    <property name="esavo-dbbusiness.ant.file"     value="${esavo-dbbusiness.dir}/build.xml"/>
-    <property name="esavo-dbbusiness.dist.dir"     value="${esavo-dbbusiness.dir}/dist"/-->
 
     <property name="db-dal.dir"          value="${basedir}/../db-dal/"/>
     <property name="db-dal.ant.file"     value="${db-dal.dir}/build.xml"/>
@@ -186,7 +178,6 @@
         </antcall>
     </target>
 
-    <!--target name="compile" depends="init, resolve, build-dbbusiness, build-tap-servlet, resources, dry-compile"/-->
     <target name="compile" depends="init, resolve, build-businesslogic, resources, dry-compile"/>    
 
     <target name="dry-compile" depends="init" description="dry compile">
