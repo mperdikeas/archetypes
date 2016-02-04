@@ -1,0 +1,3 @@
+Once deployed in a local Tomcat the application is accessible at:
+
+    http://localhost:8080/sample-jaxrs/jax-rs/application/path/boo
