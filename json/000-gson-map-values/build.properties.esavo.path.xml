@@ -1,0 +1,5 @@
+<project name="esavo.path" basedir=".">
+  <property name="esavo-reg-II.path" value="../../../esavo-reg-II"/>
+  <echo message="ESAVO path read as: [${esavo-reg-II.path}]"/>
+</project>
+
