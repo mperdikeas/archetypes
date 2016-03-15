@@ -1,0 +1,6 @@
+Run the webpack development server with:
+    npm run dev
+
+... and point your browser to:
+    http://localhost:8090/index.html
+

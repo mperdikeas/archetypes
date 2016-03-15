@@ -1,0 +1,18 @@
+{
+    "name": "webpack-dead-simple-with-own-modules-and-live-refresh",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack",
+        "dev": "webpack-dev-server --port 8090 --devtool eval --progress --colors --content-base build"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "webpack": "^1.12.14",
+        "webpack-dev-server": "^1.14.1"
+    }
+}
