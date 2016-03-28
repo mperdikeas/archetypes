@@ -1,0 +1,13 @@
+p.para {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    position: absolute;
+    top: 100px;
+    padding: 20px;
+    background-color: #ffe5ff;
+    font-size: 50%;
+    text-decoration: underline;
+    font-style: italic;
+    color: blue;
+}
