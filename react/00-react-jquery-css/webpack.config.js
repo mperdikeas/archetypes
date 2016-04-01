@@ -1,8 +1,10 @@
 'use strict';
 const path = require('path');
 
+const APPDIR = 'app/';
+
 const config = {
-    context: path.resolve(__dirname, 'app/'),
+    context: path.resolve(__dirname, APPDIR),
     entry: './main.js',
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -12,7 +14,8 @@ const config = {
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel'
+                loader: 'babel',
+                include: path.resolve(__dirname, 'app/')
             },{
                 test: /\.css$/,
                 loaders: ['style', 'css']

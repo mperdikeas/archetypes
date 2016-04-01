@@ -3,7 +3,10 @@ const     _ = require('lodash');
 const utils = require('./scripts/util.js');
 const     $ = require('jquery');
 const React = require('react');
-const ReactDOM = require('react-dom');
+/* this is only to show that since we are using the babel transpiler it is possible to use ECMAScript6 module style as well*/
+import ReactDOM from 'react-dom';
+
+
 $(document).ready(fireOff);
 
 function fireOff() {
