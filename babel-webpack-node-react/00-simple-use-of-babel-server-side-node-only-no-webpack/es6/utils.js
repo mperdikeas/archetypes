@@ -19,8 +19,8 @@ var assertPredicate = function(vs, pred, failMsg, successMsg) {
     var allEqual = true;
     var offending;
     loopOuter:
-    for (i = 0 ; i < vs.length ; i++) {
-        for (j = i+1; j < vs.length ; j++) {
+    for (var i = 0 ; i < vs.length ; i++) {
+        for (var j = i+1; j < vs.length ; j++) {
             if (!pred(vs[i], vs[j])) {
                 allEqual = false;
                 offending = {i: i, j: j};

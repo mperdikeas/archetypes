@@ -1,5 +1,10 @@
 'use strict';
 
+(function() {
+    const sourceMapSupport = require('source-map-support');
+    sourceMapSupport.install();
+})();
+
 const u = require('./utils.js');
 
 function test(f) {
@@ -28,4 +33,24 @@ function test(f) {
         return p1+p2+p3;
     }
     test(f);
+})();
+
+
+(function(){
+    // default parameter expressions
+    let i = 0;
+    function nextNumber() {
+        return ++i;
+    }
+    function add(a, b=nextNumber()) {
+        return a+b;
+    }
+
+    u.assertEqual([add(1,3), 4]);
+    u.assertEqual([add(1), 2]);
+    u.assertEqual([add(1), 3]);
+    u.assertEqual([add(1), 4]);
+    u.assertEqual([add(1), 5]);
+    u.assertEqual([add(10,20), 30]);
+
 })();

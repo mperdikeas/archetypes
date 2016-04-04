@@ -1,0 +1,26 @@
+{
+  "name": "02-default-parameter-values",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+      "build": "babel es6 --out-dir es5 --source-maps",
+      "watch": "babel es6 --out-dir es5 --source-maps --watch",
+      "start": "node es5/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.7.4",
+    "babel-preset-es2016": "^6.0.10",
+    "babel-runtime": "^6.6.1",
+    "webpack": "^1.12.14"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.7.4",
+    "source-map-support": "^0.4.0"
+  }
+}
