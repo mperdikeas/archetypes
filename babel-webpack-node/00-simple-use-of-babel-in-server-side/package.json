@@ -1,0 +1,19 @@
+{
+  "name": "07-default-parameter-values",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "start": "node build/bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2016": "^6.0.10",
+    "babel-runtime": "^6.6.1",
+    "webpack": "^1.12.14"
+  }
+}
