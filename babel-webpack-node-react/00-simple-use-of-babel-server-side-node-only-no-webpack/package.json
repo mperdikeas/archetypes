@@ -1,5 +1,5 @@
 {
-  "name": "02-default-parameter-values",
+  "name": "simple-babel-serverside-node-only-archetype",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
