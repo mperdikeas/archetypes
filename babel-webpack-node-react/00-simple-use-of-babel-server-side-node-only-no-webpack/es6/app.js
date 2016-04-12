@@ -8,8 +8,13 @@ require('babel-polyfill'); // this is important as Babel only transforms syntax 
     sourceMapSupport.install();
 })();
 
+import assert from 'assert';
+import _ from 'lodash';
 const u = require('./utils.js');
 
+
+assert(true);
+assert(_.isEqual([1,2,3], [1,2,3]));
 function test(f) {
     const s = 'foobarzar';
     u.assert(f('foo')               ===s);
