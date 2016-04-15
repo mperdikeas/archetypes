@@ -1,8 +1,5 @@
 'use strict';
 
-require('babel-polyfill'); // this is important as Babel only transforms syntax (e.g. arrow functions)
-                           // so you need this in order to support new globals or (in my experience) well-known Symbols
-
 (function() {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
