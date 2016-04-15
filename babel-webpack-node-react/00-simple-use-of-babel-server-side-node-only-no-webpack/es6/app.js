@@ -62,3 +62,10 @@ function test(f) {
     u.assertEqual([add(10,20), 30]);
 
 })();
+
+
+function *simplestIterator() {
+    yield 42;
+}
+for (let v of simplestIterator())
+    console.log(v);

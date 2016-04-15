@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel es6 --out-dir es5 --source-maps",
     "watch": "babel es6 --out-dir es5 --source-maps --watch",
-    "start": "node es5/app.js"
+    "start": "node es5/index.js"
   },
   "author": "",
   "license": "ISC",
