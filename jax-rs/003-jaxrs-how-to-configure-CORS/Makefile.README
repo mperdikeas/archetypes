@@ -1,3 +1,12 @@
 Use the targets available in the Makefile
 to observe the difference in the headers
 depending on whether or not CORS is used.
+
+
+You can also do a:
+
+    meld cors-not-present/ cors-present/
+
+... to examine the differences between the two projects.
+
+

@@ -4,7 +4,7 @@
 # Copyright (C) <year>  ESA - ESAC - Madrid, Spain
 
 ### software name & version
-software.name=jaxrs-example-no-cors
+software.name=jaxrs-example-cors
 software.version=2.0
 
 ### compiler flags & options
