@@ -1,0 +1,3 @@
+Use the targets available in the Makefile
+to observe the difference in the headers
+depending on whether or not CORS is used.
