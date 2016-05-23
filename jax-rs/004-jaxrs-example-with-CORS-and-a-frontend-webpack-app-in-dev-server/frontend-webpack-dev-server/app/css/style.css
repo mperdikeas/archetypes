@@ -1,0 +1,53 @@
+/* this rule is not really used */
+p.para {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    position: absolute;
+    top: 100px;
+    padding: 20px;
+    background-color: #ffe5ff;
+    font-size: 50%;
+    text-decoration: underline;
+    font-style: italic;
+    color: blue;
+}
+
+body {
+    background-color: slategrey;
+}
+
+
+#dir-path > ol {
+    padding: 5px;
+}
+
+#dir-path > ol > li {
+    display: inline;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: 1px solid white;
+    padding: 2px;
+}
+
+#dirs > ol > li {
+    display: inline;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: 1px solid white;
+    padding: 2px;
+}
+
+
+#dirs {
+    height: 20vh;
+    border: 2px solid white;
+}
+
+#files {
+    height: 50vh;
+    border: 2px solid white;
+}
+    

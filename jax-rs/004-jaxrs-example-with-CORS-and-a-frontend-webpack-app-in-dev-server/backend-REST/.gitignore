@@ -1,0 +1,9 @@
+WebContent/WEB-INF/classes/
+WebContent/WEB-INF/lib/
+dist/
+lib-ivy/
+ivy.xml.control
+build.properties
+lib-ivy-deploy/
+build/
+*.log
