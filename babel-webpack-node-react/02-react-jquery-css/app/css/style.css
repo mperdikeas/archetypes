@@ -1,13 +1,16 @@
-p.para {
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    position: absolute;
-    top: 100px;
-    padding: 20px;
-    background-color: #ffe5ff;
-    font-size: 50%;
-    text-decoration: underline;
-    font-style: italic;
-    color: blue;
+body {
+    background: #dddddd;
 }
+h1 {
+    font-size: 16px;
+    text-decoration: underline;
+    font-style: normal;
+    color: white;
+    background: purple;
+    padding: 10px;
+}
+
+table {
+    background: white;
+}
+    
