@@ -70,9 +70,14 @@ const App = React.createClass({
         msg: React.PropTypes.string.isRequired
     },
     render: function() {
-
+        const {a, ...rest} = {b: 2, a:1, c: 3};
         return (
             <div>
+                <div>
+                Rest property destructuring assignment works? <b>{JSON.stringify(rest)===JSON.stringify({b:2, c:3})
+                                                               ?"yes"
+                                                               :"sadly no"}</b>
+                </div>
                 <h1>{this.props.msg}</h1>
                 <Table columns={columns} data={data}/>
             </div>
