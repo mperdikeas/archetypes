@@ -1,0 +1,63 @@
+<Context unloadDelay="500000">
+
+    <!-- maxActive: Maximum number of database connections in pool. Make sure you
+         configure your mysqld max_connections large enough to handle
+         all of your db connections. Set to -1 for no limit.
+         -->
+
+    <!-- maxIdle: Maximum number of idle database connections to retain in pool.
+         Set to -1 for no limit.  See also the DBCP documentation on this
+         and the minEvictableIdleTimeMillis configuration parameter.
+         -->
+
+    <!-- maxWait: Maximum time to wait for a database connection to become available
+         in ms, in this example 10 seconds. An Exception is thrown if
+         this timeout is exceeded.  Set to -1 to wait indefinitely.
+         -->
+
+    <!-- username and password: MySQL username and password for database connections  -->
+
+    <!-- driverClassName: Class name for the old mm.mysql JDBC driver is
+         org.gjt.mm.mysql.Driver - we recommend using Connector/J though.
+         Class name for the official MySQL Connector/J driver is com.mysql.jdbc.Driver.
+         -->
+
+    <!-- url: The JDBC connection url for connecting to your MySQL database.
+         -->
+
+  
+
+    <Resource name="jdbc/postgres/silly-test-database"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5432/db-rest-react-webapp-typea"
+              username="db-rest-react-webapp-typea-user" password="db-rest-react-webapp-typea-user-pass"
+              factory="org.apache.commons.dbcp.BasicDataSourceFactory" 
+              maxActive="2" maxIdle="0" maxWait="-1"/> <!-- maxActive and maxIdle have to change in a production setting -->
+
+    <!-- NB: when deploying to Ubuntu 14.04 (not a supported configuration) I also had to add the following property in the Resource
+             element above:
+
+                 factory="org.apache.commons.dbcp.BasicDataSourceFactory" 
+
+            This is apparently related to the following issue:
+                http://stackoverflow.com/q/14712308/274677
+            ... where I followed this answer:
+                http://stackoverflow.com/a/14911716/274677
+
+             Also, on the same (Ubuntu 14.04) deployment I had the following situation on the [tomcat7]
+             libraries:
+                /===========================================================================================\
+                 $ ls /usr/share/tomcat7/lib/ | grep jdbc
+                 lrwxrwxrwx 1 root root   33 May 19 12:53 tomcat-jdbc-7.0.52.jar -> ../../java/tomcat-jdbc-7.0.52.jar
+                 lrwxrwxrwx 1 root root   33 May 19 12:52 tomcat-jdbc.jar -> ../../java/tomcat-jdbc-7.0.52.jar
+                \===========================================================================================/
+
+             Whereas, on [Ubuntu 12.04] the [factory] property is apparently not needed and the shared Tomcat libraries
+             are a bit different (no tomcat-jdbc jar is present):
+                /===========================================================================================\
+                 ls /usr/share/tomcat7/lib/ | grep jdbc
+                \===========================================================================================/
+    -->
+</Context>

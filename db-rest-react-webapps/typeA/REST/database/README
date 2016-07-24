@@ -1,0 +1,9 @@
+Copy the file credentials.TEMPLATE into file credentials:
+
+cp credentials.TEMPLATE credentials
+
+... and edit with correct password as appropriate.
+
+Run the following command to setup the database:
+
+    make -f Makefile.toplevel do

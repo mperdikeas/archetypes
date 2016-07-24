@@ -1,0 +1,4 @@
+Some of the GET paths made available by the application are (once deployed to a local TomCat):
+
+    http://localhost:8080/radoverview-jaxrs/jax-rs/missions/allSummaryInfo
+

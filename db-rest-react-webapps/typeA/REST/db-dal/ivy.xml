@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="ACME industries" module="component-x" status="integration"/>
+    <configurations>
+        <conf name="compile-time"  description="artifacts for the compile-time classpath"/>
+        <conf name="test-time"     description="artifacts for the test-time classpath (additional to the above)"/>
+    </configurations>
+    <dependencies>
+        <!-- compile-time dependencies -->
+        <dependency org="commons-dbutils"     name="commons-dbutils" rev="1.5"           conf="compile-time->master"/>        
+        <!--dependency org="commons-dbcp"        name="commons-dbcp"    rev="1.4"           conf="compile-time->master"/>
+        <dependency org="org.apache.commons"   name="commons-lang3"       rev="3.1"           conf="compile-time->master"/>
+        <dependency org="commons-collections"  name="commons-collections" rev="3.2.1"         conf="compile-time->master"/-->
+        <dependency org="com.google.guava"    name="guava"           rev="19.0"          conf="compile-time->master"/>
+        
+        <!-- test-time dependencies -->
+        <dependency org="postgresql"           name="postgresql"          rev="9.1-901.jdbc4" conf="test-time->default"/>
+        <!--dependency org="commons-io"           name="commons-io"          rev="2.4"           conf="test-time->default"/-->
+    </dependencies>
+</ivy-module>

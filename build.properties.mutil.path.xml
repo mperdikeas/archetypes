@@ -1,0 +1,6 @@
+<project name="mutil.path" basedir=".">
+ <dirname property="mutil.path.basedir" file="${ant.file.mutil.path}"/>     
+  <property file="${mutil.path.basedir}/build.properties.mutil.path"/>
+  <property name="mutil.path" value="${mutil.path.basedir}/${mutil.relative}"/>
+  <echo message="ESAVO path read as: [${mutil.path}]"/>
+</project>

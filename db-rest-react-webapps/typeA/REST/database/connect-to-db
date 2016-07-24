@@ -1,0 +1,1 @@
+psql -U db-rest-react-webapp-typea-user db-rest-react-webapp-typea
