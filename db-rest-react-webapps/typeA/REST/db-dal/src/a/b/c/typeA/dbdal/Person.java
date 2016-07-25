@@ -18,6 +18,10 @@ public class Person {
         this.yearOfBirth = yearOfBirth;
     }
 
+    // we need the no-arg constructor for JSON POST requests where the Java object has to be
+    // created out of the JSON serialization
+    public Person() {
+    }
 
     protected ToStringHelper toStringHelper() {
         return MoreObjects.toStringHelper(this)

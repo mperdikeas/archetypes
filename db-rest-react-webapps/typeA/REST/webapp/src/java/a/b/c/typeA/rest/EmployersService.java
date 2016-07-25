@@ -83,4 +83,14 @@ public class EmployersService extends BaseResource {
             throw new WebApplicationException(e);
         }
     }
+
+    @POST
+    @Path("/modifyPerson/{idx}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyPerson(Person newPerson, @PathParam("idx") int i) {
+        if (i!=newPerson.i)
+            throw new WebApplicationException();
+        System.out.printf("(%d) => %s\n", i, newPerson.toString());
+        return Response.status(200).build();
+    }
 }
