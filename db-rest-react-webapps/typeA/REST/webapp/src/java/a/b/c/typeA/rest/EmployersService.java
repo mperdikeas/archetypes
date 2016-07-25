@@ -25,7 +25,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.mail.internet.ContentDisposition;
     
@@ -36,7 +35,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import com.google.common.base.Joiner;
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import mutil.base.ShowStopper;
 import mutil.base.TimeUtils;
 
 import a.b.c.typeA.dbdal.Person;
@@ -60,13 +58,13 @@ public class EmployersService extends BaseResource {
     @GET
     @Path("/listPersons")
     @Produces(MediaType.TEXT_PLAIN)
-    public String listPersons() {
+    public Response listPersons() {
         System.out.printf("%s#%s()\n", EmployersService.class.getName(), "listPersons");
         try {
             ListPersonsResponse response =  backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
-            return Printer.print(response);
+            return Response.status(200).entity(Printer.print(response)).build();
         } catch (MalformedURLException e) {
-            throw new ShowStopper(e);
+            throw new WebApplicationException(e);
         }
     }
 
@@ -76,10 +74,11 @@ public class EmployersService extends BaseResource {
     @GET
     @Path("/listPersons2")
     @Produces(MediaType.APPLICATION_JSON)
-    public ListPersonsResponse listPersons2() {
+    public Response listPersons2() {
         System.out.printf("%s#%s()\n", EmployersService.class.getName(), "listPersons2");
         try {
-            return backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
+            ListPersonsResponse rv = backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
+            return Response.status(200).entity(rv).build();
         } catch (MalformedURLException e) {
             throw new WebApplicationException(e);
         }
