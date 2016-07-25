@@ -11,36 +11,22 @@ import java.io.OutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.PathSegment;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.mail.internet.ContentDisposition;
-    
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import javax.sql.DataSource;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+
+import javax.ws.rs.WebApplicationException;
+
+
 import com.google.common.base.Joiner;
-import com.google.common.base.Throwables;
-import com.google.common.base.Stopwatch;
-import org.apache.commons.lang3.StringEscapeUtils;
 
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
-import org.stringtemplate.v4.ST;
+import a.b.c.typeA.dbdal.IDBDAL;
+import a.b.c.typeA.dbdal.DBDAL;
+import a.b.c.typeA.dbdal.Person;
 
+
+
+import mutil.base.TimeUtils;
 
 public class EmployersServiceBackEnd implements IEmployersServiceBackEnd {
 
@@ -58,9 +44,19 @@ public class EmployersServiceBackEnd implements IEmployersServiceBackEnd {
 
 
     @Override
-    public String listPersons(String request) {
-        List<Person> people = db.listPeople();
-        return Printer.print(request, people);
+    public ListPersonsResponse listPersons(String request) {
+        List<Person> persons = db.listPersons();
+        try {
+            return new ListPersonsResponse(request
+                                           , TimeUtils.nowXMLGregorianZRnd().toString()
+                                           , persons);
+        } catch (DatatypeConfigurationException e) {
+            throw new WebApplicationException(e);
+        }
     }
-    
+
+    @Override
+    public IDBDAL getDBAPI() {
+        return db;
+    }
 }

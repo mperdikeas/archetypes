@@ -49,7 +49,7 @@
     <cobertura-classpath/>
     <taskdef-cobertura/>
     <cobertura-auxpath>
-        <!--jarfile location="../../../../components/common/dist/common-v1.0.jar"/>
+        <!--jarfile location="../../../../components/common/dist/common-v1.0.jar"/-->
     </cobertura-auxpath>
     <cobertura-instrumented-classpath/>
 

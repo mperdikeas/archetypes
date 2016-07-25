@@ -11,10 +11,11 @@ SET default_with_oids = false;
 -- SET search_path = doesnotexist;
 SET search_path = typea; -- this is not a best practice, use the line above if your PostgreSQL version allows it
 
-
-
-
 -- nothing yet
+
+INSERT INTO typea.person(fname, lname, comments, yearOfBirth) VALUES
+('John'    , 'Smith'       , 'a nondescript guy'           , 1980),
+('Mike'    , 'Peluta',       'better give him a wide berth', 1963);
 
 
 

@@ -21,8 +21,6 @@ import com.google.common.io.CharStreams;
 
 import mutil.base.ShowStopper;
 
-
-
 import mutil.jdbc.BaseDBFacade;
 import mutil.jdbc.JdbcUtils;
 
@@ -64,20 +62,18 @@ public class DBDAL extends BaseDBFacade implements IDBDAL {
         ResultSet         rs   = null;
         try {
             conn = getConnection();
-            final String SQL =  "SELECT i FROM oaipmh.dir      \n"+
-                                "WHERE mission       = ?       \n"+
-                                "AND   parent        IS NULL   \n"+
-                                "AND   componentName = ?         ";
+            final String SQL =  "SELECT a.i, a.fname, a.lname, a.comments, a.yearOfBirth \n"+
+                "FROM typea.person a;                                      ";
             ps = conn.prepareStatement(SQL);
             rs = ps.executeQuery();
             List<Person> rv = new ArrayList<>();
-            boolean beenHere = false;
             while (rs.next()) {
-                if (beenHere)
-                    throw new ShowStopper();
-                else
-                    beenHere = true;
-                rv.add(new Person());
+                int i           = JdbcUtils.rs_getInt(rs, "i");
+                String fname    =           rs.getString("fname");
+                String lname    =           rs.getString("lname");
+                String comments =           rs.getString("comments");
+                int yearOfBirth = JdbcUtils.rs_getInt(rs, "yearOfBirth");
+                rv.add(new Person(i, fname, lname, comments, yearOfBirth));
             }
             return rv;
         } catch (SQLException e) {

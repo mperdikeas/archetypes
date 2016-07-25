@@ -4,7 +4,8 @@
     xmlns:contrib="http://net.sf.antcontrib"
     xmlns:ivy="antlib:org.apache.ivy.ant"
 >
-
+    <import file="../../../../build.properties.mutil.path.xml"/>
+    <!-- by importing the above file, the property [mutil.path] becomes available and is used in the dependencies below -->
     <description>
         Web application providing a REST service
     </description>
@@ -22,10 +23,11 @@
     <property name="lib-ivy.dir"                   value="${basedir}/lib-ivy"/>
     <property name="lib-ivy-deploy.dir"            value="${basedir}/lib-ivy-deploy"/>
 
-    <property name="base.dir"          value="${basedir}/../../../components/base/"/>
-    <property name="base.ant.file"     value="${base.dir}/build.xml"/>
-    <property name="base.dist.dir"     value="${base.dir}/dist"/>
 
+   <property name="mutil.dir" value="${mutil.path}/"/>
+   <property name="mutil.ant.file" value="${mutil.dir}/build.xml"/>
+   <property name="mutil.dist.dir" value="${mutil.dir}/dist"/>    
+    
     <property name="db-dal.dir"          value="${basedir}/../db-dal/"/>
     <property name="db-dal.ant.file"     value="${db-dal.dir}/build.xml"/>
     <property name="db-dal.dist.dir"     value="${db-dal.dir}/dist"/>
@@ -46,8 +48,8 @@
             description="Build, pack, test, document and check the application"/>
 
 
-    <target name="build-base">
-        <ant antfile="${base.ant.file}" target="jar" inheritAll="false"/> 
+    <target name="build-mutil">
+        <ant antfile="${mutil.ant.file}" target="jar" inheritAll="false"/> 
     </target>    
 
     
@@ -55,7 +57,7 @@
         <ant antfile="${db-dal.ant.file}" target="jar" inheritAll="false"/> 
     </target>
 
-    <target name="build-deps" depends="build-base, build-db-dal">
+    <target name="build-deps" depends="build-mutil, build-db-dal">
     </target>
 
     
@@ -79,7 +81,7 @@
       <fileset dir="${lib-ivy.dir}">
         <include name ="*.jar"/>
       </fileset>
-      <fileset dir="${base.dist.dir}">
+      <fileset dir="${mutil.dist.dir}">
         <include name="*.jar"/>
       </fileset>
       <fileset dir="${db-dal.dist.dir}">
@@ -207,8 +209,7 @@
 
     <target name="cclean"
             depends="clean">
-        <ant antfile="${base.ant.file}"         target="clean"  inheritAll="false"/>
-        <ant antfile="${oai-pmh.ant.file}"         target="clean"  inheritAll="false"/>        
+        <ant antfile="${mutil.ant.file}"        target="clean"  inheritAll="false"/>
         <ant antfile="${db-dal.ant.file}"       target="clean"  inheritAll="false"/>
     </target>
 

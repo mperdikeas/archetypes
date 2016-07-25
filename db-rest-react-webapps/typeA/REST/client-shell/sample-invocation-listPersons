@@ -1,1 +1,1 @@
-curl http://localhost:8080/oaipmh/listPersons
+curl http://localhost:8080/db-rest-react-webapp-typeA-rest-webapp/jax-rs/oaipmh/listPersons

@@ -1,36 +1,18 @@
 package a.b.c.typeA.rest.printer;
 
-import javax.xml.datatype.DatatypeConfigurationException;
+import java.util.List;
+
 
 import mutil.json.JsonProvider;
+
+import a.b.c.typeA.rest.ListPersonsResponse;
 
 
 public class Printer {
 
-    public static String print(String request, List<Person> people) {
-        try {
-            String rv =  JsonProvider.toJson(new ListPersonsResponse(request
-                                                                     , TimeUtils.nowXMLGregorianZRnd().toString()
-                                                                     , people));
-            return rv;
-        } catch (DatatypeConfigurationException e) {
-            throw new RuntimeException(e);
-        }
+    public static String print(ListPersonsResponse response) {
+        return JsonProvider.toJson(response);
     }
 }
 
 
-class ListPersonsResponse {
-    public String      request;
-    public String      responseDate;
-    public List<Person> people;
-
-
-    public ListPersonsResponse(String request,
-                               String responseDate,
-                               List<Person> people) {
-        this.request      = request;
-        this.responseDate = responseDate;
-        this.people       = people;
-    }
-}

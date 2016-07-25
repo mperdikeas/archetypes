@@ -1,8 +1,9 @@
 package a.b.c.typeA.rest;
 
+import a.b.c.typeA.dbdal.IDBDAL;
 
 public interface IEmployersServiceBackEnd {
 
-    String listPersons                            (String request);
-
+    ListPersonsResponse listPersons (String request);
+    IDBDAL getDBAPI();
 }

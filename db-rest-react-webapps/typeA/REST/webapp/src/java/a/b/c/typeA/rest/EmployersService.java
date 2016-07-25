@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.net.URI;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
     
 import java.io.File;
 import java.io.OutputStream;
@@ -30,16 +31,16 @@ import javax.mail.internet.ContentDisposition;
     
 import javax.sql.DataSource;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+
 import com.google.common.base.Joiner;
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import mutil.base.ShowStopper;
+import mutil.base.TimeUtils;
 
-/*
-    Some typical URL I use for testing:
-
-        http://localhost:8080/oaipmh/listPersons
-
- */
+import a.b.c.typeA.dbdal.Person;
+import a.b.c.typeA.rest.printer.Printer;
 
 @Path("/oaipmh") 
 public class EmployersService extends BaseResource {
@@ -58,19 +59,29 @@ public class EmployersService extends BaseResource {
 
     @GET
     @Path("/listPersons")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String listPersons() {
         System.out.printf("%s#%s()\n", EmployersService.class.getName(), "listPersons");
-        return backEnd.listPersons(uriInfo.getRequestUri().getPath());
-    }
- 
-
-    private String baseURL() {
-        URI uri = uriInfo.getAbsolutePath(); // getBaseUri(); // uriInfo.getRequestUri().getPath();
-        String request = String.format("http://%s:%s%s", uri.getHost(), uri.getPort(), uri.getPath());
-        String xmlEscapedRequest = StringEscapeUtils.escapeXml(request);
-        return xmlEscapedRequest;
+        try {
+            ListPersonsResponse response =  backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
+            return Printer.print(response);
+        } catch (MalformedURLException e) {
+            throw new ShowStopper(e);
+        }
     }
 
-    
+    /* the second method showcases relying on implicit JSON-ification (in the first method we supply
+        our own JSON printer)
+     */        
+    @GET
+    @Path("/listPersons2")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ListPersonsResponse listPersons2() {
+        System.out.printf("%s#%s()\n", EmployersService.class.getName(), "listPersons2");
+        try {
+            return backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
+        } catch (MalformedURLException e) {
+            throw new WebApplicationException(e);
+        }
+    }
 }
