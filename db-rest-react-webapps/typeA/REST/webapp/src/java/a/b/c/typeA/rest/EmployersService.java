@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.net.URI;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
     
 import java.io.File;
 import java.io.OutputStream;
@@ -40,7 +39,7 @@ import mutil.base.TimeUtils;
 import a.b.c.typeA.dbdal.Person;
 import a.b.c.typeA.rest.printer.Printer;
 
-@Path("/oaipmh") 
+@Path("/es") 
 public class EmployersService extends BaseResource {
 
     private  IEmployersServiceBackEnd backEnd;
@@ -63,7 +62,7 @@ public class EmployersService extends BaseResource {
         try {
             ListPersonsResponse response =  backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
             return Response.status(200).entity(Printer.print(response)).build();
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             throw new WebApplicationException(e);
         }
     }
@@ -79,18 +78,20 @@ public class EmployersService extends BaseResource {
         try {
             ListPersonsResponse rv = backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
             return Response.status(200).entity(rv).build();
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             throw new WebApplicationException(e);
         }
     }
 
     @POST
-    @Path("/modifyPerson/{idx}")
+    @Path("/modifyPerson")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyPerson(Person newPerson, @PathParam("idx") int i) {
-        if (i!=newPerson.i)
-            throw new WebApplicationException();
-        System.out.printf("(%d) => %s\n", i, newPerson.toString());
-        return Response.status(200).build();
+    public Response modifyPerson(Person newPerson) {
+        try {
+            backEnd.modifyPerson(newPerson);
+            return Response.status(200).build();
+        } catch (Exception e) {
+            throw new WebApplicationException(e);
+        }
     }
 }

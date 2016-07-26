@@ -9,4 +9,5 @@ public interface IDBDAL {
     void closeExportedConnection(Connection conn);
 
     List<Person>    listPersons();
+    void modifyPerson(Person person);
 }

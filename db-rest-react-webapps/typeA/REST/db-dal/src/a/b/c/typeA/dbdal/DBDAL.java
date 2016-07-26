@@ -63,7 +63,8 @@ public class DBDAL extends BaseDBFacade implements IDBDAL {
         try {
             conn = getConnection();
             final String SQL =  "SELECT a.i, a.fname, a.lname, a.comments, a.yearOfBirth \n"+
-                "FROM typea.person a;                                      ";
+                                "FROM typea.person a                                     \n"+
+                                "ORDER BY a.i                                              ";
             ps = conn.prepareStatement(SQL);
             rs = ps.executeQuery();
             List<Person> rv = new ArrayList<>();
@@ -83,5 +84,32 @@ public class DBDAL extends BaseDBFacade implements IDBDAL {
         }
     }
 
+    @Override
+    public void modifyPerson(Person person) {
+        Connection        conn = null;
+        PreparedStatement ps   = null;
+        try {
+            conn = getConnection();
+            final String SQL =  "UPDATE typea.person                                     \n"+
+                                "SET fname = ?, lname = ?, comments = ?, yearOfBirth = ? \n"+
+                                "WHERE i=?                                                 ";
+            ps = conn.prepareStatement(SQL);
+            ps.setString       (    1, person.fname);
+            ps.setString       (    2, person.lname);
+            ps.setString       (    3, person.comments);
+            ps.setInt          (    4, person.yearOfBirth);
+            ps.setInt          (    5, person.i);
+            if (ps.executeUpdate() != 1) {
+                rollback(conn);
+                throw new ShowStopper();
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            rollback(conn);
+            throw new ShowStopper(e);
+        } finally {
+            DbUtils.closeQuietly(conn, ps, (ResultSet) null);
+        }
+    }
 
 }

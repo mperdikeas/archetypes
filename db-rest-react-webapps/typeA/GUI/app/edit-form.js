@@ -4,43 +4,30 @@ const     $ = require('jquery');
 const React = require('react');
 import assert from 'assert';
 
-import EditForm from './edit-form.js';
+import AppState        from './app-state.js';
+import PersonList      from './person-list.js';
+import PersonUnderEdit from './person-under-edit.js';
 
-const PersonUnderEdit = React.createClass({
+
+const EditForm = React.createClass({
     propTypes: {
-        personIdx   : React.PropTypes.number.isRequired,
-        getPerson   : React.PropTypes.func  .isRequired,
-        modifyPerson: React.PropTypes.func  .isRequired,
-        inTransit   : React.PropTypes.bool  .isRequired
+        person      : React.PropTypes.object.isRequired,
+        modifyPerson: React.PropTypes.func.isRequired,
+        onReset     : React.PropTypes.func.isRequired
     },
     getInitialState() {
-        return {person: this.props.getPerson(this.props.personIdx)};
+        return {
+            initialPerson: _.cloneDeep(this.props.person),
+            person: _.cloneDeep(this.props.person)
+        };
     },
-    componentWillReceiveProps: function (nextProps) {
-        assert(this.props.getPerson === nextProps.getPerson);
-        assert(this.props.onSubmit  === nextProps.onSubmit);
-        this.setState({person: this.props.getPerson(nextProps.personIdx)});
-    },
-    modifyPerson: function (person) {
-        this.props.modifyPerson(this.props.personIdx, person);
-    },
-    onReset: function (se) {
+    modifyPerson: function (se) {
         se.preventDefault();
-        this.setState(this.getInitialState());
-    },   
-    render: function() {
-        return (
-                <EditForm
-                    person={this.state.person}
-                    modifyPerson={this.modifyPerson}
-                    onReset={this.onReset}            
-                />
-        );
-    }/*
+        this.props.modifyPerson(this.state.person);
+    },    
     dataHasChanged: function() {
-        const initialPerson = this.getInitialState().person;
-        return !_.isEqual(initialPerson, this.state.person);
-    },
+        return !_.isEqual(this.state.initialPerson, this.state.person);
+    },    
     onChangeFName: function (se) {
         const newPerson = Object.assign({}, this.state.person, {fname: se.target.value});
         this.setState({person: newPerson});
@@ -52,16 +39,10 @@ const PersonUnderEdit = React.createClass({
     onChangeComments: function (se) {
         const newPerson = Object.assign({}, this.state.person, {comments: se.target.value});
         this.setState({person: newPerson});
-    },        
+    },            
     render: function() {
-        if (this.props.inTransit) {
-            return (
-                    <div>
-                        writing to database &hellip;
-                    </div>
-            );
-        } else return (
-                <form onSubmit={this.modifyPerson} onReset={this.onReset} noValidate={true}>
+        return (
+                <form onSubmit={this.modifyPerson} onReset={this.props.onReset} noValidate={true}>
                 <table>
                 <tbody>
                 <tr>
@@ -96,11 +77,11 @@ const PersonUnderEdit = React.createClass({
                 </tr>
                 </tbody>
                 </table>
-                </form>
+        </form>
         );
-    }*/
+    }
 });
 
-export default PersonUnderEdit;
+export default EditForm;
 
 

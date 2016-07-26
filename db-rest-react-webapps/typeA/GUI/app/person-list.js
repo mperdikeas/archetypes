@@ -3,20 +3,30 @@ const     _ = require('lodash');
 const     $ = require('jquery');
 const React = require('react');
 var      cx = require('classnames');
-
+import assert from 'assert';
 
 import {Table, Column, Cell} from 'fixed-data-table';
 require('fixed-data-table/dist/fixed-data-table.min.css');
 
 const PersonList = React.createClass({
     propTypes: {
-        persons: React.PropTypes.array,
-        editPerson: React.PropTypes.func.isRequired
-
+        persons   :  React.PropTypes.array,
+        editPerson:  React.PropTypes.func.isRequired,
+        inTransit :  React.PropTypes.bool.isRequired,
+        editable  :  React.PropTypes.bool.isRequired
     },
     render: function() {
         let persons;
-        if (this.props.persons)
+        if (this.props.inTransit) {
+            assert.equal(this.persons, null);
+            persons = (
+                <div>
+                   data being fetched from server &hellip;
+                </div>
+            );
+        } else {
+            console.log('PersonList is not in transit state');
+            assert(this.props.persons);
             persons = (
                     <Table
                         width={400}
@@ -55,7 +65,7 @@ const PersonList = React.createClass({
                         <Column
                                 width={80}
                                 flexGrow={0.8}                
-                                header={'birth-year'}
+                                header={'birth'}
                                 cell={ ({rowIndex})=>(<Cell>
                                                       {this.props.persons[rowIndex].yearOfBirth}
                                                       </Cell>
@@ -80,7 +90,8 @@ const PersonList = React.createClass({
                                    return (<Cell>
                                            <button
                                                type='button'
-                                           onClick={()=>{this.props.editPerson(rowIndex);}}
+                                               disabled={!this.props.editable}
+                                               onClick={()=>{this.props.editPerson(rowIndex);}}
                                            >
                                            edit
                                            </button>
@@ -91,10 +102,7 @@ const PersonList = React.createClass({
                     />                                                    
                     </Table>
             );
-        else
-            persons = (<div>
-                           data being fetched from server &hellip;
-                       </div>);
+        }
         return (<div>
                 <h1>list of persons</h1>
                 {persons}

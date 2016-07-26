@@ -56,6 +56,11 @@ public class EmployersServiceBackEnd implements IEmployersServiceBackEnd {
     }
 
     @Override
+    public void modifyPerson(Person person) {
+        db.modifyPerson(person);
+    }
+
+    @Override
     public IDBDAL getDBAPI() {
         return db;
     }
