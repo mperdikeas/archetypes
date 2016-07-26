@@ -12,8 +12,7 @@ import PersonUnderEdit from './person-under-edit.js';
 const EditForm = React.createClass({
     propTypes: {
         person      : React.PropTypes.object.isRequired,
-        modifyPerson: React.PropTypes.func.isRequired,
-        onReset     : React.PropTypes.func.isRequired
+        modifyPerson: React.PropTypes.func.isRequired
     },
     getInitialState() {
         return {
@@ -21,6 +20,10 @@ const EditForm = React.createClass({
             person: _.cloneDeep(this.props.person)
         };
     },
+    onReset: function (se) {
+        se.preventDefault();
+        this.setState(this.getInitialState());
+    },   
     modifyPerson: function (se) {
         se.preventDefault();
         this.props.modifyPerson(this.state.person);
@@ -42,7 +45,7 @@ const EditForm = React.createClass({
     },            
     render: function() {
         return (
-                <form onSubmit={this.modifyPerson} onReset={this.props.onReset} noValidate={true}>
+                <form onSubmit={this.modifyPerson} onReset={this.onReset} noValidate={true}>
                 <table>
                 <tbody>
                 <tr>
