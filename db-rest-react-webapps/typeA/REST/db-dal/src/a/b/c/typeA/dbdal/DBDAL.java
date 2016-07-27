@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.LinkedHashMap;
+import java.util.Arrays;
 import java.io.IOException;
 import java.sql.Connection; import java.sql.SQLException; import java.sql.PreparedStatement; import java.sql.ResultSet; import java.sql.Statement;
 
@@ -112,4 +113,64 @@ public class DBDAL extends BaseDBFacade implements IDBDAL {
         }
     }
 
+    @Override
+    public int createNewPerson(PersonBase person) {
+        Connection        conn              = null;
+        PreparedStatement ps                = null;
+        ResultSet         rs                = null;
+        Integer           autoIncKeyFromApi = null;        
+        try {
+            conn = getConnection();
+            final String SQL =  "INSERT INTO typea.person(fname, lname, comments, yearofbirth) \n"+
+                                "VALUES                  (    ?,     ?,        ?,           ?)   ";
+            ps = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString       (    1, person.fname);
+            ps.setString       (    2, person.lname);
+            ps.setString       (    3, person.comments);
+            ps.setInt          (    4, person.yearOfBirth);
+            if (ps.executeUpdate() != 1) {
+                rollback(conn);
+                throw new ShowStopper();
+            }
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                autoIncKeyFromApi = rs.getInt(1);
+            } else {
+                throw new ShowStopper();
+            }
+            conn.commit();
+            return autoIncKeyFromApi;
+        } catch (SQLException e) {
+            rollback(conn);
+            throw new ShowStopper(e);
+        } finally {
+            DbUtils.closeQuietly(conn, ps, (ResultSet) null);
+        }
+    }
+
+    @Override
+    public boolean deletePerson (int i) {
+        Connection        conn              = null;        
+        PreparedStatement ps                = null;
+        try {
+            conn = getConnection();
+            final String SQL =  "DELETE FROM typea.person \n"+
+                                "WHERE i = ?                ";
+            ps = conn.prepareStatement(SQL);
+            ps.setInt          (    1, i);
+            int rowCount = ps.executeUpdate();
+            if (!Arrays.asList(0,1).contains(rowCount))
+                throw new ShowStopper(String.format("Impossible affected row count: [%d]", rowCount));
+            conn.commit();
+            if (rowCount==1)
+                return true;
+            else
+                return false;
+        } catch (SQLException e) {
+            rollback(conn);
+            throw new ShowStopper(e);
+        } finally {
+            DbUtils.closeQuietly(conn, ps, (ResultSet) null);
+        }        
+    }
 }

@@ -1,0 +1,1 @@
+curl -v -X POST --header Content-Type:application/json -d@newPerson.json http://localhost:8080/db-rest-react-webapp-typeA-rest-webapp/jax-rs/es/createNewPerson

@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
@@ -37,7 +39,12 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import mutil.base.TimeUtils;
 
 import a.b.c.typeA.dbdal.Person;
+import a.b.c.typeA.dbdal.PersonBase;
+
 import a.b.c.typeA.rest.printer.Printer;
+
+import com.google.common.base.Throwables;
+
 
 @Path("/es") 
 public class EmployersService extends BaseResource {
@@ -61,7 +68,7 @@ public class EmployersService extends BaseResource {
         System.out.printf("%s#%s()\n", EmployersService.class.getName(), "listPersons");
         try {
             ListPersonsResponse response =  backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
-            return Response.status(200).entity(Printer.print(response)).build();
+            return Response.status(Response.Status.OK).entity(Printer.print(response)).build();
         } catch (Exception e) {
             throw new WebApplicationException(e);
         }
@@ -77,21 +84,53 @@ public class EmployersService extends BaseResource {
         System.out.printf("%s#%s()\n", EmployersService.class.getName(), "listPersons2");
         try {
             ListPersonsResponse rv = backEnd.listPersons(uriInfo.getAbsolutePath().toURL().toString());
-            return Response.status(200).entity(rv).build();
+            return Response.status(Response.Status.OK).entity(rv).build();
         } catch (Exception e) {
             throw new WebApplicationException(e);
         }
     }
 
-    @POST
+    @PUT
     @Path("/modifyPerson")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyPerson(Person newPerson) {
         try {
             backEnd.modifyPerson(newPerson);
-            return Response.status(200).build();
+            return Response.status(Response.Status.OK).build();
         } catch (Exception e) {
             throw new WebApplicationException(e);
         }
     }
+
+    /* In the below method I am using a different mechanism to communicate the exceptional
+       situation to the front end. I think this mechanism allows more information to be 
+       conveyed.
+     */
+
+    @POST
+    @Path("/createNewPerson")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)    
+    public Response createNewPerson(PersonBase newPerson) {
+        try {
+            int i = backEnd.createNewPerson(newPerson);
+            return Response.status(Response.Status.OK).entity(i).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Throwables.getStackTraceAsString(e)).build();
+        }
+    }
+
+    @DELETE
+    @Path("/deletePerson/{idx}")
+    public Response deletePerson(@PathParam("idx") int idx) {
+        try {
+            boolean successfulDeletion = backEnd.deletePerson(idx);
+            if (successfulDeletion)
+                return Response.status(Response.Status.OK).build();
+            else
+                return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Throwables.getStackTraceAsString(e)).build();
+        }
+    }        
 }

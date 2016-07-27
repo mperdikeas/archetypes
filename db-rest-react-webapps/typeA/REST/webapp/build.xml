@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="sample"  basedir="." default="publish"
+<project name="REST-web-app"  basedir="." default="publish"
     xmlns:contrib="http://net.sf.antcontrib"
     xmlns:ivy="antlib:org.apache.ivy.ant"
 >

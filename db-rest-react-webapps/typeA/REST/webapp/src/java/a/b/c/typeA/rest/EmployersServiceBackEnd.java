@@ -23,7 +23,7 @@ import com.google.common.base.Joiner;
 import a.b.c.typeA.dbdal.IDBDAL;
 import a.b.c.typeA.dbdal.DBDAL;
 import a.b.c.typeA.dbdal.Person;
-
+import a.b.c.typeA.dbdal.PersonBase;
 
 
 import mutil.base.TimeUtils;
@@ -58,6 +58,16 @@ public class EmployersServiceBackEnd implements IEmployersServiceBackEnd {
     @Override
     public void modifyPerson(Person person) {
         db.modifyPerson(person);
+    }
+
+    @Override
+    public int createNewPerson (PersonBase person) {
+        return db.createNewPerson(person);
+    }
+
+    @Override
+    public boolean deletePerson (int idx) {
+        return db.deletePerson(idx);
     }
 
     @Override

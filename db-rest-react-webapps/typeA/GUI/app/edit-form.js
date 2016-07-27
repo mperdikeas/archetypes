@@ -11,8 +11,9 @@ import PersonUnderEdit from './person-under-edit.js';
 
 const EditForm = React.createClass({
     propTypes: {
-        person      : React.PropTypes.object.isRequired,
-        modifyPerson: React.PropTypes.func.isRequired
+        person        : React.PropTypes.object.isRequired,
+        editPersonSave: React.PropTypes.func.isRequired,
+        cancel        : React.PropTypes.func.isRequired
     },
     getInitialState() {
         return {
@@ -24,9 +25,9 @@ const EditForm = React.createClass({
         se.preventDefault();
         this.setState(this.getInitialState());
     },   
-    modifyPerson: function (se) {
+    editPersonSave: function (se) {
         se.preventDefault();
-        this.props.modifyPerson(this.state.person);
+        this.props.editPersonSave(this.state.person);
     },    
     dataHasChanged: function() {
         return !_.isEqual(this.state.initialPerson, this.state.person);
@@ -45,7 +46,7 @@ const EditForm = React.createClass({
     },            
     render: function() {
         return (
-                <form onSubmit={this.modifyPerson} onReset={this.onReset} noValidate={true}>
+                <form onSubmit={this.editPersonSave} onReset={this.onReset} noValidate={true}>
                 <table>
                 <tbody>
                 <tr>
@@ -77,6 +78,7 @@ const EditForm = React.createClass({
                 <tr>
                     <td> <input type='submit' disabled={!this.dataHasChanged()}/> </td>
                     <td> <input type='reset'  disabled={!this.dataHasChanged()}/> </td>
+                    <td> <button type='button' onClick={this.props.cancel}>cancel</button> </td>
                 </tr>
                 </tbody>
                 </table>

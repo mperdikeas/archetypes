@@ -4,19 +4,23 @@ const     $ = require('jquery');
 const React = require('react');
 import assert from 'assert';
 
-import AppState        from './app-state.js';
-import PersonList      from './person-list.js';
-import PersonUnderEdit from './person-under-edit.js';
+import AppState                from './app-state.js';
+import PersonList              from './person-list.js';
+import PersonUnderEdit         from './person-under-edit.js';
+import PersonUnderCreation     from './person-under-creation.js';
 
 
 const App = React.createClass({
     propTypes: {
-        appState: React.PropTypes.object.isRequired,
-        persons: React.PropTypes.array,
-        personUnderEditIdx: React.PropTypes.number,
-        editPerson: React.PropTypes.func.isRequired,
-        modifyPerson: React.PropTypes.func.isRequired,
-        createNewPerson: React.PropTypes.func.isRequired
+        appState             : React.PropTypes.object.isRequired,
+        persons              : React.PropTypes.array,
+        personUnderEditIdx   : React.PropTypes.number,
+        editPersonStart      : React.PropTypes.func.isRequired,
+        editPersonSave       : React.PropTypes.func.isRequired,
+        deletePerson         : React.PropTypes.func.isRequired,
+        createNewPersonStart : React.PropTypes.func.isRequired,
+        createNewPersonSave  : React.PropTypes.func.isRequired,
+        revertToDisplayList  : React.PropTypes.func.isRequired
     },
     getPerson(idx) {
         return _.cloneDeep(this.props.persons[idx]);
@@ -26,12 +30,14 @@ const App = React.createClass({
         assert(this.props.appState.consistentWithPersons(this.props.persons));
         switch (this.props.appState) {
         case AppState.DISPLAY_LIST:
-        case AppState.DISPLAY_LIST_READING_FROM_DB:           // fall-through
+        case AppState.DISPLAY_LIST_READING_FROM_DB:
+        case AppState.DISPLAY_LIST_DELETING_AT_DB:            // intentional fall-through            
             return this.renderAtStateDisplayList();
-        case AppState.MODIFYING_EXISTING_PERSON:              // fall-through
+        case AppState.MODIFYING_EXISTING_PERSON:              // intentional fall-through
         case AppState.MODIFYING_EXISTING_PERSON_WRITING_TO_DB:
             return this.renderAtStateModifyingExistingPerson();
-        case AppState.CREATING_NEW_PERSON:
+        case AppState.CREATING_NEW_PERSON:                    // intentional fall-through
+        case AppState.CREATING_NEW_PERSON_WRITING_TO_DB:
             return this.renderAtStateCreatingNewPerson();
         default:
             throw new Error(`unhandled case ${this.props.appState}`);
@@ -39,17 +45,19 @@ const App = React.createClass({
     }
     , renderAtStateDisplayList() {
         assert( (this.props.appState===AppState.DISPLAY_LIST)                 ||
-                (this.props.appState===AppState.DISPLAY_LIST_READING_FROM_DB) );
+                (this.props.appState===AppState.DISPLAY_LIST_READING_FROM_DB) ||
+                (this.props.appState===AppState.DISPLAY_LIST_DELETING_AT_DB)  );
         let createNewButton;
         if (this.props.appState === AppState.DISPLAY_LIST)
             createNewButton=(
-                <button type='button' onClick={this.props.createNewPerson}>create new</button>
+                <button type='button' onClick={this.props.createNewPersonStart}>create new</button>
             );
         return (<div>
                 <PersonList
                     persons={this.props.persons}
-                    editPerson={this.props.editPerson}
-                    inTransit={this.props.appState===AppState.DISPLAY_LIST_READING_FROM_DB}
+                    editPersonStart={this.props.editPersonStart}
+                    deletePerson={this.props.deletePerson}
+                    inTransit={_.includes([AppState.DISPLAY_LIST_READING_FROM_DB, AppState.DISPLAY_LIST_DELETING_AT_DB], this.props.appState)}
                     editable={true}
                 />
                 {createNewButton}
@@ -62,7 +70,7 @@ const App = React.createClass({
             <div>
                 <PersonList
                     persons={this.props.persons}
-                    editPerson={this.props.editPerson}
+                    editPersonStart={this.props.editPersonStart}
                     inTransit={false}
                     editable={false}
                 />
@@ -70,14 +78,21 @@ const App = React.createClass({
                              id={this.props.personUnderEditIdx}
                              personIdx={this.props.personUnderEditIdx}
                              getPerson={this.getPerson}
-                             modifyPerson={this.props.modifyPerson}
+                             editPersonSave={this.props.editPersonSave}
                              inTransit={this.props.appState===AppState.MODIFYING_EXISTING_PERSON_WRITING_TO_DB}
+                             cancel={this.props.revertToDisplayList}
                 />
                 </div>
         );
     }
     , renderAtStateCreatingNewPerson() {
-        throw new Error('not implemented yet');
+        return (
+            <PersonUnderCreation
+                 createNewPersonSave={this.props.createNewPersonSave}
+                inTransit={this.props.appState===AppState.CREATING_NEW_PERSON_WRITING_TO_DB}
+                cancel={this.props.revertToDisplayList}
+            />
+        );
     }
 });
 

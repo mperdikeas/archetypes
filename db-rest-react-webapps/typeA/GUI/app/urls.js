@@ -9,6 +9,18 @@ function modifyPerson() {
 }
 
 
+function createNewPerson() {
+    return `${BASE}/createNewPerson`;
+}
 
-exports.listPersons  = listPersons;
-exports.modifyPerson = modifyPerson;
+
+function deletePerson(i) {
+    return `${BASE}/deletePerson/${i}`;
+}
+
+
+
+exports.listPersons     = listPersons;
+exports.modifyPerson    = modifyPerson;
+exports.createNewPerson = createNewPerson;
+exports.deletePerson    = deletePerson;

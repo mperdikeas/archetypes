@@ -10,10 +10,11 @@ require('fixed-data-table/dist/fixed-data-table.min.css');
 
 const PersonList = React.createClass({
     propTypes: {
-        persons   :  React.PropTypes.array,
-        editPerson:  React.PropTypes.func.isRequired,
-        inTransit :  React.PropTypes.bool.isRequired,
-        editable  :  React.PropTypes.bool.isRequired
+        persons         :  React.PropTypes.array,
+        editPersonStart :  React.PropTypes.func.isRequired,
+        deletePerson    :  React.PropTypes.func.isRequired,
+        inTransit       :  React.PropTypes.bool.isRequired,
+        editable        :  React.PropTypes.bool.isRequired
     },
     render: function() {
         let persons;
@@ -21,7 +22,7 @@ const PersonList = React.createClass({
             assert.equal(this.persons, null);
             persons = (
                 <div>
-                   data being fetched from server &hellip;
+                   data being fetched from server or written to server &hellip;
                 </div>
             );
         } else {
@@ -91,7 +92,7 @@ const PersonList = React.createClass({
                                            <button
                                                type='button'
                                                disabled={!this.props.editable}
-                                               onClick={()=>{this.props.editPerson(rowIndex);}}
+                                               onClick={()=>{this.props.editPersonStart(rowIndex);}}
                                            >
                                            edit
                                            </button>
@@ -99,7 +100,25 @@ const PersonList = React.createClass({
                                           );
                                }}
                                 width={30}
-                    />                                                    
+                    />
+                        <Column
+                                width={30}
+                                flexGrow={0.4}                
+                                header={''}
+                               cell={ ({rowIndex})=> {
+                                   return (<Cell>
+                                           <button
+                                               type='button'
+                                               disabled={!this.props.editable}
+                                               onClick={()=>{this.props.deletePerson(this.props.persons[rowIndex].i);}}
+                                           >
+                                           delete
+                                           </button>
+                                           </Cell>
+                                          );
+                               }}
+                                width={30}
+                    />
                     </Table>
             );
         }
