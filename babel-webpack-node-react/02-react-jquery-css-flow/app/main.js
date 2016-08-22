@@ -1,3 +1,4 @@
+/* @flow */
 const     _ = require('lodash');
 const utils = require('./scripts/util.js');
 const     $ = require('jquery');
@@ -8,7 +9,7 @@ import App      from './app.js';
 $(document).ready(doStuff);
 
 
-function doStuff() {
+function doStuff(): void {
 
     ReactDOM.render(<App msg={'some of the currently popular Javascript libraries / frameworks'}/>, $('#app')[0]);
 

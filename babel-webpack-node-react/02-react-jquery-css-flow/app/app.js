@@ -1,3 +1,4 @@
+/* @flow */
 require('./css/style.css');
 const     _ = require('lodash');
 const utils = require('./scripts/util.js');
@@ -6,7 +7,7 @@ const React = require('react');
 var      cx = require('classnames');
 import {Table} from 'reactabular';
 
-var data = [
+var data:Array<{name: string, type: string, description: string, followers: number, worksWithReactabular: boolean, id: number}> = [
     {
         name: 'React.js',
         type: 'library',
@@ -35,7 +36,7 @@ var data = [
 
 
 
-var columns = [
+var columns: Array<{property: string, header: string, headerClass?: string, cell?: function}> = [
     {
         property: 'name',
         header: 'Name',
@@ -86,6 +87,7 @@ const App = React.createClass({
 
 
 });
+
 
 export default App;
 
