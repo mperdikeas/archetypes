@@ -29,7 +29,16 @@ const config = {
             }
         ]
     },
-    plugins: [HTMLWebpackPluginConfig]
+    plugins: [HTMLWebpackPluginConfig],
+
+    
+    node___README___: {
+        text: `This is to account for what appears to be a bug:
+                   https://github.com/josephsavona/valuable/issues/9`
+    },
+    node: {
+        fs: "empty"
+    }
 };
 
 module.exports = config;
