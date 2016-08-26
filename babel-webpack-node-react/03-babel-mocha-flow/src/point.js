@@ -1,4 +1,6 @@
 // @flow
+require('source-map-support').install();
+
 'use strict';
 
 // The rationale behind using this idiom is described in:
@@ -12,10 +14,6 @@ require('babel-polyfill'); // this is important as Babel only transforms syntax 
 // ... will print 'undefined' without the the babel-polyfill being required.
 
 
-(function() {
-    const sourceMapSupport = require('source-map-support');
-    sourceMapSupport.install();
-})();
 
 import assert from 'assert';
 import _      from 'lodash';
@@ -35,6 +33,7 @@ class Point {
         return new Point(this.y, -this.x);
     }
     equals(p2: Point) {
+        dd
         return this.x===p2.x && this.y===p2.y;
     }
     add(otherPoint: Point): Point {
@@ -53,7 +52,11 @@ function between(x: number,a: number,b: number): boolean {
     return (x>=a) && (x<b);
 }
 
+function foo() {
+    throw new Error();
+}
+
 
 exports.Point = Point;
 exports.between = between;
-
+exports.foo = foo;

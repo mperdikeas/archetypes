@@ -1,8 +1,9 @@
+require('source-map-support').install();
 import 'babel-polyfill';
 const assert     = require('assert');
 import _ from 'lodash';
 
-import {Point, between} from '../lib/point.js';
+import {Point, between, foo} from '../lib/point.js';
 
 describe('Point', function () {
     describe('rotate90Right', function () {
@@ -59,4 +60,13 @@ describe('between', function () {
         assert( between(2,1,3));
         assert(!between(2,3,1));
     });
+    it('do stack traces work?' , function () {
+        assert(false);
+    });
+    it('do stack traces work? (2)' , function () {
+        (new Point(0,0)).equals(new Point(1,1));
+    });
+    it('do stack traces work? (3)' , function () {
+        foo();
+    });            
 });
