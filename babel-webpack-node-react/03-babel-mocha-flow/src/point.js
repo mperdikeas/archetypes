@@ -11,13 +11,14 @@ require('babel-polyfill'); // this is important as Babel only transforms syntax 
 //
 // ... will print 'undefined' without the the babel-polyfill being required.
 
+
 (function() {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
 })();
 
 import assert from 'assert';
-import _ from 'lodash';
+import _      from 'lodash';
 
 class Point {
     x: number;
@@ -44,6 +45,9 @@ class Point {
         return new Point(this.x, this.y);
     }
 }
+
+const a: Array<number>  = _.uniq([1,1,1,2,1,2,2]);
+
 
 function between(x: number,a: number,b: number): boolean {
     return (x>=a) && (x<b);
