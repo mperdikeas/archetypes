@@ -88,6 +88,9 @@ const App = React.createClass({
 
 });
 
+// $SuppressFlowFinding: this is just to showcase the functionality
+const a : number = 'anything but';
+
 
 export default App;
 
