@@ -1,8 +1,5 @@
-all:
+setup:
 	npm install
-	npm run build
-	npm run start
-clean:
+raze:
 	rm -fr node_modules/
-	rm -f es5/*.js
-	rm -f es5/*.map
+

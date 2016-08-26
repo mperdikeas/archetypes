@@ -1,4 +1,4 @@
 node_modules/
-es5/*.js
-es5/*.map
+lib/*
+!lib/dummy
 npm-debug.log
