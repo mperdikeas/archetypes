@@ -51,6 +51,7 @@ describe('Point', function () {
     });
 });
 
+if (false)
 describe('between', function () {
     it('should work' , function () {
         assert(!between(-0.00000000001, 0, 1)); 
@@ -60,7 +61,7 @@ describe('between', function () {
         assert( between(2,1,3));
         assert(!between(2,3,1));
     });
-    it('do stack traces work?' , function () {
+    it('do stack traces work?' , function () { // apparently the stack traces are not correctly reported
         assert(false);
     });
     it('do stack traces work? (2)' , function () {

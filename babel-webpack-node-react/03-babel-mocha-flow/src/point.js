@@ -33,7 +33,6 @@ class Point {
         return new Point(this.y, -this.x);
     }
     equals(p2: Point) {
-        dd
         return this.x===p2.x && this.y===p2.y;
     }
     add(otherPoint: Point): Point {
