@@ -12,7 +12,8 @@
     "build-watch": "babel src --out-dir lib --source-maps --watch",
     "start": "npm run build && node lib/point.js",
     "preinstall-globally": "npm run clean && flow check && npm run test && npm run build && cp src/point.js lib/point.js.flow",
-    "install-globally": "npm install -g ."
+      "install-globally": "npm install -g .",
+      "prepublish": "npm run clean && flow check && npm run test && npm run build && cp src/point.js lib/point.js.flow"
   },
   "author": "",
   "license": "ISC",
