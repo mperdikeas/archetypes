@@ -3,7 +3,7 @@ import 'babel-polyfill';
 const assert     = require('assert');
 import _ from 'lodash';
 
-import {Point, between, foo} from '../lib/point.js';
+import {Point, between, foo} from '../lib/index.js';
 
 describe('Point', function () {
     describe('rotate90Right', function () {
