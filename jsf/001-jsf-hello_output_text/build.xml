@@ -5,7 +5,7 @@
     <property name="project.artefact" value="${project.distname}.ear"/>
     <property name="dist.dir" value="dist"/>
     <property name="ear-lib.src.dir"       value="lib"/>
-    <property name="ear-lib.dest.preffix"  value="lib"/>
+    <property name="ear-lib.dest.prefix"   value="lib"/>
     <property name="project.artefact.path" value="./${dist.dir}/${project.artefact}"/>
 
     <!-- Local system paths -->
@@ -29,9 +29,10 @@
 
     <target name="ear" description="Building the ear file" depends="build-war"> <!-- building the war also builds the ejb .jar -->
       <mkdir dir="${dist.dir}"/>
+      <mkdir dir="./${ear-lib.src.dir}" />
       <ear destfile="${project.artefact.path}" appxml="conf/application.xml">
 
-        <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.preffix}">
+        <zipfileset dir="./${ear-lib.src.dir}" prefix="${ear-lib.dest.prefix}">
               <include name="commons-lang3-3.1.jar"/>
               <include name="mutil.jar"/>
               <include name="joda-time-2.1.jar"/>

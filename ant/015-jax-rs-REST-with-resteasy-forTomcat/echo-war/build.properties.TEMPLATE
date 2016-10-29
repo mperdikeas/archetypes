@@ -1,0 +1,3 @@
+# cp this file as build.properties, remove this comment line and customize according to your environment
+publish.dir=/var/lib/tomcat7/webapps/
+war-project.name=echo

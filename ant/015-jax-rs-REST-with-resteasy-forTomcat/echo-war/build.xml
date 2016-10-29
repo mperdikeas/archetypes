@@ -2,7 +2,7 @@
     xmlns:contrib="http://net.sf.antcontrib"
     xmlns:ivy="antlib:org.apache.ivy.ant"
     name="${war-project.name}"  basedir="." default="publish">
-    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib.jar" />
 
 
     <property file="build.properties"/>        <!-- IMPORTANT: at the top -->
@@ -17,6 +17,17 @@
     <property name="compilelibs.dir"           value="${basedir}/lib"/>
     <property name="lib-ivy.dir"               value="${basedir}/lib-ivy"/>
 
+    <target name="assert-that-build.properties-exists">
+        <contrib:if>
+            <available file="${basedir}/build.properties"/>
+            <then>
+                <echo message="file [build.properties] is available. Proceeding ..."/>
+            </then>
+            <else>
+                <fail message="file [build.properties] does not exist. Read instructions in file build.properties.TEMPLATE"/>
+            </else>
+        </contrib:if>
+    </target>
 
     <path id = "compile.classpath">
       <fileset dir="${compilelibs.dir}">
@@ -112,7 +123,9 @@
     <target name="rewar" depends="clean,war"/>
     <target name="dry-rewar" depends="clean,dry-war"/>
 
-    <target name="war" depends="compile">
+    <target name="war" depends="compile, dry-war"/>
+
+    <target name="dry-war" depends="dry-compile, assert-that-build.properties-exists">
       <mkdir dir="${dist.dir}"/>
       <war
         needxmlfile="false"
@@ -122,20 +135,7 @@
        </war>
     </target>
 
-    <target name="dry-war" depends="dry-compile">
-      <mkdir dir="${dist.dir}"/>
-      <war
-        needxmlfile="false"
-        basedir="${webroot.dir}"
-        warfile="${project.artefact.file}">
-        <exclude name="WEB-INF/src/**"/>
-       </war>
-    </target>
-
-    <target name="publish" depends="war" description="publish to local configured web server">
-      <echo message="copying ${project.artefact.file} to ${publish.dir}"/>
-      <copy file="${project.artefact.file}" todir="${publish.dir}"/>
-    </target>
+    <target name="publish" depends="war, dry-publish" description="publish to local configured web server"/>
 
     <target name="dry-publish" depends="dry-war" description="publish to local configured web server (without resolving IVY)">
       <echo message="copying ${project.artefact.file} to ${publish.dir}"/>

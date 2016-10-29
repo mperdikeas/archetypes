@@ -1,4 +1,5 @@
-WebContent/WEB-INF/classes/
-WebContent/WEB-INF/lib/
+build.properties
+web/WEB-INF/classes/
+web/WEB-INF/lib/
 dist/
 lib-ivy/

@@ -34,6 +34,7 @@
 
     <!-- Copy any resource or configuration files -->
     <target name="resources">
+        <mkdir dir="${javasource.dir}"/>
         <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
             <fileset dir="${javasource.dir}">
             <patternset>
