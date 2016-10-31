@@ -1,0 +1,164 @@
+<project
+    xmlns:contrib="http://net.sf.antcontrib"
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="${war-project.name}"  basedir="." default="publish">
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib.jar" />
+
+
+    <property file="build.properties"/>        <!-- IMPORTANT: at the top -->
+    <property name="webroot.dir"               value="${basedir}/web"/>
+    <property name="webinf.dir"                value="${webroot.dir}/WEB-INF"/>
+    <property name="webinf-lib.dir"            value="${webinf.dir}/lib"/>
+    <property name="dist.dir"                 value="${basedir}/dist"/>
+    <property name="project.artefact.file"     value="${dist.dir}/${war-project.name}.war"/>
+    <property name="conf.dir"                  value="${basedir}/conf"/>
+    <property name="src.dir"                   value="${basedir}/src"/>
+    <property name="javasource.dir"            value="${src.dir}"/>
+    <property name="compilelibs.dir"           value="${basedir}/lib"/>
+    <property name="deploylibs.dir"            value="${basedir}/lib-deploy"/>
+    <property name="lib-ivy.dir"               value="${basedir}/lib-ivy"/>
+
+    <target name="assert-that-build.properties-exists">
+        <contrib:if>
+            <available file="${basedir}/build.properties"/>
+            <then>
+                <echo message="file [build.properties] is available. Proceeding ..."/>
+            </then>
+            <else>
+                <fail message="file [build.properties] does not exist. Read instructions in file build.properties.TEMPLATE"/>
+            </else>
+        </contrib:if>
+    </target>
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${lib-ivy.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+    <target name="test-ivy" description="Test ivy installation">
+        <ivy:settings />
+    </target>
+    
+    <target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+        <ivy:resolve/> 
+        <ivy:retrieve conf="compile-time" sync="true"  pattern="${lib-ivy.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+        <ivy:retrieve conf="deploy-time"  sync="true"  pattern="${webinf-lib.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+        <!-- go ahead and create the IVY directories in the off-chance that nothing was configured to be retrieved via Ivy-->
+        <mkdir dir="${lib-ivy.dir}"/> 
+        <mkdir dir="${webinf-lib.dir}"/> 
+    </target>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+        <mkdir dir="${lib-ivy.dir}"/>
+        <mkdir dir="${webinf-lib.dir}"/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
+            <fileset dir="${javasource.dir}">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+        <copy todir="${webinf-lib.dir}">
+          <fileset dir="${compilelibs.dir}">
+            <include name ="*.jar"/>
+          </fileset>
+          <fileset dir="${deploylibs.dir}">
+            <include name ="*.jar"/>
+          </fileset>
+        </copy>
+    </target>
+
+    <target name="compile" depends="prepare, resolve, resources">
+        <echo message="compile classpath is: ${toString:compile.classpath}"/>
+        <mkdir  dir="${webinf.dir}/classes"/>
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8"/> <!-- added that on 2012-XI-13 althought not fully convinced" -->
+        </javac>
+    </target>
+
+    <target name="dry-compile" depends="prepare,resources">
+        <echo message="compile classpath is: ${toString:compile.classpath}"/>
+        <mkdir  dir="${webinf.dir}/classes"/>
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" destdir="${webinf.dir}/classes"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <compilerarg line="-encoding utf-8"/> <!-- added that on 2012-XI-13 althought not fully convinced" -->
+        </javac>
+    </target>
+
+
+
+    <target name="clean-ivy" description="clean IVY">
+      <delete dir ="${lib-ivy.dir}"/>
+    </target>
+
+    <target name="clean-except-ivy"
+            description="Prepare for clean build (except for IVY deps)">
+      <delete dir="${webinf.dir}/classes"/>
+      <delete dir="${dist.dir}"/>
+      <delete dir="${webinf-lib.dir}"/>
+    </target>
+
+
+    <target name="clean"
+            depends="clean-except-ivy, clean-ivy"
+            description="Prepare for clean build (including IVY deps)">
+    </target>
+
+
+    <target name="rewar" depends="clean,war"/>
+    <target name="dry-rewar" depends="clean,dry-war"/>
+
+    <target name="war" depends="compile, dry-war"/>
+
+    <target name="dry-war" depends="dry-compile, assert-that-build.properties-exists">
+      <mkdir dir="${dist.dir}"/>
+      <war
+        needxmlfile="false"
+        basedir="${webroot.dir}"
+        warfile="${project.artefact.file}">
+        <exclude name="WEB-INF/src/**"/>
+       </war>
+    </target>
+
+    <target name="publish" depends="war, dry-publish" description="publish to local configured web server"/>
+
+    <target name="dry-publish" depends="dry-war" description="publish to local configured web server (without resolving IVY)">
+      <echo message="copying ${project.artefact.file} to ${publish.dir}"/>
+      <copy file="${project.artefact.file}" todir="${publish.dir}"/>
+    </target>
+
+    <target name="republish"     depends="clean,                publish" description="clean and publish anew"/>
+    <target name="dry-republish" depends="clean-except-ivy, dry-publish" description="clean and dry publish anew"/>
+
+    <!--target name="unpublish">
+        <delete quiet="true" verbose="true">
+            <fileset dir="${publish.dir}" includes="${project.artefact}"/>
+            <fileset dir="${publish.dir}" includes="${project.artefact}.*"/>
+        </delete>
+    </target-->
+
+
+</project>

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      >
+    <o:importConstants type="mjb44.calculator_with_navigation.SessionKeys"/>
+    <h:head>
+        <title>Calculator</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <div>
+                <span>Welcome #{sessionScope[SessionKeys.LOGGEDIN_USER]}!</span>
+                <h:form>
+                    <h:commandButton value="logout" action="#{user.logout}"/>
+                </h:form>
+            </div>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="left"></h:outputLabel>
+                    <h:inputText id="left" value="#{calculator.left}"></h:inputText>
+                    <h:message for="left"></h:message>
+
+                    <h:outputLabel value="right"></h:outputLabel>
+                    <h:inputText id="right" value="#{calculator.right}">
+                    </h:inputText>
+                    <h:message for="right"></h:message>
+
+                </h:panelGrid>
+                <h:commandButton action="#{calculator.show}" value="show"></h:commandButton>
+                <h:commandButton action="#{calculator.clear}" value="reset"
+                                 immediate="true"></h:commandButton>
+                <h:messages layout="table"></h:messages>
+            </h:form>
+
+            <h:panelGrid rendered="#{calculator.result!=0}" columns="3">
+                <h:form>
+                    <h:outputLabel value="#{result}"></h:outputLabel>
+                    <h:inputText id="result" value="#{calculator.result}">
+                    </h:inputText>
+                    <h:message for="result"></h:message>
+                </h:form>
+            </h:panelGrid>
+        </f:view>
+    </h:body>
+</html>

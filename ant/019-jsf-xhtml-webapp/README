@@ -1,0 +1,13 @@
+Provenance:
+
+    ../001-celsius-fahrenheit-converter/
+
+To use:
+    [1] ant
+    [2] go to "http://localhost:8080/jsf-calculator-with-navigation"
+        (mutatis mutandis based on the value you've configured
+        for property [war-project.name] in file [build.properties])
+
+
+This has been tested against Apache Tomcat 7.0.26.0
+

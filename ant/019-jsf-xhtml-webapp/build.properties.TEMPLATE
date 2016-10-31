@@ -1,0 +1,7 @@
+# These are just sample values and are not really taken into account.
+# To configure your build.properties file do the following:
+# [1] cp build.properties.TEMPLATE build.properties
+# [2] edit build.properties with the appropriate values for your environment
+# [3] observe that build.properties has to stay out of git
+publish.dir=/var/lib/tomcat7/webapps/
+war-project.name=jsf-calculator-with-navigation
