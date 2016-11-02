@@ -4,4 +4,3 @@
 # [2] edit build.properties with the appropriate values for your environment
 # [3] observe that build.properties has to stay out of git
 publish.dir=/var/lib/tomcat7/webapps/
-war-project.name=jsf-calculator-with-navigation

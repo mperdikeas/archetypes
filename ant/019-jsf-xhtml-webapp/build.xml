@@ -5,7 +5,8 @@
     <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib.jar" />
 
 
-    <property file="build.properties"/>        <!-- IMPORTANT: at the top -->
+    <property file="build.properties"/>           <!-- IMPORTANT: at the top -->
+    <property file="build.properties.defaults"/>
     <property name="webroot.dir"               value="${basedir}/web"/>
     <property name="webinf.dir"                value="${webroot.dir}/WEB-INF"/>
     <property name="webinf-lib.dir"            value="${webinf.dir}/lib"/>
