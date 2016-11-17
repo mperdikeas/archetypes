@@ -1,0 +1,4 @@
+I recently added Flow validations to the Mocha code, but had some issues.
+Check the responses to this:
+http://stackoverflow.com/q/40666571/274677
+and update the archetype accordingly.

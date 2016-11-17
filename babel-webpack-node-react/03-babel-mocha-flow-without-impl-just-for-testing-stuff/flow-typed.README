@@ -1,0 +1,9 @@
+Remember to periodically update library definitions
+by doing a:
+
+    $ flow-typed install
+    
+or:
+
+    $ flow-typed install --overwrite
+
