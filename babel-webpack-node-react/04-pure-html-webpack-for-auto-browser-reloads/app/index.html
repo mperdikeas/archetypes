@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <script src="http://localhost:8090/webpack-dev-server.js"></script>
+    <meta charset='utf-8'/>
+    <style>
+     * {
+       margin: 0;
+       padding: 0;
+     }
+     html, body {
+       height: 100%;
+     }
+     #app {
+       border: 3px solid black;
+       width: 100%;
+       height: calc(100% - 3em);
+       box-sizing: border-box;
+       padding: 10px;
+     }
+     .item {
+       background: lightBlue;
+       border: 1px solid coral;
+       margin: 10px;
+       width: 50%;
+       height: calc( (100% - (2*10px + (5+1)*10px)) / 5 );
+       }
+    </style>
+  </head>
+  <body>
+    <div style='height: 3em'>
+      The need to anchor a containing element with precise height or at least use percentages all the
+      way up to the &lt;body&gt; and &lt;html&gt; elements is explained <a href='http://stackoverflow.com/a/5658062/274677'>here</a>, <a href='http://stackoverflow.com/a/1622097/274677'>here</a> and <a href='http://stackoverflow.com/a/31728799/274677'>here</a>
+    </div>
+    <div id='app'>
+      <div class='item'> 1 </div>
+      <div class='item'> 2 </div>
+      <div class='item'> 3 </div>
+      <div class='item'> 4 </div>
+      <div class='item'> 5 </div>
+      
+    </div>
+  </body>
+</html>

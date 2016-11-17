@@ -1,0 +1,9 @@
+[ignore]
+    <PROJECT_ROOT>/node_modules/react/node_modules/fbjs/
+[include]
+
+[libs]
+
+[options]
+    module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow/stub/css-modules.js'
+    suppress_comment= \\(.\\|\n\\)*\\$SuppressFlowFinding:
