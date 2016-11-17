@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "clean": "rm -fr lib/",
-    "raze": "npm run clean && rm -fr node_modules",
+    "raze": "rm -fr node_modules",
     "flow-check": "flow check",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "flow.README": [
