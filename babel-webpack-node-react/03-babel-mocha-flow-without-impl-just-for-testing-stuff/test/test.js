@@ -2,13 +2,16 @@
 
 require('source-map-support').install();
 import 'babel-polyfill';
+
 import {assert} from 'chai';
 import _ from 'lodash';
 
 
 
 describe('it', function () {
-    it('fails flow but succeeds0 as a test', function() {
+    // The below two (2) tests are expected to fail with Flow (this confirms that
+    // Flow is properly type-checking the mocha files)
+    it('fails flow but succeeds as a test', function() {
         const f: number = 'string';
     });
     it('this is spotted by Flow and serves to show that Flow when type-checking Mocha has access to the declarations defined in [decls] - succeeds as a test', function() {
