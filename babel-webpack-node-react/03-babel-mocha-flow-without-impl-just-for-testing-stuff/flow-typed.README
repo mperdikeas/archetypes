@@ -7,3 +7,8 @@ or:
 
     $ flow-typed install --overwrite
 
+NB: it is possible that flow-typed may not be declared in the
+    development dependencies in [package.json], this may be because
+    it was globally installed with:
+
+    $ sudo npm install -g flow-typed
