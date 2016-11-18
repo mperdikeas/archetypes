@@ -4,7 +4,8 @@
 declare module "chai" {
 
     declare class AssertClass {
-         static isFalse       (o: any)        : void;    
+         static isBoolean     (o: any)        : void;
+         static isFalse       (o: any)        : void;
          static instanceOf    (x: any, t: any): void;
          static isNumber      (x: any)        : void;
          static isString      (x: any)        : void;
