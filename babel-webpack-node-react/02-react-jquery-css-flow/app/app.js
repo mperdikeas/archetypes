@@ -1,7 +1,7 @@
 /* @flow */
 require('./css/style.css');
 const     _ = require('lodash');
-const utils = require('./scripts/util.js');
+const utils = require('./util.js');
 const     $ = require('jquery');
 const React = require('react');
 var      cx = require('classnames');
@@ -19,7 +19,7 @@ var data:Array<{name: string, type: string, description: string, followers: numb
     {
         name: 'Angular.js',
         type: 'framework',
-        description: 'bloated; really does a lot of stuff wrong.',
+        description: 'bloated; comes from Microsoft (yikes); really does a lot of stuff wrong.',
         followers: 35159,
         worksWithReactabular: false,
         id: 456
@@ -36,7 +36,7 @@ var data:Array<{name: string, type: string, description: string, followers: numb
 
 
 
-var columns: Array<{property: string, header: string, headerClass?: string, cell?: function}> = [
+var columns: Array<{property: string, header: string, headerClass?: ?string, cell?: F2}> = [
     {
         property: 'name',
         header: 'Name',

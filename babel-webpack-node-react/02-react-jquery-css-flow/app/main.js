@@ -1,6 +1,5 @@
 /* @flow */
 const     _ = require('lodash');
-const utils = require('./scripts/util.js');
 const     $ = require('jquery');
 import React    from 'react';
 import ReactDOM from 'react-dom';

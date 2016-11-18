@@ -17,6 +17,10 @@ const config = {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
     },
+    resolve_I_AM_NOT_SURE_WHY_I_HAD_THAT_IT_DOESNT_SEEM_NECESSARY: {
+        root: path.resolve('./build'),
+        extensions: ['', '.js']
+    },
     module: {
         loaders: [
             {
@@ -26,6 +30,11 @@ const config = {
             },{
                 test: /\.css$/,
                 loaders: ['style', 'css']
+            },{
+                test: /\.(png|jpg|jpeg|gif|woff)$/,
+                loader: 'url-loader?limit=9999&name=[path][name].[ext]'
+            },{
+                test: /\.README$/, loader: 'null'
             }
         ]
     },
