@@ -27,8 +27,9 @@ class Point {
         this.x = x;
         this.y = y;
     }
-    // $SuppressFlowFinding: obvious mistyping just to demonstrate use of line-specific suppression
-    rotate90Right(): boolean {
+    rotate90Right(): Point {
+        // $SuppressFlowFinding: obvious mistyping just to demonstrate use of line-specific suppression
+        const n: number = 'problem';
         return new Point(-this.y, this.x);
     }
     rotate90Left(): Point {
@@ -43,6 +44,9 @@ class Point {
     }
     clone(): Point {
         return new Point(this.x, this.y);
+    }
+    static foo(): number {
+        return 3;
     }
 }
 
