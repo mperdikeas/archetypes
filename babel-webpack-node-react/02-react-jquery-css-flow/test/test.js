@@ -1,3 +1,4 @@
+/* @flow */
 require('source-map-support').install();
 import 'babel-polyfill';
 const assert     = require('chai').assert;
