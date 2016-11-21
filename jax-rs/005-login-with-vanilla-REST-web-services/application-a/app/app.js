@@ -26,22 +26,27 @@ const App = React.createClass({
     },
     loginPost: function() {
         const data = {  username: this.state.username
-                      , password: this.state.password};
-        //        $.post( LOGIN_URL, data, this.loginResponse);
-        $.ajax({
-            type: 'post',
-            url: LOGIN_URL,
-            crossDomain: true,
-            dataType: 'text',
-            xhrFields: {
-                withCredentials: true
-            },
-            data: {
-                username : this.state.username,
-                password : this.state.password
-            },
-            success: this.loginResponse
-        });
+                        , password: this.state.password};
+
+        // see: http://stackoverflow.com/a/24689738/274677
+        const COOKIES_ARE_BY_DEFAULT_NOT_INCLUDED_IN_CORS_REQUESTS = false;
+        if (COOKIES_ARE_BY_DEFAULT_NOT_INCLUDED_IN_CORS_REQUESTS)
+            $.post( LOGIN_URL, data, this.loginResponse);
+        else
+            $.ajax({
+                type: 'post',
+                url: LOGIN_URL,
+                crossDomain: true,
+                dataType: 'text',
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {
+                    username : this.state.username,
+                    password : this.state.password
+                },
+                success: this.loginResponse
+            });
     },
     loginResponse: function(returnedData: any, status: string) {
         console.log(`loginResponse method called with status: ${status} and returned data: ${returnedData}`);

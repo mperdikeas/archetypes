@@ -8,9 +8,9 @@ software.name=jaxrs-example-cors
 software.version=2.0
 
 ### compiler flags & options
-javac.source=1.7
-javac.target=1.7
-javac.compiler=javac1.7
+javac.source=1.8
+javac.target=1.8
+javac.compiler=javac1.8
 
 javac.nowarn=false
 javac.debug=true
