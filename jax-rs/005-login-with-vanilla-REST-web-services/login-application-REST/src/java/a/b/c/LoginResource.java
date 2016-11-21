@@ -33,14 +33,14 @@ import javax.sql.DataSource;
 
 
 @Path("/somePath")
-public class DomainSpecificResource {
+public class LoginResource {
 
     @Context
     ServletContext context;
 
-    public DomainSpecificResource() {
+    public LoginResource() {
         System.out.printf("%s instance hashcode: [%s]\n"
-                          , DomainSpecificResource.class.getName()
+                          , LoginResource.class.getName()
                           , System.identityHashCode(this));
     }
 
@@ -51,8 +51,13 @@ public class DomainSpecificResource {
                           , @FormParam("password") String password) {
         SessionIdentifierGenerator generator = (SessionIdentifierGenerator) context.getAttribute(Constants.RANDOM_GENERATOR);
         if (username.equals(password)) {
-            NewCookie cookie = new NewCookie("session-id", generator.nextSessionId());
-            return Response.ok("true").cookie(cookie).build();
+            NewCookie cookie = null;
+            if (true) {
+                cookie = new NewCookie("session-id", generator.nextSessionId());
+            } else {
+                cookie = new NewCookie("session-id", generator.nextSessionId(), "", "127.0.0.1", 2, null, 10, false);
+            }
+            return Response.ok("true").cookie(cookie).build();            
         } else
             return Response.ok("false").build();
     }
