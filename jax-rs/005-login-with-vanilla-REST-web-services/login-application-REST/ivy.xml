@@ -9,13 +9,16 @@
     </configurations>
     <dependencies>
 
-        <dependency org="com.sun.jersey"      name="jersey-bundle"        rev="1.19"   conf="compile-time->master"/>        
-        <dependency org="com.sun.jersey"      name="jersey-core"          rev="1.19"   conf="compile-time->master"/>
-        <dependency org="com.sun.jersey"      name="jersey-server"        rev="1.19"   conf="compile-time->master"/>
-        <dependency org="javax.servlet"       name="javax.servlet-api"    rev="3.1.0"  conf="compile-time->master"/>
+        <dependency org="com.sun.jersey"       name="jersey-bundle"        rev="1.19"   conf="compile-time->master"/>        
+        <dependency org="com.sun.jersey"       name="jersey-core"          rev="1.19"   conf="compile-time->master"/>
+        <dependency org="com.sun.jersey"       name="jersey-server"        rev="1.19"   conf="compile-time->master"/>
+        <dependency org="javax.servlet"        name="javax.servlet-api"    rev="3.1.0"  conf="compile-time->master"/>
+        <dependency org="com.google.code.gson" name="gson"                 rev="2.8.0"  conf="compile-time->master"/>
 
-        <dependency org="com.sun.jersey"      name="jersey-bundle"        rev="1.19"   conf="deploy-time->default"/>
-        <dependency org="com.sun.jersey"      name="jersey-json"          rev="1.19"   conf="deploy-time->default"/>
+        
+        <dependency org="com.sun.jersey"       name="jersey-bundle"        rev="1.19"   conf="deploy-time->default"/>
+        <dependency org="com.sun.jersey"       name="jersey-json"          rev="1.19"   conf="deploy-time->default"/>
+        <dependency org="com.google.code.gson" name="gson"                 rev="2.8.0"  conf="deploy-time->default"/>
 
     </dependencies>
 </ivy-module>

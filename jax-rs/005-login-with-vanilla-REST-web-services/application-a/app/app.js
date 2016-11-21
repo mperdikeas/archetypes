@@ -24,7 +24,8 @@ const App = React.createClass({
         console.log('x');        
         this.setState({password: ev.target.value});
     },
-    loginPost: function() {
+    loginPost: function(ev: SyntheticEvent) {
+        ev.preventDefault();
         const data = {  username: this.state.username
                         , password: this.state.password};
 
@@ -54,10 +55,11 @@ const App = React.createClass({
     render: function() {
         return (
             <div>
-                <input type='text' value={this.state.username} onChange={this.updateUsername}/><br/>
-                <input type='text' value={this.state.password} onChange={this.updatePassword}/>
-                <br/>
-                <input type='button' value='login' onClick={this.loginPost}/>
+                <form onSubmit={this.loginPost}>
+                    <input type='text' value={this.state.username} onChange={this.updateUsername}/><br/>
+                    <input type='text' value={this.state.password} onChange={this.updatePassword}/><br/>
+                    <input type='submit' value='login'/>
+                </form>
             </div>
         );
     }
