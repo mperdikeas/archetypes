@@ -4,12 +4,11 @@ Steps to run the demo:
 Ensure that the Rest (backend) application is already deployed in Tomcat (port 8080).
 This can be accomplished with:
 
-    ant -f ../backend-REST/build.xml clean && ant -f ../backend-REST/build.xml 
+    ant -f ../login-application-REST/build.xml clean && ant -f ../login-application-REST/build.xml 
 
     the deployed applciation has HTTP Access Control CORS (Cross-origin resource sharing) configured.
 
-[1] npm install 
-[2] npm run build 
-[3] npm run dev
+[1] make
+[2] npm run dev
 [4] connect to http://localhost:8090
 
