@@ -6,15 +6,22 @@ const React = require('react');
 import ReactDOM from 'react-dom';
 
 const LOGIN_URL = "http://127.0.0.1:8080/jaxrs-example-cors/jax-rs/somePath/login";
+const LOGOUT_URL = "http://127.0.0.1:8080/jaxrs-example-cors/jax-rs/somePath/logout";
 
 const SyntheticEvent = require('react/lib/SyntheticEvent');
 
 const App = React.createClass({
     propTypes: {
-//        msg: React.PropTypes.string.isRequired
+        //        msg: React.PropTypes.string.isRequired
     },
     getInitialState: function() {
-        return {username: '', password: ''};
+        return {
+            loggedIn: false,
+            alreadyLoggedInFlag: false,
+            logoutFailure: false,
+            username: '',
+            password: ''
+        };
     },
     updateUsername: function (ev: SyntheticEvent) {
         console.log('x');
@@ -42,26 +49,93 @@ const App = React.createClass({
                 xhrFields: {
                     withCredentials: true
                 },
-                data: {
-                    username : this.state.username,
-                    password : this.state.password
-                },
-                success: this.loginResponse
-            });
+                data: data
+            })
+            .done(this.loginResponse)
+            .fail(this.loginResponseFail);
     },
-    loginResponse: function(returnedData: any, status: string) {
-        console.log(`loginResponse method called with status: ${status} and returned data: ${returnedData}`);
+    logoutPost: function(ev: SyntheticEvent) {
+        ev.preventDefault();
+        const data = {  username: this.state.username };
+
+        $.ajax({
+            type: 'post',
+            url: LOGOUT_URL,
+            crossDomain: true,
+            dataType: 'text',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: data})
+            .done(this.logoutResponse)
+            .fail(this.logoutResponseFail)
+    },    
+    loginResponse: function(rvJSON: string, status: string, jqXHR: any) {
+        console.log(`loginResponse method called with status: ${status} and returned data: ${rvJSON}`);
+        const rv = JSON.parse(rvJSON);
+        if (rv.data === 'ok')
+            this.setState({loggedIn: true, alreadyLoggedInFlag: false, logoutFailure: false});
+        else if ((rv.data === 'alrlc') || (rv.data === 'alrle'))
+            this.setState({loggedIn: true, alreadyLoggedInFlag: true, logoutFailure: false});
+    },
+    loginResponseFail: function(jqXHR: any, status: string, errorThrown: any) {
+        console.log(`loginResponseFail method called with status: ${status} and error: ${errorThrown}`);
+        throw new Error();
+    },
+    logoutResponse: function(rvJSON: string, status: string, jqXHR: any) {
+        console.log(`logoutResponse method called with status: ${status} and returned data: ${rvJSON}`);
+        const rv = JSON.parse(rvJSON);
+        if (rv.data === 'ok')
+            this.setState({loggedIn: false, alreadyLoggedInFlag: false, logoutFailure: false});
+        else if (rv.data === 'fail-not-logged-in')
+            this.setState({loggedIn: true, alreadyLoggedInFlag: true, logoutFailure: true});
+    },
+    logoutResponseFail: function(jqXHR: any, status: string, errorThrown: any) {
+        console.log(`logoutResponseFail method called with status: ${status} and error: ${errorThrown}`);
+        throw new Error();
+    },                                  
+    backToLoginScreen: function() {
+        this.setState({loggedIn: false});
     },
     render: function() {
-        return (
-            <div>
-                <form onSubmit={this.loginPost}>
+        if (!this.state.loggedIn) {
+            return (
+                    <div>
+                    <form onSubmit={this.loginPost}>
                     <input type='text' value={this.state.username} onChange={this.updateUsername}/><br/>
                     <input type='text' value={this.state.password} onChange={this.updatePassword}/><br/>
                     <input type='submit' value='login'/>
-                </form>
-            </div>
-        );
+                    </form>
+                    </div>
+            );
+        } else {
+            const header = (()=>{
+                if (this.state.alreadyLoggedInFlag)
+                    return (
+                            <h3>user is already logged-in</h3>
+                    );
+                else
+                    return (
+                            <h3>successful login</h3>                        
+                    );
+            })();
+            const footer = (()=>{
+                if (this.state.logoutFailure)
+                    return (
+                        <h4>some weird logout failure detected </h4>
+                    );
+                else return null;
+            })();
+            return (
+                    <div>
+                    {header}
+                private data &hellip;
+                    <input type='button' value='back to login screen' onClick={this.backToLoginScreen}/>
+                    <input type='button' value='logout' onClick={this.logoutPost}/>
+                    {footer}
+                    </div>
+            );
+        }
     }
 
 
@@ -72,39 +146,3 @@ const a : number = 'anything but';
 
 
 export default App;
-
-/*
-$(document).ready(fireOff);
-
-function fireOff() {
-    utils.assert(6===_.range(0, 6).length, `problem`);
-    console.log('libraries have apparently loaded OK');
-    doStuff();
-}
-
-function doStuff() {
-    console.log('in do stuff');
-    $.getJSON('http://localhost:8080/jaxrs-example-cors/jax-rs/somePath/foo', function(data) {
-            console.log(data);
-            showFirstPage(data);
-    });
-
-}
-
-function showFirstPage(msg) {
-
-    const Message = React.createClass({
-        propTypes: {
-            msg: React.PropTypes.string.isRequired
-        },
-        render: function render() {
-            return (
-                    <div>The return value retrieved via Ajax (from a different host) was: <b>{this.props.msg}</b></div>
-            );
-        }
-    });
-
-    ReactDOM.render(<Message msg={JSON.stringify(msg)}/>, $('#app')[0]);
-
-}
-*/

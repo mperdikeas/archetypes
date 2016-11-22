@@ -59,7 +59,10 @@ public class LoginResource {
                           , @FormParam("username") String username
                           , @FormParam("password") String password) {
         SessionIdentifierGenerator generator = (SessionIdentifierGenerator) context.getAttribute(Constants.RANDOM_GENERATOR);
-        if (requestCookie!=null) {
+        if (requestCookie!=null) { // Note 1: Here we make the outrageous assumption that the mere presence of the cookie
+                                   // (irrespectively of its value) means that the user is actually logged-in.
+                                   // This is because this is a throw-away prototype and I don't want to be bother with
+                                   // a database.
             if (authenticates(username, password))
                 return Response.ok(JsonProvider.toJson(LoginStatus.ALREADY_LOGGED_CORRECT.wrapper())).build();
             else
@@ -77,4 +80,21 @@ public class LoginResource {
         } else
             return Response.ok(JsonProvider.toJson(LoginStatus.FAIL.wrapper())).build();
     }
+
+    @Path("/logout")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logout(  @CookieParam(Constants.SESSION_ID_COOKIE) Cookie requestCookie
+                           , @FormParam("username") String username) {
+        System.out.printf("logout called\n");
+        if (requestCookie==null) { // See: Note 1
+            System.out.printf("logout when not cookie is present case\n");
+            return Response.ok(JsonProvider.toJson(LogoutStatus.FAIL_NOT_LOGGED_IN.wrapper())).build();
+        } else {
+            System.out.printf("cookie wil be erased\n");
+            NewCookie eraserCookie = new NewCookie(Constants.SESSION_ID_COOKIE, null, null, null, Cookie.DEFAULT_VERSION, null, 0, false);
+            return Response.ok(JsonProvider.toJson(LogoutStatus.OK.wrapper())).cookie(eraserCookie).build();
+        }
+    }
+    
 }
