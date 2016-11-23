@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="esa" module="tap-service-webapp" status="integration"/>
+    <configurations>
+        <conf name="compile-time" description="jars used while building the war"/>
+        <conf name="deploy-time"  description="jars used by the war when deployed in Tomcat"/>
+    </configurations>
+    <dependencies>
+
+        <dependency org="com.sun.jersey"       name="jersey-bundle"        rev="1.19"   conf="compile-time->master"/>        
+        <dependency org="com.sun.jersey"       name="jersey-core"          rev="1.19"   conf="compile-time->master"/>
+        <dependency org="com.sun.jersey"       name="jersey-server"        rev="1.19"   conf="compile-time->master"/>
+        <dependency org="javax.servlet"        name="javax.servlet-api"    rev="3.1.0"  conf="compile-time->master"/>
+        <dependency org="com.google.code.gson" name="gson"                 rev="2.8.0"  conf="compile-time->master"/>
+
+        
+        <dependency org="com.sun.jersey"       name="jersey-bundle"        rev="1.19"   conf="deploy-time->default"/>
+        <dependency org="com.sun.jersey"       name="jersey-json"          rev="1.19"   conf="deploy-time->default"/>
+        <dependency org="com.google.code.gson" name="gson"                 rev="2.8.0"  conf="deploy-time->default"/>
+
+    </dependencies>
+</ivy-module>

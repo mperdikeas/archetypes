@@ -1,0 +1,5 @@
+web/WEB-INF/classes/
+web/WEB-INF/lib/
+dist/
+lib-ivy/
+build.properties

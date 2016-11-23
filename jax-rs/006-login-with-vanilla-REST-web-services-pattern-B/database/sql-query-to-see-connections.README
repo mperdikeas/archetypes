@@ -1,0 +1,1 @@
+SELECT substr(query, 1, 40) AS query, state, waiting FROM pg_stat_activity WHERE usename='silly-test-user';

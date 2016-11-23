@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+USER=$1
+DB=$2
+SCRIPT=$3
+PGOPTIONS='--client-min-messages=warning' psql -v ON_ERROR_STOP=1 --quiet -X -U $USER -d $DB --no-password -f $SCRIPT

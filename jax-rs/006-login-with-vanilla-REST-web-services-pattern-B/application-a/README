@@ -1,0 +1,27 @@
+This is an attempt to build a bare-bones JSP Model 2 application
+(see http://mperdikeas.github.io/struts-1.1/res_rep.pdf).
+
+This has been tested against Apache Tomcat 7.0.26.0
+
+It uses both forward and redirect (from page to page) to
+exemplify the correct functioning of both.
+
+The code is entirely mine.
+
+This episode differs from the previous one in the following ways:
+[1] it ditches URL rewriting
+[2] implements access control in the AuthenticationFilter
+
+Ideas for new interesting features:
+
+[1] add timer that shows how much time's left in the session
+[2] add [back] button.
+
+In the next version I should implement everything with redirects
+so feature [2] is supported out of the box.
+
+
+This appliation can be accessed at:
+
+    http://localhost:8080/<context-path>/controller/login
+
