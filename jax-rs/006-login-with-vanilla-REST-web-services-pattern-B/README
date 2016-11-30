@@ -3,3 +3,4 @@ application in that the Rest login application does not set the
 cookie, it merely reports the status.
 
 Also, the client applications are now servlets, not ReactJS apps.
+

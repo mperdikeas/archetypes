@@ -1,2 +1,9 @@
 This is totally WIP I have to finish the experimentation with setting a SSO cookie
 for specific application partitions.
+
+Also, I believe that the following example:
+
+    ~/playground/cookies/004-custom-cookie-common-source-of-sso-values-full-example/
+
+... now offers a more complete archetype (even though it's in the "playground" repo).
+
