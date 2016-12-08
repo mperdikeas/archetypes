@@ -131,6 +131,7 @@
     <target name="rewar" depends="clean,war"/>
     <target name="dry-rewar" depends="clean,dry-war"/>
 
+    <target name="build" depends="war"/>
     <target name="war" depends="compile, dry-war"/>
 
     <target name="dry-war" depends="dry-compile, assert-that-build.properties-exists">
