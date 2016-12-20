@@ -16,6 +16,10 @@
     ],
     "flow-stop"  : "flow stop",
     "test-build" : "mkdir -p lib && babel app --out-dir lib --source-maps",
+    "test-build.README": [
+        "If you wish to test build continuously use the following incantation (from the command line): ",
+        "$ when-changed $(find app/) -c npm run test-build                                             "
+    ],      
     "test"       : "npm run test-build && mocha --require source-map-support/register --compilers js:babel-register",
     "test-watch" : "npm run test-build && mocha --require source-map-support/register --compilers js:babel-register --watch"
   },
