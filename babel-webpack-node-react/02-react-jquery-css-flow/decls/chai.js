@@ -12,6 +12,7 @@ declare module "chai" {
          static isTrue        (x: any)        : void;
          static isNull        (x: any)        : void;
          static throws        (f:   F)        : void;
+         static fail          (m: ?string)     : void;        
     }
 
      declare export var assert: typeof AssertClass

@@ -6,6 +6,30 @@ import _ from 'lodash';
 
 import {Point, between, foo} from '../lib/index.js';
 
+/* example code of how to use generic type definitions in Flow start */
+type RelationFT<T> = (a: T, b: T) => boolean;
+
+function partialSorting<T>(_vs: Array<T>, isGreaterThan: RelationFT<T>): Array<T> {
+    const n = _vs.length;
+    const vs : Array<T> = _vs.slice();
+    while (true) {
+        let flipHappened = false;
+        for (let i = 0; i < n ; i++) {
+            if (isGreaterThan(vs[i], vs[i+1])) {
+                const tmp = vs[i];
+                vs[i]     = vs[i+1];
+                vs[i+1]   = tmp;
+                flipHappened = true;
+            }
+        }
+        if (!flipHappened)
+            break;
+    }
+    return vs;
+}
+/* example code of how to use generic type definitions in Flow end */
+
+
 describe('Point', function () {
     describe('rotate90Right', function () {
         it('should work'
