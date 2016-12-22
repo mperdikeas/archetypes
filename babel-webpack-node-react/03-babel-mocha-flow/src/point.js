@@ -20,6 +20,10 @@ if (!global._babelPolyfill) // https://github.com/s-panferov/awesome-typescript-
 import assert from 'assert';
 import _      from 'lodash';
 
+export type DemonstrateUseOfExportedTypes = {a: number, b: string};
+
+const foobarzar : DemonstrateUseOfExportedTypes = {a: 1,b: '2'};
+
 class Point {
     x: number;
     y: number;

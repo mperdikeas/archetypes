@@ -9,6 +9,9 @@ import {Point, between, foo} from '../lib/index.js';
 /* example code of how to use generic type definitions in Flow start */
 type RelationFT<T> = (a: T, b: T) => boolean;
 
+import type {DemonstrateUseOfExportedTypes} from '../lib/point.js';
+const foobarzar : DemonstrateUseOfExportedTypes = {a: 1, b: '2'};
+
 function partialSorting<T>(_vs: Array<T>, isGreaterThan: RelationFT<T>): Array<T> {
     const n = _vs.length;
     const vs : Array<T> = _vs.slice();

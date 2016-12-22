@@ -17,3 +17,7 @@ import {Point, between, foo} from './point.js';
 exports.Point   = Point;
 exports.between = between;
 exports.foo     = foo;
+
+import type {DemonstrateUseOfExportedTypes} from './point.js';
+
+export type {DemonstrateUseOfExportedTypes};

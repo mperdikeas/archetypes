@@ -10,7 +10,7 @@
     "prebuild": "mkdir -p lib && for f in $(find src/ -iname *.js | cut -c5-) ; do cp src/$f lib/$f.flow; done",
     "build": "babel src --out-dir lib --source-maps",
     "build-watch": "babel src --out-dir lib --source-maps --watch",
-    "build-watch.NOT-PLAYING-NICELY-with-FLOW.README": [
+    "build-watch.README.NOT-PLAYING-NICELY-with-FLOW.README": [
       "The above script is not playing nicely under a scenario of continuous Flow validation when one is also using   ",
       "the suggested method of running Flow continuously as given in property 'flow.README'.                          ",
       "The reason it is not playing nicely is that this script fails to trigger the prebuild script that prepares     ",
@@ -25,13 +25,21 @@
       "The static method [foo] in class [Point] was added precisely to highlight and repro the above case.            ",
       "So in order to avoid surprises even in this edge case just build continuously with:                            ",
       "                                                                                                               ",
-      "    $watch -n 1 -t -d npm run build                                                                            ",
+      "    $ watch -n 1 -t -d npm run build                                                                           ",
+      "    ... or (alternatively):                                                                                    ",
+      "    $ when-changed $(find src/) -c npm run build                                                               ",
       "                                                                                                               ",
       "The above automatically triggers the [prebuild] so updated .flow files are copied into [lib/] and are taken    ",
       "into account when Flow validates the Mocha files in [test/]. Last comment is that all this happens because     ",
       "our Mocha tests validate the compiled implementations in [lib/], not those in [src/]. In the latter case       ",
       "things would have presumably been simpler.                                                                     "
     ],
+    "build-watch.README.ENOSPC": ["If the above command gives you 'Error: watch src/lib.js ENOSPC', you have to do the following:",
+                                  "$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p",
+                                  "... as suggested in the below links:",
+                                  "http://stackoverflow.com/a/32600959/274677",
+                                  "https://github.com/remy/nodemon/issues/214"
+                                 ],
     "start": "npm run build && node lib/index.js",
     "flow-check": "flow check",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
