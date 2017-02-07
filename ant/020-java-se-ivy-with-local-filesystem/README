@@ -1,0 +1,27 @@
+This archetype exemplifies:
+
+[1] use of an IVY file-system resolver
+[2] use of an IVY chained resolver
+[3] use of a dynamically selected ivysettings.xml file 
+    (see attribute settingsRef in the call to the ivy:resolve
+    target)
+[4] ant target to clean IVY cache (ivy-clean-cache)
+
+During development time you are supposed to be simply using the
+default ant build targets. These end up calling <resolve-dev>.
+Target <resolve-dev> uses a chained resolver so it will fetch
+the file for you from Maven central if it is not locally found.
+
+You are then supposed to take the artifacts that are brought / downloaded
+from Maven central and place them in:
+
+ivy-filesystem-resolver-repo/
+
+
+Once your project builds, to ensure that you actually get everything
+from the local repo use:
+
+    $ ant ivy-clean-cache && ant clean && ant resolve-only-local
+
+You should be able to test that the above incantation complains if
+you remove a file from ivy-filesystem-resolver-repo/

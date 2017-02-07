@@ -1,0 +1,6 @@
+lib-ivy-compile/*.jar
+lib-ivy-runtime/*.jar
+ivy-reports/
+build/
+dist/
+ivy.xml.control

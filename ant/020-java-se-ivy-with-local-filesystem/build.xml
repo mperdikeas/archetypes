@@ -1,0 +1,225 @@
+<project
+    xmlns:contrib="http://net.sf.antcontrib"
+    xmlns:ivy="antlib:org.apache.ivy.ant"
+    name="foo" basedir="." default="run">
+    <taskdef uri="http://net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" classpath="${basedir}/tools/ant-contrib-1.0b3.jar" />
+
+    <property name="project.MainClass.name" value="FooMain"/>
+    <property name="project.distname"       value="${ant.project.name}"/>
+    <property name="jar-artefact.name"      value="${ant.project.name}.jar"/>
+    <property name="build.dir"              value="${basedir}/build"/>
+    <property name="dist.dir"               value="${basedir}/dist"/>
+    <property name="dist-runnable.dir"      value="${basedir}/dist-runnable"/>
+    <property name="jar-artefact"           value="${dist.dir}/${jar-artefact.name}"/>
+    <property name="dist.sources-jar.file"  value="${dist.dir}/${ant.project.name}-sources.jar"/>
+    <property name="src.dir"                value="${basedir}/src"/>
+    <property name="javasource.dir"         value="${src.dir}"/>
+    <property name="compilelibs.dir"        value="${basedir}/lib-compile"/>
+    <property name="ivylibs.compile.dir"    value="${basedir}/lib-ivy-compile"/>
+    <property name="ivylibs.runtime.dir"    value="${basedir}/lib-ivy-runtime"/>
+    <property name="runtimelibs.dir"        value="${basedir}/lib-runtime"/>
+    <property name="ivy-reports.dir"        value="${basedir}/ivy-reports"/>    
+    <property name="run-app.script.name"    value="run-app"/>
+
+    <property name="ivy.xml.file"               value="${basedir}/ivy.xml"/>
+    <property name="ivy.xml.control.file"       value="${basedir}/ivy.xml.control"/>
+
+
+    <path id = "compile.classpath">
+      <fileset dir="${compilelibs.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+      <fileset dir="${ivylibs.compile.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+    </path>
+
+
+<target name="test-ivy" description="Test ivy installation">
+    <ivy:settings />
+</target>
+
+
+<ivy:settings id="ivy.settings.dev"        file="ivysettings-dev.xml"/>
+<ivy:settings id="ivy.settings.only-local" file="ivysettings-only-local.xml"/>
+
+<target name="ivy-clean-cache">
+    <ivy:cleancache/>
+</target>
+
+<target name="resolve-dev">
+    <antcall target="resolve">
+        <param name="ivysettings-id" value="ivy.settings.dev"/>
+    </antcall>
+</target>
+
+<target name="resolve-only-local">
+    <antcall target="resolve">
+        <param name="ivysettings-id" value="ivy.settings.only-local"/>
+    </antcall>
+</target>
+
+<target name="resolve" depends="test-ivy" description="resolve and retrieve dependencies with ivy">
+    <fail>
+        <condition>
+            <not>
+                <isset property="ivysettings-id"/>
+            </not>
+        </condition>
+    </fail>
+    <contrib:outofdate>
+        <deletetargets all="true"/>
+        <sourcefiles>
+            <pathelement path="${ivy.xml.file}"/>
+        </sourcefiles>
+        <targetfiles>
+            <pathelement path="${ivy.xml.control.file}"/>
+        </targetfiles>
+        <sequential>
+
+            <ivy:resolve settingsRef="${ivysettings-id}"/>       <!-- type="jar" means only jar files, not javadoc or sources; "bundle" is used because of this: http://stackoverflow.com/a/23804543/274677 -->
+            <ivy:report todir='${ivy-reports.dir}' graph='false' xml='false'/>
+            <ivy:retrieve conf="compile-time" sync="true" type="jar, bundle" pattern="${ivylibs.compile.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <ivy:retrieve conf="run-time"     sync="true" type="jar, bundle" pattern="${ivylibs.runtime.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+            <touch file="${ivy.xml.control.file}"/>
+        </sequential>
+    </contrib:outofdate>
+    <!-- go ahead and create the IVY directories in the off-chance that nothing was configured to be retrieved via Ivy-->
+    <mkdir dir="${ivylibs.compile.dir}"/> 
+    <mkdir dir="${ivylibs.runtime.dir}"/>
+</target>
+
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+        <mkdir dir="${ivylibs.compile.dir}"/>
+        <mkdir dir="${ivylibs.runtime.dir}"/>
+    </target>
+
+
+    <target name="compile" depends="prepare, resolve-dev, dry-compile" description="Compile java sources"/>
+
+    <target name="dry-compile" 
+            description="dry compile without IVY deps resolve and wsgen">
+        <mkdir  dir="${build.dir}"/>
+        <property name="classpath-comp.msg" refid="compile.classpath"/>
+        <echo message="compiling with classpath = ${classpath-comp.msg}"/>
+        <javac includeAntRuntime="false" srcdir="${javasource.dir}" 
+               destdir="${build.dir}"
+               source="1.7"
+               target="1.7"
+               debug="true"
+               >
+            <include name="**/*.java"/>
+            <classpath refid="compile.classpath"/>
+            <!--compilerarg line="-encoding utf-8 -Xlint:unchecked"                                                                                                                                                     -->
+            <!-- 2014-I-30 change: compile with all warnings except -Xlint:path (do not use the plain "-Xlint" options which includes all, i.e. including -Xlint:path, cause I get many false positives in Ubuntu / Ant -->
+            <compilerarg line="-encoding utf-8 -Xlint:unchecked -Xlint:cast -Xlint:deprecation -Xlint:divzero -Xlint:empty -Xlint:fallthrough -Xlint:finally -Xlint:overrides -Xlint:serial"/>
+        </javac>
+	<copy todir="${build.dir}">
+            <fileset dir="${javasource.dir}">
+	        <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="build" depends="jar"/>
+    <target name="jar" depends="compile, dry-jar" description="jar class files"/>
+
+    <target name="dry-jar" depends="dry-compile"
+            description="dry-jar class files">
+      <mkdir  dir="${dist.dir}"/>
+      <jar destfile="${dist.dir}/${project.distname}.jar"
+           basedir="${build.dir}"
+      />
+      <jar destfile="${dist.sources-jar.file}" basedir="${src.dir}"
+                                       compress="${jar.compress}"
+           index="${jar.index}" update="${jar.update}" filesetmanifest="merge">
+      </jar>
+    </target>
+
+    <target name="clean-ivy" description="clean IVY">
+      <delete dir ="${ivylibs.compile.dir}"/>
+      <delete dir ="${ivylibs.runtime.dir}"/>
+      <delete file ="${ivy.xml.control.file}"/>
+      <delete dir="${ivy-reports.dir}"/>
+      <!--delete>
+        <fileset dir ="${ivylibs.dir}" includes="*.jar"/>
+      </delete-->
+    </target>
+
+    <target name="clean-except-ivy"
+            description="Prepare for clean build (except for IVY deps)">
+      <delete dir ="${build.dir}"/>
+      <delete dir ="${dist.dir}"/>
+      <delete dir ="${dist-runnable.dir}"/>
+    </target>
+
+
+    <target name="clean"
+            depends="clean-except-ivy, clean-ivy"
+            description="Prepare for clean build (including IVY deps)">
+    </target>
+
+    <target name="cclean"
+            depends="clean"
+            description="clean dependencies as well">
+        <!--ant antfile="${wsdl.ant.file}" target="clean" inheritAll="false"/-->
+    </target>
+
+
+    <path id = "run.classpath">
+        <path refid="compile.classpath"/>
+        <pathelement path = "${jar-artefact}"/>
+        <fileset dir="${runtimelibs.dir}">
+          <include name ="*.jar"/>
+        </fileset>
+      <fileset dir="${ivylibs.runtime.dir}">
+        <include name ="*.jar"/>
+      </fileset>
+
+    </path>
+
+    <macrodef name="run-generic">
+        <attribute name="paranoid" />
+        <sequential>
+            <contrib:if>
+                <equals arg1="@{paranoid}" arg2="true" />
+                <then>
+                    <echo message="removing ${build.dir} folder to be sure we run from the jar"/>
+                    <delete dir="${build.dir}"/>
+                </then> 
+            </contrib:if>
+        <property name="classpath-run.msg" refid="run.classpath"/>
+        <echo message="ant.java.version=${ant.java.version}" />
+        <echo message="running the app with classpath = ${classpath-run.msg}"/>
+        <java classname ="${project.MainClass.name}" failonerror="true" fork="true" resultproperty="javaExitCode">
+             <jvmarg value="-Xmx1024m"/>
+             <classpath refid="run.classpath"/>
+        </java>
+        <fail message="java invocation failure [${javaExitCode}]" status="${javaExitCode}">
+            <condition>
+                <not>
+                    <equals arg1="${javaExitCode}" arg2="0"/>
+                </not>
+            </condition>
+        </fail>
+        </sequential>
+    </macrodef>
+
+    <target name="run" depends="jar, dry-run" description="run the jared application"/>
+
+    <target name="dry-run" depends="dry-jar" description="run the jared application">
+        <run-generic paranoid="false"/>
+    </target>
+
+    <target name="run-paranoid" depends="jar" description="run the jared application (paranoid mode)">
+        <run-generic paranoid="true"/>
+    </target>
+
+    <target name="rejar" depends="clean,jar" description="clean and jar anew"/>
+
+
+
+</project>
