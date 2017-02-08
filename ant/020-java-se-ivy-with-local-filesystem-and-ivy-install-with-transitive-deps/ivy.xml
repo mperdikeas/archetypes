@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ivy-module version="2.0" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="foo" module="foo" status="foo"/>
+    <configurations>
+        <conf name="theConf"  description="just one configuration"/>
+    </configurations>
+    <dependencies>
+        <dependency org="commons-discovery" name="commons-discovery" rev="0.5" conf="theConf->default"/> <!-- if you change "theConf->default" to "theConf->master" you only get the artifact itself (without its transitive dependencies) -->
+    </dependencies>
+</ivy-module>

@@ -1,0 +1,18 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="foo" basedir="." default="resolve">
+
+    <property name="ivylibs.dir"        value="${basedir}/ivy-libs"/>
+    <property name="ivy-reports.dir"    value="${basedir}/ivy-reports"/>    
+
+    <target name="resolve" description="resolve and retrieve dependencies with ivy">
+        <ivy:settings/>
+        <ivy:resolve/>
+        <ivy:report todir='${ivy-reports.dir}' graph='false' xml='false'/>
+        <ivy:retrieve conf="theConf" sync="true" type="jar, bundle" pattern="${ivylibs.dir}/[artifact]-[revision](-[classifier]).[ext]"/> 
+    </target>
+
+    <target name="clean" description="Prepare for clean build">
+        <delete dir ="${ivylibs.dir}"/>
+        <delete dir="${ivy-reports.dir}"/>
+        <ivy:cleancache/>
+    </target>
+</project>

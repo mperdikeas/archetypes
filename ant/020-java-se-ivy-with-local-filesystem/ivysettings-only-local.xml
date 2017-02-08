@@ -1,8 +1,0 @@
-<ivysettings>
-    <settings defaultResolver="local"/>
-    <resolvers>
-        <filesystem name="local">
-            <artifact pattern="${ivy.settings.dir}/ivy-filesystem-resolver-repo/[artifact]-[revision].[ext]"/>
-        </filesystem>
-    </resolvers>
-</ivysettings>

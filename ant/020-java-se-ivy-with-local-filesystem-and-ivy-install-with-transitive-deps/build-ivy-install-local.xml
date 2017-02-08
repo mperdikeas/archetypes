@@ -1,0 +1,10 @@
+<project name="shared repository" default="install"
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+    <target name="install" description="local at non default location">
+
+        <ivy:settings id="ivysettings-ibiblio-to-local" file="ivysettings-ibiblio-to-local.xml"/>
+        <ivy:install settingsRef="ivysettings-ibiblio-to-local"
+                     organisation="commons-discovery" module="commons-discovery" revision="0.5"
+                     transitive="true" overwrite="false" from="public" to="local" />
+    </target>
+</project>

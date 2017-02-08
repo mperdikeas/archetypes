@@ -1,0 +1,20 @@
+<ivysettings>
+    <caches defaultCacheDir="${ivy.settings.dir}/cache"/> 
+    <property name="ivy.local.default.root"
+              value="${ivy.settings.dir}/lib" override="false" />
+    <property name="ivy.local.default.ivy.pattern"
+              value="[organisation]/[module]/ivys/ivy-[revision].xml"
+              override="false" />
+    <property name="ivy.local.default.artifact.pattern"
+              value="[organisation]/[module]/[type]s/[artifact]-[revision].[ext]"
+              override="false" />
+    <settings defaultResolver="local" />
+    <resolvers>
+        <filesystem name="local">
+            <ivy
+                pattern="${ivy.local.default.root}/${ivy.local.default.ivy.pattern}" />
+            <artifact
+                pattern="${ivy.local.default.root}/${ivy.local.default.artifact.pattern}" />
+        </filesystem>
+    </resolvers>
+</ivysettings>

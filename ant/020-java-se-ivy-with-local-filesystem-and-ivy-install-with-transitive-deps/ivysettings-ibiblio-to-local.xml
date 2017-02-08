@@ -1,0 +1,6 @@
+<ivysettings>
+    <include file="${ivy.settings.dir}/ivysettings-only-local.xml"/>
+    <resolvers>
+        <ibiblio name="public" m2compatible="true" />
+    </resolvers>
+</ivysettings>
