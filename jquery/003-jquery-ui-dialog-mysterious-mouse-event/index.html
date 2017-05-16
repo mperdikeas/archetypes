@@ -1,0 +1,90 @@
+    <html>
+      <head>
+        <link rel='stylesheet' href='https://code.jquery.com/ui/1.11.4/themes/vader/jquery-ui.css'>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"       ></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+      </head>
+      <body>
+        <div style='margin-bottom: 1em;'>
+          jsFiddle is: <a href='https://jsfiddle.net/q8po0y12/'>https://jsfiddle.net/q8po0y12/</a>
+        </div>
+        <div style='margin-bottom: 1em;'>
+          SO question: <a href='http://stackoverflow.com/q/44010744/274677'>http://stackoverflow.com/q/44010744/274677</a>
+        </div>
+        <div id='missile-launch-confirmation-modal' title='Confirm missile launch'</div>
+          <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
+            Are you sure you want to unleash nuclear Armageddon?
+        </div>
+        </div>
+        <div>
+          <div>
+            <div>Enter missile launch code:</div>
+            <div>
+              <input id='missile-launch-code-input' type='text' autofocus/>
+            </div>
+            <div>
+              <button id='missile-launch-button' type='button'>OK</button>
+            </div>
+          </div>
+        </div>
+        <script>     
+    
+         function inputKeyListener (evt) {
+           console.log('key listener - triggered key code is: '+evt.keyCode);
+           if (evt.keyCode === $.ui.keyCode.ENTER) {
+             evt.stopPropagation();
+             $('#missile-launch-button').click(); // directly calling confirm() doesn't work either
+           }
+         }
+    
+         function missileLaunchButtonClickHandler(e) {
+           e.stopPropagation();
+           confirm();
+         }
+    
+         function confirm() {
+           var launchCode = $('#missile-launch-code-input').val();       
+           const dialog  = $('#missile-launch-confirmation-modal');
+           dialog.dialog({
+             closeOnEscape: false,
+             dialogClass: 'no-close',
+             open: function(event, ui) {
+               console.log('confirm :: open is called');
+             },
+             close: function () {
+               console.log('confirm :: close is called');
+             },
+             resizable: false,
+             height: "auto",
+             width: 400,
+             modal: true,
+             buttons: {
+               "Yeap": function() {
+                 console.log('Confirmation button was clicked');
+                 $( this ).dialog( "close" );
+                 console.log('missile launch with code ['+launchCode+'] was confirmed!');
+               },
+               "Maybe not just yet": function(ev) {
+                 console.log('Abort button was clicked');
+                 $( this ).dialog( "close" );
+                 console.log('Armageddon was averted');
+               }
+             }});
+           
+           dialog.dialog('open');
+           console.log('by this time the dialog should be displayed');
+         }
+    
+         
+         $('#missile-launch-confirmation-modal').dialog({autoOpen: false});
+         
+    
+         $('#missile-launch-button').click(missileLaunchButtonClickHandler);     
+    
+         $(document).on('keydown', inputKeyListener);
+    
+        </script>
+    
+    
+      </body>
+    </html>
