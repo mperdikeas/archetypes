@@ -45,7 +45,9 @@
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "flow.README": [
       "If you wish to run flow continuously use the following incantation (from the command line): ",
-      "$ watch -n 1 -t -d npm run flow                                                             "
+      "$ watch -n 1 -t -d npm run flow                                                             ",
+      "                                                                                            ",
+      "In this connection also see: build-watch.README.NOT-PLAYING-NICELY-with-FLOW.README         "
     ],
     "flow-stop": "flow stop",
     "test": "npm run build && mocha --require source-map-support/register --compilers js:babel-register",
