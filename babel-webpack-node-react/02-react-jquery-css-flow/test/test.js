@@ -1,8 +1,12 @@
 /* @flow */
 require('source-map-support').install();
 import 'babel-polyfill';
-const assert     = require('chai').assert;
+import {assert} from 'chai';
+import AssertionError  from 'assertion-error';
+assert.isOk(AssertionError);
 import _ from 'lodash';
+
+import {arr2set, foo} from '../app/util.js';
 
 
 /* example code of how to use generic type definitions in Flow start */
@@ -57,5 +61,40 @@ describe('generic exploratory', function () {
                 assert.isNumber(-Infinity);
             });
         });
+        describe('test throw assertions', function() {
+            it('works with my own throws', function() {
+                assert.throws(()=>{
+                    arr2set([1,1]);
+                }, Error);
+            });
+            it('works with chai throws #1', function() {
+                assert.throws(()=>{
+                    foo();
+                }, AssertionError);
+            });
+            it('works with chai throws #2', function() {
+                assert.throws(()=>{
+                    foo();
+                }, Error);
+            });
+            it('weird', function() {
+                assert.throws(()=>{
+                    throw 1;
+                }, undefined);
+            });
+        });
+
+        describe('foo', function() { // https://stackoverflow.com/q/46457351/274677
+            it('works', function() {
+                assert.throws( ()=>{throw new Error('foo')}
+                               , Error, /f../);
+                assert.throws( ()=>{throw new AssertionError()}
+                               , Error);
+                assert.throws( ()=>{assert.isTrue(false, 'foobar');}
+                               , Error, /.*bar/);
+                assert.throws( ()=>{assert.isTrue(false, 'foobarzar');}
+                               , AssertionError, /^foobarzar/);
+            });
+        });        
     });
 });

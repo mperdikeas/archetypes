@@ -1,7 +1,15 @@
-/* @flow */
+// @flow
 require('source-map-support').install();
 import 'babel-polyfill';
-import {assert} from 'chai';
+  import {assert} from 'chai';
+import AssertionError  from 'assertion-error';
+assert.isOk(AssertionError);
+
+
+/*const assert = require('chai').assert;
+const AssertionError = require('assertion-error');
+*/
+
 import _ from 'lodash';
 
 import {Point, between, foo} from '../lib/index.js';
@@ -13,7 +21,7 @@ import type {DemonstrateUseOfExportedTypes} from '../lib/point.js';
 const foobarzar : DemonstrateUseOfExportedTypes = {a: 1, b: '2'};
 
 function partialSorting<T>(_vs: Array<T>, isGreaterThan: RelationFT<T>): Array<T> {
-    const n = _vs.length;
+    const n: number = _vs.length;
     const vs : Array<T> = _vs.slice();
     while (true) {
         let flipHappened = false;
@@ -76,6 +84,45 @@ describe('Point', function () {
                 assert.isTrue(p2.equals(p));
                 assert.isTrue(_.isEqual(p, p2));
             });            
+        });
+    });
+    describe('test throw assertions', function() {
+        it('works with my own throws', function() {
+            assert.throws(()=>{
+                foo();
+            }, Error);
+        });
+        it('works with chai throws', function() {
+            assert.throws(()=>{
+                const p: Point = new Point(2,3);
+                p.add(3);                
+            }, AssertionError);
+        });
+        it('works with chai throws #2', function() {
+            assert.throws(()=>{
+                const p: Point = new Point(2,3);
+                p.add(3);                
+            }, Error);
+        });
+        it('weird', function() {
+            assert.throws(()=>{
+                throw 1;
+            }, undefined);
+        });
+    });
+
+    describe('foo', function() { // https://stackoverflow.com/q/46457351/274677
+        it('works', function() {
+            assert.throws( ()=>{throw new Error('foo')}
+                           , Error, /f../);
+            assert.throws( ()=>{throw new AssertionError()}
+                           , Error);
+            assert.throws( ()=>{throw new AssertionError()}
+                           , AssertionError);
+            assert.throws( ()=>{assert.isTrue(false, 'foobar');}
+                           , Error, /.*bar/);
+            assert.throws( ()=>{assert.isTrue(false, 'foobarzar');}
+                           , AssertionError, /^foobarzar/);
         });
     });
 });

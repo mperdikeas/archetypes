@@ -17,7 +17,7 @@ if (!global._babelPolyfill) // https://github.com/s-panferov/awesome-typescript-
 
 
 
-import assert from 'assert';
+import {assert} from 'chai';
 import _      from 'lodash';
 
 export type DemonstrateUseOfExportedTypes = {a: number, b: string};
@@ -43,7 +43,7 @@ class Point {
         return this.x===p2.x && this.y===p2.y;
     }
     add(otherPoint: Point): Point {
-        assert(otherPoint instanceof Point);
+        assert.isTrue(otherPoint instanceof Point);
         return new Point(this.x+otherPoint.x, this.y+otherPoint.y);
     }
     clone(): Point {

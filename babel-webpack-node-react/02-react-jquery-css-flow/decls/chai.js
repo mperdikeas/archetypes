@@ -15,7 +15,8 @@ declare module "chai" {
         static throws        (f:   F)             : void;
         static fail          (m: ?string)         : void;
         static strictEqual   (actual: any, expected: any, m: ?string): void;
-        static deepEqual   (actual: any, expected: any, m: ?string): void; // TODO: update in archetype
+        static deepEqual     (actual: any, expected: any, m: ?string): void; // TODO: update in archetype
+        static isOk          (x: any)             : void;
     }
 
     declare export var assert: typeof AssertClass;

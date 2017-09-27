@@ -1,5 +1,5 @@
 node_modules/
 build/bundle.js
-npm-debug.log
+npm-debug.log*
 build/index.html
 lib/

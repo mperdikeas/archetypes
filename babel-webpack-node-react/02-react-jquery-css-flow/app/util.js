@@ -38,10 +38,14 @@ function nameOfClassC2S(klass: Class<any>): string { // C2S stands for Camel 2 S
     return camelCase2Space(nameOfClass(klass));
 }
 
+function foo() {
+    assert.isTrue(false);
+}
+
 
 exports.isSetOf         = isSetOf;
 exports.arr2set         = arr2set;
 exports.camelCase2Space = camelCase2Space;
 exports.nameOfClass     = nameOfClass;
 exports.nameOfClassC2S  = nameOfClassC2S;
-
+exports.foo             = foo;
