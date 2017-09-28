@@ -3,7 +3,9 @@
 const     _  = require('lodash');
 import {assert} from 'chai';
 
+// I haven't yet fully dug what's the difference between 'declare type / export type' other than the fact that the exported type can be used from other modules (e.g. as in this case from test.js)
 declare type Function = () => any;
+export type Function2 = (number) => number;
 
 function isSetOf(setOfTs: any, T: Function): boolean {
     if (!(setOfTs instanceof Set)) return false;

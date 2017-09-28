@@ -7,13 +7,19 @@ assert.isOk(AssertionError);
 import _ from 'lodash';
 
 import {arr2set, foo} from '../app/util.js';
+import type {Function2} from '../app/util.js';
 
 
 /* example code of how to use generic type definitions in Flow start */
 type RelationFT<T> = (a: T, b: T) => boolean;
 
+function someFunction(a: number) {
+    return 42;
+}
+(someFunction: Function2)
+
 function partialSorting<T>(_vs: Array<T>, isGreaterThan: RelationFT<T>): Array<T> {
-    const n = _vs.length;
+    const n: number = _vs.length;
     const vs : Array<T> = _vs.slice();
     while (true) {
         let flipHappened = false;

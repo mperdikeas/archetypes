@@ -12,12 +12,12 @@ const AssertionError = require('assertion-error');
 
 import _ from 'lodash';
 
-import {Point, between, foo} from '../lib/index.js';
+import {Point, between, foo} from '../src/index.js'; // it is important that types are imported from ../src and not from ../lib if you want Flow to perform static type checking in your test code. Quite simply, the files in ../lib are stripped from type checking annotations
 
 /* example code of how to use generic type definitions in Flow start */
 type RelationFT<T> = (a: T, b: T) => boolean;
 
-import type {DemonstrateUseOfExportedTypes} from '../lib/point.js';
+import type {DemonstrateUseOfExportedTypes} from '../src/point.js';
 const foobarzar : DemonstrateUseOfExportedTypes = {a: 1, b: '2'};
 
 function partialSorting<T>(_vs: Array<T>, isGreaterThan: RelationFT<T>): Array<T> {
@@ -95,12 +95,14 @@ describe('Point', function () {
         it('works with chai throws', function() {
             assert.throws(()=>{
                 const p: Point = new Point(2,3);
-                p.add(3);                
+                // $SuppressFlowFinding: this is done on purpose to test the throw of the exception
+                p.add(3);
             }, AssertionError);
         });
         it('works with chai throws #2', function() {
             assert.throws(()=>{
                 const p: Point = new Point(2,3);
+                // $SuppressFlowFinding: this is done on purpose to test the throw of the exception
                 p.add(3);                
             }, Error);
         });
