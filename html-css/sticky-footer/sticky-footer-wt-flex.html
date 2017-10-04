@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Sticky footer pattern</title>
+    <style>
+
+     body {
+       font-size: 6px;
+       margin-top: 0;
+       margin-bottom: 0;
+     }
+
+     #container {
+       min-height: 100vh;
+       display: flex;
+       flex-direction: column;
+       /* sse-1507139844 */
+       /* justify-content: space-between; */
+     }
+
+     #non-footer {
+       flex-grow: 1; /* do this or the other (sse-1507139844) */
+       background-color: #ddd;
+       padding-bottom: 150px; /* 100px + 50px (#footer::height + #footer::margin-top) */
+     }
+
+     #footer {
+       background-color: #aaa;       
+       margin: 50px 0 0 0 ;
+       height: 100px;
+     }
+
+    </style>
+  </head>
+  <body>
+    <div id='container'>
+      <div id='non-footer'>
+        <h1>Sticky footer pattern</h1>
+        <p>
+          <a href='https://stackoverflow.com/q/46552641/274677'>SO question</a>
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean libero ex, tempus quis dolor at, consectetur lobortis leo. Etiam faucibus velit non turpis euismod lacinia. Vestibulum lobortis neque sed mi vestibulum, sit amet venenatis nulla auctor. Aenean porttitor sed purus id ornare. Mauris sed fermentum sem, id dapibus dolor. Nullam ullamcorper ut sem in consectetur. Quisque accumsan mauris vitae mi faucibus, sed blandit libero scelerisque. Donec vitae luctus metus, non fermentum elit. Duis purus ante, tempor vestibulum facilisis id, iaculis sed eros. Maecenas condimentum tortor suscipit aliquam feugiat. Sed sed enim egestas, venenatis ex at, pharetra nibh. Nullam faucibus tincidunt erat in mollis. Nulla a nunc lacus. Proin in pellentesque lorem.
+        </p>
+      </div>
+      <div id='footer'>
+      </div>
+    </div>
+  </body>
+</html>
