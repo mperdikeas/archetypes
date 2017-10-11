@@ -12,7 +12,7 @@ const AssertionError = require('assertion-error');
 
 import _ from 'lodash';
 
-import {Point, between, foo} from '../src/index.js'; // it is important that types are imported from ../src and not from ../lib if you want Flow to perform static type checking in your test code. Quite simply, the files in ../lib are stripped from type checking annotations
+import {Point, between, foo} from '../src/index.js'; // it is important that types are imported from ../src and not from ../lib if you want Flow to perform static type checking in your test code. Quite simply, the files in ../lib are stripped from type checking annotations. ** HOWEVER **, if this package is to be used as a library we also have to add 'test/' in the .npmignore file otherwise the importation from src fails when we try to use this module from npm.
 
 /* example code of how to use generic type definitions in Flow start */
 type RelationFT<T> = (a: T, b: T) => boolean;
