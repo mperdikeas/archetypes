@@ -9,11 +9,10 @@ declare module "chai" {
         static instanceOf    (x: any, t: any)     : void;
         static isNumber      (x: any)             : void;
         static isString      (x: any)             : void;
-        static isTrue        (x: any)             : void;
+        static isTrue        (x: any, m: ?string) : void;
         static isNull        (x: any, m: ?string) : void;
         static isNotNull     (x: any, m: ?string) : void;        
         static throws        (f:   F)             : void;
-        static fail          (m: ?string)         : void;
         static fail          (x: any, y: any, m: ?string)            : void;
         static strictEqual   (actual: any, expected: any, m: ?string): void;
         static deepEqual     (actual: any, expected: any, m: ?string): void; // TODO: update in archetype
