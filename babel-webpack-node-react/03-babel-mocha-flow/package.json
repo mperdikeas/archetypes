@@ -59,14 +59,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/username/replaceme.git"
+    "url": "git+https://github.com/username/changeme.git"
   },
   "bugs": {
-    "url": "https://github.com/username/replaceme/issues"
+    "url": "https://github.com/username/changeme/issues"
   },
-  "homepage": "https://github.com/username/replaceme#readme",
+  "homepage": "https://github.com/username/changeme#readme",
   "keywords": [
-      "shogi", "AI", "boardgames"
+      "some", "key", "words"
   ],
   "author": "",
   "license": "ISC",
