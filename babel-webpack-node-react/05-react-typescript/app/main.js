@@ -9,6 +9,6 @@ $(document).ready(doStuff);
 
 function doStuff() {
 
-    ReactDOM.render(<App msg={'some of the currently popular Javascript libraries / frameworks'}/>, $('#app')[0]);
+    ReactDOM.render(<App msg={'Hello World'}/>, $('#app')[0]);
 
 }

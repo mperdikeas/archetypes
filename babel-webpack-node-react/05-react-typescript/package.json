@@ -55,12 +55,12 @@
     "@babel/polyfill": "^7.2.5",
     "chai": "^4.2.0",
     "classnames": "^2.2.6",
+    "create-react-class": "^15.6.3",
     "fs-extra": "^7.0.1",
     "jquery": "^3.4.1",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-router-dom": "^4.3.1",
-    "reactabular-table": "^8.14.0"
+    "react-router-dom": "^4.3.1"
   }
 }
