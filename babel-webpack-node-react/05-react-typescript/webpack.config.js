@@ -11,6 +11,7 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const config = {
     mode: 'production',
+    devtool: 'eval-source-map',
     entry: './app/main.js',
     output: {
         path: path.resolve(__dirname, 'build'),

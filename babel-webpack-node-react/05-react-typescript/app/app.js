@@ -7,7 +7,7 @@ var      cx = require('classnames');
 import PropTypes from 'prop-types';
 
 const createReactClass = require('create-react-class');
-
+import {theAnswer} from './util.js';
 
 
 const App = createReactClass({
@@ -23,6 +23,9 @@ const App = createReactClass({
                 </div>
                 <div>
                     the value of the spread property is {JSON.stringify(b)}
+                </div>
+                <div>
+                    The answer to everything is {theAnswer()}.
                 </div>
             </div>
                );
