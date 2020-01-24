@@ -15,11 +15,16 @@ const App = createReactClass({
         msg: PropTypes.string.isRequired
     },
     render: function() {
-        const {a, ...rest} = {b: 2, a:1, c: 3};
+        const {a, ...b} = {b: 2, a:1, c: 3};
         return (
+            <div>
                 <div>
                    {this.props.msg}
                 </div>
+                <div>
+                    the value of the spread property is {JSON.stringify(b)}
+                </div>
+            </div>
                );
     }
 });
